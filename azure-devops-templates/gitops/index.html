@@ -8,22 +8,22 @@
       
       
       
-        <link rel="canonical" href="http://xenitab.github.io/home/terraform-modules/modules/kubernetes/opa-gatekeeper/">
+        <link rel="canonical" href="http://xenitab.github.io/home/azure-devops-templates/gitops/">
       
       
-      <link rel="shortcut icon" href="../../../../assets/images/favicon.png">
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.5">
     
     
       
-        <title>Opa gatekeeper - Xenit</title>
+        <title>GitOps - Xenit</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.21aed14c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.21aed14c.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.196e0c26.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
         
       
     
@@ -59,7 +59,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#requirements" class="md-skip">
+        <a href="#gitops" class="md-skip">
           Skip to content
         </a>
       
@@ -89,7 +89,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Opa gatekeeper
+              GitOps
             
           </span>
         </div>
@@ -189,7 +189,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../.." class="md-nav__link">
+    <a href="../.." class="md-nav__link">
       Xenit
     </a>
   </li>
@@ -199,10 +199,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     <label class="md-nav__link" for="nav-2">
       Azure devops templates
       <span class="md-nav__icon md-icon"></span>
@@ -221,7 +223,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../../azure-devops-templates/" class="md-nav__link">
+    <a href="../" class="md-nav__link">
       Azure DevOps Templates
     </a>
   </li>
@@ -231,11 +233,77 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../../../azure-devops-templates/gitops/" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        GitOps
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
       GitOps
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    Architecture
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#template-format" class="md-nav__link">
+    Template Format
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build" class="md-nav__link">
+    Build
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy" class="md-nav__link">
+    Deploy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -245,7 +313,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../../azure-devops-templates/packer/" class="md-nav__link">
+    <a href="../packer/" class="md-nav__link">
       packer
     </a>
   </li>
@@ -257,7 +325,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../../azure-devops-templates/terraform/" class="md-nav__link">
+    <a href="../terraform/" class="md-nav__link">
       Terraform
     </a>
   </li>
@@ -272,12 +340,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
     <label class="md-nav__link" for="nav-3">
       Terraform modules
       <span class="md-nav__icon md-icon"></span>
@@ -296,7 +362,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../" class="md-nav__link">
+    <a href="../../terraform-modules/" class="md-nav__link">
       terraform-modules
     </a>
   </li>
@@ -306,12 +372,10 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2" checked>
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2" >
     <label class="md-nav__link" for="nav-3-2">
       Modules
       <span class="md-nav__icon md-icon"></span>
@@ -350,7 +414,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/aks-global/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/azure/aks-global/" class="md-nav__link">
       Aks global
     </a>
   </li>
@@ -362,7 +426,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/aks/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/azure/aks/" class="md-nav__link">
       Aks
     </a>
   </li>
@@ -374,7 +438,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/azure-pipelines-agent-vmss/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/azure/azure-pipelines-agent-vmss/" class="md-nav__link">
       Azure Pipelines Agent
     </a>
   </li>
@@ -386,7 +450,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/core/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/azure/core/" class="md-nav__link">
       Core
     </a>
   </li>
@@ -398,7 +462,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/governance/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/azure/governance/" class="md-nav__link">
       Governance
     </a>
   </li>
@@ -410,7 +474,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/hub/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/azure/hub/" class="md-nav__link">
       Hub
     </a>
   </li>
@@ -425,12 +489,10 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2-2" type="checkbox" id="nav-3-2-2" checked>
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2-2" type="checkbox" id="nav-3-2-2" >
     <label class="md-nav__link" for="nav-3-2-2">
       Kubernetes
       <span class="md-nav__icon md-icon"></span>
@@ -449,7 +511,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../aad-pod-identity/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/kubernetes/aad-pod-identity/" class="md-nav__link">
       Aad pod identity
     </a>
   </li>
@@ -461,7 +523,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../azdo-proxy/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/kubernetes/azdo-proxy/" class="md-nav__link">
       Azdo proxy
     </a>
   </li>
@@ -473,7 +535,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../cert-manager/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/kubernetes/cert-manager/" class="md-nav__link">
       Cert manager
     </a>
   </li>
@@ -485,7 +547,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../external-dns/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/kubernetes/external-dns/" class="md-nav__link">
       External dns
     </a>
   </li>
@@ -497,7 +559,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../fluxcd-v1/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/kubernetes/fluxcd-v1/" class="md-nav__link">
       Fluxcd v1
     </a>
   </li>
@@ -509,7 +571,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../helm-operator/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/kubernetes/helm-operator/" class="md-nav__link">
       Helm operator
     </a>
   </li>
@@ -521,7 +583,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../ingress-nginx/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/kubernetes/ingress-nginx/" class="md-nav__link">
       Ingress nginx
     </a>
   </li>
@@ -533,7 +595,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../loki/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/kubernetes/loki/" class="md-nav__link">
       Loki
     </a>
   </li>
@@ -543,66 +605,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Opa gatekeeper
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
-    <a href="./" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../terraform-modules/modules/kubernetes/opa-gatekeeper/" class="md-nav__link">
       Opa gatekeeper
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
-    Requirements
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#providers" class="md-nav__link">
-    Providers
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    Inputs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    Outputs
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -612,7 +619,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../velero/" class="md-nav__link">
+    <a href="../../terraform-modules/modules/kubernetes/velero/" class="md-nav__link">
       Velero
     </a>
   </li>
@@ -647,6 +654,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -655,29 +664,36 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
-    Requirements
+  <a href="#architecture" class="md-nav__link">
+    Architecture
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#providers" class="md-nav__link">
-    Providers
+  <a href="#template-format" class="md-nav__link">
+    Template Format
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    Inputs
+  <a href="#build" class="md-nav__link">
+    Build
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    Outputs
+  <a href="#deploy" class="md-nav__link">
+    Deploy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
   </a>
   
 </li>
@@ -695,79 +711,211 @@
               
                 
                 
-                  <h1>Opa gatekeeper</h1>
-                
-                <h2 id="requirements">Requirements</h2>
+                <h1 id="gitops">GitOps</h1>
+<p>The GitOps templates are meant to be used with Flux v1 to build docker images and update a repository with the new image tag.</p>
+<h2 id="architecture">Architecture</h2>
+<p><img alt="gitops-architecture" src="../assets/gitops-architecture.jpg" /></p>
+<h2 id="template-format">Template Format</h2>
+<p>Parameter names that end with  <code>Template</code> will be templated before they are used.  They are templted with the <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops#format">format command</a>.
+The format command is passed the environment name, which can be placed in the string.</p>
+<h2 id="build">Build</h2>
 <table>
 <thead>
 <tr>
 <th>Name</th>
-<th>Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>terraform</td>
-<td>0.13.5</td>
-</tr>
-<tr>
-<td>helm</td>
-<td>1.3.2</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers">Providers</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>helm</td>
-<td>1.3.2</td>
-</tr>
-</tbody>
-</table>
-<h2 id="inputs">Inputs</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Type</th>
 <th>Default</th>
-<th align="center">Required</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>additional_constraints</td>
-<td>Additional constraints that should be added</td>
-<td><pre>list(object({<br>    kind               = string<br>    name               = string<br>    enforcement_action = string<br>    match = object({<br>      kinds = list(object({<br>        apiGroups = list(string)<br>        kinds     = list(string)<br>      }))<br>      namespaces = list(string)<br>    })<br>    parameters = any<br>  }))</pre></td>
+<td>poolVmImage</td>
+<td><code>"ubuntu-16.04"</code></td>
+<td>VM Image to set in pool configuration.</td>
+</tr>
+<tr>
+<td>poolName</td>
+<td><code>""</code></td>
+<td>Pool name to set in pool configuration.</td>
+</tr>
+<tr>
+<td>sourceBranch</td>
+<td><code>"refs/heads/master"</code></td>
+<td>Source branch to limit image builds to.</td>
+</tr>
+<tr>
+<td>dockerfilePath</td>
+<td><code>"./Dockerfile"</code></td>
+<td>Path to Dockerfile used in build.</td>
+</tr>
+<tr>
+<td>dockerBuildArgs</td>
+<td><code>""</code></td>
+<td>Additional build args to append when building docker image.</td>
+</tr>
+<tr>
+<td>serviceName</td>
+<td><code>""</code></td>
+<td>Name of application or service, will also be the name of the image.</td>
+</tr>
+<tr>
+<td>preBuild</td>
 <td><code>[]</code></td>
-<td align="center">no</td>
+<td>Steps to run  before Docker build, takes a list of steps.</td>
 </tr>
 <tr>
-<td>default_constraints</td>
-<td>Default constraints that should be added</td>
-<td><pre>list(object({<br>    kind               = string<br>    name               = string<br>    enforcement_action = string<br>    match = object({<br>      kinds = list(object({<br>        apiGroups = list(string)<br>        kinds     = list(string)<br>      }))<br>      namespaces = list(string)<br>    })<br>    parameters = any<br>  }))</pre></td>
-<td><pre>[<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPAllowPrivilegeEscalationContainer",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-allow-privilege-escalation-container",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPHostNamespace",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-host-namespace",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPHostNetworkingPorts",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-host-network-ports",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPFlexVolumes",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-flexvolume-drivers",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPPrivilegedContainer",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-privileged-container",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPProcMount",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-proc-mount",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPReadOnlyRootFilesystem",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-readonlyrootfilesystem",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPVolumeTypes",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-volume-types",<br>    "parameters": {<br>      "volumes": [<br>        "configMap",<br>        "downwardAPI",<br>        "emptyDir",<br>        "persistentVolumeClaim",<br>        "secret",<br>        "projected"<br>      ]<br>    }<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPCapabilities",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-capabilities",<br>    "parameters": {<br>      "allowedCapabilities": [<br>        ""<br>      ],<br>      "requiredDropCapabilities": [<br>        "NET_RAW"<br>      ]<br>    }<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sBlockNodePort",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "block-node-port",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sRequiredProbes",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "required-probes",<br>    "parameters": {<br>      "probeTypes": [<br>        "tcpSocket",<br>        "httpGet",<br>        "exec"<br>      ],<br>      "probes": [<br>        "readinessProbe"<br>      ]<br>    }<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPodPriorityClass",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "pod-priority-class",<br>    "parameters": {}<br>  }<br>]</pre></td>
-<td align="center">no</td>
+<td>postBuild</td>
+<td><code>[]</code></td>
+<td>Steps to run  after Docker build, takes a list of steps.</td>
 </tr>
 <tr>
-<td>exclude</td>
-<td>Namespaces to opt out of constraints</td>
-<td><pre>list(object({<br>    excluded_namespaces = list(string)<br>    processes           = list(string)<br>  }))</pre></td>
-<td><pre>[<br>  {<br>    "excluded_namespaces": [<br>      "kube-system",<br>      "gatekeeper-system"<br>    ],<br>    "processes": [<br>      "*"<br>    ]<br>  }<br>]</pre></td>
-<td align="center">no</td>
+<td>dockerLint.enable</td>
+<td><code>true</code></td>
+<td>Enable running Docker lint step.</td>
+</tr>
+<tr>
+<td>dockerLint.ignoreRuleViolations</td>
+<td><code>true</code></td>
+<td>Continues if any Docker lint violations occur.</td>
+</tr>
+<tr>
+<td>imageScan.enable</td>
+<td><code>true</code></td>
+<td>Enable running Image scan step.</td>
+</tr>
+<tr>
+<td>imageScan.ignoreRuleViolations</td>
+<td><code>true</code></td>
+<td>Continues if any Image scan violations occur.</td>
+</tr>
+<tr>
+<td>binaries.hadolint.tag</td>
+<td><code>v.18.0</code></td>
+<td>Version of hadolint to download.</td>
+</tr>
+<tr>
+<td>binaries.hadolint.sha</td>
+<td><code>f9bc9de12438b463ca84e77fde70b07b155d4da07ca21bc3f4354a62c6199db4</code></td>
+<td>SHA sum to verify downloaded hadolint binary with.</td>
+</tr>
+<tr>
+<td>binaries.trivy.tag</td>
+<td>`v0.12.0</td>
+<td>Version of trivy to download.</td>
+</tr>
+<tr>
+<td>binaries.trivy.sha</td>
+<td><code>4003d993d4b6b5673d4ef6e216578e8ac2bf6b439201a8e748a75fc68430c3f5</code></td>
+<td>SHA sum to verify downloaded trivy archive with.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="outputs">Outputs</h2>
-<p>No output.</p>
+<h2 id="deploy">Deploy</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>poolNameTemplate</td>
+<td><code>""</code></td>
+<td>Name of pool to use in template format.</td>
+</tr>
+<tr>
+<td>sourceBranch</td>
+<td><code>"refs/heads/master"</code></td>
+<td>Source branch to limit image builds to.</td>
+</tr>
+<tr>
+<td>serviceName</td>
+<td><code>""</code></td>
+<td>Name of the service, should match service name in build.</td>
+</tr>
+<tr>
+<td>azureSubscriptionTemplate</td>
+<td><code>""</code></td>
+<td>Name of Azure subscription in template format.</td>
+</tr>
+<tr>
+<td>acrNameTemplate</td>
+<td><code>""</code></td>
+<td>Name of ACr to use in template format.</td>
+</tr>
+<tr>
+<td>imagePathPrefix</td>
+<td><code>""</code></td>
+<td>Prefix to append to image name before pushing to ACR.</td>
+</tr>
+<tr>
+<td>environments</td>
+<td><code>[{name: dev, deployTags: false}, {name: qa, deployTags: true}, {name: prod, deployTags: true}]</code></td>
+<td>Environments that should be deployed to.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
+<p><strong>Build</strong></p>
+<pre><code class="language-yaml">name: $(Build.BuildId)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  tags:
+    include:
+      - &quot;*&quot;
+  paths:
+    include:
+      - &quot;*&quot;
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: XenitKubernetesService/azure-devops-templates
+      ref: refs/tags/2020.10.0
+
+stages:
+  - template: gitops/build/main.yaml@templates
+    parameters:
+      serviceName: &quot;podinfo&quot;
+</code></pre>
+<p><strong>Deploy</strong></p>
+<pre><code class="language-yaml">name: $(Build.BuildId)
+
+trigger: none
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: XenitKubernetesService/azure-devops-templates
+      ref: refs/tags/2020.10.2
+  pipelines:
+    - pipeline: ciPipeline
+      source: ci-podinfo
+      trigger:
+        stages:
+        - cd_trigger # Stage will only trigger if the build reason isn't pull request
+
+stages:
+  - template: gitops/deploy/main.yaml@templates
+    parameters:
+      poolNameTemplate: &quot;xks-{0}&quot;
+      serviceName: &quot;podinfo&quot;
+      azureSubscriptionTemplate: &quot;azure-{0}-lab-contributor&quot;
+      acrNameTemplate: &quot;acr{0}wexks&quot;
+      imagePathPrefix: &quot;lab&quot;
+      imageTagPath: &quot;.spec.values.application.buildId&quot;
+      environments:
+        - name: dev
+          deployTags: false
+</code></pre>
                 
               
               
@@ -786,7 +934,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../loki/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -795,19 +943,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Loki
+                Azure DevOps Templates
               </div>
             </div>
           </a>
         
         
-          <a href="../velero/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../packer/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Velero
+                packer
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
@@ -834,15 +982,15 @@
       
     </div>
     
-      <script src="../../../../assets/javascripts/vendor.7e0ee788.min.js"></script>
-      <script src="../../../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
-          base: "../../../..",
+          base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../../../assets/javascripts/worker/search.4ac00218.min.js"
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

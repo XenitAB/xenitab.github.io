@@ -8,22 +8,22 @@
       
       
       
-        <link rel="canonical" href="http://xenitab.github.io/home/terraform-modules/modules/kubernetes/opa-gatekeeper/">
+        <link rel="canonical" href="http://xenitab.github.io/home/azure-devops-templates/">
       
       
-      <link rel="shortcut icon" href="../../../../assets/images/favicon.png">
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.5">
     
     
       
-        <title>Opa gatekeeper - Xenit</title>
+        <title>Azure DevOps Templates - Xenit</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.21aed14c.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.21aed14c.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.196e0c26.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.196e0c26.min.css">
         
       
     
@@ -59,7 +59,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#requirements" class="md-skip">
+        <a href="#azure-devops-templates" class="md-skip">
           Skip to content
         </a>
       
@@ -89,7 +89,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Opa gatekeeper
+              Azure DevOps Templates
             
           </span>
         </div>
@@ -189,7 +189,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../.." class="md-nav__link">
+    <a href=".." class="md-nav__link">
       Xenit
     </a>
   </li>
@@ -199,10 +199,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     <label class="md-nav__link" for="nav-2">
       Azure devops templates
       <span class="md-nav__icon md-icon"></span>
@@ -219,11 +221,83 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../../../azure-devops-templates/" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Azure DevOps Templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
       Azure DevOps Templates
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#importing-the-repository-to-azure-devops" class="md-nav__link">
+    Importing the repository to Azure DevOps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-build-service-permissions" class="md-nav__link">
+    Configuring Build Service permissions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-azure-pipelines-for-repository-syncronization" class="md-nav__link">
+    Adding Azure Pipelines for repository syncronization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-reference-to-the-synchronized-repository" class="md-nav__link">
+    Adding reference to the synchronized repository
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -233,7 +307,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../../azure-devops-templates/gitops/" class="md-nav__link">
+    <a href="gitops/" class="md-nav__link">
       GitOps
     </a>
   </li>
@@ -245,7 +319,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../../azure-devops-templates/packer/" class="md-nav__link">
+    <a href="packer/" class="md-nav__link">
       packer
     </a>
   </li>
@@ -257,7 +331,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../../azure-devops-templates/terraform/" class="md-nav__link">
+    <a href="terraform/" class="md-nav__link">
       Terraform
     </a>
   </li>
@@ -272,12 +346,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
     <label class="md-nav__link" for="nav-3">
       Terraform modules
       <span class="md-nav__icon md-icon"></span>
@@ -296,7 +368,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../" class="md-nav__link">
+    <a href="../terraform-modules/" class="md-nav__link">
       terraform-modules
     </a>
   </li>
@@ -306,12 +378,10 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2" checked>
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2" >
     <label class="md-nav__link" for="nav-3-2">
       Modules
       <span class="md-nav__icon md-icon"></span>
@@ -350,7 +420,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/aks-global/" class="md-nav__link">
+    <a href="../terraform-modules/modules/azure/aks-global/" class="md-nav__link">
       Aks global
     </a>
   </li>
@@ -362,7 +432,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/aks/" class="md-nav__link">
+    <a href="../terraform-modules/modules/azure/aks/" class="md-nav__link">
       Aks
     </a>
   </li>
@@ -374,7 +444,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/azure-pipelines-agent-vmss/" class="md-nav__link">
+    <a href="../terraform-modules/modules/azure/azure-pipelines-agent-vmss/" class="md-nav__link">
       Azure Pipelines Agent
     </a>
   </li>
@@ -386,7 +456,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/core/" class="md-nav__link">
+    <a href="../terraform-modules/modules/azure/core/" class="md-nav__link">
       Core
     </a>
   </li>
@@ -398,7 +468,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/governance/" class="md-nav__link">
+    <a href="../terraform-modules/modules/azure/governance/" class="md-nav__link">
       Governance
     </a>
   </li>
@@ -410,7 +480,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../azure/hub/" class="md-nav__link">
+    <a href="../terraform-modules/modules/azure/hub/" class="md-nav__link">
       Hub
     </a>
   </li>
@@ -425,12 +495,10 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2-2" type="checkbox" id="nav-3-2-2" checked>
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2-2" type="checkbox" id="nav-3-2-2" >
     <label class="md-nav__link" for="nav-3-2-2">
       Kubernetes
       <span class="md-nav__icon md-icon"></span>
@@ -449,7 +517,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../aad-pod-identity/" class="md-nav__link">
+    <a href="../terraform-modules/modules/kubernetes/aad-pod-identity/" class="md-nav__link">
       Aad pod identity
     </a>
   </li>
@@ -461,7 +529,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../azdo-proxy/" class="md-nav__link">
+    <a href="../terraform-modules/modules/kubernetes/azdo-proxy/" class="md-nav__link">
       Azdo proxy
     </a>
   </li>
@@ -473,7 +541,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../cert-manager/" class="md-nav__link">
+    <a href="../terraform-modules/modules/kubernetes/cert-manager/" class="md-nav__link">
       Cert manager
     </a>
   </li>
@@ -485,7 +553,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../external-dns/" class="md-nav__link">
+    <a href="../terraform-modules/modules/kubernetes/external-dns/" class="md-nav__link">
       External dns
     </a>
   </li>
@@ -497,7 +565,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../fluxcd-v1/" class="md-nav__link">
+    <a href="../terraform-modules/modules/kubernetes/fluxcd-v1/" class="md-nav__link">
       Fluxcd v1
     </a>
   </li>
@@ -509,7 +577,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../helm-operator/" class="md-nav__link">
+    <a href="../terraform-modules/modules/kubernetes/helm-operator/" class="md-nav__link">
       Helm operator
     </a>
   </li>
@@ -521,7 +589,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../ingress-nginx/" class="md-nav__link">
+    <a href="../terraform-modules/modules/kubernetes/ingress-nginx/" class="md-nav__link">
       Ingress nginx
     </a>
   </li>
@@ -533,7 +601,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../loki/" class="md-nav__link">
+    <a href="../terraform-modules/modules/kubernetes/loki/" class="md-nav__link">
       Loki
     </a>
   </li>
@@ -543,66 +611,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Opa gatekeeper
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
-    <a href="./" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../terraform-modules/modules/kubernetes/opa-gatekeeper/" class="md-nav__link">
       Opa gatekeeper
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
-    Requirements
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#providers" class="md-nav__link">
-    Providers
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    Inputs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    Outputs
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -612,7 +625,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../velero/" class="md-nav__link">
+    <a href="../terraform-modules/modules/kubernetes/velero/" class="md-nav__link">
       Velero
     </a>
   </li>
@@ -647,6 +660,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -655,30 +670,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
-    Requirements
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#importing-the-repository-to-azure-devops" class="md-nav__link">
+    Importing the repository to Azure DevOps
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#providers" class="md-nav__link">
-    Providers
+        
+          <li class="md-nav__item">
+  <a href="#configuring-build-service-permissions" class="md-nav__link">
+    Configuring Build Service permissions
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    Inputs
+        
+          <li class="md-nav__item">
+  <a href="#adding-azure-pipelines-for-repository-syncronization" class="md-nav__link">
+    Adding Azure Pipelines for repository syncronization
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    Outputs
+        
+          <li class="md-nav__item">
+  <a href="#adding-reference-to-the-synchronized-repository" class="md-nav__link">
+    Adding reference to the synchronized repository
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -695,79 +723,58 @@
               
                 
                 
-                  <h1>Opa gatekeeper</h1>
-                
-                <h2 id="requirements">Requirements</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>terraform</td>
-<td>0.13.5</td>
-</tr>
-<tr>
-<td>helm</td>
-<td>1.3.2</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers">Providers</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>helm</td>
-<td>1.3.2</td>
-</tr>
-</tbody>
-</table>
-<h2 id="inputs">Inputs</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Type</th>
-<th>Default</th>
-<th align="center">Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>additional_constraints</td>
-<td>Additional constraints that should be added</td>
-<td><pre>list(object({<br>    kind               = string<br>    name               = string<br>    enforcement_action = string<br>    match = object({<br>      kinds = list(object({<br>        apiGroups = list(string)<br>        kinds     = list(string)<br>      }))<br>      namespaces = list(string)<br>    })<br>    parameters = any<br>  }))</pre></td>
-<td><code>[]</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>default_constraints</td>
-<td>Default constraints that should be added</td>
-<td><pre>list(object({<br>    kind               = string<br>    name               = string<br>    enforcement_action = string<br>    match = object({<br>      kinds = list(object({<br>        apiGroups = list(string)<br>        kinds     = list(string)<br>      }))<br>      namespaces = list(string)<br>    })<br>    parameters = any<br>  }))</pre></td>
-<td><pre>[<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPAllowPrivilegeEscalationContainer",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-allow-privilege-escalation-container",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPHostNamespace",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-host-namespace",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPHostNetworkingPorts",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-host-network-ports",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPFlexVolumes",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-flexvolume-drivers",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPPrivilegedContainer",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-privileged-container",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPProcMount",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-proc-mount",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPReadOnlyRootFilesystem",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-readonlyrootfilesystem",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPVolumeTypes",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-volume-types",<br>    "parameters": {<br>      "volumes": [<br>        "configMap",<br>        "downwardAPI",<br>        "emptyDir",<br>        "persistentVolumeClaim",<br>        "secret",<br>        "projected"<br>      ]<br>    }<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPSPCapabilities",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "psp-capabilities",<br>    "parameters": {<br>      "allowedCapabilities": [<br>        ""<br>      ],<br>      "requiredDropCapabilities": [<br>        "NET_RAW"<br>      ]<br>    }<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sBlockNodePort",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "block-node-port",<br>    "parameters": {}<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sRequiredProbes",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "required-probes",<br>    "parameters": {<br>      "probeTypes": [<br>        "tcpSocket",<br>        "httpGet",<br>        "exec"<br>      ],<br>      "probes": [<br>        "readinessProbe"<br>      ]<br>    }<br>  },<br>  {<br>    "enforcement_action": "",<br>    "kind": "K8sPodPriorityClass",<br>    "match": {<br>      "kinds": [],<br>      "namespaces": []<br>    },<br>    "name": "pod-priority-class",<br>    "parameters": {}<br>  }<br>]</pre></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>exclude</td>
-<td>Namespaces to opt out of constraints</td>
-<td><pre>list(object({<br>    excluded_namespaces = list(string)<br>    processes           = list(string)<br>  }))</pre></td>
-<td><pre>[<br>  {<br>    "excluded_namespaces": [<br>      "kube-system",<br>      "gatekeeper-system"<br>    ],<br>    "processes": [<br>      "*"<br>    ]<br>  }<br>]</pre></td>
-<td align="center">no</td>
-</tr>
-</tbody>
-</table>
-<h2 id="outputs">Outputs</h2>
-<p>No output.</p>
+                <h1 id="azure-devops-templates">Azure DevOps Templates</h1>
+<p>Collection of templates to use in Azure DevOps.</p>
+<h2 id="usage">Usage</h2>
+<p>Currently Azure DevOps does not support referencing templates from public GitHub repositories without
+specifiying a valid service connection. This would be too cumborsome to deal with for multiple organizations.
+Instead this repo is best used by creating a mirror of it, and using a pipeline to synchronize the content from upstream.</p>
+<h3 id="importing-the-repository-to-azure-devops">Importing the repository to Azure DevOps</h3>
+<p>Begin by <a href="https://docs.microsoft.com/en-us/azure/devops/repos/git/import-git-repository?view=azure-devops">importing the repository</a> into a global project in your organization.</p>
+<ul>
+<li>Azure DevOps &gt; Project &gt; Repos &gt; Import Repository</li>
+<li>Repository type: Git</li>
+<li>Clone URL: https://github.com/XenitAB/azure-devops-templates.git</li>
+<li>[ ] Requires Authentication</li>
+<li>Name: azure-devops-templates</li>
+<li>Press Import</li>
+</ul>
+<h3 id="configuring-build-service-permissions">Configuring Build Service permissions</h3>
+<p>Configure Build Service to have permission to push changes to the template repository.</p>
+<ul>
+<li>Azure DevOps &gt; Project &gt; Project settings &gt; Repositories &gt; azure-devops-templates &gt; Permissions</li>
+<li>[Project Name] Build Service ([org name]):</li>
+<li>Contribute: <code>Allow</code></li>
+<li>Create branch: <code>Allow</code></li>
+</ul>
+<h3 id="adding-azure-pipelines-for-repository-syncronization">Adding Azure Pipelines for repository syncronization</h3>
+<p>Then create a pipeline from the definition located in <code>./ci/pipeline.yaml</code>, this pipeline will sync with Github.
+Any time you want to get the latest changes you need to run this pipeline.</p>
+<ul>
+<li>Azure DevOps &gt; Project &gt; Repos &gt; Set up build</li>
+<li>Choose Azisting Azure Pipelines YAML file</li>
+<li>Branch: master</li>
+<li>Path: /.ci/pipeline.yaml</li>
+<li>Press Continue &gt; Press Run</li>
+</ul>
+<h3 id="adding-reference-to-the-synchronized-repository">Adding reference to the synchronized repository</h3>
+<p>You should be able to use the templates when the mirroring is complete by referencing the git repository.</p>
+<pre><code class="language-yaml">resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: &lt;project&gt;/azure-devops-templates
+      ref: refs/tags/&lt;version&gt;
+
+stages:
+  - template: gitops/deploy/pipeline.yaml@templates
+</code></pre>
+<h1 id="versioning">Versioning</h1>
+<p>Versions follow the <a href="https://calver.org/">CalVer</a> standard. This simplifies detecting usage of very old versions.
+The versions should use the following pattern <code>YYYY.0M.MICRO</code>. The micro value starts at 0 and increments by one
+for each release during the same month.</p>
+<h1 id="license">License</h1>
+<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
                 
               
               
@@ -786,7 +793,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../loki/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -795,19 +802,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Loki
+                Xenit
               </div>
             </div>
           </a>
         
         
-          <a href="../velero/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="gitops/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Velero
+                GitOps
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
@@ -834,15 +841,15 @@
       
     </div>
     
-      <script src="../../../../assets/javascripts/vendor.7e0ee788.min.js"></script>
-      <script src="../../../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
-          base: "../../../..",
+          base: "..",
           features: [],
           search: Object.assign({
-            worker: "../../../../assets/javascripts/worker/search.4ac00218.min.js"
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
