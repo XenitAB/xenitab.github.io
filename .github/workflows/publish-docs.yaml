@@ -23,6 +23,9 @@ jobs:
           python3 -m pip install mkdocs-material
       - name: Generate docs
         run: |
-          make gh-actions
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          make build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: $
+          publish_dir: ./generated/site
