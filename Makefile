@@ -1,12 +1,14 @@
 .ONESHELL:
 SHELL := /bin/bash
 
-all: clean-generated home terraform-modules
+all: clean home terraform-modules
 
 .SILENT:
-clean-generated:
+clean:
 	rm -rf generated
+	rm -rf output
 	mkdir generated
+	mkdir output
 
 .SILENT:
 home:
@@ -14,8 +16,8 @@ home:
 
 .SILENT:
 terraform-modules:
-	# rm -rf output/terraform-modules
-	# git clone https://github.com/XenitAB/terraform-modules.git output/terraform-modules
+	rm -rf output/terraform-modules
+	git clone https://github.com/XenitAB/terraform-modules.git output/terraform-modules
 	DOCS=$$(find output/terraform-modules -name *.md -mindepth 4 -maxdepth 4)
 	for doc in $$DOCS; do
 		GENERATED_FILE=$$(echo $$doc | sed "s|output/|generated/docs/|g" | sed "s|/README||g")
