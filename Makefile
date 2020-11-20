@@ -12,7 +12,7 @@ clean:
 
 .SILENT:
 home:
-	cp -r docs/ generated/
+	cp -r docs/* generated/
 
 .SILENT:
 terraform-modules:
