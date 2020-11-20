@@ -37,6 +37,7 @@ azure-devops-templates:
 		cp $$doc $$GENERATED_FILE
 	done
 	cp output/azure-devops-templates/README.md generated/docs/azure-devops-templates/README.md
+	cp -r output/azure-devops-templates/assets generated/docs/azure-devops-templates/
 
 .SILENT:
 serve: all
