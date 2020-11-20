@@ -35,7 +35,7 @@ build: all
 	mkdocs build -f generated/mkdocs.yml
 
 .SILENT:
-install-mac:
-	python3 -m pip install mkdocs
+install-mkdocs:
+	python3 -m pip install --upgrade pip
 	python3 -m pip install mkdocs
 	python3 -m pip install mkdocs-material
