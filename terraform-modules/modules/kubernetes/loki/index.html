@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../../img/favicon.ico">
+  <title>Loki - Xenit</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Loki";
+    var mkdocs_page_input_path = "terraform-modules/modules/kubernetes/loki.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> Xenit</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../..">Xenit</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Terraform modules</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../../../">terraform-modules</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Modules</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="#">Azure</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../azure/aks-global/">Aks global</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../azure/aks/">Aks</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../azure/azure-pipelines-agent-vmss/">Azure Pipelines Agent</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../azure/core/">Core</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../azure/governance/">Governance</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../azure/hub/">Hub</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Kubernetes</a>
+    <ul class="current">
+                <li class="toctree-l3"><a class="reference internal" href="../aad-pod-identity/">Aad pod identity</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../azdo-proxy/">Azdo proxy</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cert-manager/">Cert manager</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../external-dns/">External dns</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../fluxcd-v1/">Fluxcd v1</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../helm-operator/">Helm operator</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../ingress-nginx/">Ingress nginx</a>
+                </li>
+                <li class="toctree-l3 current"><a class="reference internal current" href="./">Loki</a>
+    <ul class="current">
+    </ul>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../opa-gatekeeper/">Opa gatekeeper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../velero/">Velero</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../..">Xenit</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Kubernetes &raquo;</li>
+        
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+        
+          <li>Terraform modules &raquo;</li>
+        
+      
+    
+    <li>Loki</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="requirements">Requirements</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>terraform</td>
+<td>0.13.5</td>
+</tr>
+<tr>
+<td>azurerm</td>
+<td>2.35.0</td>
+</tr>
+<tr>
+<td>helm</td>
+<td>1.3.2</td>
+</tr>
+<tr>
+<td>kubernetes</td>
+<td>1.13.3</td>
+</tr>
+</tbody>
+</table>
+<h2 id="providers">Providers</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>azurerm</td>
+<td>2.35.0</td>
+</tr>
+<tr>
+<td>helm</td>
+<td>1.3.2</td>
+</tr>
+<tr>
+<td>kubernetes</td>
+<td>1.13.3</td>
+</tr>
+</tbody>
+</table>
+<h2 id="inputs">Inputs</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Type</th>
+<th>Default</th>
+<th align="center">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>environment</td>
+<td>The environment (short name) to use for the deploy</td>
+<td><code>string</code></td>
+<td>n/a</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td>kubernetes_namespace_name</td>
+<td>The Kubernetes namespace name</td>
+<td><code>string</code></td>
+<td><code>"loki"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>location_short</td>
+<td>The Azure region short name.</td>
+<td><code>string</code></td>
+<td>n/a</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td>loki_helm_chart_name</td>
+<td>The helm chart name for loki</td>
+<td><code>string</code></td>
+<td><code>"loki-stack"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>loki_helm_chart_version</td>
+<td>The helm chart version for loki</td>
+<td><code>string</code></td>
+<td><code>"2.0.0"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>loki_helm_release_name</td>
+<td>The helm release name for loki</td>
+<td><code>string</code></td>
+<td><code>"loki"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>loki_helm_repository</td>
+<td>The helm repository for loki</td>
+<td><code>string</code></td>
+<td><code>"https://grafana.github.io/loki/charts"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>minio_helm_chart_name</td>
+<td>The helm chart name for minio</td>
+<td><code>string</code></td>
+<td><code>"minio"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>minio_helm_chart_version</td>
+<td>The helm chart version for minio</td>
+<td><code>string</code></td>
+<td><code>"8.0.0"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>minio_helm_release_name</td>
+<td>The helm release name for minio</td>
+<td><code>string</code></td>
+<td><code>"loki-minio"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>minio_helm_repository</td>
+<td>The helm repository for minio</td>
+<td><code>string</code></td>
+<td><code>"https://helm.min.io/"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>name</td>
+<td>The name to use for the deploy</td>
+<td><code>string</code></td>
+<td>n/a</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td>resource_group_name</td>
+<td>The resource group name</td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>storage_account_configuration</td>
+<td>The storage account configuration</td>
+<td><pre>object({<br>    account_tier             = string<br>    account_replication_type = string<br>    account_kind             = string<br>  })</pre></td>
+<td><pre>{<br>  "account_kind": "StorageV2",<br>  "account_replication_type": "GRS",<br>  "account_tier": "Standard"<br>}</pre></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>storage_account_name</td>
+<td>The storage account name</td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>storage_container_name</td>
+<td>The storage container name</td>
+<td><code>string</code></td>
+<td><code>"loki"</code></td>
+<td align="center">no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="outputs">Outputs</h2>
+<p>No output.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../opa-gatekeeper/" class="btn btn-neutral float-right" title="Opa gatekeeper">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../ingress-nginx/" class="btn btn-neutral" title="Ingress nginx"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../ingress-nginx/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../opa-gatekeeper/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../../..';</script>
+    <script src="../../../../js/theme.js" defer></script>
+      <script src="../../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
