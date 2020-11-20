@@ -13,9 +13,4 @@ jobs:
         uses: actions/checkout@v1
       - name: Generate docs
         run: |
-          make all
-      - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CONFIG_FILE: generated/mkdocs.yml
+          make gh-actions

@@ -29,3 +29,16 @@ terraform-modules:
 .SILENT:
 serve: all
 	mkdocs serve -f generated/mkdocs.yml
+
+.SILENT:
+gh-actions: all
+	set -e
+	if [ -n "${GITHUB_TOKEN}" ]; then
+		remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+		git remote rm origin
+		git remote add origin "${remote_repo}"
+		mkdocs gh-deploy --config-file generated/mkdocs.yml --force
+	else
+		echo ERROR: This should only be used with GitHub Actions.
+		exit 1
+	fi
