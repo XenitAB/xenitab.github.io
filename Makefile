@@ -34,6 +34,7 @@ serve: all
 gh-actions: all
 	set -e
 	if [ -n "${GITHUB_TOKEN}" ]; then
+		find .
 		remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 		git remote rm origin
 		git remote add origin "${remote_repo}"
