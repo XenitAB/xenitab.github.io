@@ -59,7 +59,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#requirements" class="md-skip">
+        <a href="#hub" class="md-skip">
           Skip to content
         </a>
       
@@ -353,7 +353,7 @@
 
   <li class="md-nav__item">
     <a href="../aks-global/" class="md-nav__link">
-      Aks global
+      Azure Kubernetes Service - Global
     </a>
   </li>
 
@@ -365,7 +365,7 @@
 
   <li class="md-nav__item">
     <a href="../aks/" class="md-nav__link">
-      Aks
+      Azure Kubernetes Service
     </a>
   </li>
 
@@ -417,6 +417,8 @@
     
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
+    
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
         Hub
@@ -431,12 +433,21 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
@@ -505,7 +516,7 @@
 
   <li class="md-nav__item">
     <a href="../../kubernetes/aad-pod-identity/" class="md-nav__link">
-      Aad pod identity
+      Azure AD POD Identity (AAD-POD-Identity)
     </a>
   </li>
 
@@ -517,7 +528,7 @@
 
   <li class="md-nav__item">
     <a href="../../kubernetes/azdo-proxy/" class="md-nav__link">
-      Azdo proxy
+      Azure DevOps Proxy (azdo-proxy)
     </a>
   </li>
 
@@ -529,7 +540,7 @@
 
   <li class="md-nav__item">
     <a href="../../kubernetes/cert-manager/" class="md-nav__link">
-      Cert manager
+      Certificate manager (cert-manager)
     </a>
   </li>
 
@@ -541,7 +552,7 @@
 
   <li class="md-nav__item">
     <a href="../../kubernetes/external-dns/" class="md-nav__link">
-      External dns
+      External DNS (external-dns)
     </a>
   </li>
 
@@ -553,7 +564,7 @@
 
   <li class="md-nav__item">
     <a href="../../kubernetes/fluxcd-v1/" class="md-nav__link">
-      Fluxcd v1
+      Flux (v1)
     </a>
   </li>
 
@@ -565,7 +576,7 @@
 
   <li class="md-nav__item">
     <a href="../../kubernetes/helm-operator/" class="md-nav__link">
-      Helm operator
+      Helm Operator (helm-operator)
     </a>
   </li>
 
@@ -577,7 +588,7 @@
 
   <li class="md-nav__item">
     <a href="../../kubernetes/ingress-nginx/" class="md-nav__link">
-      Ingress nginx
+      Ingress NGINX (ingress-nginx)
     </a>
   </li>
 
@@ -589,7 +600,7 @@
 
   <li class="md-nav__item">
     <a href="../../kubernetes/loki/" class="md-nav__link">
-      Loki
+      Grafana Loki
     </a>
   </li>
 
@@ -601,7 +612,7 @@
 
   <li class="md-nav__item">
     <a href="../../kubernetes/opa-gatekeeper/" class="md-nav__link">
-      Opa gatekeeper
+      Open Policy Agent Gatekeeper (opa-gatekeeper)
     </a>
   </li>
 
@@ -647,12 +658,21 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
@@ -695,9 +715,11 @@
               
                 
                 
-                  <h1>Hub</h1>
-                
-                <h2 id="requirements">Requirements</h2>
+                <h1 id="hub">Hub</h1>
+<p>This module is used to create a separate network in one of the subscriptions (usually PROD) and connect it to all the networks.</p>
+<h2 id="usage">Usage</h2>
+<p>Use together with the <code>core</code> module to create a peered network where SPOF (single point of failure) resources can be created, lik Azure Pipelines Agent Virtual Machine Scale Set (VMSS).</p>
+<h2 id="requirements">Requirements</h2>
 <table>
 <thead>
 <tr>
@@ -853,7 +875,7 @@
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Aad pod identity
+                Azure AD POD Identity (AAD-POD-Identity)
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

@@ -16,7 +16,7 @@
     
     
       
-        <title>Opa gatekeeper - Xenit</title>
+        <title>Open Policy Agent Gatekeeper (opa-gatekeeper) - Xenit</title>
       
     
     
@@ -59,7 +59,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#requirements" class="md-skip">
+        <a href="#open-policy-agent-gatekeeper-opa-gatekeeper" class="md-skip">
           Skip to content
         </a>
       
@@ -89,7 +89,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Opa gatekeeper
+              Open Policy Agent Gatekeeper (opa-gatekeeper)
             
           </span>
         </div>
@@ -351,7 +351,7 @@
 
   <li class="md-nav__item">
     <a href="../../azure/aks-global/" class="md-nav__link">
-      Aks global
+      Azure Kubernetes Service - Global
     </a>
   </li>
 
@@ -363,7 +363,7 @@
 
   <li class="md-nav__item">
     <a href="../../azure/aks/" class="md-nav__link">
-      Aks
+      Azure Kubernetes Service
     </a>
   </li>
 
@@ -450,7 +450,7 @@
 
   <li class="md-nav__item">
     <a href="../aad-pod-identity/" class="md-nav__link">
-      Aad pod identity
+      Azure AD POD Identity (AAD-POD-Identity)
     </a>
   </li>
 
@@ -462,7 +462,7 @@
 
   <li class="md-nav__item">
     <a href="../azdo-proxy/" class="md-nav__link">
-      Azdo proxy
+      Azure DevOps Proxy (azdo-proxy)
     </a>
   </li>
 
@@ -474,7 +474,7 @@
 
   <li class="md-nav__item">
     <a href="../cert-manager/" class="md-nav__link">
-      Cert manager
+      Certificate manager (cert-manager)
     </a>
   </li>
 
@@ -486,7 +486,7 @@
 
   <li class="md-nav__item">
     <a href="../external-dns/" class="md-nav__link">
-      External dns
+      External DNS (external-dns)
     </a>
   </li>
 
@@ -498,7 +498,7 @@
 
   <li class="md-nav__item">
     <a href="../fluxcd-v1/" class="md-nav__link">
-      Fluxcd v1
+      Flux (v1)
     </a>
   </li>
 
@@ -510,7 +510,7 @@
 
   <li class="md-nav__item">
     <a href="../helm-operator/" class="md-nav__link">
-      Helm operator
+      Helm Operator (helm-operator)
     </a>
   </li>
 
@@ -522,7 +522,7 @@
 
   <li class="md-nav__item">
     <a href="../ingress-nginx/" class="md-nav__link">
-      Ingress nginx
+      Ingress NGINX (ingress-nginx)
     </a>
   </li>
 
@@ -534,7 +534,7 @@
 
   <li class="md-nav__item">
     <a href="../loki/" class="md-nav__link">
-      Loki
+      Grafana Loki
     </a>
   </li>
 
@@ -550,19 +550,23 @@
     
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
+    
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Opa gatekeeper
+        Open Policy Agent Gatekeeper (opa-gatekeeper)
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="./" class="md-nav__link md-nav__link--active">
-      Opa gatekeeper
+      Open Policy Agent Gatekeeper (opa-gatekeeper)
     </a>
     
       
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -570,6 +574,20 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-deployment" class="md-nav__link">
+    Example deployment
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
@@ -647,12 +665,28 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-deployment" class="md-nav__link">
+    Example deployment
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
@@ -695,9 +729,71 @@
               
                 
                 
-                  <h1>Opa gatekeeper</h1>
-                
-                <h2 id="requirements">Requirements</h2>
+                <h1 id="open-policy-agent-gatekeeper-opa-gatekeeper">Open Policy Agent Gatekeeper (opa-gatekeeper)</h1>
+<p>This module is used to add <a href="https://github.com/open-policy-agent/gatekeeper"><code>opa-gatekeeper</code></a> to Kubernetes clusters.</p>
+<h2 id="details">Details</h2>
+<p>This module also adds opinionated defaults from the <a href="https://github.com/XenitAB/gatekeeper-library"><code>gatekeeper-library</code></a> that Xenit hosts (and aggregates the <a href="https://github.com/open-policy-agent/gatekeeper-library"><code>gatekeeper-library</code></a> OPA hosts).</p>
+<h2 id="example-deployment">Example deployment</h2>
+<pre><code class="language-YAML">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podinfo
+  labels:
+    app: podinfo
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: podinfo
+  template:
+    metadata:
+      labels:
+        app: podinfo
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: podinfo
+          image: &quot;ghcr.io/stefanprodan/podinfo:5.0.3&quot;
+          imagePullPolicy: &quot;IfNotPresent&quot;
+          command:
+            - ./podinfo
+            - --port=8080
+            - --level=info
+          env:
+          - name: PODINFO_UI_MESSAGE
+            value: &quot;WELCOME TO PODINFO!&quot;
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - podcli
+              - check
+              - http
+              - localhost:8080/readyz
+            initialDelaySeconds: 1
+            timeoutSeconds: 5
+          volumeMounts:
+          - name: data
+            mountPath: /data
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - NET_RAW
+      volumes:
+      - name: data
+        emptyDir: {}
+</code></pre>
+<p>Required parts are <code>securityContext</code> and usually mounting an <code>emptyDir</code> to either a data directory or tmp.</p>
+<h2 id="requirements">Requirements</h2>
 <table>
 <thead>
 <tr>
@@ -795,7 +891,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Loki
+                Grafana Loki
               </div>
             </div>
           </a>
