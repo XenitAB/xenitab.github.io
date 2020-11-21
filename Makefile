@@ -1,5 +1,6 @@
 .ONESHELL:
 SHELL := /bin/bash
+UNAME_S := $(shell uname -s)
 
 all: clean home terraform-modules azure-devops-templates
 
@@ -35,6 +36,11 @@ azure-devops-templates:
 		GENERATED_FILE=$$(echo $$doc | sed "s|output/|generated/docs/|g" | sed "s|/README||g")
 		mkdir -p $${GENERATED_FILE%/*}
 		cp $$doc $$GENERATED_FILE
+		if [ "$$(uname -s)" = "Darwin" ]; then
+			sed -i '' "s|../assets|assets|g" $$GENERATED_FILE
+		else
+			sed -i "s|../assets|assets|g" $$GENERATED_FILE
+		fi
 	done
 	cp output/azure-devops-templates/README.md generated/docs/azure-devops-templates/README.md
 	cp -r output/azure-devops-templates/assets generated/docs/azure-devops-templates/
