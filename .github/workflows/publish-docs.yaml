@@ -3,6 +3,11 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      remote_repo:
+        description: 'Remote repository name that triggered workflow'     
+        required: true
 
 jobs:
   build:
