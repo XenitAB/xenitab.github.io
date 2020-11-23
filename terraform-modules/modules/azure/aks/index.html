@@ -811,13 +811,6 @@
 <td align="center">no</td>
 </tr>
 <tr>
-<td>acr_name</td>
-<td>Name of ACR registry to use for cluster</td>
-<td><code>string</code></td>
-<td>n/a</td>
-<td align="center">yes</td>
-</tr>
-<tr>
 <td>aks_authorized_ips</td>
 <td>Authorized IPs to access AKS API</td>
 <td><code>list(string)</code></td>
@@ -844,13 +837,6 @@
 <td><code>string</code></td>
 <td>n/a</td>
 <td align="center">yes</td>
-</tr>
-<tr>
-<td>azdo_proxy_enabled</td>
-<td>Should azdo-proxy be enabled</td>
-<td><code>bool</code></td>
-<td><code>true</code></td>
-<td align="center">no</td>
 </tr>
 <tr>
 <td>azure_devops_organization</td>
@@ -902,29 +888,8 @@
 <td align="center">yes</td>
 </tr>
 <tr>
-<td>fluxcd_v1_enabled</td>
-<td>Should fluxcd-v1 be enabled</td>
-<td><code>bool</code></td>
-<td><code>true</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
 <td>fluxcd_v2_enabled</td>
 <td>Should fluxcd-v2 be enabled</td>
-<td><code>bool</code></td>
-<td><code>true</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>helm_operator_credentials</td>
-<td>ACR credentials pased to Helm Operator</td>
-<td><pre>object({<br>    client_id = string<br>    secret    = string<br>  })</pre></td>
-<td>n/a</td>
-<td align="center">yes</td>
-</tr>
-<tr>
-<td>helm_operator_enabled</td>
-<td>Should helm-operator be enabled</td>
 <td><code>bool</code></td>
 <td><code>true</code></td>
 <td align="center">no</td>
