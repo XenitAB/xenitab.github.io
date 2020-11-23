@@ -16,14 +16,11 @@ jobs:
     steps:
       - name: Checkout master
         uses: actions/checkout@v1
-      - name: Setup Python
-        uses: actions/setup-python@v1
-        with:
-          python-version: '3.7'
-          architecture: 'x64'
+      - name: Setup node
+        uses: actions/node@v1
       - name: Install dependencies
         run: |
-          make install-mkdocs
+          make install-site
       - name: Generate docs
         run: |
           make build
