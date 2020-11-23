@@ -12,7 +12,7 @@
       
       
       <link rel="shortcut icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.5">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.21aed14c.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.6910b76c.min.css">
       
         
         <link rel="stylesheet" href="../../../../assets/stylesheets/palette.196e0c26.min.css">
@@ -568,6 +568,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../kubernetes/fluxcd-v2/" class="md-nav__link">
+      Flux V2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../kubernetes/helm-operator/" class="md-nav__link">
       Helm Operator (helm-operator)
     </a>
@@ -721,6 +733,10 @@
 <td>1.0.0</td>
 </tr>
 <tr>
+<td>azuredevops</td>
+<td>0.2.1</td>
+</tr>
+<tr>
 <td>azurerm</td>
 <td>2.35.0</td>
 </tr>
@@ -838,7 +854,14 @@
 </tr>
 <tr>
 <td>azure_devops_organization</td>
-<td>Azure Devops organization used to configure azdo-proxy</td>
+<td>Azure Devops organization root</td>
+<td><code>string</code></td>
+<td><code>""</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>azure_devops_project</td>
+<td>Azure Devops project root</td>
 <td><code>string</code></td>
 <td><code>""</code></td>
 <td align="center">no</td>
@@ -881,6 +904,13 @@
 <tr>
 <td>fluxcd_v1_enabled</td>
 <td>Should fluxcd-v1 be enabled</td>
+<td><code>bool</code></td>
+<td><code>true</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>fluxcd_v2_enabled</td>
+<td>Should fluxcd-v2 be enabled</td>
 <td><code>bool</code></td>
 <td><code>true</code></td>
 <td align="center">no</td>
@@ -1032,8 +1062,8 @@
       
     </div>
     
-      <script src="../../../../assets/javascripts/vendor.7e0ee788.min.js"></script>
-      <script src="../../../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../../../assets/javascripts/vendor.fd16492e.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({

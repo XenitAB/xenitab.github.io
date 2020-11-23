@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="http://xenitab.github.io/home/terraform-modules/modules/azure/azure-pipelines-agent-vmss/">
+        <link rel="canonical" href="http://xenitab.github.io/home/terraform-modules/modules/kubernetes/fluxcd-v2/">
       
       
       <link rel="shortcut icon" href="../../../../assets/images/favicon.png">
@@ -16,7 +16,7 @@
     
     
       
-        <title>Azure Pipelines Agent - Xenit</title>
+        <title>Flux V2 - Xenit</title>
       
     
     
@@ -59,7 +59,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#azure-pipelines-agent" class="md-skip">
+        <a href="#flux-v2" class="md-skip">
           Skip to content
         </a>
       
@@ -89,7 +89,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Azure Pipelines Agent
+              Flux V2
             
           </span>
         </div>
@@ -328,12 +328,10 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2-1" type="checkbox" id="nav-3-2-1" checked>
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2-1" type="checkbox" id="nav-3-2-1" >
     <label class="md-nav__link" for="nav-3-2-1">
       Azure
       <span class="md-nav__icon md-icon"></span>
@@ -352,7 +350,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../aks-global/" class="md-nav__link">
+    <a href="../../azure/aks-global/" class="md-nav__link">
       Azure Kubernetes Service - Global
     </a>
   </li>
@@ -364,8 +362,143 @@
 
 
   <li class="md-nav__item">
-    <a href="../aks/" class="md-nav__link">
+    <a href="../../azure/aks/" class="md-nav__link">
       Azure Kubernetes Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../azure/azure-pipelines-agent-vmss/" class="md-nav__link">
+      Azure Pipelines Agent
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../azure/core/" class="md-nav__link">
+      Core
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../azure/governance/" class="md-nav__link">
+      Governance
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../azure/hub/" class="md-nav__link">
+      Hub
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2-2" type="checkbox" id="nav-3-2-2" checked>
+    <label class="md-nav__link" for="nav-3-2-2">
+      Kubernetes
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Kubernetes" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-2-2">
+        <span class="md-nav__icon md-icon"></span>
+        Kubernetes
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aad-pod-identity/" class="md-nav__link">
+      Azure AD POD Identity (AAD-POD-Identity)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../azdo-proxy/" class="md-nav__link">
+      Azure DevOps Proxy (azdo-proxy)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cert-manager/" class="md-nav__link">
+      Certificate manager (cert-manager)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../external-dns/" class="md-nav__link">
+      External DNS (external-dns)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fluxcd-v1/" class="md-nav__link">
+      Flux (v1)
     </a>
   </li>
 
@@ -385,12 +518,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Azure Pipelines Agent
+        Flux V2
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="./" class="md-nav__link md-nav__link--active">
-      Azure Pipelines Agent
+      Flux V2
     </a>
     
       
@@ -405,13 +538,6 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#azure-devops-configuration" class="md-nav__link">
-    Azure DevOps Configuration
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
@@ -454,140 +580,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../core/" class="md-nav__link">
-      Core
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../governance/" class="md-nav__link">
-      Governance
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../hub/" class="md-nav__link">
-      Hub
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2-2" type="checkbox" id="nav-3-2-2" >
-    <label class="md-nav__link" for="nav-3-2-2">
-      Kubernetes
-      <span class="md-nav__icon md-icon"></span>
-    </label>
-    <nav class="md-nav" aria-label="Kubernetes" data-md-level="3">
-      <label class="md-nav__title" for="nav-3-2-2">
-        <span class="md-nav__icon md-icon"></span>
-        Kubernetes
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../kubernetes/aad-pod-identity/" class="md-nav__link">
-      Azure AD POD Identity (AAD-POD-Identity)
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../kubernetes/azdo-proxy/" class="md-nav__link">
-      Azure DevOps Proxy (azdo-proxy)
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../kubernetes/cert-manager/" class="md-nav__link">
-      Certificate manager (cert-manager)
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../kubernetes/external-dns/" class="md-nav__link">
-      External DNS (external-dns)
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../kubernetes/fluxcd-v1/" class="md-nav__link">
-      Flux (v1)
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../kubernetes/fluxcd-v2/" class="md-nav__link">
-      Flux V2
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../kubernetes/helm-operator/" class="md-nav__link">
+    <a href="../helm-operator/" class="md-nav__link">
       Helm Operator (helm-operator)
     </a>
   </li>
@@ -599,7 +592,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../kubernetes/ingress-nginx/" class="md-nav__link">
+    <a href="../ingress-nginx/" class="md-nav__link">
       Ingress NGINX (ingress-nginx)
     </a>
   </li>
@@ -611,7 +604,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../kubernetes/loki/" class="md-nav__link">
+    <a href="../loki/" class="md-nav__link">
       Grafana Loki
     </a>
   </li>
@@ -623,7 +616,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../kubernetes/opa-gatekeeper/" class="md-nav__link">
+    <a href="../opa-gatekeeper/" class="md-nav__link">
       Open Policy Agent Gatekeeper (opa-gatekeeper)
     </a>
   </li>
@@ -635,7 +628,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../kubernetes/velero/" class="md-nav__link">
+    <a href="../velero/" class="md-nav__link">
       Velero
     </a>
   </li>
@@ -680,13 +673,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#azure-devops-configuration" class="md-nav__link">
-    Azure DevOps Configuration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
     Requirements
   </a>
@@ -727,10 +713,18 @@
               
                 
                 
-                <h1 id="azure-pipelines-agent">Azure Pipelines Agent</h1>
-<p>This is the setup for Azure Pipelines Agent Virtual Machine Scale Set (VMSS).</p>
-<h2 id="azure-devops-configuration">Azure DevOps Configuration</h2>
-<p>Follow this guide to setup the agent pool (manually): https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/scale-set-agents?view=azure-devops#create-the-scale-set-agent-pool</p>
+                <h1 id="flux-v2">Flux V2</h1>
+<p>Installs and configures <a href="https://github.com/fluxcd/flux2">flux2</a> with Azure DevOps.</p>
+<p>The module is meant to offer a full bootstrap and confiugration of a Kubernetes cluster<br />
+with Fluxv2. A "root" repository is created for the bootstrap configuration along with a<br />
+repository per namepsace passed in the variables. The root repository will receive <code>cluster-admin</code><br />
+permissions in the cluster while each of the namespace repositories will be limited to their<br />
+repsective namespace. The CRDs, component deployments and bootstrap configuration are both<br />
+added to the Kubernetes cluster and commited to the root repository. While the namespace<br />
+configuration is only comitted to the root repository and expected to be reconciled through<br />
+the bootstrap configuration.</p>
+<p align="center"><img src="../../../assets/fluxcd-v2.jpg"></p>
+
 <h2 id="requirements">Requirements</h2>
 <table>
 <thead>
@@ -745,12 +739,20 @@
 <td>0.13.5</td>
 </tr>
 <tr>
-<td>azurerm</td>
-<td>2.35.0</td>
+<td>azuredevops</td>
+<td>0.2.1</td>
 </tr>
 <tr>
-<td>tls</td>
-<td>3.0.0</td>
+<td>flux</td>
+<td>0.0.4</td>
+</tr>
+<tr>
+<td>kubectl</td>
+<td>1.9.1</td>
+</tr>
+<tr>
+<td>kubernetes</td>
+<td>1.13.3</td>
 </tr>
 </tbody>
 </table>
@@ -764,12 +766,20 @@
 </thead>
 <tbody>
 <tr>
-<td>azurerm</td>
-<td>2.35.0</td>
+<td>azuredevops</td>
+<td>0.2.1</td>
 </tr>
 <tr>
-<td>tls</td>
-<td>3.0.0</td>
+<td>flux</td>
+<td>0.0.4</td>
+</tr>
+<tr>
+<td>kubectl</td>
+<td>1.9.1</td>
+</tr>
+<tr>
+<td>kubernetes</td>
+<td>1.13.3</td>
 </tr>
 </tbody>
 </table>
@@ -786,102 +796,53 @@
 </thead>
 <tbody>
 <tr>
-<td>azure_pipelines_agent_image_name</td>
-<td>The Azure Pipelines agent image name</td>
+<td>azdo_org</td>
+<td>Azure DevOps organization for bootstrap repository</td>
 <td><code>string</code></td>
 <td>n/a</td>
 <td align="center">yes</td>
 </tr>
 <tr>
-<td>azure_pipelines_agent_image_resource_group_name</td>
-<td>The Azure Pipelines agent image resource group name</td>
-<td><code>string</code></td>
-<td><code>""</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>environment</td>
-<td>The environment (short name) to use for the deploy</td>
+<td>azdo_pat</td>
+<td>PAT to authenticate with Azure DevOps</td>
 <td><code>string</code></td>
 <td>n/a</td>
 <td align="center">yes</td>
 </tr>
 <tr>
-<td>keyvault_name</td>
-<td>The keyvault name</td>
-<td><code>string</code></td>
-<td><code>""</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>keyvault_resource_group_name</td>
-<td>The keyvault resource group name</td>
-<td><code>string</code></td>
-<td><code>""</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>location_short</td>
-<td>The location (short name) for the region</td>
+<td>azdo_proj</td>
+<td>Azure DevOps project for bootstrap repository</td>
 <td><code>string</code></td>
 <td>n/a</td>
 <td align="center">yes</td>
 </tr>
 <tr>
-<td>name</td>
-<td>The commonName to use for the deploy</td>
+<td>azdo_repo</td>
+<td>Name of repository to bootstrap from</td>
+<td><code>string</code></td>
+<td><code>"fleet-infra"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>branch</td>
+<td>Path to reconcile bootstrap from</td>
+<td><code>string</code></td>
+<td><code>"master"</code></td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td>git_path</td>
+<td>Path to reconcile bootstrap from</td>
 <td><code>string</code></td>
 <td>n/a</td>
 <td align="center">yes</td>
 </tr>
 <tr>
-<td>resource_group_name</td>
-<td>The resource group name</td>
-<td><code>string</code></td>
-<td><code>""</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>vmss_admin_username</td>
-<td>The admin username</td>
-<td><code>string</code></td>
-<td><code>"azpagent"</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>vmss_disk_size_gb</td>
-<td>The disk size (in GB) for the VMSS instances</td>
-<td><code>number</code></td>
-<td><code>128</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>vmss_instances</td>
-<td>The number of instances</td>
-<td><code>number</code></td>
-<td><code>1</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>vmss_sku</td>
-<td>The sku for VMSS instances</td>
-<td><code>string</code></td>
-<td><code>"Standard_F4s_v2"</code></td>
-<td align="center">no</td>
-</tr>
-<tr>
-<td>vmss_subnet_config</td>
-<td>The subnet configuration for the VMSS instances</td>
-<td><pre>object({<br>    name                 = string<br>    virtual_network_name = string<br>    resource_group_name  = string<br>  })</pre></td>
+<td>namespaces</td>
+<td>The namespaces to configure flux with</td>
+<td><pre>list(<br>    object({<br>      name = string<br>      flux = object({<br>        enabled      = bool<br>        azdo_org     = string<br>        azdo_project = string<br>        azdo_repo    = string<br>      })<br>    })<br>  )</pre></td>
 <td>n/a</td>
 <td align="center">yes</td>
-</tr>
-<tr>
-<td>vmss_zones</td>
-<td>The zones to place the VMSS instances</td>
-<td><code>list(string)</code></td>
-<td><pre>[<br>  "1",<br>  "2",<br>  "3"<br>]</pre></td>
-<td align="center">no</td>
 </tr>
 </tbody>
 </table>
@@ -905,7 +866,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../aks/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../fluxcd-v1/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -914,19 +875,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Azure Kubernetes Service
+                Flux (v1)
               </div>
             </div>
           </a>
         
         
-          <a href="../core/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../helm-operator/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Core
+                Helm Operator (helm-operator)
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
