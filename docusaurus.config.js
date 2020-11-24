@@ -10,10 +10,11 @@ module.exports = {
   projectName: "home", // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: "Xenit",
+      title: "Xenit AB Open Source",
       logo: {
         alt: "Xenit logo",
-        src: "img/logo.svg",
+        src: "img/bannerlogo.jpg",
+        srcDark: "img/bannerlogo.jpg",
       },
       items: [
         {
@@ -22,9 +23,9 @@ module.exports = {
           label: "Docs",
           position: "left",
         },
-        { to: "blog", label: "Blog", position: "left" },
+        // { to: "blog", label: "Blog", position: "left" },
         {
-          href: "https://github.com/xenit",
+          href: "https://github.com/XenitAB",
           label: "GitHub",
           position: "right",
         },
@@ -32,7 +33,7 @@ module.exports = {
     },
     footer: {
       style: "dark",
-      links: [
+      /*links: [
         {
           title: "Docs",
           items: [
@@ -46,8 +47,8 @@ module.exports = {
             },
           ],
         },
-      ],
-      copyright: `Copyright © ${new Date().getFullYear()} Xenit AB. Built with Docusaurus.`,
+      ],*/
+      copyright: `Copyright © ${new Date().getFullYear()} Xenit AB`,
     },
   },
   presets: [
@@ -59,11 +60,11 @@ module.exports = {
           // Please change this to your repo.
           editUrl: "https://github.com/xenitab/home/edit/main/",
         },
-        blog: {
+        /*blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl: "https://github.com/xenitab/home/edit/main/blog/",
-        },
+        },*/
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },

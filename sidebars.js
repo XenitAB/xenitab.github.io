@@ -1,5 +1,5 @@
 module.exports = {
   docs: {
-    docs: ["index"],
+    Documentation: ["index"],
   },
 };

@@ -1,7 +1,7 @@
 ---
 id: index
 slug: /
-title: Xenit
+title: Overview
 ---
 
 Welcome to Xenit open source projects!
