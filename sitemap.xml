@@ -1,95 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>http://xenitab.github.io/home/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/azure-devops-templates/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/azure-devops-templates/gitops/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/azure-devops-templates/packer/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/azure-devops-templates/terraform/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/azure/aks-global/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/azure/aks/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/azure/azure-pipelines-agent-vmss/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/azure/core/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/azure/governance/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/azure/hub/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/aad-pod-identity/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/azdo-proxy/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/cert-manager/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/external-dns/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/fluxcd-v1/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/fluxcd-v2/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/helm-operator/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/ingress-nginx/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/loki/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/opa-gatekeeper/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://xenitab.github.io/home/terraform-modules/modules/kubernetes/velero/</loc>
-     <lastmod>2020-11-23</lastmod>
+     <lastmod>2020-11-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
