@@ -11,6 +11,7 @@ const {
 } = require("./utils");
 
 const [_, __, name, title = name, docs_root] = process.argv;
+const DEVMODE = process.env.DEVMODE === "true";
 
 if (name == null || name === "") {
   console.info(`
@@ -35,7 +36,10 @@ const git_args = [
 console.info(`Cloning XenitAB/${name} into ${output_path} with the following command:
 git ${git_args.join(" ")}`);
 
-spawn_promise("git", git_args, { encoding: "utf-8" })
+(DEVMODE
+  ? Promise.resolve()
+  : spawn_promise("git", git_args, { encoding: "utf-8" })
+)
   .then((clone_result) => {
     return get_md_files(output_path);
   })
@@ -106,6 +110,7 @@ spawn_promise("git", git_args, { encoding: "utf-8" })
           const custom_edit_url = `https://github.com/XenitAB/${name}/edit/main/${repo_file_path}`;
 
           await fix_files_and_copy({
+            repo: name,
             src: file.path,
             dest: new_path,
             slug: `/${slug}`,
@@ -123,5 +128,7 @@ spawn_promise("git", git_args, { encoding: "utf-8" })
     console.warn(e);
   })
   .then((_) => {
-    Fs.promises.rmdir(output_path, { force: true, recursive: true });
+    if (!DEVMODE) {
+      Fs.promises.rmdir(output_path, { force: true, recursive: true });
+    }
   });

@@ -120,6 +120,7 @@ async function write_sidebar(
 }
 
 async function fix_files_and_copy({
+  repo,
   src,
   dest,
   slug,
@@ -127,6 +128,9 @@ async function fix_files_and_copy({
   assets_folder,
 }) {
   const assets_relative_path = Path.relative(Path.dirname(dest), assets_folder);
+
+  const slug_parts = slug.split("/").filter((x) => x !== "");
+  const pre_slug = slug_parts.slice(0, slug_parts.length - 1).join("/");
 
   const fixes = [
     { regex: /[\.\/]+assets/, replacement: assets_relative_path },
@@ -139,11 +143,23 @@ async function fix_files_and_copy({
     return last_content.split(fix.regex).join(fix.replacement);
   }, content);
 
-  const title_match = next_content.match(/^# (.*)\n/);
+  const readme_regex = /\((modules\/)?(.*)\/README\.md\)/;
+  let match = readme_regex.test(next_content);
+  let link_fixed_content = next_content;
+  while (match) {
+    link_fixed_content = link_fixed_content.replace(
+      readme_regex,
+      `(/docs/${pre_slug}/$2)`
+    );
+
+    match = readme_regex.test(link_fixed_content);
+  }
+
+  const title_match = link_fixed_content.match(/^# (.*)\n/);
 
   const t =
     title_match == null
-      ? next_content
+      ? link_fixed_content
       : `---
 title: ${title_match[1]}
 slug: ${slug.replace("/overview", "")}
@@ -153,7 +169,7 @@ custom_edit_url: ${custom_edit_url}${
             : ""
         }
 ---
-${next_content.replace(title_match[0], "")}`;
+${link_fixed_content.replace(title_match[0], "")}`;
 
   await Fs.promises.mkdir(Path.dirname(dest), { recursive: true });
   await Fs.promises.writeFile(dest, t, "utf8");
