@@ -36,4 +36,4 @@ jobs:
         run: |
           git config --global user.email "actions@gihub.com"
           git config --global user.name "gh-actions"
-          deploy docusaurus deploy
+          yarn deploy
