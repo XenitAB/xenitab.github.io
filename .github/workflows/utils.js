@@ -169,7 +169,7 @@ custom_edit_url: ${custom_edit_url}${
             : ""
         }
 ---
-${link_fixed_content.replace(title_match[0], "")}`;
+${link_fixed_content.replace(title_match[0], "").split(/# License.*/)[0]}`;
 
   await Fs.promises.mkdir(Path.dirname(dest), { recursive: true });
   await Fs.promises.writeFile(dest, t, "utf8");
