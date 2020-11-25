@@ -9,7 +9,7 @@ serve: all
 	yarn start
 
 .SILENT:
-build: all
+build:
 	yarn build
 
 .SILENT:
