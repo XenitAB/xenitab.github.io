@@ -2,12 +2,12 @@ module.exports = {
   title: "Xenit",
   tagline: "Xenit Open Source",
   url: "http://xenitab.github.io",
-  baseUrl: "/home/",
+  baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "xenitab", // Usually your GitHub org/user name.
-  projectName: "home", // Usually your repo name.
+  organizationName: "XenitAB", // Usually your GitHub org/user name.
+  projectName: "xenitab.github.io", // Usually your repo name.
   themeConfig: {
     navbar: {
       title: "Xenit AB Open Source",
@@ -58,7 +58,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://github.com/xenitab/home/edit/main/",
+          editUrl: "https://github.com/xenitab/xenitab.github.io/edit/main/",
         },
         /*blog: {
           showReadingTime: true,
