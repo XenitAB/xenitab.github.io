@@ -7,13 +7,20 @@ module.exports = {
         label: "Kubernetes",
         items: [
           "documentation/kubernetes/oneoone",
-          "documentation/kubernetes/developers",
-          "documentation/kubernetes/operators",
+          "documentation/kubernetes/best-practices",
         ],
       },
     ],
     Services: [
-      "services/xks",
+      {
+        type: "category",
+        label: "Xenit Kubernetes Service",
+        items: [
+          "services/xks/index",
+          "services/xks/operator-guide",
+          "services/xks/developer-guide",
+        ],
+      },
     ]
   },
 };

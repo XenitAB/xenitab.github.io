@@ -1,4 +1,0 @@
----
-id: developers
-title: Developers
----

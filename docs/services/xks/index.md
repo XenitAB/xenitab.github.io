@@ -1,6 +1,6 @@
 ---
-id: xks
-title: Xenit Kubernetes Service
+id: index
+title: Overview
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
@@ -12,6 +12,14 @@ Azure services with additional configuration and services that run ontop of AKS.
 XKS is set up from a set of Terraform modules that when combined creates the full XKS service. There are multiple individual states that all fulfill their own purpose and build
 upon each other in a heirarchal manner. The first setup requires applying the Terraform in the correct order, but after that ordering should not matter. Separate states are used
 as it allows for a more flexible architecture that could be changed in paralell.
+<img alt="XKS Overview" src={useBaseUrl("img/diagrams/xks-overview.drawio.jpeg")} />
+
+The following Terraform modules are used in XKS:
+* [Core](../terraform-modules/azure/core)
+* [Governance](../terraform-modules/azure/governance)
+* [AKS Global](../terraform-modules/azure/aks-global)
+* [AKS](../terraform-modules/azure/aks)
+* [AKS Core](../terraform-modules/kubernetes/aks-core)
 
 ## Core
 
@@ -29,27 +37,3 @@ The aks and aks-core module creates a AKS cluster and configures it. This cluste
 when performing a blue/green deployment of the clusters. Namespaces will be created in the cluster for each of the configured tenants. Each namespaces is linked to a resource
 group in Azure where namespace resources are expected to be created.
 <img alt="AKS Resource Groups" src={useBaseUrl("img/diagrams/xks-aks-rg.drawio.jpeg")} />
-
-Access to the resource group is granted through the use of aad-pod-identity.
-
-### Network Policies
-
-### Resource Limits
-
-### Policy Constraints
-
-### Continous Delivery
-#### Flux V1
-#### Flux V2
-
-
-# Guides
-## Setup
-## New Tenant
-## Clean Up
-
-# FAQ
-## How do I access a AKS cluster?
-```
-az aks get-credentials --resource-group rg-dev-we-aks --name aks-dev-we-aks1
-```
