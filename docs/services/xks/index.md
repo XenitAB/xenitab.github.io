@@ -9,17 +9,19 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 Azure services with additional configuration and services that run ontop of AKS.
 
 # Architecture
+
 XKS is set up from a set of Terraform modules that when combined creates the full XKS service. There are multiple individual states that all fulfill their own purpose and build
 upon each other in a heirarchal manner. The first setup requires applying the Terraform in the correct order, but after that ordering should not matter. Separate states are used
 as it allows for a more flexible architecture that could be changed in paralell.
 <img alt="XKS Overview" src={useBaseUrl("img/diagrams/xks-overview.drawio.jpeg")} />
 
 The following Terraform modules are used in XKS:
-* [Core](../terraform-modules/azure/core)
-* [Governance](../terraform-modules/azure/governance)
-* [AKS Global](../terraform-modules/azure/aks-global)
-* [AKS](../terraform-modules/azure/aks)
-* [AKS Core](../terraform-modules/kubernetes/aks-core)
+
+- [Core](../../terraform-modules/azure/core)
+- [Governance](../../terraform-modules/azure/governance)
+- [AKS Global](../../terraform-modules/azure/aks-global)
+- [AKS](../../terraform-modules/azure/aks)
+- [AKS Core](../../terraform-modules/kubernetes/aks-core)
 
 ## Core
 
@@ -28,6 +30,7 @@ The following Terraform modules are used in XKS:
 ## Hub
 
 ## AKS
+
 The AKS terraform contains three modules that are used to setup a Kubernetes cluster. To allow for blue/green deployments of AKS clusters resources have to be split up in to
 global resources that can be shared between the clusters, and cluster specific resources.
 
