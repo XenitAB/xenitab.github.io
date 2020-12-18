@@ -8,6 +8,8 @@ on:
       remote_repo:
         description: 'Remote repository name that triggered workflow'     
         required: true
+  schedule:
+    - cron:  '0 7-18 * * 1-5'
 
 jobs:
   build:

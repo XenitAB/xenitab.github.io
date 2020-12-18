@@ -36,7 +36,7 @@ const git_args = [
 console.info(`Cloning XenitAB/${name} into ${output_path} with the following command:
 git ${git_args.join(" ")}`);
 
-(DEVMODE
+(DEVMODE && Fs.existsSync(output_path)
   ? Promise.resolve()
   : spawn_promise("git", git_args, { encoding: "utf-8" })
 )
