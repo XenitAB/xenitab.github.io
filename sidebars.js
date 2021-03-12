@@ -8,6 +8,7 @@ module.exports = {
         items: [
           "documentation/kubernetes/oneoone",
           "documentation/kubernetes/best-practices",
+          "documentation/kubernetes/blast-radius",
         ],
       },
     ],
