@@ -31,9 +31,10 @@ It's easy to add more environments when you have created your first one.
 
 At Xenit we are using terraform modules that we share [upstream](https://github.com/XenitAB/terraform-modules)
 
-To setup XKS we will utalize 3 modules:
+To setup XKS we will utilize 4 modules:
 
 - governance-global
+- governance-regional
 - core
 - aks
 
@@ -169,7 +170,23 @@ Copy the generated key, we will need it for the next step.
 
 To make it possible for terraform to reach the PAT in a easy and secure way we have chosen to store the PAT in Azure Key Vaults which you need to add manually.
 
-Now you need access to the azure portal.
+#### az cli
+
+You can add the secret using the az cli.
+
+Call the secret azure-devops-pat and the value should be the token you created in azure devops.
+
+```bash
+# List all key vaults
+az keyvault list
+
+# Create the secret
+az keyvault secret set --vault-name kv-dev-we-core-1234 --name azure-devops-pat --value "SuperSecretToken123"
+```
+
+#### Azure portal
+
+Or if you prefer use the UI.
 
 In azure portal search for "Key vaults" and pick the core one that matches the unique_suffix that you have specified in global.tfvars, in our case 1234.
 
