@@ -7,19 +7,224 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary: #02d35f;
   --ifm-color-primary-dark: rgb(33, 175, 144);
   --ifm-color-primary-darker: rgb(31, 165, 136);
   --ifm-color-primary-darkest: rgb(26, 136, 112);
   --ifm-color-primary-light: rgb(70, 203, 174);
   --ifm-color-primary-lighter: rgb(102, 212, 189);
   --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-color-white: #fff;
+  --ifm-color-black: #000;
   --ifm-code-font-size: 95%;
 }
 
+html[data-theme="dark"] {
+  --ifm-navbar-background-color: #1e2125;
+  --ifm-background-color: #1e2125;
+  --ifm-background-surface-color: #121212;
+}
+
+footer {
+  color: #fff;
+  /* colums should be 40% 20 20 20 and one 100% */
+  padding-top: 130px;
+  background-color: #0d2c40;
+  height: 600px;
+  position: relative;
+}
+
+footer::before {
+  content: "";
+  background-image: url(/img/pattern_triangle.svg);
+  clip-path: polygon(0 10%, 0 100%, 45% 100%);
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.1;
+  z-index: 0;
+}
+
 .docusaurus-highlight-code-line {
-  background-color: rgb(72, 77, 91);
+  background-color: rgb(15, 20, 32);
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
+}
+
+.grid {
+  margin-top: 60px;
+  display: block;
+}
+
+.item {
+  display: inline-block;
+  width: 33%;
+}
+
+/* 
+.-absolute {
+  position: absolute;
+  bottom: 10px;
+  right: 0;
+  left: 0;
+  text-align: center;
+} */
+
+.image-wrapper {
+  margin-top: 50px;
+}
+
+/* 1px solid var(--ifm-toc-border-color) */
+
+.navbar {
+  transition: 0.35s all ease;
+  box-shadow: none;
+  height: 100%;
+  border-bottom: 1px solid #606770;
+  /* padding: 35px 45px 35px 45px; */
+}
+
+.scrolled {
+  min-height: 10px;
+  background: black;
+  transition: 0.35s all ease;
+}
+
+h2 {
+  font-size: 72px;
+  margin-top: 40px;
+}
+
+h3 {
+  font-size: 22px;
+}
+
+.hero__title {
+  font-size: 104px;
+  line-height: 100%;
+}
+
+.hero__subtitle {
+  font-size: 18px;
+}
+
+.green {
+  color: #02d35f;
+}
+/* 
+.hero--section {
+  margin-top: 200px;
+  height: 55vh;
+} */
+/* 
+.project--section {
+  height: 75vh;
+  margin-top: 100px;
+}
+
+.what-we-do {
+  height: 90vh;
+  margin-top: 100px;
+  padding-top: 25vh;
+  background-color: var(--ifm-color-primary);
+  clip-path: polygon(100% 85%, 100% 0%, 0% 15%, 0% 100%);
+}
+
+.clipout--section {
+  height: 75vh;
+  margin-top: 100px;
+  padding-top: 15%;
+  background-color: var(--ifm-color-primary);
+  clip-path: polygon(100% 100%, 100% 0%, 0% 15%, 0% 100%);
+} */
+
+.gallery {
+  background: #eee;
+}
+
+.gallery-cell {
+  width: 66%;
+  height: 200px;
+  margin-right: 10px;
+  background: #8c8;
+  counter-increment: gallery-cell;
+}
+
+/* cell number */
+.gallery-cell:before {
+  display: block;
+  text-align: center;
+  content: counter(gallery-cell);
+  line-height: 200px;
+  font-size: 80px;
+  color: white;
+}
+
+.copyright {
+  font-size: 12px;
+}
+
+.social-media {
+  z-index: 1;
+}
+
+.linkedin {
+  z-index: 3;
+}
+
+.xenit-text {
+  /* font-book */
+  font-size: 16px;
+  padding-right: 20px;
+  margin-bottom: 24px;
+}
+
+footer p {
+  color: #fff;
+  font-size: 16px;
+  line-height: 150%;
+  z-index: 1;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+footer a {
+  color: #fff;
+  border-bottom: solid 1px #fff;
+  font-size: 16px;
+  line-height: 100%;
+  z-index: 1;
+}
+
+footer a:hover {
+  z-index: 1;
+  border-bottom: solid 1px #02d35f;
+  color: #02d35f;
+  font-size: 16px;
+  line-height: 100%;
+  cursor: pointer;
+}
+
+.social-media {
+  margin-bottom: 10px;
+}
+
+.social-media a {
+  border: none;
+  color: #02d35f;
+}
+
+.social-media a:hover {
+  border: none;
+}
+
+.social-media img {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  cursor: pointer;
 }
