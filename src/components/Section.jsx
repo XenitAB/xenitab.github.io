@@ -16,7 +16,7 @@ const style = css`
   &.clipout {
     height: 75vh;
     margin-top: 100px;
-    padding-top: 15%;
+    padding-top: 25vh;
     background-color: var(--ifm-color-primary);
     clip-path: polygon(100% 100%, 100% 0%, 0% 15%, 0% 100%);
   }
