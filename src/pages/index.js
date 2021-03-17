@@ -10,6 +10,7 @@ import Hero from "../components/Hero";
 import WhatWeDo from "../components/WhatWeDo";
 import H2 from "../components/H2";
 import Image from "../components/Image";
+import Intro from "../components/Intro";
 
 import { projects } from "../data/projects";
 
@@ -48,16 +49,7 @@ export const Home = () => {
       </Section>
       <Section name="project">
         <FlexGrid>
-          <div className="col-64">
-            <H2>Projects</H2>
-            <p>
-              Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin.
-              Lorem ipsum har varit standard ända sedan 1500-talet, när en okänd
-              boksättare tog att antal bokstäver och blandade dem för att göra
-              ett provexemplar av en bok. Lorem ipsum har inte bara överlevt fem
-              århundraden.
-            </p>
-          </div>
+          <Intro />
         </FlexGrid>
         <div className="container grid">{projectList}</div>
       </Section>

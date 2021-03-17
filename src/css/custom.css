@@ -104,6 +104,10 @@ h3 {
     margin-right: 15px;
   }
 
+  .item {
+    width: 50%;
+  }
+
   p {
     font-size: 14px;
   }

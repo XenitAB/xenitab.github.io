@@ -88,6 +88,15 @@ const style = css`
       cursor: pointer;
     }
   }
+
+  @media (max-width: 400px) {
+    height: auto;
+    padding-bottom: 130px;
+
+    h3 {
+      margin-top: 50px;
+    }
+  }
 `;
 
 export const Footer = (props) => {

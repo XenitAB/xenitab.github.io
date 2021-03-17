@@ -9,9 +9,14 @@ const style = css`
   padding-left: 30px;
   position: relative;
   width: 100%;
+  text-align: left;
 
   p {
     margin: 0px;
+
+    @media (max-width: 400px) {
+      font-size: 15px;
+    }
   }
 
   a {
@@ -28,6 +33,10 @@ const style = css`
       font-size: 16px;
       line-height: 100%;
       cursor: pointer;
+    }
+
+    @media (max-width: 400px) {
+      font-size: 11px;
     }
   }
 

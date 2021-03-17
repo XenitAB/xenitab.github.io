@@ -4,8 +4,13 @@ import React from "react";
 
 const style = css`
   &.project {
-    height: 75vh;
+    height: auto;
     margin-top: 100px;
+
+    @media (max-width: 400px) {
+      text-align: center;
+      margin-top: 80px;
+    }
   }
 
   &.landing {
