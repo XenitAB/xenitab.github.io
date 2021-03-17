@@ -6,10 +6,24 @@ const style = css`
   .hero__title {
     font-size: 104px;
     line-height: 100%;
+
+    @media (max-width: 400px) {
+      font-size: 64px;
+    }
+  }
+
+  h3 {
+    @media (max-width: 400px) {
+      font-size: 24px;
+    }
   }
 
   .hero__subtitle {
     font-size: 18px;
+
+    @media (max-width: 400px) {
+      font-size: 14px;
+    }
   }
 
   .green {

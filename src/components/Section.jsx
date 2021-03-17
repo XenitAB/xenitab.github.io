@@ -11,6 +11,10 @@ const style = css`
   &.landing {
     margin-top: 200px;
     height: 55vh;
+
+    @media (max-width: 400px) {
+      margin-top: 130px;
+    }
   }
 
   &.clipout {
@@ -19,6 +23,13 @@ const style = css`
     padding-top: 25vh;
     background-color: var(--ifm-color-primary);
     clip-path: polygon(100% 100%, 100% 0%, 0% 15%, 0% 100%);
+
+    @media (max-width: 400px) {
+      height: 65vh;
+      text-align: center;
+      margin-top: 80px;
+      padding-top: 10vh;
+    }
   }
 
   &.what-we-do {
@@ -27,6 +38,13 @@ const style = css`
     padding-top: 25vh;
     background-color: var(--ifm-color-primary);
     clip-path: polygon(100% 85%, 100% 0%, 0% 15%, 0% 100%);
+
+    @media (max-width: 400px) {
+      height: 80vh;
+      text-align: center;
+      margin-top: 80px;
+      padding-top: 10vh;
+    }
   }
 `;
 

@@ -42,10 +42,6 @@ html[data-theme="dark"] {
   width: 33%;
 }
 
-.image-wrapper {
-  margin-top: 50px;
-}
-
 .navbar {
   transition: 0.35s all ease;
   box-shadow: none;
@@ -58,11 +54,6 @@ html[data-theme="dark"] {
   min-height: 10px;
   background: black;
   transition: 0.35s all ease;
-}
-
-h2 {
-  font-size: 72px;
-  margin-top: 40px;
 }
 
 h3 {
@@ -111,5 +102,9 @@ h3 {
 
   .navbar-sidebar .navbar__brand {
     margin-right: 15px;
+  }
+
+  p {
+    font-size: 14px;
   }
 }
