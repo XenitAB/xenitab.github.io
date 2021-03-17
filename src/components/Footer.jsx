@@ -72,6 +72,10 @@ const style = css`
     margin-bottom: 5px;
   }
 
+  h3 {
+    font-size: 22px;
+  }
+
   a {
     color: #fff;
     border-bottom: solid 1px #fff;
@@ -89,7 +93,7 @@ const style = css`
     }
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 415px) {
     height: auto;
     padding-bottom: 130px;
 

@@ -11,12 +11,11 @@ import WhatWeDo from "../components/WhatWeDo";
 import H2 from "../components/H2";
 import Image from "../components/Image";
 import Intro from "../components/Intro";
+import Link from "../components/Link";
 
 import { projects } from "../data/projects";
 
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import useBaseUrl from "@docusaurus/useBaseUrl";
-import styles from "./styles.module.css";
 
 export const Home = () => {
   const context = useDocusaurusContext();
@@ -49,7 +48,18 @@ export const Home = () => {
       </Section>
       <Section name="project">
         <FlexGrid>
-          <Intro />
+          <Intro title="Projects">
+            <p>
+              Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin.
+              Lorem ipsum har varit standard ända sedan 1500-talet,{" "}
+              <Link green url="https://github.com/XenitAB">
+                https://github.com/XenitAB
+              </Link>{" "}
+              när en okänd boksättare tog att antal bokstäver och blandade dem
+              för att göra ett provexemplar av en bok. Lorem ipsum har inte bara
+              överlevt fem århundraden.
+            </p>
+          </Intro>
         </FlexGrid>
         <div className="container grid">{projectList}</div>
       </Section>

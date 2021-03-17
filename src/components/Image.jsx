@@ -6,8 +6,9 @@ const style = css`
   .image-wrapper {
     margin-top: 50px;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       text-align: center;
+      margin-top: 40px;
 
       img {
         width: 220px;

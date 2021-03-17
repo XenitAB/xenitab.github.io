@@ -7,13 +7,13 @@ const style = css`
     font-size: 104px;
     line-height: 100%;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       font-size: 64px;
     }
   }
 
   h3 {
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       font-size: 24px;
     }
   }
@@ -21,7 +21,7 @@ const style = css`
   .hero__subtitle {
     font-size: 18px;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       font-size: 14px;
     }
   }
@@ -30,7 +30,7 @@ const style = css`
     color: #02d35f;
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 415px) {
     display: block;
   }
 `;

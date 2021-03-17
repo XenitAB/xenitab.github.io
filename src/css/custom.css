@@ -46,18 +46,7 @@ html[data-theme="dark"] {
   transition: 0.35s all ease;
   box-shadow: none;
   height: 100%;
-  border-bottom: 1px solid #606770;
-  /* padding: 35px 45px 35px 45px; */
-}
-
-.scrolled {
-  min-height: 10px;
-  background: black;
-  transition: 0.35s all ease;
-}
-
-h3 {
-  font-size: 22px;
+  border-bottom: 1px solid #dadde1;
 }
 
 .gallery {
@@ -82,7 +71,7 @@ h3 {
   color: white;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 415px) {
   .navbar__brand {
     position: absolute;
     right: 0;
@@ -111,4 +100,29 @@ h3 {
   p {
     font-size: 14px;
   }
+}
+
+@font-face {
+  font-family: "MaisonNeue-Bold";
+  src: url("/fonts/MaisonNeue-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "MaisonNeue-Demi";
+  src: url("/fonts/MaisonNeue-Demi.woff") format("woff");
+}
+
+@font-face {
+  font-family: "MaisonNeue-Book";
+  src: url("/fonts/MaisonNeue-Book.woff") format("woff");
+}
+
+@font-face {
+  font-family: "MaisonNeue-Medium";
+  src: url("/fonts/MaisonNeue-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "MaisonNeue-Light";
+  src: url("/fonts/MaisonNeue-Light.woff") format("woff");
 }

@@ -1,24 +1,33 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react'
-import React from 'react';
+import { jsx, css } from "@emotion/react";
+import React from "react";
 
-const style = css`
-    color: #fff;
-    border-bottom: solid 1px #fff;
+export const Link = (props) => {
+  const style = css`
+    color: ${props.green ? `#02d35f` : `#fff`};
+    border-bottom: solid 1px ${props.green ? `#02d35f` : `#fff`};
     font-size: 16px;
     line-height: 100%;
 
     &:hover {
-    border-bottom: solid 1px #02d35f;
-    color: #02d35f;
-    font-size: 16px;
-    line-height: 100%;
-    cursor: pointer;
-}
-`;
+      text-decoration: none;
+      border-bottom: solid 1px #02d35f;
+      color: #02d35f;
+      font-size: 16px;
+      line-height: 100%;
+      cursor: pointer;
+    }
 
-export const Link = (props) => {
-  return <a css={style}>{props.children}</a>;
-}
+    @media (max-width: 415px) {
+      font-size: 14px;
+    }
+  `;
+
+  return (
+    <a href={props.url} css={style}>
+      {props.children}
+    </a>
+  );
+};
 
 export default Link;

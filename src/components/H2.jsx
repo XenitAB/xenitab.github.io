@@ -6,7 +6,7 @@ const style = css`
   font-size: 72px;
   margin-top: 40px;
 
-  @media (max-width: 400px) {
+  @media (max-width: 415px) {
     font-size: 32px;
   }
 `;

@@ -12,30 +12,30 @@ const style = css`
   text-align: left;
 
   p {
+    font-family: MaisonNeue-Bold;
     margin: 0px;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       font-size: 15px;
     }
   }
 
   a {
+    font-family: MaisonNeue-Light;
     color: inherit;
-    border-bottom: solid 1px #fff;
+    border-bottom: solid 1px;
     font-size: 16px;
     line-height: 100%;
     text-decoration: none;
 
     &:hover {
       border-bottom: solid 1px #02d35f;
-
       color: #02d35f;
-      font-size: 16px;
       line-height: 100%;
       cursor: pointer;
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       font-size: 11px;
     }
   }

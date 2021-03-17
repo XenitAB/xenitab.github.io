@@ -7,7 +7,7 @@ const style = css`
     height: auto;
     margin-top: 100px;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       text-align: center;
       margin-top: 80px;
     }
@@ -17,7 +17,7 @@ const style = css`
     margin-top: 200px;
     height: 55vh;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       margin-top: 130px;
     }
   }
@@ -29,7 +29,7 @@ const style = css`
     background-color: var(--ifm-color-primary);
     clip-path: polygon(100% 100%, 100% 0%, 0% 15%, 0% 100%);
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       height: 65vh;
       text-align: center;
       margin-top: 80px;
@@ -44,7 +44,7 @@ const style = css`
     background-color: var(--ifm-color-primary);
     clip-path: polygon(100% 85%, 100% 0%, 0% 15%, 0% 100%);
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       height: 80vh;
       text-align: center;
       margin-top: 80px;

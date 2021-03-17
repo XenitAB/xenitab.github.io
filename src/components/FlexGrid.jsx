@@ -17,7 +17,7 @@ const style = css`
   .col-20 {
     width: 20%;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       display: block;
       width: 100%;
     }
@@ -26,7 +26,7 @@ const style = css`
   .col-32 {
     width: 32%;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       display: block;
       width: 100%;
     }
@@ -35,7 +35,7 @@ const style = css`
   .col-40 {
     width: 40%;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       display: block;
       width: 100%;
     }
@@ -44,7 +44,7 @@ const style = css`
   .col-64 {
     width: 64%;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       display: block;
       width: 100%;
     }
@@ -57,13 +57,13 @@ const style = css`
   .flex-fill {
     flex: 1;
 
-    @media (max-width: 400px) {
+    @media (max-width: 415px) {
       display: block;
       width: 100%;
     }
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 415px) {
     display: block;
   }
 `;
