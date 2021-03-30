@@ -20,6 +20,7 @@ module.exports = {
           "services/xks/index",
           "services/xks/operator-guide",
           "services/xks/developer-guide",
+          "services/xks/monitoring-guide",
         ],
       },
     ]
