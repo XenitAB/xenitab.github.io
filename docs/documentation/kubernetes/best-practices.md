@@ -4,12 +4,12 @@ title: Best Practices
 ---
 
 
-# Probes
+## Probes
 
-# Resources
+## Resources
 
+## External Dependencies
 
-# External Dependencies
+## Links
 
-# Links
 * https://srcco.de/posts/web-service-on-kubernetes-production-checklist-2019.html
