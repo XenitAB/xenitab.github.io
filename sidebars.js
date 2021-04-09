@@ -19,6 +19,7 @@ module.exports = {
         items: [
           "services/xks/index",
           "services/xks/operator-guide",
+          "services/xks/azure-devops-agents",
           "services/xks/developer-guide",
         ],
       },
