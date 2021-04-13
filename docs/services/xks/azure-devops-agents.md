@@ -12,7 +12,7 @@ To configure azure agent we need to run a few steps in a specific order.
 - In Governance add hub & azpagent
 - Configure & run packer, which generates a vm image
 - hub with the correct packer file defined
-- core with "peering_config" defined
+- core & hub with "peering_config" defined
 
 ## Governance
 
@@ -113,3 +113,45 @@ This will increase your azure cost. Read up on how much on your own.
 Organization Settings -> Billing
 
 Under "Self-Hosted CI/CD" set "Paid parallel jobs" = 3
+
+## Peering config
+
+We need to setup peering_config between the hub and the core resource group.
+
+This to be able to talk from Azure DevOps agent VMSS pool to the core network.
+
+Bellow you can find a example on how you can do it:
+
+hub/variables/prod.tfvars
+
+```.tfvars
+peering_config = [
+  {
+    name                         = "core-dev"
+    remote_virtual_network_id    = "/subscriptions/your-sub-id/resourceGroups/rg-dev-we-core/providers/Microsoft.Network/virtualNetworks/vnet-dev-we-core"
+    allow_forwarded_traffic      = true
+    use_remote_gateways          = false
+    allow_virtual_network_access = true
+  },
+]
+```
+
+core/variables/dev.tfvars
+
+```.tfvars
+peering_config = [
+  {
+    name                         = "hub"
+    remote_virtual_network_id    = "/subscriptions/your-sub-id/resourceGroups/rg-prod-we-hub/providers/Microsoft.Network/virtualNetworks/vnet-prod-we-hub"
+    allow_forwarded_traffic      = true
+    use_remote_gateways          = false
+    allow_virtual_network_access = true
+  },
+]
+```
+
+After your terraform code is applied you should be able to see that your two vnets is connected:
+
+```shell
+az network vnet list -o json --query '[0].virtualNetworkPeerings'
+```
