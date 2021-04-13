@@ -13,8 +13,8 @@ module.exports = {
       // title: "Xenit AB Open Source",
       logo: {
         alt: "Xenit logo",
-        src: "img/xenit_logo_Svart.png",
-        srcDark: "img/xenit_logo_Vit.png",
+        src: "img/Xenit_logo_Svart.png",
+        srcDark: "img/Xenit_logo_Vit.png",
       },
       items: [
         {
