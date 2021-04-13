@@ -110,10 +110,10 @@ export const Footer = (props) => {
         <div className="col-40">
           <img src="/img/Xenit_logo_Vit.png" alt="xenit" />
           <p className="xenit-text">
-            Xenit är ett tillväxtbolag med tjänster inom cloud och digital
-            transformation. Våra engagerade specialister inspirerar, utmanar och
-            vägleder företag och organisationer till molnet – alltid med
-            affärsnytta och slutanvändarens frihet i fokus.
+            Xenit is a growth company with services in cloud and digital
+            transformation. Our dedicated specialists inspire, challenge and
+            guide companies and organizations to the cloud - always with
+            business value and the end user's freedom in focus.
           </p>
           <div className="social-media">
             <a href="#">
@@ -135,44 +135,51 @@ export const Footer = (props) => {
           <Link href="#">Integritetspolicy</Link>
         </div>
         <div className="col-20">
-          <h3>Kontakt</h3>
+          <h3>Contact</h3>
           <List>
             <li>Kungstorget 7</li>
             <li>411 17 Göteborg</li>
             <li>
-              <Link href="tel:+46 (0) 10 707 35 00">+46 (0) 10 707 35 00</Link>
+              <Link url="tel:+46 (0) 10 707 35 00">+46 (0) 10 707 35 00</Link>
             </li>
             <li>
-              <Link target href="mailto:info@xenit.se">
+              <Link target url="mailto:info@xenit.se">
                 info@xenit.se
               </Link>
             </li>
-            <li>Visa på karta</li>
+            <li>Show on map</li>
           </List>
         </div>
         <div className="col-20">
-          <h3>Sidor</h3>
+          <h3>Pages</h3>
           <List>
             <li>
-              <Link href="#">IT-tjänster</Link>
+              <Link newtab="_blank" url="https://www.xenit.se/it-tjanster/">
+                IT-services
+              </Link>
             </li>
             <li>
-              <Link href="#">Kundcase</Link>
+              <Link newtab="_blank" url="https://www.xenit.se/kundcase/">
+                Customer stories
+              </Link>
             </li>
             <li>
-              <Link href="#">Karriär</Link>
+              <Link newtab="_blank" url="https://www.xenit.se/karriar/">
+                Career
+              </Link>
             </li>
             <li>
-              <Link href="#">Om Xenit</Link>
+              <Link newtab="_blank" url="https://www.xenit.se/om-oss/">
+                About Xenit
+              </Link>
             </li>
           </List>
         </div>
         <div className="col-20">
           <h3>Support</h3>
           <p>
-            För våra avtalskunder finns våra specialister redo. Ring oss på +46
-            (0) 10 707 35 80 eller logga in på vår fjärrsupport för att få
-            hjälp.
+            For our contract customers, our specialists are ready. Call us on
+            +46 (0) 10 707 35 80 or log in to our remote support to get help.
           </p>
         </div>
       </FlexGrid>

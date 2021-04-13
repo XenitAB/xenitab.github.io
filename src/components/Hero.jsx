@@ -41,12 +41,17 @@ export const Hero = (props) => {
       <h1 className="hero__title">
         Xenit <span className="green">open</span> source
       </h1>
-      <h3>Lorem Ipsum är en utfyllnadstext</h3>
+      <h3>The power of collaboration</h3>
       <p className="hero__subtitle">
-        Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin. Lorem
+        Xenit is a growth company with services in cloud and digital
+        transformation. Our dedicated specialists inspire, challenge and guide
+        companies and organizations to the cloud - always with business value
+        and the end user's freedom in focus. Xenit opensource will be a big part
+        of the future.
+        {/* Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin. Lorem
         ipsum har varit standard ända sedan 1500-talet, när en okänd boksättare
         tog att antal bokstäver och blandade dem för att göra ett provexemplar
-        av en bok. Lorem ipsum har inte bara överlevt fem århundraden.
+        av en bok. Lorem ipsum har inte bara överlevt fem århundraden. */}
       </p>
     </div>
   );

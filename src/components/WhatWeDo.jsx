@@ -17,10 +17,11 @@ export const WhatWeDo = (props) => {
     <div className="flex-fill">
       <H2 css={titleStyle}>What we do</H2>
       <p>
-        Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin. Lorem
-        ipsum har varit standard ända sedan 1500-talet, när en okänd boksättare
-        tog att antal bokstäver och blandade dem för att göra ett provexemplar
-        av en bok. Lorem ipsum har inte bara överlevt fem århundraden.
+        Xenit is a growth company with the goal of becoming the largest and
+        kindest cloud partner. Our purpose is to create freedom for people and
+        we do this through our services in cloud and digital transformation.
+        Services that create better conditions for telework, cooperation between
+        offices and freedom in the choice of units, working hours and workplace.
       </p>
     </div>
   );

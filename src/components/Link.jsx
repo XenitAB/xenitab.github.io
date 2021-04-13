@@ -24,7 +24,7 @@ export const Link = (props) => {
   `;
 
   return (
-    <a href={props.url} css={style}>
+    <a target={props.newtab} href={props.url} css={style}>
       {props.children}
     </a>
   );

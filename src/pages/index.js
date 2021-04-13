@@ -50,14 +50,14 @@ export const Home = () => {
         <FlexGrid>
           <Intro title="Projects">
             <p>
-              Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin.
-              Lorem ipsum har varit standard ända sedan 1500-talet,{" "}
+              Projects that we can proudly present and is opensource, you can
+              find them below. If you want to checkout our github, please go
+              ahead{" "}
               <Link green url="https://github.com/XenitAB">
                 https://github.com/XenitAB
               </Link>{" "}
-              när en okänd boksättare tog att antal bokstäver och blandade dem
-              för att göra ett provexemplar av en bok. Lorem ipsum har inte bara
-              överlevt fem århundraden.
+              . If you are interested in a project or want to contribute, feel
+              free to take part in our contact information.
             </p>
           </Intro>
         </FlexGrid>
@@ -69,11 +69,16 @@ export const Home = () => {
           <div className="flex-fill">
             <H2>Contact</H2>
             <p>
-              Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin.
+              If you feel that opensource, Xenit or if you are interested in a
+              project or want to contribute, feel free to take part in our
+              contact information. We are constantly looking for new passionate
+              people! If you are wondering more about what we do? Dont forget to
+              drop by our website!
+              {/* Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin.
               Lorem ipsum har varit standard ända sedan 1500-talet, när en okänd
               boksättare tog att antal bokstäver och blandade dem för att göra
               ett provexemplar av en bok. Lorem ipsum har inte bara överlevt fem
-              århundraden.
+              århundraden. */}
             </p>
           </div>
         </FlexGrid>
