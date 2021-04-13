@@ -31,38 +31,6 @@ module.exports = {
         },
       ],
     },
-    // footer: {
-    //   logo: {
-    //     alt: 'Facebook Open Source Logo',
-    //     src: 'img/oss_logo.png',
-    //     href: 'https://opensource.facebook.com',
-    //   },
-    //   copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-    // }
-    // footer: {
-    //   style: "dark",
-    //   links: [
-    //     {
-    //       title: "Docs",
-    //       items: [
-    //         {
-    //           label: "Style Guide",
-    //           to: "docs/",
-    //           logo: {
-    //             alt: "Facebook Open Source Logo",
-    //             src: "img/oss_logo.png",
-    //             href: "https://opensource.facebook.com",
-    //           },
-    //         },
-    //         {
-    //           label: "Second Doc",
-    //           to: "docs/doc2/",
-    //         },
-    //       ],
-    //     },
-    //   ],
-    //   copyright: `Copyright © ${new Date().getFullYear()} Xenit AB`,
-    // },
   },
   presets: [
     [
@@ -70,7 +38,6 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
           editUrl: "https://github.com/xenitab/xenitab.github.io/edit/main/",
         },
         /*blog: {
