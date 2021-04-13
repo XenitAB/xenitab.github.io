@@ -10,18 +10,18 @@ module.exports = {
   projectName: "xenitab.github.io", // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: "Xenit AB Open Source",
+      // title: "Xenit AB Open Source",
       logo: {
         alt: "Xenit logo",
-        src: "img/xenit_icon.svg",
-        srcDark: "img/xenit_icon.svg",
+        src: "img/xenit_logo_Svart.png",
+        srcDark: "img/xenit_logo_Vit.png",
       },
       items: [
         {
           to: "docs/",
           activeBasePath: "docs",
           label: "Docs",
-          position: "left",
+          position: "right",
         },
         // { to: "blog", label: "Blog", position: "left" },
         {
@@ -31,25 +31,38 @@ module.exports = {
         },
       ],
     },
-    footer: {
-      style: "dark",
-      /*links: [
-        {
-          title: "Docs",
-          items: [
-            {
-              label: "Style Guide",
-              to: "docs/",
-            },
-            {
-              label: "Second Doc",
-              to: "docs/doc2/",
-            },
-          ],
-        },
-      ],*/
-      copyright: `Copyright © ${new Date().getFullYear()} Xenit AB`,
-    },
+    // footer: {
+    //   logo: {
+    //     alt: 'Facebook Open Source Logo',
+    //     src: 'img/oss_logo.png',
+    //     href: 'https://opensource.facebook.com',
+    //   },
+    //   copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+    // }
+    // footer: {
+    //   style: "dark",
+    //   links: [
+    //     {
+    //       title: "Docs",
+    //       items: [
+    //         {
+    //           label: "Style Guide",
+    //           to: "docs/",
+    //           logo: {
+    //             alt: "Facebook Open Source Logo",
+    //             src: "img/oss_logo.png",
+    //             href: "https://opensource.facebook.com",
+    //           },
+    //         },
+    //         {
+    //           label: "Second Doc",
+    //           to: "docs/doc2/",
+    //         },
+    //       ],
+    //     },
+    //   ],
+    //   copyright: `Copyright © ${new Date().getFullYear()} Xenit AB`,
+    // },
   },
   presets: [
     [

@@ -7,19 +7,122 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary: #02d35f;
   --ifm-color-primary-dark: rgb(33, 175, 144);
   --ifm-color-primary-darker: rgb(31, 165, 136);
   --ifm-color-primary-darkest: rgb(26, 136, 112);
   --ifm-color-primary-light: rgb(70, 203, 174);
   --ifm-color-primary-lighter: rgb(102, 212, 189);
   --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-color-white: #fff;
+  --ifm-color-black: #000;
   --ifm-code-font-size: 95%;
 }
 
+html[data-theme="dark"] {
+  --ifm-navbar-background-color: #1e2125;
+  --ifm-background-color: #1e2125;
+  --ifm-background-surface-color: #121212;
+}
+
 .docusaurus-highlight-code-line {
-  background-color: rgb(72, 77, 91);
+  background-color: rgb(15, 20, 32);
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
+}
+
+.grid {
+  margin-top: 60px;
+  display: block;
+}
+
+.item {
+  display: inline-block;
+  width: 33%;
+}
+
+.navbar {
+  transition: 0.35s all ease;
+  box-shadow: none;
+  height: 100%;
+  border-bottom: 1px solid #dadde1;
+}
+
+.gallery {
+  background: #eee;
+}
+
+.gallery-cell {
+  width: 66%;
+  height: 200px;
+  margin-right: 10px;
+  background: #8c8;
+  counter-increment: gallery-cell;
+}
+
+/* cell number */
+.gallery-cell:before {
+  display: block;
+  text-align: center;
+  content: counter(gallery-cell);
+  line-height: 200px;
+  font-size: 80px;
+  color: white;
+}
+
+@media (max-width: 415px) {
+  .navbar__brand {
+    position: absolute;
+    right: 0;
+    margin-right: 0px;
+  }
+
+  .navbar__brand img {
+    margin-right: 0px;
+    width: 80px;
+    height: auto;
+  }
+
+  .navbar__items {
+    width: 100%;
+    position: relative;
+  }
+
+  .navbar-sidebar .navbar__brand {
+    margin-right: 15px;
+  }
+
+  .item {
+    width: 50%;
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
+
+@font-face {
+  font-family: "MaisonNeue-Bold";
+  src: url("/fonts/MaisonNeue-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "MaisonNeue-Demi";
+  src: url("/fonts/MaisonNeue-Demi.woff") format("woff");
+}
+
+@font-face {
+  font-family: "MaisonNeue-Book";
+  src: url("/fonts/MaisonNeue-Book.woff") format("woff");
+}
+
+@font-face {
+  font-family: "MaisonNeue-Medium";
+  src: url("/fonts/MaisonNeue-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "MaisonNeue-Light";
+  src: url("/fonts/MaisonNeue-Light.woff") format("woff");
 }

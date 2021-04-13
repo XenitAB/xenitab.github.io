@@ -12,6 +12,11 @@
   overflow: hidden;
 }
 
+.hero {
+  height: 70vh;
+  clip-path: polygon(0% 100%, 100% 100%, 0% 0%);
+}
+
 @media screen and (max-width: 966px) {
   .heroBanner {
     padding: 2rem;
