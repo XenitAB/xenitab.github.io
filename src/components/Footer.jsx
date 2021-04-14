@@ -110,10 +110,10 @@ export const Footer = (props) => {
         <div className="col-40">
           <img src="/img/Xenit_logo_Vit.png" alt="xenit" />
           <p className="xenit-text">
-            Xenit is a growth company with services in cloud and digital
-            transformation. Our dedicated specialists inspire, challenge and
-            guide companies and organizations to the cloud - always with
-            business value and the end user's freedom in focus.
+            Xenit is a growth company that provides services and products within
+            cloud and digital transformation. Our engaged and experienced
+            specialists inspire, challenges and guides organizations to the
+            cloud – always with business value and freedom in focus.
           </p>
           <div className="social-media">
             <a href="#">
@@ -181,11 +181,11 @@ export const Footer = (props) => {
           </List>
         </div>
         <div className="col-20">
-          <h3>Support</h3>
+          {/* <h3>Support</h3>
           <p>
             For our contract customers, our specialists are ready. Call us on
             +46 (0) 10 707 35 80 or log in to our remote support to get help.
-          </p>
+          </p> */}
         </div>
       </FlexGrid>
       <FlexGrid className="container flex-grid">
