@@ -174,6 +174,11 @@ export const Footer = (props) => {
               </Link>
             </li>
             <li>
+              <Link newtab="_blank" url="https://xenit.se/tech-blog/">
+                Tech blog
+              </Link>
+            </li>
+            <li>
               <Link newtab="_blank" url="https://www.xenit.se/om-oss/">
                 About Xenit
               </Link>
