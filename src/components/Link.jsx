@@ -11,8 +11,8 @@ export const Link = (props) => {
 
     &:hover {
       text-decoration: none;
-      border-bottom: solid 1px #02d35f;
-      color: #02d35f;
+      border-bottom: ${props.green ? `#02d35f` : `#fff`};
+      color: ${props.green ? `#02d35f` : `#fff`};
       font-size: 16px;
       line-height: 100%;
       cursor: pointer;

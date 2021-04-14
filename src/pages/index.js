@@ -50,14 +50,14 @@ export const Home = () => {
         <FlexGrid>
           <Intro title="Projects">
             <p>
-              Projects that we can proudly present and is opensource, you can
-              find them below. If you want to checkout our github, please go
-              ahead{" "}
+              We want to contribute to projects that leads innovation forward
+              and improves people’s life and freedom through increased
+              flexibility, smoother collaboration, and freedom in choice. If you
+              want to checkout our github, go ahead{" "}
               <Link green url="https://github.com/XenitAB">
                 https://github.com/XenitAB
               </Link>{" "}
-              . If you are interested in a project or want to contribute, feel
-              free to take part in our contact information.
+              .
             </p>
           </Intro>
         </FlexGrid>
@@ -69,11 +69,13 @@ export const Home = () => {
           <div className="flex-fill">
             <H2>Contact</H2>
             <p>
-              If you feel that opensource, Xenit or if you are interested in a
-              project or want to contribute, feel free to take part in our
-              contact information. We are constantly looking for new passionate
-              people! If you are wondering more about what we do? Dont forget to
-              drop by our website!
+              With presence as one of our core values, we’re never too far away!
+              Reach our if you want to know more about how you can accelerate
+              your digital transformation or take the next step on your cloud
+              journey. Your can find our contact details here:{" "}
+              <Link newtab="_blank" url="https://xenit.se/contact/">
+                https://xenit.se/contact/
+              </Link>
               {/* Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin.
               Lorem ipsum har varit standard ända sedan 1500-talet, när en okänd
               boksättare tog att antal bokstäver och blandade dem för att göra
