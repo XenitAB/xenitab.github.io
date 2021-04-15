@@ -129,6 +129,6 @@ git ${git_args.join(" ")}`);
   })
   .then((_) => {
     if (!DEVMODE) {
-      Fs.promises.rmdir(output_path, { force: true, recursive: true });
+      return Fs.promises.rmdir(output_path, { force: true, recursive: true });
     }
   });

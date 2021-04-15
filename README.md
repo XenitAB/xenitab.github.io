@@ -10,7 +10,6 @@ Repository gathering documentation for Xenit open source projects
 
 Take a look at the [Makefile](Makefile) and in [docs/](docs/).
 
-
 # Website
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
@@ -21,6 +20,11 @@ This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern 
 yarn install
 ```
 
+## Add more projects to documentation sync
+
+If you want to add a project to be synced into the docs pages simply add a line [here](./.github/workflows/publish-docs.yaml#26) with the repo name under the XenitAB organisation.
+It picks up all the markdown files to create the documentation pages in "Docs".
+
 ## Local Development
 
 ```console
@@ -28,6 +32,20 @@ yarn start
 ```
 
 This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
+
+To sync a repos documentation locally
+
+```sh
+DEVMODE=true node .github/workflows/sync-docs.js <repo-name> "<Nice name>" [<docs folder>]
+```
+
+For example,
+
+```sh
+DEVMODE=true node .github/workflows/sync-docs.js azure-devops-templates "Azure DevOps Templates"
+
+DEVMODE=true node .github/workflows/sync-docs.js terraform-modules "Terraform Modules" modules
+```
 
 ## Build
 

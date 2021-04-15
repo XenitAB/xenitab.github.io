@@ -22,6 +22,7 @@ module.exports = {
           "services/xks/developer-guide",
         ],
       },
-    ]
+    ],
+    Security: ["security"],
   },
 };
