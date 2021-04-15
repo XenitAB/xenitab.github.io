@@ -1,5 +1,5 @@
 export const projects = [
-  { id: 1, name: "Xenit AB", url: "https//:www.github.com/xenitab" },
+  { id: 1, name: "Xenit AB", url: "https://github.com/xenitab" },
   {
     id: 2,
     name: "Terraform Modules",
