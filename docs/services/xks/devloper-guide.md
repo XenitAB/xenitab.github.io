@@ -3,6 +3,8 @@ id: developer-guide
 title: Developer Guide
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 This guide assumes that you have been added to one or more resource groups with a configured Kubernetes namespace. Before going through the developer guide it is good to make
 sure that you understand the basics in the [101](../../documentation/kubernetes/oneoone) guide.
 
@@ -88,3 +90,20 @@ spec:
 ```
 
 ## Azure AD Identity
+
+## Setup CI/CD pipeline
+
+At Xenit we have created a CI/CD template to make it easier to get started with GitOps in our case using FluxV2 and the [GitOps toolkit](https://toolkit.fluxcd.io/).
+
+You can find the base for all our azure devops pipelines in our [Azure Devops Templates repo](https://github.com/XenitAB/azure-devops-templates/tree/main/gitops-v2).
+
+Follow the example documentation on how to setup your base repo.
+Bellow we will explain how to do the manual steps that is needed to get Azure Devops to allow some of the flows that we are making.
+
+### Enable CI user to push to gitops repo
+
+The core feature of the gitops repo is that one of the pipelines automatically updates the image tag in your repository so flux will automatically update your deployment in kubernetes.
+
+We have to grant it permissions to do this, sadly manually...
+
+<img alt="CI access" src={useBaseUrl("img/developer-guide/gitops_repo_settings.png")} />
