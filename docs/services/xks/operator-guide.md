@@ -281,7 +281,14 @@ Install krew: https://krew.sigs.k8s.io/docs/user-guide/setup/install/#windows
 Install azad-proxy plugin: kubectl krew install azad-proxy
 Login with azure cli (a valid session with azure cli is always required): az login
 Discover the clusters: kubectl azad-proxy discover
-Connect to the cluster you want to use: kubectl azad-proxy generate --cluster-name dev-cluster --proxy-url https://dev.example.com --resource https://dev.example.com
+
+There are two ways to connect to the cluster using azad.
+
+Ether use the menu feature:
+`kubectl azad-proxy menu`
+
+Or connect by using the generate command:
+`kubectl azad-proxy generate --cluster-name dev-cluster --proxy-url https://dev.example.com --resource https://dev.example.com`
 
 ### AAD groups
 
