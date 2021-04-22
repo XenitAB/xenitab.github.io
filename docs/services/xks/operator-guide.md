@@ -256,3 +256,78 @@ aks_config = {
 ```
 
 > Notice the vm_size = Standard_B2s
+
+## Admin and developer access
+
+Hopefully you should now have one XKS cluster up and running, but currently no developer can actually reach the cluster.
+
+In XKF we see clusters as cattle and at any time we can decide to recreate a XKS cluster.
+To be able to do this without our developers even knowing we use blue green clusters, TODO write a document on how blue green clusters works and link.
+We use GitOps together with DNS to be able to migrate applications without any impact to end-users assuming that our developers have written 12 step applications.
+To store state we utilize the cloud services available in the different clouds that XKF supports.
+
+To make sure that our developers don't notice when we change our the cluster we have written a Kubernetes API Proxy called [azad-kube-proxy](https://github.com/XenitAB/azad-kube-proxy).
+
+### Azure AD Kubernetes Proxy
+
+AZAD as we also call it, is a deployment that runs inside XKS and sits in front of the kubernetes API.
+
+We also supplie a krew/kubectl plugin to make it easy for our developers to use AZAD.
+For instructions on how to setup and configure [see](https://github.com/XenitAB/azad-kube-proxy).
+
+#### AZAD Usage
+
+Install krew: https://krew.sigs.k8s.io/docs/user-guide/setup/install/#windows
+Install azad-proxy plugin: kubectl krew install azad-proxy
+Login with azure cli (a valid session with azure cli is always required): az login
+Discover the clusters: kubectl azad-proxy discover
+
+There are two ways to connect to the cluster using azad.
+
+Ether use the menu feature:
+`kubectl azad-proxy menu`
+
+Or connect by using the generate command:
+`kubectl azad-proxy generate --cluster-name dev-cluster --proxy-url https://dev.example.com --resource https://dev.example.com`
+
+### AAD groups
+
+To make it possible for our developers and admins to actually login to the cluster we need to add them to a AAD group.
+
+#### Developer groups
+
+Depending on what configuration you did in global.tfvars this will differ but the group name should be something like bellow.
+
+This group will give your developers contributor access in the namespaces where they have access.
+
+`<azure_ad_group_prefix>-rg-xks-<cluster-env>-aks-contributor`
+
+Example: `az-rg-xks-dev-aks-contributor`
+
+#### Admin groups
+
+To make it easy for you as a admin you should also use AZAD.
+
+To give your self cluster-admin:
+
+`<azure_ad_group_prefix>-xks-<cluster-env>-clusteradmin`
+
+Example: aks-xks-dev-clusteradmin
+
+### Authorized IP
+
+To minimize the exposure of the XKS clusters we define a list of authorized ip:s that is approved to connect the kubernetes cluster API.
+
+We need to approve multiple infrastructure networks and user networks.
+
+- If you are using the HUB module and you are running VMSS Azure Devops Agent you need to approve those IP:s as authorized.
+- The AKS public ip
+- Your developers public ip
+
+A recommendations is to add a comment with what IP you have added.
+
+aks_authorized_ips = [
+  "8.8.8.8/32",  # google dns
+  "1.2.3.4/32",  # developer x ip
+  "2.3.4.5/30",  # AKS0 dev
+]
