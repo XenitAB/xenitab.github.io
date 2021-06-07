@@ -314,6 +314,15 @@ To give your self cluster-admin:
 
 Example: aks-xks-dev-clusteradmin
 
+### Verify access
+
+There is a wonderful command option in kubernetes called --as, which enables you to see if a specific user got access to a specific resource.
+
+Since we are using OIDC we also need to provide the group id, you can find the group id in AAD.
+Just as mentioned under developer groups `az-rg-xks-dev-aks-contributor`
+
+`kubectl get pods --as-group="so-much-uid" --as="edvin_domain.se#EXT#@domain.onmicrosoft.com"`
+
 ### Authorized IP
 
 To minimize the exposure of the XKS clusters we define a list of authorized ip:s that is approved to connect the kubernetes cluster API.
