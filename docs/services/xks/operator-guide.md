@@ -294,6 +294,9 @@ Or connect by using the generate command:
 
 To make it possible for our developers and admins to actually login to the cluster we need to add them to a AAD group.
 
+If you are a AAD guest user you need to add the AAD Role: **Directory Reader** to your user account.
+AZAD proxy parses the AAD and that is why the user needs Directory Reader.
+
 #### Developer groups
 
 Depending on what configuration you did in global.tfvars this will differ but the group name should be something like bellow.
