@@ -19,7 +19,7 @@ az account list -o table
 
 In the case that you have more than one subscription, you might want to change the default subscription in order to target the correct environment.
 ```bash
-az account set -s $SubscriptionId
+az account set -s <SubscriptionId>
 ```
 To get information about cluster name and resource group for your current default subscription you can use.
 ```bash
@@ -28,7 +28,7 @@ az aks list -o table
 
 Once you know the resource group and name of the cluster, you can run the following to add the credentials to your kubekonfig.
 ```bash
-az aks get-credentials --resource-group $ResourceGroup --name $Name
+az aks get-credentials --resource-group <ResourceGroup> --name <Name>
 ```
 
 ## Continous Delivery
