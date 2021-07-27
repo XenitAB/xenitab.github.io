@@ -26,7 +26,7 @@ To get information about cluster name and resource group for your current defaul
 az aks list -o table
 ```
 
-Once you know the resource group and name of the cluster you want to access you can run to add the credentials to your kubekonfig.
+Once you know the resource group and name of the cluster, you can run the following to add the credentials to your kubekonfig.
 ```bash
 az aks get-credentials --resource-group $ResourceGroup --name $Name
 ```
