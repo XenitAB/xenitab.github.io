@@ -12,6 +12,11 @@ sure that you understand the basics in the [101](../../documentation/kubernetes/
 You can run the following commands to add the AKS cluster to your kubeconfig assuming that you have installed the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 and [authenticated with the azure portal](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli).
 
+### Using AZAD Proxy
+If you use the AZAD proxy you can setup configuration using: [AZAD Documentation](operator-guide.md#azure-ad-kubernetes-proxy)
+
+### Otherwise
+
 Once you have logged in you can list your subscriptions
 ```bash
 az account list -o table
