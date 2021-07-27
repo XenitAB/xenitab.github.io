@@ -17,4 +17,4 @@ install-site:
 	yarn
 
 drawio:
-	draw.io -s 3 -x -f jpeg -o static/img/diagrams assets/
+	draw.io -s 3 -b 10 -x -f jpeg -o static/img/diagrams assets/
