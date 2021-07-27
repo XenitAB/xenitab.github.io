@@ -272,7 +272,7 @@ To make sure that our developers don't notice when we change our the cluster we 
 
 AZAD as we also call it, is a deployment that runs inside XKS and sits in front of the kubernetes API.
 
-We also supplie a krew/kubectl plugin to make it easy for our developers to use AZAD.
+We also supply a krew/kubectl plugin to make it easy for our developers to use AZAD.
 For instructions on how to setup and configure [see](https://github.com/XenitAB/azad-kube-proxy).
 
 #### AZAD Usage

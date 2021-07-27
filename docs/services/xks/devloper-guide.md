@@ -9,12 +9,31 @@ This guide assumes that you have been added to one or more resource groups with 
 sure that you understand the basics in the [101](../../documentation/kubernetes/oneoone) guide.
 
 ## Kubectl Configuration
-
-You can run the following command to add the AKS cluster to your kubeconfig assuming that you have installed the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+You can run the following commands to add the AKS cluster to your kubeconfig assuming that you have installed the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 and [authenticated with the azure portal](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli).
 
+### Using AZAD Proxy
+If you use the AZAD proxy you can setup configuration using: [AZAD Documentation](operator-guide.md#azure-ad-kubernetes-proxy)
+
+### Otherwise
+
+Once you have logged in you can list your subscriptions
 ```bash
-az aks get-credentials --resource-group rg-dev-we-aks --name aks-dev-we-aks1
+az account list -o table
+```
+
+In the case that you have more than one subscription, you might want to change the default subscription in order to target the correct environment.
+```bash
+az account set -s <SubscriptionId>
+```
+To get information about cluster name and resource group for your current default subscription you can use.
+```bash
+az aks list -o table
+```
+
+Once you know the resource group and name of the cluster, you can run the following to add the credentials to your kubekonfig.
+```bash
+az aks get-credentials --resource-group <ResourceGroup> --name <Name>
 ```
 
 ## Continous Delivery
