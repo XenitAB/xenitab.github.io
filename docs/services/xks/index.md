@@ -17,11 +17,6 @@ as it allows for a more flexible architecture that could be changed in paralell.
 
 The following Terraform modules are used in XKS:
 
-- [Core](../../terraform-modules/azure/core)
-- [Governance](../../terraform-modules/azure/governance)
-- [AKS Global](../../terraform-modules/azure/aks-global)
-- [AKS](../../terraform-modules/azure/aks)
-- [AKS Core](../../terraform-modules/kubernetes/aks-core)
 
 ## Core
 

@@ -6,14 +6,14 @@ title: Overview
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This guide assumes that you have been added to one or more resource groups with a configured Kubernetes namespace. Before going through the developer guide it is good to make
-sure that you understand the basics in the [101](../../documentation/kubernetes/oneoone) guide.
+sure that you understand the basics in the 101 guide.
 
 ## Kubectl Configuration
 You can run the following commands to add the AKS cluster to your kubeconfig assuming that you have installed the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 and [authenticated with the azure portal](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli).
 
 ### Using AZAD Proxy
-If you use the AZAD proxy you can setup configuration using: [AZAD Documentation](operator-guide.md#azure-ad-kubernetes-proxy)
+If you use the AZAD proxy you can setup configuration using: AZAD Documentation
 
 ### Otherwise
 
