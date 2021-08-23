@@ -10,7 +10,10 @@ module.exports = {
         label: "Developer Guide",
         items: [
           "xks/developer-guide/index",
+          "xks/developer-guide/best-practices",
           "xks/developer-guide/ingress",
+          "xks/developer-guide/security",
+          "xks/developer-guide/cd",
           "xks/developer-guide/linkerd",
         ],
       },
