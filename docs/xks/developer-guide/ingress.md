@@ -1,5 +1,5 @@
 ---
-id: ingrss
+id: ingress
 title: Ingress
 ---
 

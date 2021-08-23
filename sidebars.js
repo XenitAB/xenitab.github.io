@@ -1,5 +1,20 @@
 module.exports = {
   docs: {
+    "Xenit Kubernetes Service": [
+      {
+        type: "doc",
+        id: "xks/index"
+      },
+      {
+        type: "category",
+        label: "Developer Guide",
+        items: [
+          "xks/developer-guide/index",
+          "xks/developer-guide/ingress",
+          "xks/developer-guide/linkerd",
+        ],
+      },
+    ],
     Documentation: [
       "documentation/index",
       {
