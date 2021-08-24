@@ -15,7 +15,7 @@ Refer to the [oficial documentation](https://linkerd.io/2.10/overview/) for docu
 Linkerd works by injecting a sidecar into every Pod which uses Linkerd. All network requests have to be sent through the sidecar which will then be
 responsible with forwarding it. The sidecar will hanlde things like traffic encryption before sending the packets outside of the node.
 
-<img alt="Linkerd Overview" src={useBaseUrl("img/docs/xks/linkerd-overview.jpg")} />
+<img alt="Linkerd Overview" src={useBaseUrl("img/assets/xks/developer-guide/linkerd-overview.drawio.jpeg")} />
 
 ## Get Started
 
@@ -41,7 +41,7 @@ spec:
         app: linkerd-test
     spec:
       containers:
-      - name: app-api
+      - name: linkerd-test
         image: alpine:latest
         ports:
         - containerPort: 8080
