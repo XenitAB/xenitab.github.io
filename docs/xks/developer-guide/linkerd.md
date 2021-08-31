@@ -61,6 +61,10 @@ With the sidecar added all traffic going out of the container will automatically
 
 ## FAQ
 
+### Is all network traffic encrypted?
+
+No it depends on the traffic type and is something that should be verified rather than assumed. More information can be found in the [Linkerd documentation](https://linkerd.io/2.10/features/automatic-mtls/#).
+
 ### What overhead can I expect?
 
 Each Pod will at minimum consume and additional 10 MB due to the extra sidecar and the number can grow as traffic increases.
