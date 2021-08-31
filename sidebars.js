@@ -22,6 +22,7 @@ module.exports = {
             "xks/developer-guide/security",
             "xks/developer-guide/cd",
             "xks/developer-guide/linkerd",
+            "xks/developer-guide/cloud-resources",
           ],
         },
         {
