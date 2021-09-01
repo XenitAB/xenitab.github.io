@@ -47,7 +47,7 @@ TODO create a example repo that uses our terraform modules.
 
 You can today see a example of the [Makefile](https://github.com/XenitAB/azure-devops-templates/blob/master/terraform-docker/README.md#makefile)
 
-This is how we normally structure our tenant repos:
+This is how we normally structure our tenant repo
 
 ```txt
 ├── Makefile
@@ -105,7 +105,7 @@ Lets create the first terraform state, in this case governance.
 
 `make prepare ENV=dev DIR=governance`
 
-You will need to run the prepare command for each separate folder.
+You will need to run the prepare command for each separate terraform folder.
 
 ### Configure governance
 
@@ -170,8 +170,8 @@ In my case I will have flux manage a namespace called monitor and sync a repo un
 You need to create the repository in Azure Devops that you link to before applying this terraform.
 The repository can be empty.
 
-You will also need to create a separate repository for fleet-infra, this repo is used to store flux config.
-This repo cannot be empty and needs a README file or something similar to work as intended before you run terraform.
+You will also need to create a separate repository for `fleet-infra`, this repo is used to store flux config.
+> This repo cannot be empty and needs a README file or something similar to work as intended before you run terraform.
 
 ```common.tfvars
 namespaces = [
@@ -198,7 +198,7 @@ namespaces = [
 
 ## CI/CD
 
-We have one CI/CD pipeline per directory.
+We have one CI/CD pipeline per terraform directory.
 You can find ready to use pipelines under .ci/ in the terraform repo.
 
 ### Configure SP
