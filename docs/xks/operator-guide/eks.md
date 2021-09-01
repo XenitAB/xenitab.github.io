@@ -17,6 +17,43 @@ manage access to our clusters called [azad-kube-proxy](https://github.com/XenitA
 
 So our governance solution is still fully located in Azure together with our Terraform state
 
+### Repo structure
+
+This is how a AWS repo structure can look like:
+
+```txt
+├── Makefile
+├── README.md
+├── aws-core
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── variables
+│   │   ├── common.tfvars
+│   │   ├── dev.tfvars
+│   │   ├── prod.tfvars
+│   │   └── qa.tfvars
+│   └── variables.tf
+├── aws-eks
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── variables
+│   │   ├── common.tfvars
+│   │   ├── dev.tfvars
+│   │   ├── prod.tfvars
+│   │   └── qa.tfvars
+│   └── variables.tf
+├── azure-governance
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── variables
+│   │   ├── common.tfvars
+│   │   ├── dev.tfvars
+│   │   ├── prod.tfvars
+│   │   └── qa.tfvars
+│   └── variables.tf
+├── global.tfvars
+```
+
 ### EKS
 
 Just like in AKS we use Calico as our CNI.
