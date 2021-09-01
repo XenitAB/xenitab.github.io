@@ -317,6 +317,21 @@ To give your self cluster-admin:
 
 Example: aks-xks-dev-clusteradmin
 
+#### Verify access
+
+There is a command option in kubernetes called --as, which enables you to see if a specific user got access to a specific resource.
+
+> Note this will not work if you are connecting to the cluster using AZAD-proxy due to it uses the --as option to run the commands for you.
+
+Since we are using OIDC we also need to provide the group id, you can find the group id in AAD.
+You can find the UUID of the group in AAD.
+
+`kubectl get pods --as-group=12345678-1234-1234-1234-00000000000 --as="fake`
+
+If you already have a rolebinding where a existing UUID exist you can run the following command:
+
+`kubectl get pods --as-group=$(kubectl get rolebinding <rolebiding-name> -o jsonpath='{.subjects[0].name}') --as="fake`
+
 ### Authorized IP
 
 To minimize the exposure of the XKS clusters we define a list of authorized ip:s that is approved to connect the kubernetes cluster API.
