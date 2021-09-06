@@ -9,28 +9,28 @@ For different reasons you might want to create a completely new cluster, this ca
 - Test patch the cluster
 - Major breaking change
 
-Thanks to this we support performing blue green on a entire kubernetes cluster, this is applicable for both Azure and AWS.
+Thanks to this XKF support performing blue-green deployment on an entire kubernetes cluster, this is applicable for both Azure and AWS.
 These docs is intended for both clouds, the main difference is in the naming.
 
-Today we do not support any way of only doing blue green on a specific environment.
-If you need to perform blue green on QA you should do it in dev and prod as well.
+Today XKS does not support any way of only doing blue green on a specific environment.
+If you need too perform blue green on QA you should do it in dev and prod as well.
 We think that the risk is to great that you by mistake would get drift between the modules used in the different clusters would be to great.
 
 ## Workflow
 
-> We assume that the workloads on the clusters is stateless and can run multiple instances.
+> We assume that the workloads on the clusters are stateless and can run multiple instances.
 
-- Setup a new cluster in the target environment using terraform
-- Verify that the new cluster is functioning as intended
-  - You **won't** be able to verify any ingress
-  - You **won't** be able to use AZAD-proxy in the newly created cluster
-- Change the txt files over to the newly created cluster
-- Verify that the ingress traffic is migrated to the new cluster and it's working as intended
-- Destroy the old cluster using terraform
+1. Set up a new cluster in the target environment using [Terraform](operator-guide.md)
+2. Verify that the new cluster is functioning as intended
+    - You **won't** be able to verify any ingress
+    - You **won't** be able to use AZAD-proxy in the newly created cluster
+3. Change the TXT DNS records over to the newly created cluster
+4. Verify that the ingress traffic is migrated to the new cluster and it is working as intended
+5. Destroy the old cluster using terraform
 
 ## DNS migration
 
-We have written a small script to make the migration easier for us.
+You can find a small small script bellow to make the migration of DNS easier.
 As always use at your own risk and make sure that you understand what the script does.
 
 Our recommendation is that you migrate one DNS record manually and verify that the ingress and the new cluster is working as intended,
