@@ -26,6 +26,7 @@ access to the tenants resource group. All that has to be done to enable the mana
 AzureIdentity has a labelselector which expects the label to have the same value as the namespace name.
 
 This example will deploy a Pod with the Azure CLI so that you can test access to the Azure API.
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -48,6 +49,7 @@ spec:
 ```
 
 After the Pod has started you can execute a shell in the Pod and verify that the managed identity is working.
+
 ```bash
 az login --identity
 az account show
@@ -60,6 +62,7 @@ language specific SDKs which will most of the time support MSI credentials. Belo
 can interact with Azure storage account blobs.
 
 ** Golang **
+
 ```golang
 package main
 
@@ -93,6 +96,7 @@ func main() {
 ```
 
 ** C# **
+
 ```c#
 using Azure;
 using Azure.Identity;

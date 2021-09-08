@@ -10,8 +10,7 @@ Repository gathering documentation for Xenit open source projects
 
 Take a look at the [Makefile](Makefile) and in [docs/](docs/).
 
-
-# Website
+## Website
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
 
