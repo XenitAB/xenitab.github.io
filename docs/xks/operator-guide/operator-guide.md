@@ -364,7 +364,7 @@ For instructions on how to setup and configure [see](https://github.com/XenitAB/
 Install krew: https://krew.sigs.k8s.io/docs/user-guide/setup/install/#windows
 Install azad-proxy plugin: kubectl krew install azad-proxy
 Login with azure cli (a valid session with azure cli is always required): az login
-Discover the clusters: kubectl azad-proxy discover
+Discover the clusters: `kubectl azad-proxy discover`
 
 There are two ways to connect to the cluster using azad.
 
@@ -380,6 +380,21 @@ To make it possible for our developers and admins to actually login to the clust
 
 If you are a AAD guest user you need to add the AAD Role: **Directory Reader** to your user account.
 AZAD proxy parses the AAD and that is why the user needs Directory Reader.
+
+#### No subscription
+
+If you haven't gotten any of the RG groups that XKF generates and perform `az login` you might see an error
+saying that you don't have any subscriptions.
+
+This is more likely if you are running XKF in AWS but also possible in Azure.
+Do as the error suggest and use the `--allow-no-subscription`.
+
+```shell
+# The variable TENANT_ID = your tenant id
+az login $TENANT_ID --allow-no-subscription
+```
+
+AZAD proxy should still work.
 
 #### Developer groups
 
