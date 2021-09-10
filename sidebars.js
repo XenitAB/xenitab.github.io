@@ -16,11 +16,11 @@ module.exports = {
           type: "category",
           label: "Developer Guide",
           items: [
-            "xks/developer-guide/index",
+            "xks/developer-guide/introduction",
             "xks/developer-guide/best-practices",
             "xks/developer-guide/ingress",
-            "xks/developer-guide/security",
             "xks/developer-guide/cd",
+            "xks/developer-guide/security",
             "xks/developer-guide/linkerd",
             "xks/developer-guide/cloud-resources",
           ],
