@@ -10,6 +10,8 @@ Flux have it's own [official documentation](https://fluxcd.io/) and where you ca
 
 Before reading any further please read through the [core concepts](https://fluxcd.io/docs/concepts/) of flux.
 
+Our very own Philip Laine [presented](https://www.youtube.com/watch?v=F7B_TBcIyl8) on KubeCon 2021 show a similar workflow that we use.
+
 ## CLI
 
 You don't have to use the cli but it can be very helpful especially if want to force a reconcile of a flux resource.
@@ -64,3 +66,38 @@ spec:
 
 As a member of tenant1 you will be able to see this data in your namespace, in this case tenant1.
 You should never update this config manually, flux will automatically change back to the config defined in the git repository.
+
+## Debugging
+
+Bellow you will find a few good base commands to debug why flux haven't applied your changes.
+
+### git repositories
+
+Shows you the status if your changes have been synced to the cluster.
+
+```shell
+$ kubectl get gitrepositories
+NAME   URL                                                                         READY   STATUS                                                            AGE
+wt     http://azdo-proxy.flux-system.svc.cluster.local/Org1/project1/_git/gitops   True    Fetched revision: main/9baa401630894b78ecc5fa5ebdf72c978583dea8   2d2h
+```
+
+Flux should automatically pull the changes to the cluster but if you think they sync takes
+to long time or you want to sync it for some other reason you can.
+
+> Remember to provide the --namespace flag, else flux will assume the source is in the flux-system namespace.
+
+```shell
+flux reconcile source git tenant1 --namespace tenant1
+```
+
+### Kustomization
+
+It's always good to check if flux have applied your changes and if your health checks have passed.
+Overall the sha of your source and the kustomization resource should be the same.
+
+```shell
+$ kubectl get kustomizations
+NAME       READY   STATUS                                                            AGE
+apps-dev   True    Applied revision: main/9baa401630894b78ecc5fa5ebdf72c978583dea8   47h
+tenant1    True    Applied revision: main/9baa401630894b78ecc5fa5ebdf72c978583dea8   2d2h
+```
