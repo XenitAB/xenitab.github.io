@@ -248,11 +248,11 @@ SUB_ID=$(az account show -o tsv --query id)
 In Azure DevOps:
 Project settings -> Service connections -> New service connection -> Azure Resource Manager -> Service principal (manual)
 
-- Subscription Id = $SUB_ID
-- Service Principal Id = $APP_ID
-- Service principal key = The key created in the earlier step
-- Tenant ID = $TENANT_ID
-- Service connection name = xks-<environment\>-owner
+* Subscription Id = $SUB_ID
+* Service Principal Id = $APP_ID
+* Service principal key = The key created in the earlier step
+* Tenant ID = $TENANT_ID
+* Service connection name = xks-${environment}-owner
 
 ### Update pipelines
 
