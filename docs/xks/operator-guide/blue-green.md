@@ -1,5 +1,5 @@
 ---
-id: blue green
+id: blue-green
 title: Cluster blue green
 ---
 
