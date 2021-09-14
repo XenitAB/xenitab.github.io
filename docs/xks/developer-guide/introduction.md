@@ -17,14 +17,13 @@ A good starting point is to get CLI access to the clusters. It is useful to have
 doing any changes to cluster resources with the CLI as the changes will be difficult to track and update in the future. There are a couple of
 prerequisites that have to be met before getting access however.
 
-Start off by [installing the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli). Y
-```
+Start off by [installing the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
+
+```shell
 az login
 ```
 
 Install the
-
-
 
 ## Kubectl Configuration
 
