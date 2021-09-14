@@ -48,6 +48,7 @@ spec:
 ```
 
 After the Pod has started you can execute a shell in the Pod and verify that the managed identity is working.
+
 ```bash
 az login --identity
 az account show
@@ -114,7 +115,188 @@ TBD
 
 ### AWS
 
+When authenticating towards AWS in XKS we recommend that you utilize [IRSA]([amazon.com.TODO](https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/setting-up-enable-IAM.html)).
+
+You create a IAM rule that matches the minimal access that you need to use the resource.
+Annotate the serviceAccount with the IAM arn.
+
+```serviceAccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/iam-name
+  name: application1
+```
+
+In your deployment use the serviceAccount.
+
+```pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: aws-cli
+spec:
+  serviceAccountName: application1
+  containers:
+  - name: msi-test
+      image: amazon/aws-cli
+      command: ["sh"]
+      stdin: true
+      tty: true
+```
+
+After the Pod has started you can execute a shell in the Pod and verify that the managed identity is working.
+
+```bash
+aws sts get-caller-identity
+```
+
+## Secret Provider
+
+If all you need is a secret for example to be able to talk to a database XKS utilize [secret store csi driver](https://secrets-store-csi-driver.sigs.k8s.io/providers.html).
+Both AWS and Azure have done there implementation of secret store csi driver where it talks to it's API to get data from there key store solutions.
+
+### Azure SPC
+
 TBD
+
+### AWS SPC
+
+As mentioned before in AWS we use IRSA to connect pods to the AWS API.
+You will have to create a IAM rule that gives you read access to the secret solution that you use.
+In AWS case it supports both [AWS Secret Manager](https://aws.amazon.com/secrets-manager/) and [AWS System Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html).
+
+Example IAM policy document, this might have been changed always look at the latest [docs](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html).
+The IAM rule only contains the policy not a attachment of it.
+
+```iam.tf
+data "aws_iam_policy_document" "db_connection_string" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "secretsmanager:ListSecrets",
+    ]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "secretsmanager:GetSecretValue",
+      "secretsmanager:DescribeSecret",
+      "secretsmanager:GetResourcePolicy",
+      "secretsmanager:ListSecretVersionIds"
+    ]
+    resources = ["arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:application/application1/connectionstring"]
+  }
+}
+```
+
+[IAM docs](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-access.html) for AWS System Manager Parameter Store.
+
+```ssm-iam.tf
+data "aws_iam_policy_document" "db_connection_string" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:DescribeParameters",
+    ]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:GetParameter",
+      "ssm:GetParameters",
+    ]
+    resources = ["arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/db-*"]
+  }
+}
+```
+
+This is a example secret provider class for **Secret Manager** and **System Manager Parameter**.
+
+```secretproviderclass.yaml
+apiVersion: secrets-st`ore.csi.x-k8s.io/v1alpha1
+kind: SecretProviderClass
+metadata:
+  name: spc1
+  namespace: tenant1
+spec:
+  provider: aws
+  parameters:
+    objects: |
+        # Path to your secret
+      - objectName: "application/application1/connectionstring"
+        objectType: "secretsmanager"
+        # Notice the usage of objectAlias
+        objectAlias: "connectionstring"
+      - objectName: "db-test"
+        objectType: "ssmparameter"
+  secretObjects:
+    - data:
+        - key: password
+          objectName: "connectionstring"
+      secretName: connectionstring
+      type: Opaque
+    - data:
+        - key: password
+          objectName: db-test
+      secretName: db-test
+      type: Opaque
+```
+
+A service account using the IAM rule that we have created.
+
+```sa.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/iam-name
+  name: application1
+```
+
+A deployment using the service account and the csi driver.
+
+```deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application1
+spec:
+  selector:
+    matchLabels:
+      app: application1
+  template:
+    metadata:
+      annotations:
+        secret.reloader.stakater.com/reload: "db-test"
+      labels:
+        app: application1
+    spec:
+      serviceAccountName: application1
+      containers:
+        - name: api
+          image: alpine:latest
+          env:
+            - name: ConnectionStrings
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: db-test
+          volumeMounts:
+            - name: secret-store
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+      volumes:
+        - name: secret-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: spc1
+```
 
 ## Resource Creation
 
