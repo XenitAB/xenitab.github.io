@@ -1,0 +1,22 @@
+name: PR Validation
+
+on: pull_request
+
+jobs:
+  build:
+    name: github super-linter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: super-linter
+        uses: docker://ghcr.io/github/super-linter:slim-v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_MARKDOWN: true

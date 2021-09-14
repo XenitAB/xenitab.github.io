@@ -26,6 +26,7 @@ access to the tenants resource group. All that has to be done to enable the mana
 AzureIdentity has a labelselector which expects the label to have the same value as the namespace name.
 
 This example will deploy a Pod with the Azure CLI so that you can test access to the Azure API.
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -60,7 +61,9 @@ A more realistic scenario is an internally developed application needs to access
 language specific SDKs which will most of the time support MSI credentials. Below are examples for how to create a client using MSI credentials that
 can interact with Azure storage account blobs.
 
+<!-- markdownlint-disable -->
 ** Golang **
+
 ```golang
 package main
 
@@ -94,6 +97,7 @@ func main() {
 ```
 
 ** C# **
+
 ```c#
 using Azure;
 using Azure.Identity;
@@ -108,6 +112,7 @@ async static Task CreateBlockBlobAsync(string accountName, string containerName,
                                                                     new DefaultAzureCredential());
 }
 ```
+<!-- markdownlint-restore -->
 
 #### Limiting Permissions
 

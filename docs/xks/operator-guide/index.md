@@ -17,7 +17,6 @@ as it allows for a more flexible architecture that could be changed in paralell.
 
 The following Terraform modules are used in XKS:
 
-
 ## Core
 
 ## Governance

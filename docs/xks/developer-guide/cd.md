@@ -5,8 +5,8 @@ title: Continuous Delivery
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-Continous Delivery (CD) should be the only way to make changes to running applications in the XKS service. This is to ensure that changes are consistent and tracked in a centrailized
-manner that can be observed by all.
+Continuous Delivery (CD) should be the only way to make changes to running applications in the XKS service.
+This is to ensure that changes are consistent and tracked in a centralized manner that can be observed by all.
 
 ## GitOps
 

@@ -3,8 +3,7 @@ id: best-practices
 title: Best Practices
 ---
 
-This page aims to collect best practices and common misstakes that can be made while using XKS.
-
+This page aims to collect best practices and common mistakes that can be made while using XKS.
 
 ## Container Resources
 
@@ -18,4 +17,4 @@ This page aims to collect best practices and common misstakes that can be made w
 
 Here are some good resources to also read ontop of this page.
 
-* https://srcco.de/posts/web-service-on-kubernetes-production-checklist-2019.html
+* [https://srcco.de/posts/web-service-on-kubernetes-production-checklist-2019.html](https://srcco.de/posts/web-service-on-kubernetes-production-checklist-2019.html)
