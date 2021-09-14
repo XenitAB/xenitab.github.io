@@ -61,6 +61,7 @@ A more realistic scenario is an internally developed application needs to access
 language specific SDKs which will most of the time support MSI credentials. Below are examples for how to create a client using MSI credentials that
 can interact with Azure storage account blobs.
 
+<!-- markdownlint-disable -->
 ** Golang **
 
 ```golang
@@ -111,6 +112,7 @@ async static Task CreateBlockBlobAsync(string accountName, string containerName,
                                                                     new DefaultAzureCredential());
 }
 ```
+<!-- markdownlint-restore -->
 
 #### Limiting Permissions
 
