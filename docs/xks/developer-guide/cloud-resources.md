@@ -120,7 +120,7 @@ TBD
 
 ### AWS
 
-When authenticating towards AWS in XKS we recommend that you utilize [IRSA]([amazon.com.TODO](https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/setting-up-enable-IAM.html)).
+When authenticating towards AWS in XKS we recommend that you utilize [IRSA](https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/setting-up-enable-IAM.html).
 
 You create a IAM rule that matches the minimal access that you need to use the resource.
 Annotate the serviceAccount with the IAM arn.
