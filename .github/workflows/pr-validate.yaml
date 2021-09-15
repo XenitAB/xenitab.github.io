@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   build:
-    name: github super-linter
+    name: markdownlint-cli
     runs-on: ubuntu-latest
 
     steps:
@@ -13,10 +13,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: super-linter
-        uses: docker://ghcr.io/github/super-linter:slim-v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_MARKDOWN: true
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - run: npm install markdownlint-cli
+      - run: make markdownlint
