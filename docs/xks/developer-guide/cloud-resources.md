@@ -198,6 +198,46 @@ data "aws_iam_policy_document" "db_connection_string" {
 [IAM docs](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-access.html) for AWS System Manager Parameter Store.
 
 ```ssm-iam.tf
+XKS in AWS makes use of [IAM roles for service accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) (IRSA)
+to give individual containers access to AWS services. IRSA works by annotating a ServiceAccount with an IAM Role ARN, when that ServiceAccount is
+attached to a Pod, the Pod will receive the permissions of the role. The one caveat is that the attached role needs to be configured with a specific
+trust policy which allows the Pod to assume the role.
+
+Tenants in XKS are expected to use separate AWS accounts to limit access.
+
+Start by defining a variable for the OIDC URLs that need to be trusted. Currently this is a static definition that needs to be specified but work is
+planned to make this value discoverable in the future.
+```terraform
+variable "oidc_urls" {
+  description = "List of EKS OIDC URLs to trust."
+  type        = list(string)
+}
+```
+
+A new OIDC provider has to be created for each trusted URL. The simplest way to do this is to iterate the URL list. This should only be done once per
+account, so try to define all roles in the same Terraform state.
+```terraform
+data "tls_certificate" "this" {
+  for_each = {
+    for v in var.oidc_urls :
+    v => v
+  }
+  url = each.value
+}
+
+resource "aws_iam_openid_connect_provider" "this" {
+  for_each = {
+    for v in var.oidc_urls :
+    v => v
+  }
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = ["${data.tls_certificate.this[each.value].certificates.0.sha1_fingerprint}"]
+  url             = each.value
+}
+```
+
+```terraform
+>>>>>>> 26118e5 (Add more details to cloud resources docs)
 data "aws_iam_policy_document" "db_connection_string" {
   statement {
     effect = "Allow"
@@ -302,5 +342,24 @@ spec:
 ```
 
 ## Resource Creation
+
+module "irsa_db" {
+  source = "github.com/xenitab/terraform-modules//modules/aws/irsa?ref=2021.08.9"
+
+  name = "${var.name_prefix}-${data.aws_region.current.name}-${var.environment}-eks${var.eks_name_suffix}-db"
+  oidc_providers = [
+    for v in var.oidc_urls :
+    {
+      url = v
+      arn = aws_iam_openid_connect_provider.this[v].arn
+    }
+  ]
+  kubernetes_namespace       = var.tenant_namespace
+  kubernetes_service_account = var.tenant_sa
+  policy_json                = data.aws_iam_policy_document.db_connection_string.json
+}
+```
+
+#### SDK Configuration
 
 TBD
