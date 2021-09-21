@@ -54,7 +54,7 @@ az login --identity
 az account show
 ```
 
-#### SDK Configuration
+#### SDK
 
 A common scenario is that an application may need API access to an Azure resources through the API. In these cases the best solution is to use the language specific SDKs which will most of the time
 support MSI credentials. Below are examples for how to create a client using MSI credentials that can interact with Azure storage account blobs.
@@ -236,6 +236,6 @@ kubectl -n tenant exec -it irsa-test
 aws sts get-caller-identity
 ```
 
-#### SDK Configuration
+#### SDK
 
 TBD

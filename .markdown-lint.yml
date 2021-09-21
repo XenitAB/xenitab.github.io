@@ -7,6 +7,9 @@ MD013:
   # Number of characters
   line_length: 200
 
+MD024:
+  allow_different_nesting: true
+
 MD033:
   # Allowed elements
   allowed_elements:
