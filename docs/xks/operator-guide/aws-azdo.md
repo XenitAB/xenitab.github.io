@@ -1,6 +1,6 @@
 ---
-id: aws-azure-devops
-title: AWS-azure-devops
+id: aws-azdo
+title: AWS azure-devops
 ---
 
 We use Azure DevOps to manage git repositories even if you are using AWS to deploy XKF and we run all our pipelines in Azure using VMSS just like in a Azure based XKF.
