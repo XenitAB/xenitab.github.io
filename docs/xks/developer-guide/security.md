@@ -3,11 +3,6 @@ id: security
 title: Security
 ---
 
-## Network Policies
-
-By default each namespace is limited in the permitted network trafic. Pods in the namespaces are allowed to egress freely out to the internet and comminicate with other pods
-in the same namespace. It is however restricted when it comes to communicating with other pods in other namespaces, unless explicitly configured to be allowed this is not possible.
-
 ## Constraint Policies
 
 Certain policies will always be enforced in the cluster as a guard rail to minimize the risk of security exposures. The policies are implemented on the Kubernetes API level so that
