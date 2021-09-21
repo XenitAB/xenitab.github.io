@@ -19,3 +19,13 @@ build:
 .SILENT:
 install-site:
 	yarn
+
+# markdownlint-cli
+# Assumes that you have npm installed
+.PHONY: markdownlint-install
+markdownlint-install:
+	npm install markdownlint-cli
+
+.PHONY: markdownlint
+markdownlint:
+	node_modules/.bin/markdownlint -c .markdown-lint.yml docs/
