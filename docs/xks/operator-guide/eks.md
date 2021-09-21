@@ -100,3 +100,12 @@ Run Terraform in the following order:
 
 Make sure that you only have one peering request open at the same time, else the accepter side won't be able to find a unique request.
 Now you should be able to see the VPC peering connected on both sides.
+
+## Break glass
+
+We are very dependent on azad-proxy to work but if something happens with the
+ingress, azad-proxy or the AAD we need have ways of reaching the cluster.
+
+```bash
+aws eks --region eu-west-1 update-kubeconfig --name dev-eks1 --alias dev-eks1 --role-arn arn:aws:iam::111111111111:role/xkf-eu-west-1-dev-eks-admin
+```
