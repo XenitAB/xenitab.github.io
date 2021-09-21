@@ -5,7 +5,7 @@ title: EKS
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-Xenit Kubernetes Framework supports both AKS and EKS, though AKS is our main platform.
+Xenit Kubernetes Framework supports both AKS and EKS.
 In this document we will describe how to setup XKF on EKS and how it differs from AKS.
 
 ## Differences
