@@ -20,10 +20,11 @@ module.exports = {
             "xks/developer-guide/best-practices",
             "xks/developer-guide/ingress",
             "xks/developer-guide/cd",
+            "xks/developer-guide/cloud-iam",
+            "xks/developer-guide/secrets-management",
             "xks/developer-guide/security",
             "xks/developer-guide/linkerd",
             "xks/developer-guide/flux",
-            "xks/developer-guide/cloud-resources",
           ],
         },
         {
