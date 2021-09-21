@@ -3,9 +3,10 @@ id: aws-azdo
 title: AWS azure-devops
 ---
 
-We use Azure DevOps to manage git repositories even if you are using AWS to deploy XKF and we run all our pipelines in Azure using VMSS just like in a Azure based XKF.
+In this scenario, the customer is using Azure DevOps for source control and continuous delivery and use EKS to deliver services.
+We also have support for GitHub.
 
-The main difference is that we use the AWS service connection.
+The main difference from a Azure DevOps point of view is that we use the AWS service connection.
 First you need to install the addon to Azure DevOps using the Azure marketplace,
 you can find more information how [here](https://docs.aws.amazon.com/vsts/latest/userguide/getting-started.html).
 
@@ -18,7 +19,7 @@ All this is possible to solve using Terraform but we currently don't have any te
 
 - Create a IAM user
   - Tip put both these users under a specific path, for example CI
-  - Save the credentials in a safe place
+  - Save the access key in a safe place
 - Attach IAM policy
   - AmazonEKSClusterPolicy
   - AdministratorAccess
