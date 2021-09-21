@@ -158,7 +158,7 @@ data "aws_iam_policy_document" "db_connection_string" {
 }
 ```
 
-**or**
+or
 
 ```hcl
 data "aws_iam_policy_document" "db_connection_string" {

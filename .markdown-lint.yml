@@ -8,7 +8,10 @@ MD013:
   line_length: 200
 
 MD024:
+  # Only check sibling headings
   allow_different_nesting: true
+  # Only check sibling headings
+  siblings_only: true
 
 MD033:
   # Allowed elements
