@@ -94,7 +94,7 @@ git ${git_args.join(" ")}`);
             }
 
             // Calculate slug
-            if (s.length === 2) {
+            if (s.length === 2 && file_name === "README") {
               slug = Path.join(slug, s[0], "overview");
             } else {
               slug = Path.join(slug, s[0], s[1]);
@@ -102,7 +102,11 @@ git ${git_args.join(" ")}`);
           } else {
             // Normal case used for other repos
             if (folder_name === name) {
-              slug = Path.join(slug, "overview");
+              if (file_name === "README") {
+                slug = Path.join(slug, "overview");
+              } else {
+                slug = Path.join(slug, file_name);
+              }
             } else {
               slug = Path.join(slug, folder_name);
             }
