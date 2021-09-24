@@ -63,6 +63,15 @@ git ${git_args.join(" ")}`);
           let slug = name; // Used for pretty urls
           let new_path = docs_path; // Where to put the document
 
+          const ignored_files = [
+            "SECURITY",
+          ]
+
+          if (ignored_files.includes(file_name)) {
+            console.info(`Ignoring file: ${full_match}`)
+            return null
+          }          
+
           // Special case if docs_root is supplied, used for terraform-modules repo
           if (docs_root != null && full_match.includes(`/${docs_root}/`)) {
             // The relative path from docs root to file path
@@ -122,7 +131,8 @@ git ${git_args.join(" ")}`);
     );
   })
   .then(async (result) => {
-    await write_sidebar(title, result);
+    const result_without_null = result.filter(v => v);
+    await write_sidebar(title, result_without_null);
   })
   .catch((e) => {
     console.error(`Error: ${e}`);
