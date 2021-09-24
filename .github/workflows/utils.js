@@ -126,7 +126,7 @@ async function write_sidebar(
 
       if (projects_items.includes(name)) {
         return_item.items = docs_item.items.map((projects_item) => {
-          if (projects_item === name) {
+          if (projects_item.label === name) {
             return new_projects_item
           }
           return projects_item

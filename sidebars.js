@@ -45,13 +45,7 @@ module.exports = {
     {
       "type": "category",
       "label": "Projects",
-      "items": [
-        {
-          "type": "category",
-          "label": "Terraform Modules",
-          "items": []
-        }
-      ]
+      "items": []
     }
   ]
 }
