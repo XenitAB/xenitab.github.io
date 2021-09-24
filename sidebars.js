@@ -18,15 +18,12 @@ module.exports = {
           "items": [
             "xks/developer-guide/introduction",
             "xks/developer-guide/best-practices",
-            "xks/developer-guide/cd",
-            "xks/developer-guide/cloud-iam",
-            "xks/developer-guide/flux",
             "xks/developer-guide/secrets-management",
+            "xks/developer-guide/cloud-iam",
+            "xks/developer-guide/security",
             "xks/developer-guide/cd",
             "xks/developer-guide/flux",
-            "xks/developer-guide/networking",
-            "xks/developer-guide/best-practices",
-            "xks/developer-guide/security",
+            "xks/developer-guide/networking"
           ]
         },
         {
@@ -34,12 +31,12 @@ module.exports = {
           "label": "Operator Guide",
           "items": [
             "xks/operator-guide/index",
-            "xks/operator-guide/aws-azdo",
-            "xks/operator-guide/azure-devops-agents",
-            "xks/operator-guide/blast-radius",
             "xks/operator-guide/blue-green",
+            "xks/operator-guide/aws-azdo",
             "xks/operator-guide/eks",
-            "xks/operator-guide/operator-guide"
+            "xks/operator-guide/blast-radius",
+            "xks/operator-guide/operator-guide",
+            "xks/operator-guide/azure-devops-agents"
           ]
         }
       ]
