@@ -125,7 +125,8 @@ git ${git_args.join(" ")}`);
     await write_sidebar(title, result);
   })
   .catch((e) => {
-    console.warn(e);
+    console.error(`Error: ${e}`);
+    process.exit(1);
   })
   .then((_) => {
     if (!DEVMODE) {
