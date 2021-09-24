@@ -24,7 +24,9 @@ module.exports = {
             "xks/developer-guide/secrets-management",
             "xks/developer-guide/cd",
             "xks/developer-guide/flux",
-            "xks/developer-guide/best-practices"
+            "xks/developer-guide/networking",
+            "xks/developer-guide/best-practices",
+            "xks/developer-guide/security",
           ]
         },
         {
