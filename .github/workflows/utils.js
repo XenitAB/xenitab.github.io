@@ -1,6 +1,7 @@
 const Fs = require("fs");
 const Cp = require("child_process");
 const Path = require("path");
+const { Console } = require("console");
 
 function spawn_promise(command, args, options) {
   return new Promise((resolve, reject) => {
@@ -107,13 +108,45 @@ async function write_sidebar(
       }
     }, []);
 
-  sidebar["docs"][name] = ids;
+  // this logic should be cleaned up
+  // it updates the items array of Projects if it exist
+  const new_docs = sidebar["docs"].map((docs_item) => {
+    let return_item = docs_item;
+
+    if (docs_item.label === "Projects") {
+      const projects_items = docs_item.items.map((projects_item) => {
+        return projects_item.label
+      })
+
+      const new_projects_item = {
+        type: "category",
+        label: name,
+        items: ids
+      }
+
+      if (projects_items.includes(name)) {
+        return_item.items = docs_item.items.map((projects_item) => {
+          if (projects_item.label === name) {
+            return new_projects_item
+          }
+          return projects_item
+        })
+      } else {
+        return_item.items.push(new_projects_item)
+      }
+    }
+
+    return return_item;
+  });
+
+  sidebar["docs"] = new_docs;
 
   const sidebar_content = `module.exports = ${JSON.stringify(
     sidebar,
     null,
     2
   )}`;
+
   await Fs.promises.writeFile(sidebar_file, sidebar_content, "utf8");
 
   return sidebar;
