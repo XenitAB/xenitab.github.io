@@ -36,7 +36,6 @@ module.exports = {
             "xks/operator-guide/blast-radius",
             "xks/operator-guide/blue-green",
             "xks/operator-guide/eks",
-            "xks/operator-guide/eks2",
             "xks/operator-guide/operator-guide",
           ],
         },
