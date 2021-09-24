@@ -3,8 +3,7 @@ name: PR Validation
 on: pull_request
 
 jobs:
-  build:
-    name: markdownlint-cli
+  markdownlint:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,3 +17,17 @@ jobs:
           node-version: "16"
       - run: npm install markdownlint-cli
       - run: make markdownlint
+
+  build-page:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - run: make all
