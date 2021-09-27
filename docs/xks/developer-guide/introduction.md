@@ -6,7 +6,7 @@ title: Introduction
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This documentation is targeted towards developers using [XKS](https://xenit.se/it-tjanster/kubernetes-framework/#contact). It covers the basics of
-Kubernetes and the custom features that are offered by XKS. It is reccomended to read this page in its entirety to get a lay of the land. By the end
+Kubernetes and the custom features that are offered by XKS. It is recommended to read this page in its entirety to get a lay of the land. By the end
 of it new users should be setup with access to their clusters and ready to deploy applications.
 
 ## Architecture
@@ -67,3 +67,9 @@ TBD
 ## Next Steps
 
 TBD
+
+## Troubleshoot applications in Kubernetes
+
+There is a great guide how to debug Kubernetes deployment over at [learnk8s.io](https://learnk8s.io/troubleshooting-deployments).
+
+To debug flux issues have a look at our [flux docs](flux.md).
