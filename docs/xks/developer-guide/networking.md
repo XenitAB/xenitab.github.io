@@ -13,7 +13,7 @@ the box in XKS all tenant namespaces have a default deny rule added to them. Thi
 namespaces and egress traffic two other namespaces. All traffic within the namespace between Pods is allowed. The reasoning behind this setup is that Pods should not have more network access than they
 require to function, as it reduces the blast radius in the case of an exploit.
 
-<img alt="Default Deny Network Policy" src={useBaseUrl("img/assets/xks/developer-guide/network-policy-default-deny.drawio.jpeg")} />
+<img alt="Default Deny Network Policy" src={useBaseUrl("img/assets/xks/developer-guide/network-policy-default-deny.jpg")} />
 
 The default deny Network Policy contains an exception for traffic destined to the clusters DNS service. Without this exception DNS resolution would not work. The pod selector in the Network Policy is
 empty, this means that the Network Policy will apply for all Pods in the namespace.
@@ -160,7 +160,7 @@ TBD
 as a layer ontop of Kubernetes Services by exposing the Service with a hostname. All Ingress traffic is Layer 7 routed meaning that traffic is routed based on the host header in the HTTP request. This
 also means that Ingress only works with HTTP traffic. Doing it this way means that only a single load balancer is required reducing cost compared to running multiple load balancers, one per Ingress.
 
-<img alt="Ingress Overview" src={useBaseUrl("img/assets/xks/developer-guide/ingress-overview.drawio.jpeg")} />
+<img alt="Ingress Overview" src={useBaseUrl("img/assets/xks/developer-guide/ingress-overview.jpg")} />
 
 XKS comes with everything pre configured for Ingress to work. The cluster will either have a single [Nginx Ingress Controller](https://kubernetes.github.io/ingress-nginx/) which is exposed to the
 public internet or two controllers where one is public and one is private. On top of that the cluster is configured with [External DNS](https://github.com/kubernetes-sigs/external-dns) which creates
@@ -265,7 +265,7 @@ Refer to the [oficial documentation](https://linkerd.io/2.10/overview/) for docu
 Linkerd works by injecting a sidecar into every Pod which uses Linkerd. All network requests have to be sent through the sidecar which will then be
 responsible with forwarding it. The sidecar will hanlde things like traffic encryption before sending the packets outside of the node.
 
-<img alt="Linkerd Overview" src={useBaseUrl("img/assets/xks/developer-guide/linkerd-overview.drawio.jpeg")} />
+<img alt="Linkerd Overview" src={useBaseUrl("img/assets/xks/developer-guide/linkerd-overview.jpg")} />
 
 ### Get Started
 

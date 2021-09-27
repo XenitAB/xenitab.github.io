@@ -6,8 +6,8 @@ all: install-site build
 
 .PHONY: assets
 assets:
-	draw.io -s 3 -b 10 -x -f jpeg -o static/img/assets/xks/operator-guide/ assets/xks/operator-guide/
-	draw.io -s 3 -b 10 -x -f jpeg -o static/img/assets/xks/developer-guide/ assets/xks/developer-guide/
+	docker run --rm -it -v $(PWD):/data rlespinasse/drawio-export:4.1.0 -s 3 -b 10 -f jpg --remove-page-suffix -o /data/static/img/assets/xks/operator-guide/ /data/assets/xks/operator-guide/
+	docker run --rm -it -v $(PWD):/data rlespinasse/drawio-export:4.1.0 -s 3 -b 10 -f jpg --remove-page-suffix -o /data/static/img/assets/xks/developer-guide/ /data/assets/xks/developer-guide/
 
 .SILENT:
 serve: all
