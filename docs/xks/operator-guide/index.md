@@ -5,8 +5,7 @@ title: Overview
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-[Xenit Kubernetes Service](https://xenit.se/it-tjanster/kubernetes-service/) (XKS) is a opinionated standardized Kubernetes deployment on Azure. It combines AKS and other
-Azure services with additional configuration and services that run on-top of AKS.
+[Xenit Kubernetes Service](https://xenit.se/it-tjanster/kubernetes-service/) (XKS) is an opinionated Kubernetes deployment on a public cloud provider's managed Kubernetes service. It combines a cloud provider's managed Kubernetes offering and ancillary services with additional configuration and services that run on top of Kubernetes.
 
 ## Architecture
 
