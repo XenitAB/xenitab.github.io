@@ -22,6 +22,7 @@ module.exports = {
             "xks/developer-guide/cloud-iam",
             "xks/developer-guide/security",
             "xks/developer-guide/cd",
+            "xks/developer-guide/ci",
             "xks/developer-guide/flux",
             "xks/developer-guide/networking"
           ]
