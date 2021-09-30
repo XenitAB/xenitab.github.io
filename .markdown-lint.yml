@@ -3,9 +3,7 @@ MD010:
   # Include code blocks
   code_blocks: false
 
-MD013:
-  # Number of characters
-  line_length: 200
+MD013: false
 
 MD024:
   # Only check sibling headings
