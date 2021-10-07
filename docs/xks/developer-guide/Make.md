@@ -18,7 +18,7 @@ In Windows: Go to Control Panel → Programs and Features.
 
 In the left-hand menu, select “Turn Windows features on or off”
 
-![alt text](image.jpg)
+![wsl-enable](https://user-images.githubusercontent.com/91601778/136399733-d7acf799-1748-42e8-8e2d-9f05bd2a1f53.jpeg)
 
 ## Install Docker-Desktop.
 
@@ -32,11 +32,12 @@ Now sign-out from Windows and back in, and Docker application should work.
 
 Verify in settings, WSL2 based engine is used.
 
-![alt text](image.jpg)
+![Docker1](https://user-images.githubusercontent.com/91601778/136399809-dbe5dc4c-5b24-4754-975e-1bda1b1993bc.jpeg)
+
 
 Also under settings. Go to Resources → WSL Integration and verify that you have access to the WSL integration with your installed WSL. In this case Ubuntu and make sure it is checked.
  
-![alt text](image.jpg)
+![Docker2](https://user-images.githubusercontent.com/91601778/136399892-f3e8b0f3-edbc-4c8d-a311-63e1b65b3db8.jpeg)
 
 To verify functionality:
 
