@@ -1,7 +1,8 @@
 ---
-Installing WSL2 with Docker on Windows and using Make.
+Installing WSL2 and Docker on Windows and using Make.
 ---
-## H1 Installation of WSL2 - Windows Subsystem for Linux
+
+## Installation of WSL2 - Windows Subsystem for Linux
 
 Install via Powershell follow this link 
 
@@ -17,10 +18,9 @@ In Windows: Go to Control Panel → Programs and Features.
 
 In the left-hand menu, select “Turn Windows features on or off”
 
+![alt text](image.jpg)
 
- 
-
-## H1 Install docker-desktop from Docker via this link. Follow the setup guide.
+## Install docker-desktop from Docker via this link. Follow the setup guide.
 
 Docker Desktop for Mac and Windows | Docker
 
@@ -32,16 +32,15 @@ Now sign-out from Windows and back in, and Docker application should work.
 
 Verify in settings, WSL2 based engine is used.
 
+![alt text](image.jpg)
 
 Also under settings. Go to Resources → WSL Integration and verify that you have access to the WSL integration with your installed WSL. In this case Ubuntu and make sure it is checked.
-
-
  
+![alt text](image.jpg)
 
 To verify functionality:
 
 In WSL2. Run the command:
-
 
 docker run hello-world
 Wait for the image to be pulled and if everything works properly the output should be:
@@ -51,7 +50,7 @@ Hello from Docker!
 This message shows that your installation appears to be working correctly.
  
 
-Utilising Make with WSL2, Terraform and Docker.
+## Utilising Make with WSL2, Terraform and Docker.
 
 First time we ran Make - It worked great. Second time we ran into the following error. Which seemed to be a temporary error, caused by slow/bad tcp-connection.
 
