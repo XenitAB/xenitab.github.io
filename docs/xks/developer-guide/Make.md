@@ -10,7 +10,7 @@ Install WSL | Microsoft Docs
 
 Installation is also possible via Microsoft Store. Search for “linux”.
 
-For this issue we used Ubuntu version 2004.2021.825.0
+For this [ISSUE](https://github.com/XenitAB/azure-devops-templates/issues/69) we used Ubuntu version 2004.2021.825.0
 
 Important for this to work is to make sure that Windows Subsystem for Linux is enabled as a feature in Windows.
 
@@ -20,9 +20,9 @@ In the left-hand menu, select “Turn Windows features on or off”
 
 ![alt text](image.jpg)
 
-## Install docker-desktop from Docker via this link. Follow the setup guide.
+## Install Docker-Desktop.
 
-Docker Desktop for Mac and Windows | Docker
+[Download and install Docker.](https://www.docker.com/products/docker-desktop)
 
 Once installation is complete, verify that the application works. We experienced issues when trying to start Docker-desktop within a managed organisation using AD accounts, this caused an error with us not being members of a group called “docker-users“.
 
@@ -42,12 +42,13 @@ To verify functionality:
 
 In WSL2. Run the command:
 
-docker run hello-world
+> docker run hello-world
+
 Wait for the image to be pulled and if everything works properly the output should be:
 
 
-Hello from Docker!
-This message shows that your installation appears to be working correctly.
+>Hello from Docker!
+>This message shows that your installation appears to be working correctly.
  
 
 ## Utilising Make with WSL2, Terraform and Docker.
@@ -55,6 +56,6 @@ This message shows that your installation appears to be working correctly.
 First time we ran Make - It worked great. Second time we ran into the following error. Which seemed to be a temporary error, caused by slow/bad tcp-connection.
 
 
-│ Error: Failed to install provider
-│
-│ Error while installing hashicorp/azurerm v2.64.0: local error: tls: bad record MAC
+>│ Error: Failed to install provider
+>│
+>│ Error while installing hashicorp/azurerm v2.64.0: local error: tls: bad record MAC
