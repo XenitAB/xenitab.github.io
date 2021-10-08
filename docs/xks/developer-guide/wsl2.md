@@ -33,7 +33,7 @@ Now sign-out from Windows and back in, and Docker application should work.
 
 Verify in settings, WSL2 based engine is used.
 
-<img alt="docker1" src={useBaseUrl("img/developer/docker1.png")} />
+<img alt="docker1" src={useBaseUrl("img/xks/developer-guide/docker1.png")} />
 
 Also under settings. Go to Resources → WSL Integration and verify that you have access to the WSL integration with your installed WSL. In this case Ubuntu and make sure it is checked.
 
