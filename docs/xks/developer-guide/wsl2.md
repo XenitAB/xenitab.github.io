@@ -7,7 +7,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Installation of WSL2 - Windows Subsystem for Linux
 
-For this we used Ubuntu version 2004.2021.825.0 but other distributions might work, but not verified.
+The reason for this documentation is that we are using a number of linux based tools to be able to have a good integration with Windows, we recommend to use linux as a base for this.
+This document is verified using Ubuntu version 2004.2021.825.0 but other distributions will most likely work.
 
 [Install via Powershell](https://docs.microsoft.com/en-us/windows/wsl/install)
 
@@ -19,7 +20,7 @@ In Windows: Go to Control Panel → Programs and Features.
 
 In the left-hand menu, select “Turn Windows features on or off”
 
-<img alt="wsl-enable" src={useBaseUrl("img/assets/xks/developer-guide/wsl-enable.png")} />
+<img alt="wsl-enable" src={useBaseUrl("img/developer/wsl-enable.png")} />
 
 ## Install Docker-Desktop
 
@@ -33,15 +34,15 @@ Now sign-out from Windows and back in, and Docker application should work.
 
 Verify in settings, WSL2 based engine is used.
 
-<img alt="docker1" src={useBaseUrl("img/assets/xks/developer-guide/docker1.png")} />
+<img alt="docker1" src={useBaseUrl("img/developer/docker1.png")} />
 
 Also under settings. Go to Resources → WSL Integration and verify that you have access to the WSL integration with your installed WSL. In this case Ubuntu and make sure it is checked.
 
-<img alt="docker2" src={useBaseUrl("img/assets/xks/developer-guide/docker2.png")} />
+<img alt="docker2" src={useBaseUrl("img/developer/docker2.png")} />
 
 To verify functionality:
 
-In WSL2. Run the command:
+In your Ubuntu WSL2 instance - Run the command:
 
 ```shell
 docker run hello-world
@@ -54,8 +55,10 @@ Wait for the image to be pulled and if everything works properly the output shou
 
 ## Utilising Make with WSL2, Terraform and Docker
 
-First time we ran Make - It worked great. Second time we ran into the following error. Which seemed to be a temporary error, caused by slow/bad tcp-connection.
+We noticed, when running terraform from withing our Ubuntu-instance, that there appears to be som network issues. We saw quite slow network connections. Probably caused by the TCP-connection with the following error:
 
 >│ Error: Failed to install provider
 >│
 >│ Error while installing hashicorp/azurerm v2.64.0: local error: tls: bad record MAC
+
+We ran the terraform command again - and it worked perfectly.
