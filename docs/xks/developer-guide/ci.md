@@ -49,7 +49,7 @@ For example it can look like this:
 CVE-2020-29652
 ```
 
-If you want to disable trivy by appending the following to your ci file build file.
+If you want to disable trivy by appending the following to your ci file.
 
 ```.yaml
 imageScan
