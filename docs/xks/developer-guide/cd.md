@@ -27,7 +27,7 @@ The core feature of the gitops repo is that one of the pipelines automatically u
 
 We have to grant it permissions to do this, sadly manually...
 
-<img alt="CI access" src={useBaseUrl("img/developer-guide/gitops_repo_settings.png")} />
+<img alt="CI access" src={useBaseUrl("img/assets/xks/developer-guide/gitops_repo_settings.png")} />
 
 ### Service connections
 

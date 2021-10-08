@@ -5,15 +5,15 @@ title: Overview
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-[Xenit Kubernetes Service](https://xenit.se/it-tjanster/kubernetes-service/) (XKS) is a oppinionated standerdized Kubernetes deployment on Azure. It combines AKS and other
-Azure services with additional configuration and services that run ontop of AKS.
+[Xenit Kubernetes Service](https://xenit.se/it-tjanster/kubernetes-service/) (XKS) is a opinionated standardized Kubernetes deployment on Azure. It combines AKS and other
+Azure services with additional configuration and services that run on-top of AKS.
 
 ## Architecture
 
 XKS is set up from a set of Terraform modules that when combined creates the full XKS service. There are multiple individual states that all fulfill their own purpose and build
-upon each other in a heirarchal manner. The first setup requires applying the Terraform in the correct order, but after that ordering should not matter. Separate states are used
-as it allows for a more flexible architecture that could be changed in paralell.
-<img alt="XKS Overview" src={useBaseUrl("img/assets/xks/operator-guide/xks-overview.jpg")} />
+upon each other in a hierarchical manner. The first setup requires applying the Terraform in the correct order, but after that ordering should not matter. Separate states are used
+as it allows for a more flexible architecture that could be changed in parallel.
+<img alt="XKS Overview" src={useBaseUrl("img/assets/xks/operator-guide/aks-overview.jpg")} />
 
 The following Terraform modules are used in XKS:
 
