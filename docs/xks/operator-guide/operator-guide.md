@@ -258,7 +258,7 @@ Project settings -> Service connections -> New service connection -> Azure Resou
 
 Update the variable azureSubscriptionTemplate. You can find the value under Project settings -> Service Connections
 
-<img alt="Service Connections" src={useBaseUrl("img/operator/project_settings.png")} />
+<img alt="Service Connections" src={useBaseUrl("img/assets/xks/operator-guide/project_settings.png")} />
 
 In my case sp-sub-project1-xks
 
@@ -303,11 +303,11 @@ To make it possible for flux to clone repos from azure devops we need to create 
 
 User Settings -> Personal access tokens -> New Token
 
-<img alt="Settings user" src={useBaseUrl("img/operator/settings_user.png")} />
+<img alt="Settings user" src={useBaseUrl("img/assets/xks/operator-guide/settings_user.png")} />
 
 Create a PAT
 
-<img alt="Create PAT" src={useBaseUrl("img/operator/create_pat.png")} />
+<img alt="Create PAT" src={useBaseUrl("img/assets/xks/operator-guide/create_pat.png")} />
 
 Copy the generated key, we will need it for the next step.
 
@@ -337,7 +337,7 @@ In azure portal search for "Key vaults" and pick the core one that matches the u
 
 Key vaults -> core-1234 -> Secrets -> Generate/Import
 
-<img alt="Azure Key Vaults" src={useBaseUrl("img/operator/azure_key_vault.jpg")} />
+<img alt="Azure Key Vaults" src={useBaseUrl("img/assets/xks/operator-guide/azure_key_vault.jpg")} />
 
 Call the secret "azure-devops-pat" and add the PAT key that you created in the previous step.
 
