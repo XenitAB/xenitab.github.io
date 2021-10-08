@@ -23,7 +23,8 @@ module.exports = {
             "xks/developer-guide/security",
             "xks/developer-guide/cd",
             "xks/developer-guide/flux",
-            "xks/developer-guide/networking"
+            "xks/developer-guide/networking",
+            "xks/developer-guide/wsl2"
           ]
         },
         {
