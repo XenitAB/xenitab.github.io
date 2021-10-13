@@ -5,7 +5,7 @@ title: Overview
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-[Xenit Kubernetes Service](https://xenit.se/it-tjanster/kubernetes-service/) (XKS; page in Swedish) is an opinionated Kubernetes deployment on top of a cloud provider's managed Kubernetes service. XKS currently supports Azure Kubernetes Service (AKS) and AWS Kubernetes service (EKS). Xenit Kubernetes Service:
+[Xenit Kubernetes Service](https://xenit.se/it-tjanster/kubernetes-framework-2/) (XKS; page in Swedish) is an opinionated Kubernetes deployment on top of a cloud provider's managed Kubernetes service. XKS currently supports Azure Kubernetes Service (AKS) and AWS Elastic Kubernetes service (EKS). Xenit Kubernetes Service:
 
 - is secure by default
 - is DevOps-oriented
