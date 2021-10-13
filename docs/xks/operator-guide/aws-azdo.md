@@ -26,7 +26,7 @@ All this is possible to solve using Terraform but we currently don't have any te
 
 ## GitOps user
 
-In our GitOps pipelines using flux we need to be able to push and delete containers in ECR.
+In our GitOps pipelines using flux we need to be able to push and delete images in ECR.
 So very similar to how we created the terraform user:
 
 - Create a IAM user
