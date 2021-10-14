@@ -7,6 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 The reason for this documentation is that we are using a number of linux based tools to be able to have a good integration with Windows, we recommend to use linux as a base for this.
 This document is verified using Ubuntu version 20.04 but other distributions will most likely work.
+
 ## Installation of WSL2 - Windows Subsystem for Linux
 
 [Install via Powershell](https://docs.microsoft.com/en-us/windows/wsl/install)
