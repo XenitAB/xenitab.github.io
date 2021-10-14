@@ -1,20 +1,19 @@
 ---
 id: wsl2
-title: Installing WSL2 on Windows
+title: Working with XKF from Windows
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-## Installation of WSL2 - Windows Subsystem for Linux
-
 The reason for this documentation is that we are using a number of linux based tools to be able to have a good integration with Windows, we recommend to use linux as a base for this.
-This document is verified using Ubuntu version 2004.2021.825.0 but other distributions will most likely work.
+This document is verified using Ubuntu version 20.04 but other distributions will most likely work.
+## Installation of WSL2 - Windows Subsystem for Linux
 
 [Install via Powershell](https://docs.microsoft.com/en-us/windows/wsl/install)
 
 Installation is also possible via Microsoft Store. Search for “linux”.
 
-Important for this to work is to make sure that Windows Subsystem for Linux is enabled as a feature in Windows.
+Make sure that Windows Subsystem for Linux is enabled as a feature in Windows.
 
 In Windows: Go to Control Panel → Programs and Features.
 
@@ -26,9 +25,7 @@ In the left-hand menu, select “Turn Windows features on or off”
 
 [Download and install Docker.](https://www.docker.com/products/docker-desktop)
 
-Once installation is complete, verify that the application works. We experienced issues when trying to start Docker-desktop within a managed organisation using AD accounts, this caused an error with us not being members of a group called “docker-users“.
-
-To solve this, open up “Computer Management” in Windows as an administrator. Navigate to “local users and groups” → Groups and locate the "docker-users" group and double-click. Press “Add” and search for “Authenticated Users” and add to the group.
+Once installation is complete, verify that the application works. We experienced issues when trying to start Docker-desktop within a managed organisation using AD accounts, this caused an error with us not being members of a group called “docker-users“. To solve this, open up “Computer Management” in Windows as an administrator. Navigate to “local users and groups” → Groups and locate the "docker-users" group and double-click. Press “Add” and search for “Authenticated Users” and add to the group.
 
 Now sign-out from Windows and back in, and Docker application should work.
 
@@ -55,7 +52,7 @@ Wait for the image to be pulled and if everything works properly the output shou
 
 ## Utilising Make with WSL2, Terraform and Docker
 
-We noticed, when running terraform from withing our Ubuntu-instance, that there appears to be som network issues. We saw quite slow network connections. Probably caused by the TCP-connection with the following error:
+We noticed, when running terraform from within our Ubuntu instance, that there appears to be som network issues. We saw quite slow network connections. Probably caused by the TCP connection with the following error:
 
 >│ Error: Failed to install provider
 >│
