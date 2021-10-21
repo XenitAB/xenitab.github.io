@@ -22,6 +22,8 @@ for easy use.
 Below you can find a example pipeline that uses the github action workflow.
 Read further down to see how to create the secrets needed to run the pipeline.
 
+You should store this GitHub action in your Terraform repository under `.github/workflows/name.yaml`
+
 ```.github/workflows/core.yaml
 name: terraform_core
 
@@ -61,12 +63,12 @@ jobs:
       AZURE_CREDENTIALS_PROD: ${{ secrets.AZURE_CREDENTIALS_PROD }}
 ```
 
-### Azure
+### Azure Service Principal
 
 Create a Service Principal(SP) with the access that terraform requires to perform all the tasks you want.
 You can read more about SP creation in our [operator guide](operator-guide.md)
 
-We are using [Azure Login GitHub Action](https://github.com/marketplace/actions/azure-login#configure-deployment-credentials)
+The workflow is using [Azure Login GitHub Action](https://github.com/marketplace/actions/azure-login#configure-deployment-credentials)
 to login to Azure. When uploading your SP to GitHub make sure to follow the formatting in the examples.
 
 This is to prevent unnecessary masking of { } in your logs which are in dictionary form.
@@ -92,9 +94,8 @@ This is to prevent unnecessary masking of { } in your logs which are in dictiona
 ```
 
 Upload the entire json as your github secret.
-We use one secret per environment and it **have** to follow our namestandard or
-else the github action workflow won't be able to find the secret.
-The secret name should be **AZURE_CREDENTIALS_\<ENV\>**, for  example **AZURE_CREDENTIALS_DEV**
+The workflow uses one secret per environment and we recommend that you follow our namestandard.
+The secret name the workflow use is **AZURE_CREDENTIALS_\<ENV\>**, for  example **AZURE_CREDENTIALS_DEV**
 
 To upload the secret to github you can use the github UI or you can use the [gh cli](https://github.com/cli/cli) to upload secrets to GitHub.
 
