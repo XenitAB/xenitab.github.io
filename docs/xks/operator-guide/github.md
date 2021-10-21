@@ -66,22 +66,29 @@ jobs:
 Create a Service Principal(SP) with the access that terraform requires to perform all the tasks you want.
 You can read more about SP creation in our [operator guide](operator-guide.md)
 
-The SP should look something like this when your SP is created:
+We are using [Azure Login GitHub Action](https://github.com/marketplace/actions/azure-login#configure-deployment-credentials)
+to login to Azure. When uploading your SP to GitHub make sure to follow the formatting in the examples.
 
-```.json
-{"clientId": "<GUID>",
-  "clientSecret": "<CLIENT_SECRET_VALUE>",
-  "subscriptionId": "<GUID>",
-  "tenantId": "<GUID>"}
-```
+This is to prevent unnecessary masking of { } in your logs which are in dictionary form.
 
-For example:
+**For example, do**:
 
 ```.json
 {"clientId": "00000000-0000-0000-0000-000000000000",
   "clientSecret": "super-duper-secret-value",
   "subscriptionId": "00000000-0000-0000-0000-000000000000",
   "tenantId": "00000000-0000-0000-0000-000000000000"}
+```
+
+**instead of**:
+
+```.json
+{
+  "clientId": "00000000-0000-0000-0000-000000000000",
+  "clientSecret": "super-duper-secret-value",
+  "subscriptionId": "00000000-0000-0000-0000-000000000000",
+  "tenantId": "00000000-0000-0000-0000-000000000000"
+}
 ```
 
 Upload the entire json as your github secret.
