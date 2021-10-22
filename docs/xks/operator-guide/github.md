@@ -9,6 +9,31 @@ your Terraform and GitOps repositories.
 In this document we will go through how to use XKF on GitHub focusing
 on Infrastructure As Code (IAC) using Terraform.
 
+## GitOps promotion
+
+In XKF we use the cloud providers container registry to store custom application images.
+
+### Azure
+
+Assuming that you are using XKF to setup your AKS cluster it will automatically create a SP that you can use
+to send images to ACR.
+Depending on your input values it will be called something like `sp-rg-xks-dev-tenant-contributor`.
+That SP is added to a group that have ACR push access.
+
+The generated SP stores it's secrets in a key vault `kv-dev-we-core-1337` with the SP name.
+In it you will find all the secrets you need.
+
+TODO write instructions how to extract the AZ key vault secret and push to GitHub.
+
+Create [GitHub secrets](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-github-action#save-credentials-to-github-repo)
+named as follows.
+
+| Secret                       | Value                                                                                  |
+| ---------------------------- | -------------------------------------------------------------------------------------- |
+| REGISTRY_LOGIN_SERVER_\<ENV> | The login server name of your registry (all lowercase). Example: myregistry.azurecr.io |
+| REGISTRY_USERNAME_\<ENV>     | the clientId from the JSON output from the service principal creation                  |
+| REGISTRY_PASSWORD_\<ENV>     | The clientSecret from the JSON output from the service principal creation              |
+
 ## Terraform
 
 How to run Terraform plan and apply through a GitHub action workflow.
