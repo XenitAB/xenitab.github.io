@@ -15,6 +15,6 @@ This page aims to collect best practices and common mistakes that can be made wh
 
 ## Resources
 
-Here are some good resources to also read ontop of this page.
+Here are some good resources to also read on top of this page.
 
 * [https://srcco.de/posts/web-service-on-kubernetes-production-checklist-2019.html](https://srcco.de/posts/web-service-on-kubernetes-production-checklist-2019.html)

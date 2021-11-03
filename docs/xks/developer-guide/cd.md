@@ -16,14 +16,14 @@ This is to ensure that changes are consistent and tracked in a centralized manne
 
 At Xenit we have created a CI/CD template to make it easier to get started with GitOps in our case using FluxV2 and the [GitOps toolkit](https://toolkit.fluxcd.io/).
 
-You can find the base for all our azure devops pipelines in our [Azure Devops Templates repo](https://github.com/XenitAB/azure-devops-templates/tree/main/gitops-v2).
+You can find the base for all our Azure DevOps pipelines in our [Azure Devops Templates repo](https://github.com/XenitAB/azure-devops-templates/tree/main/gitops-v2).
 
 Follow the example documentation on how to setup your base repo.
-Bellow we will explain how to do the manual steps that is needed to get Azure Devops to allow some of the flows that we are making.
+Below we will explain how to do the manual steps that is needed to get Azure DevOps to enable some of the flows that we are creating.
 
 ### Enable CI user to push to gitops repo
 
-The core feature of the gitops repo is that one of the pipelines automatically updates the image tag in your repository so flux will automatically update your deployment in kubernetes.
+The core feature of the gitops repo is that one of the pipelines automatically updates the image tag in your repository so Flux will automatically update your deployment in Kubernetes.
 
 We have to grant it permissions to do this, sadly manually...
 
