@@ -4,4 +4,4 @@ slug: /
 title: Introduction
 ---
 
-Welcome to Xenit open source projects!
+Welcome to Xenit's open source projects!

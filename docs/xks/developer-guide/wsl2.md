@@ -5,7 +5,7 @@ title: Working with XKF from Windows
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-The reason for this documentation is that we are using a number of linux based tools to be able to have a good integration with Windows, we recommend to use linux as a base for this.
+The reason for this documentation is that we are using a number of Linux-based tools to be able to have a good integration with Windows, we recommend to use Linux as a base for this.
 This document is verified using Ubuntu version 20.04 but other distributions will most likely work.
 
 ## Installation of WSL2 - Windows Subsystem for Linux
@@ -48,15 +48,15 @@ docker run hello-world
 
 Wait for the image to be pulled and if everything works properly the output should be:
 
->Hello from Docker!
->This message shows that your installation appears to be working correctly.
+> Hello from Docker!
+> This message shows that your installation appears to be working correctly.
 
 ## Utilising Make with WSL2, Terraform and Docker
 
-We noticed, when running terraform from within our Ubuntu instance, that there appears to be som network issues. We saw quite slow network connections. Probably caused by the TCP connection with the following error:
+We have noticed when running Terraform from within our Ubuntu instance, that there appears to be som network issues. We saw quite slow network connections. Probably caused by the TCP connection with the following error:
 
->│ Error: Failed to install provider
->│
->│ Error while installing hashicorp/azurerm v2.64.0: local error: tls: bad record MAC
+> │ Error: Failed to install provider
+> │
+> │ Error while installing hashicorp/azurerm v2.64.0: local error: tls: bad record MAC
 
-We ran the terraform command again - and it worked perfectly.
+We ran the Terraform command again - and it worked perfectly.

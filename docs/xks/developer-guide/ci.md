@@ -10,9 +10,9 @@ The core feature of the CI pipeline is that it generates a artifactory containin
 
 The CI triggers the CD that will grab the container artifact and push it to a central container registry, for Azure it will be ACR and AWS uses ECR.
 
-When following these docs we assume that you already have imported the azure-devops-templates to your [project](https://github.com/XenitAB/azure-devops-templates#usage).
+When following these docs we assume that you already have imported the [azure-devops-templates](https://github.com/XenitAB/azure-devops-templates#usage) to your project.
 
-There are a number of extra addons that you can enable on your build stage that we will go through bellow.
+There are a number of extra addons that you can enable on your build stage that we will cover below.
 
 ## Hadolint
 
@@ -40,16 +40,16 @@ To scan the image
 trivy <image-name>
 ```
 
-After that we have built the image we scan it and give you a report.
+After we have built the image we scan it and send you a report.
 
-If you want to ignore specific trivy errors you can create a .trivyignore file.
+If you want to ignore specific Trivy errors you can create a .trivyignore file.
 For example it can look like this:
 
 ```.trivyignore
 CVE-2020-29652
 ```
 
-If you want to disable trivy by appending the following to your ci file.
+If you want to disable Trivy by appending the following to your CI file.
 
 ```.yaml
 imageScan
@@ -60,24 +60,25 @@ imageScan
 ## Horusec
 
 A CLI tool to scan your application code for security issues that is disabled by default.
-To enable in your CI pipeline
 
-Before enabling horusec in your CI pipeline you should configure what issues your CI pipeline should catch.
+### To enable Hoursec in your CI pipeline
+
+Before enabling Horusec in your CI pipeline you should configure what issues your CI pipeline should catch.
 
 ```shell
 horusec generate
 ```
 
-It will generate a file called: horusec-config.json, in this file you can configure everything horusec should scan and report.
+It will generate a file called `horusec-config.json`, in this file you can configure everything Horusec should scan and report.
 
-You can find more horusec config [flags here](https://horusec.io/docs/cli/resources/#global-flags).
+You can find more [Horusec config flags here](https://horusec.io/docs/cli/resources/#global-flags).
 
 **Key config values:**
 
 - horusecCliSeveritiesToIgnore: What severities do you want to show?
 - horusecCliFilesOrPathsToIgnore: What paths do you want to ignore
 
-To save time it's easy to run horusec locally:
+To save time it's easy to run Horusec locally:
 
 ```shell
 horusec start -p .

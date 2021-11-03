@@ -19,16 +19,14 @@ Start off by [installing the Azure CLI](https://docs.microsoft.com/en-us/cli/azu
 az login
 ```
 
-Install the
-
 ## Kubectl Configuration
 
 You can run the following commands to add the AKS cluster to your kubeconfig assuming that you have installed the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-and [authenticated with the azure portal](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli).
+and [authenticated with the Azure portal](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli).
 
 ### Using AZAD Proxy
 
-If you use the AZAD proxy you can setup configuration using: AZAD Documentation
+If you use the AZAD proxy you can find documentation to help you set it up here: [AZAD Documentation](https://github.com/XenitAB/azad-kube-proxy)
 
 ### Otherwise
 
@@ -44,13 +42,13 @@ In the case that you have more than one subscription, you might want to change t
 az account set -s <SubscriptionId>
 ```
 
-To get information about cluster name and resource group for your current default subscription you can use.
+To get information about cluster name and resource group for your current default subscription you can use:
 
 ```bash
 az aks list -o table
 ```
 
-Once you know the resource group and name of the cluster, you can run the following to add the credentials to your kubekonfig.
+Once you know the resource group and name of the cluster, you can run the following to add the credentials to your kubekonfig:
 
 ```bash
 az aks get-credentials --resource-group <ResourceGroup> --name <Name>
@@ -68,4 +66,4 @@ TBD
 
 There is a great guide how to debug Kubernetes deployment over at [learnk8s.io](https://learnk8s.io/troubleshooting-deployments).
 
-To debug flux issues have a look at our [flux docs](flux.md).
+To debug flux issues have a look at our [Flux docs](flux.md).
