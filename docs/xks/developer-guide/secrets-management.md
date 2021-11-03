@@ -81,7 +81,7 @@ spec:
   parameters:
     usePodIdentity: "true"
     keyvaultName: "kvname"
-    objects:  |
+    objects: |
       array:
         - |
           objectName: connectionstring

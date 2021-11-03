@@ -97,7 +97,7 @@ spec:
     matchLabels:
       app: foo
   policyTypes:
-  - Ingress
+    - Ingress
 ```
 
 #### Allow Cross Namespace
@@ -202,15 +202,15 @@ metadata:
   namespace: tenant
 spec:
   rules:
-  - host: app-one.example.com
-    http:
-      paths:
-        - path: /
-          backend:
-            service:
-              name: app-one
-              port:
-                name: http
+    - host: app-one.example.com
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: app-one
+                port:
+                  name: http
   tls:
     - hosts:
         - app-one.example.com
@@ -238,15 +238,15 @@ metadata:
     nginx.ingress.kubernetes.io/client-body-buffer-size: 1M
 spec:
   rules:
-  - host: foo.dev.example.com
-    http:
-      paths:
-      - backend:
-          serviceName: foo
-          servicePort: http
+    - host: foo.dev.example.com
+      http:
+        paths:
+          - backend:
+              serviceName: foo
+              servicePort: http
   tls:
     - hosts:
-      - foo.dev.example.com
+        - foo.dev.example.com
 ```
 
 ### Debugging
@@ -291,15 +291,15 @@ spec:
         app: linkerd-test
     spec:
       containers:
-      - name: linkerd-test
-        image: alpine:latest
-        ports:
-        - containerPort: 8080
-          name: http
-          protocol: TCP
+        - name: linkerd-test
+          image: alpine:latest
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
 ```
 
-Eventually a Pod should be created. A important detail is that there should be two containers in the Pod. One container should be the one defined in
+Eventually a Pod should be created. An important detail is that there should be two containers in the Pod. One container should be the one defined in
 the Deployment and the other one the Linkerd sidecar. This can be verified by getting the Pods containers.
 
 ```shell

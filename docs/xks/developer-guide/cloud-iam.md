@@ -34,16 +34,15 @@ metadata:
     aadpodidbinding: ${NAMESPACE_NAME}
 spec:
   containers:
-  - name: msi-test
-    image: mcr.microsoft.com/azure-cli
-    tty: true
-    volumeMounts:
-      - name: az-cli
-        mountPath: /root/.azure
+    - name: msi-test
+      image: mcr.microsoft.com/azure-cli
+      tty: true
+      volumeMounts:
+        - name: az-cli
+          mountPath: /root/.azure
   volumes:
     - name: az-cli
       emptyDir: {}
-
 ```
 
 After the Pod has started you can execute a shell in the Pod and verify that the managed identity is working.
