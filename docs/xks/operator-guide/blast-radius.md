@@ -1,6 +1,6 @@
 ---
 id: blast-radius
-title: OPA Blast Radius
+title: Blast Radius
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl';

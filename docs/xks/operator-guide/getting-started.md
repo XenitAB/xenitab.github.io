@@ -1,6 +1,6 @@
 ---
-id: operator-guide
-title: Operator Guide
+id: getting-started
+title: Getting Started
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl';

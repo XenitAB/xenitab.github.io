@@ -1,6 +1,6 @@
 ---
 id: blue-green
-title: Cluster blue green
+title: Blue Green Clusters
 ---
 
 For different reasons you might want to create a completely new cluster, this can be due to many reasons like:

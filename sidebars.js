@@ -33,6 +33,10 @@ module.exports = {
           "label": "Operator Guide",
           "items": [
             "xks/operator-guide/index",
+            "xks/operator-guide/architecture",
+            "xks/operator-guide/getting-started",
+            "xks/operator-guide/azure-devops-agents",
+            "xks/operator-guide/blast-radius",
             "xks/operator-guide/blue-green",
             "xks/operator-guide/aws-azdo",
             "xks/operator-guide/blast-radius",
