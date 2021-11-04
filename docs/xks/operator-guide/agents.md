@@ -153,7 +153,7 @@ The name should be similar to `azp-agent-2021-04-09T08-18-30Z`.
 
 ## Pre Setup
 
-## GitHub
+### GitHub
 
 When using GitHub Runners a GitHub application has to be created that will allow the agent to communicate back to GitHub. Follow the steps in the [GitHub Runner
 Documentations](https://github.com/XenitAB/github-runner#creating-a-github-app) for instructions in how to create the GitHub Application with the correct permissions. In the end you should have
