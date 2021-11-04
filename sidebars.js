@@ -38,7 +38,7 @@ module.exports = {
             "xks/operator-guide/eks",
             "xks/operator-guide/blast-radius",
             "xks/operator-guide/operator-guide",
-            "xks/operator-guide/azure-devops-agents",
+            "xks/operator-guide/agents",
             "xks/operator-guide/github",
           ]
         }
