@@ -63,6 +63,14 @@ jobs:
       AZURE_CREDENTIALS_PROD: ${{ secrets.AZURE_CREDENTIALS_PROD }}
 ```
 
+### Self-hosted runners
+
+GitHub workflows is still rather immature and have a number of features missing.
+One of these are that it's currently not possible to use self-hosted runners in github organization X while calling on workflows in github organization Y.
+
+To be able to use self-hosted runners you have to import the repository to organization X **not fork** the [workflow repository](https://github.com/XenitAB/azure-devops-templates)
+and make it public. Else private repositories located in organization X won't be able to find the workflows.
+
 ### Azure Service Principal
 
 Create a Service Principal(SP) with the access that terraform requires to perform all the tasks you want.
