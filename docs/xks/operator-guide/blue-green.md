@@ -1,6 +1,6 @@
 ---
 id: blue-green
-title: Cluster blue green
+title: Blue Green Clusters
 ---
 
 For different reasons you might want to create a completely new cluster, this can be due to many reasons like:
@@ -20,7 +20,7 @@ We think that the risk is to great that you by mistake would get drift between t
 
 > We assume that the workloads on the clusters are stateless and can run multiple instances.
 
-1. Set up a new cluster in the target environment using [Terraform](operator-guide.md)
+1. Set up a new cluster in the target environment using Terraform
 2. Verify that the new cluster is functioning as intended
     - You **won't** be able to verify any ingress
     - You **won't** be able to use AZAD-proxy in the newly created cluster

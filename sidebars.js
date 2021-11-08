@@ -33,11 +33,12 @@ module.exports = {
           "label": "Operator Guide",
           "items": [
             "xks/operator-guide/index",
+            "xks/operator-guide/architecture",
+            "xks/operator-guide/getting-started",
+            "xks/operator-guide/agents",
+            "xks/operator-guide/blast-radius",
             "xks/operator-guide/blue-green",
             "xks/operator-guide/aws-azdo",
-            "xks/operator-guide/blast-radius",
-            "xks/operator-guide/operator-guide",
-            "xks/operator-guide/agents",
             "xks/operator-guide/github",
             {
               "type": "category",
@@ -45,8 +46,8 @@ module.exports = {
               "items": [
                 "xks/operator-guide/kubernetes/aks",
                 "xks/operator-guide/kubernetes/eks",
-              ],
-            },
+              ]
+            }
           ]
         }
       ]
