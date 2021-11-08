@@ -15,9 +15,7 @@ How to run Terraform plan and apply through a GitHub action workflow.
 
 ### Workflow
 
-Just like in azure devops case we have created a
-[basic pipeline](https://github.com/XenitAB/azure-devops-templates/terraform-docker-github/README.md)
-for easy use.
+Just like in azure devops case we have created a [basic pipeline](https://github.com/XenitAB/azure-devops-templates/terraform-docker-github/README.md) for easy use.
 
 Below you can find a example pipeline that uses the github action workflow.
 Read further down to see how to create the secrets needed to run the pipeline.
@@ -73,7 +71,7 @@ and make it public. If you don't do this private repositories located in organiz
 ### Azure Service Principal
 
 Create a Service Principal(SP) with the access that terraform requires to perform all the tasks you want.
-You can read more about SP creation in our [operator guide](operator-guide.md)
+You can read more about SP creation in our [getting started guide](getting-started.md)
 
 The workflow is using [Azure Login GitHub Action](https://github.com/marketplace/actions/azure-login#configure-deployment-credentials)
 to login to Azure. When uploading your SP to GitHub make sure to follow the formatting in the examples.

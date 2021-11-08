@@ -68,7 +68,7 @@ resource group has to be created for both Azure DevOps and GitHub, the only diff
 ```
 
 The Service Principal credentials need to be stored as a secret when running Packer from GitHub. This step does not have to be followed when setting up Azure DevOps. The Service Principal id and
-credentials can be retreived after the Terraform has bee applied. Read the [operator guide](./operator-guide/#configure-service-principal) for information about how to get the crecredential
+credentials can be retreived after the Terraform has bee applied. Read the [getting started guide](./getting-started/#configure-service-principal) for information about how to get the crecredential
 information, the difference being that the application will be named `sp-rg-xks-prod-ghrunner-contributor` instead of `az-mg-lz-xks-owner`. The secret should be added to the repository packer, as the
 VM image only has to be built for production it is enough to create the secret `AZURE_CREDENTIALS_PROD`. The format of the secret content should be as the example below.
 
