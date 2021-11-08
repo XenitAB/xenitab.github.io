@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
     inputs:
       remote_repo:
-        description: "Remote repository name that triggered workflow"
+        description: 'Remote repository name that triggered workflow'     
         required: true
   schedule:
-    - cron: "0 7-18 * * 1-5"
+    - cron:  '0 7-18 * * 1-5'
 
 jobs:
   build:
@@ -21,7 +21,12 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: '12.x'
+      - name: Sync repos
+        run: |
+          set -e
+          node .github/workflows/sync-docs.js terraform-modules "Terraform Modules" modules
+          node .github/workflows/sync-docs.js azure-devops-templates "Azure DevOps Templates"
       - name: Test Build
         run: |
           yarn install --frozen-lockfile
