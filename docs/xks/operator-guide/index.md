@@ -14,15 +14,29 @@ upon each other in a hierarchical manner. The first setup requires applying the 
 as it allows for a more flexible architecture that could be changed in parallel.
 <img alt="XKS Overview" src={useBaseUrl("img/assets/xks/operator-guide/aks-overview.jpg")} />
 
-The following Terraform modules are used in XKS:
+## Network diagram
 
-## Core
+Looking at a cluster, the simple network diagram looks like this:
 
-## Governance
+<img alt="XKS Overview" src={useBaseUrl("img/assets/xks/operator-guide/simple-network-design.jpg")} />
 
-## Hub
+## Terraform modules
 
-## AKS
+The following Terraform modules are used in XKS.
+
+### Governance
+
+Governance is split in [global](https://github.com/XenitAB/terraform-modules/tree/main/modules/azure/governance-global) and [regional](https://github.com/XenitAB/terraform-modules/tree/main/modules/azure/governance-regional), it handles the creation and delegation of Azure Resource Groups, Azure KeyVaults, Azure AD groups, Service Principals and resources like that.
+
+### Core
+
+[Core](https://github.com/XenitAB/terraform-modules/tree/main/modules/azure/core) sets up the main network for an environment.
+
+### Hub
+
+[Hub](https://github.com/XenitAB/terraform-modules/tree/main/modules/azure/hub) is setup in the production subscription and is used for things like Azure Pipelines agents.
+
+### AKS
 
 The AKS terraform contains three modules that are used to setup a Kubernetes cluster. To allow for blue/green deployments of AKS clusters resources have to be split up in to
 global resources that can be shared between the clusters, and cluster specific resources.
