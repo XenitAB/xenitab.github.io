@@ -425,11 +425,11 @@ There is a command option in kubernetes called --as, which enables you to see if
 Since we are using OIDC we also need to provide the group id, you can find the group id in AAD.
 You can find the UUID of the group in AAD.
 
-`kubectl get pods --as-group=12345678-1234-1234-1234-00000000000 --as="fake`
+`kubectl get pods --as-group=12345678-1234-1234-1234-00000000000 --as="fake"`
 
 If you already have a rolebinding where a existing UUID exist you can run the following command:
 
-`kubectl get pods --as-group=$(kubectl get rolebinding <rolebiding-name> -o jsonpath='{.subjects[0].name}') --as="fake`
+`kubectl get pods --as-group=$(kubectl get rolebinding <rolebiding-name> -o jsonpath='{.subjects[0].name}') --as="fake"`
 
 ### Authorized IP
 
