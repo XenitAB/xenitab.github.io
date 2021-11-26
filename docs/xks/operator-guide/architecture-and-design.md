@@ -17,7 +17,7 @@ The primary goal of the framework is to provide a standardized service to custom
 
 ## Role-based access management
 
-All role-base access control (RBAC) and identity & access management (IAM) is handled with Azure AD. Azure AD groups are created and nested using the framework and framework admins as well as customer end users are granted access through these different groups.
+All role-based access control (RBAC) and identity & access management (IAM) is handled with Azure AD. Azure AD groups are created and nested using the framework and framework admins as well as customer end users are granted access through these different groups.
 
 Everything, where possible, exposes two different permissions: Reader and Contributor
 
