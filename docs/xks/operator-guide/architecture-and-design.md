@@ -9,7 +9,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 [Xenit Kubernetes Framework](https://github.com/search?q=topic%3Axenit-kubernetes-framework+org%3AXenitAB+fork%3Atrue) (XKF) is the open source building blocks for a service Xenit AB provides customers: [Xenit Kubernetes Service](https://xenit.se/it-tjanster/kubernetes-eng/) (XKS)
 
-In the perspective of [Microsoft Cloud Adoption Framework](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) (CAF), Xenit Kubernetes Service is an enterprise-scale landing zone.
+In the perspective of [Microsoft Cloud Adoption Framework](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) (CAF), Xenit Kubernetes Service is an enterprise-scale landing zone. Additionally, the workload supports multiple cloud providers and AWS is also supported at the moment (but still requires the governance part in Azure).
 
 The primary goal of the framework is to provide a standardized service to customers where the creators of the framework (employees at Xenit) can manage multiple environments without having to be the one who set it up - because it looks just about the same in all places. This also provides the ability to fix issues, change standards in one place and not having to repeat the same thing over and over at all customer (or two engineers solving the same problem at two different customers).
 
