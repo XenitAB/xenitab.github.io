@@ -13,6 +13,11 @@ module.exports = {
           "id": "xks/index"
         },
         {
+          "type": "doc",
+          "id": "xks/architecture-and-design",
+
+        },
+        {
           "type": "category",
           "label": "Developer Guide",
           "items": [
@@ -33,7 +38,6 @@ module.exports = {
           "label": "Operator Guide",
           "items": [
             "xks/operator-guide/index",
-            "xks/operator-guide/architecture-and-design",
             "xks/operator-guide/getting-started",
             "xks/operator-guide/agents",
             "xks/operator-guide/blast-radius",
