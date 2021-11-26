@@ -71,11 +71,35 @@ Other than that, most of the access and work with the tenant resources are done 
 
 ## Network design
 
+By default, the network setup is expected to be quite autonomous and usually considered to be an external service compared to everything else in the organization using it. It is possible to setup peering with internal networks, but usually it begins with a much simpler setup and then grows organically when required.
+
+<img alt="XKS Simple Network Design" src={useBaseUrl("img/assets/xks/operator-guide/simple-network-design.jpg")} />
+
+The cluster environments are completely separated from each other, but a hub in the production subscription has a peering with them to provide static IP-addresses for CI/CD like terraform to access resources.
+
+Inside an environment the cluster is using kubenet and Calico to keep the amount of IP-addresses to a minimum. Services can either be exposed internally or externally using either a service or an ingress, where most tenants exclusively use ingress (provided by ingress-nginx).
+
+Inside the clusters Calico is used to limit traffic between namespaces.
+
 ## Backup
+
+The platform is built to be ephemeral wich means any cluster can at any time be wiped and a new setup without any loss of data. This means that tenants are not allowed to store state inside of the clusters and are required to store it in the cloud provider (blob storage, databases, message queues etc.).
+
+Since the deployment is built on GitOps, the current state of the environment is stored in git.
+
+Backups of databases and resources like it are handled by the cloud provided and is up to the tenant to manage.
 
 ## Cost optimization
 
+The platform team limits how much the clusters can auto scale and a service delivery manager together with the platform team helps the tenants understand their utilization and provides feedback to keep the cost at bay.
+
 ## Container management
+
+When a new tenant is being setup, the platform team provides onboarding for them in the initial phase of the setup and then continously works together to assist in any questions. Monthly health checks are done to make sure that no obvious mistakes have been made by the tenants and monitoring is setup to warn the platform team if something is wrong with the platform.
+
+Most of the management of the workloads that the tenants deploy are handled through GitOps but they are also able to work with the clusters directly, with the knowledge that any cluster may at any time be rolled over (blue/green) and anything not in git won't be persisted.
+
+## Xenit Kubernetes Framework
 
 XKF is set up from a set of Terraform modules that when combined creates the full XKS service. There are multiple individual states that all fulfill their own purpose and build
 upon each other in a hierarchical manner. The first setup requires applying the Terraform in the correct order, but after that ordering should not matter. Separate states are used
