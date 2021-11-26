@@ -31,6 +31,16 @@ As a last step, each tenant namespace has the ability to use the cloud provider 
 
 ## Security and access
 
+### Access
+
+The primary authentication method to access any resource is based on Azure AD. This isn't enforced using the framework in all places, with two examples being AWS Console / CLI and GitHub. Most of the actions taken by a tenant engineer will require authentication to Azure AD either using the Azure Management Console or the Azure CLI.
+
+A tenant will be granted access to the clusters using a [proxy](https://github.com/XenitAB/azad-kube-proxy) built by Xenit and provided in the framework, making sure they don't have to reconfigure their computers when a blue/green deployment of the clusters are made and the Kubernetes API endpoint change. The proxy will move with the clusters and it will be seamless for the tenant engineers.
+
+The proxy also provides a CLI (kubectl plugin through [krew](https://krew.sigs.k8s.io/)) that makes it easier to both discover and configure access to the clusters. A valid session with Azure CLI is required to use it.
+
+Other than that, most of the access and work with the tenant resources are done through a GitOps repository for changes in regards to applications in Kubernetes and a terraform repository in regards to resources in the cloud provider.
+
 ## Network design
 
 ## Backup
