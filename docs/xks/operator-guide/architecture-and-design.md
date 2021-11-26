@@ -7,27 +7,30 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Overview
 
-[Xenit Kubernetes Framework](https://github.com/search?q=topic%3Axenit-kubernetes-framework+org%3AXenitAB+fork%3Atrue) (XKF) is the open source building blocks for a service Xenit AB provides customers: [Xenit Kubernetes Service](https://xenit.se/it-tjanster/kubernetes-eng/) (XKS)
+[Xenit Kubernetes Framework](https://github.com/search?q=topic%3Axenit-kubernetes-framework+org%3AXenitAB+fork%3Atrue) (XKF) are the open source building blocks for a service Xenit AB provides customers: [Xenit Kubernetes Service](https://xenit.se/it-tjanster/kubernetes-eng/) (XKS)
 
 In the terminology of [Microsoft Cloud Adoption Framework](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) (CAF), Xenit Kubernetes Service is an enterprise-scale landing zone. Additionally, the workload supports multiple cloud providers and AWS is also supported at the moment (but still requires the governance part in Azure).
 
-The primary goal of the framework is to provide a standardized service to customers where the creators of the framework (employees at Xenit) can manage multiple environments without having to be the one who set it up - because it looks just about the same in all places. This also provides the ability to fix issues, change standards in one place and not having to repeat the same thing over and over at all customer (or two engineers solving the same problem at two different customers).
-
 <img alt="XKS Overview" src={useBaseUrl("img/assets/xks/operator-guide/aks-overview.jpg")} />
+
+### Glossary
+
+- Platform team: the team managing the platform (XKF)
+- Tenant: A group of people (team/project/product) at the company using XKS
 
 ## Role-based access management
 
 All role-based access control (RBAC) and identity & access management (IAM) is handled with Azure AD. Azure AD groups are created and nested using the framework and framework admins as well as customer end users are granted access through these different groups.
 
-Everything, where possible, exposes two different permissions: Reader and Contributor
+where possible two different permissions are exposed through Azure AD groups: Reader and Contributor
 
 These permissions are scoped in many different ways and start at the management group level, subscription level, resource group level and at last namespaces in Kubernetes. These are also split over the different environments (development, quality assurance and production) meaning you can have read/write in one environment but only read in the others.
 
 An owner role and group is also created for most resources, but the recommendation is not to use it as owners will be able to actually change the IAM wich in most cases is undesirable.
 
-The normal customer end user (often an engineer / developer, referred to as a tenant) is granted read/write to their resource groups and namespaces, meaning they will be able to add/remove whatever they want in their limited scope. This usually means creating deployments in Kubernetes as well as databases and other stateful resources in their Azure Resource Groups. When using AWS Elastic Kubernetes Service (EKS) the delegation insn't as rigorous as in Azure and the default setup creates three accounts where all the customer tenants share resources.
+Usually the tenant is granted read/write to their resource groups and namespaces, meaning they will be able to add/remove whatever they want in their limited scope. This usually means creating deployments in Kubernetes as well as databases and other stateful resources in their Azure Resource Groups. When using AWS Elastic Kubernetes Service (EKS) the delegation insn't as rigorous as in Azure and the default setup creates three accounts where all the customer tenants share resources.
 
-As a last step, each tenant namespace has the ability to use the cloud provider metadata service to access services in the cloud provider. This is enabled through the tools like [Azure AD POD Identity](https://github.com/Azure/aad-pod-identity) (aad-pod-identity) and [IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) (IRSA). These tools enable the tenants to access resources in their respective resource groups or accounts without having to creat manually shared secrets (that also would have to be rotated).
+Each tenant namespace has the ability to use the cloud provider metadata service to access services in the cloud provider. This is enabled through the tools like [Azure AD POD Identity](https://github.com/Azure/aad-pod-identity) (aad-pod-identity) and [IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) (IRSA). These tools enable the tenants to access resources in their respective resource groups or accounts without having to creat manually shared secrets (that also would have to be rotated).
 
 ## Security and access
 
@@ -61,7 +64,7 @@ Additionally, we try to add products and services into the mix to make it easier
 
 ### Access
 
-The primary authentication method to access any resource is based on Azure AD. This isn't enforced using the framework in all places, with two examples being AWS Console / CLI and GitHub. Most of the actions taken by a tenant engineer will require authentication to Azure AD either using the Azure Management Console or the Azure CLI.
+The primary authentication method to access any resource is based on Azure AD. Most of the actions taken by a tenant engineer will require authentication to Azure AD either using the Azure Management Console or the Azure CLI.
 
 A tenant will be granted access to the clusters using a [proxy](https://github.com/XenitAB/azad-kube-proxy) built by Xenit and provided in the framework, making sure they don't have to reconfigure their computers when a blue/green deployment of the clusters are made and the Kubernetes API endpoint change. The proxy will move with the clusters and it will be seamless for the tenant engineers.
 
@@ -77,17 +80,17 @@ By default, the network setup is expected to be quite autonomous and usually con
 
 The cluster environments are completely separated from each other, but a hub in the production subscription has a peering with them to provide static IP-addresses for CI/CD like terraform to access resources.
 
-Inside an environment the cluster is using kubenet and Calico to keep the amount of IP-addresses to a minimum. Services can either be exposed internally or externally using either a service or an ingress, where most tenants exclusively use ingress (provided by ingress-nginx).
+Inside an environment the cluster is using kubenet and Calico to keep the amount of IP-addresses to a minimum. Kubernetes Services can either be exposed internally or externally using either a service resource or an ingress resource, where most tenants exclusively use ingress (provided by NGiNX Ingress Controller).
 
-Inside the clusters Calico is used to limit traffic between namespaces.
+Inside the clusters Calico is used to restrict traffic between namespaces.
 
 ## Backup
 
-The platform is built to be ephemeral wich means any cluster can at any time be wiped and a new setup without any loss of data. This means that tenants are not allowed to store state inside of the clusters and are required to store it in the cloud provider (blob storage, databases, message queues etc.).
+Xenit Kubernetes Framework is built to be ephemeral wich means any cluster can at any time be wiped and a new setup without any loss of data. This means that tenants are not allowed to store state inside of the clusters and are required to store it in the cloud provider (blob storage, databases, message queues etc.).
 
-Since the deployment is built on GitOps, the current state of the environment is stored in git.
+Since both the platform team and the tenant teams are deploying resources using GitOps, the current state of the environment is stored in git.
 
-Backups of databases and resources like it are handled by the cloud provided and is up to the tenant to manage.
+The content of stateful resources (including backups) are handled by the cloud provided and is up to the tenants to configure and manage.
 
 ## Cost optimization
 
@@ -95,7 +98,7 @@ The platform team limits how much the clusters can auto scale and a service deli
 
 ## Container management
 
-When a new tenant is being setup, the platform team provides onboarding for them in the initial phase of the setup and then continously works together to assist in any questions. Monthly health checks are done to make sure that no obvious mistakes have been made by the tenants and monitoring is setup to warn the platform team if something is wrong with the platform.
+When a new tenant is being setup, the platform team provides onboarding for them and then continously works together to assist in any questions. Monthly health checks are done to make sure that no obvious mistakes have been made by the tenants and monitoring is setup to warn the platform team if something is wrong with the platform.
 
 Most of the management of the workloads that the tenants deploy are handled through GitOps but they are also able to work with the clusters directly, with the knowledge that any cluster may at any time be rolled over (blue/green) and anything not in git won't be persisted.
 
