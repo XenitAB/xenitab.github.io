@@ -33,7 +33,7 @@ module.exports = {
           "label": "Operator Guide",
           "items": [
             "xks/operator-guide/index",
-            "xks/operator-guide/architecture",
+            "xks/operator-guide/architecture-and-design",
             "xks/operator-guide/getting-started",
             "xks/operator-guide/agents",
             "xks/operator-guide/blast-radius",
