@@ -31,6 +31,34 @@ As a last step, each tenant namespace has the ability to use the cloud provider 
 
 ## Security and access
 
+### Security
+
+The platform is based on the principle of least privilege and in every layer we try to only delegate what is needed and no more. This is both true for the tenant and platform resources and their respective access.
+
+The second part of the work we do around security is try to keep the platform as lean and easy to understand as possible, making sure to remove complexity where needed. Adding security often means a much more complex solution and it is much harder to understand and maintain something complex over something simple, and keeping the cognitive load of maintaining a platform like this as low as possible is always a priority.
+
+Additionally, we try to add products and services into the mix to make it easier for both the platform team and tenant teams to keep the environment secure. This is an everchanging environment where new things are added as needed and the list below is not an exhaustive one:
+
+#### Tenant security
+
+- GitOps for application delivery to clusters
+- CI/CD templates for building containers and promoting applications with GitOps
+- Tools for security scanning and linting inside the pipelines
+- Admission controllers to make sure unsafe configuration is prohibited
+- Mutating admission controllers to make it easier to have sane defaults
+- Continous education from the platform team
+- One account to protect instead of having multiple accounts to access different resources
+- Infrastructure as Code with corresponding CI/CD templates for secure deployment of resources
+- SSO from the tenant namespaces to the tenant resource groups to make sure no secrets have to be shared
+- Ability to use mTLS together with a service mesh (linkerd)
+- Automated certificate and dns management from the platform
+
+#### Platform
+
+- Observability of the platform handled by the platform team
+- Runtime security in the platform using Falco
+- Automated update management of Infrastructure as Code (with code review)
+
 ### Access
 
 The primary authentication method to access any resource is based on Azure AD. This isn't enforced using the framework in all places, with two examples being AWS Console / CLI and GitHub. Most of the actions taken by a tenant engineer will require authentication to Azure AD either using the Azure Management Console or the Azure CLI.
