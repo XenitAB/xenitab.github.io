@@ -1,6 +1,6 @@
 ---
 id: secrets-management
-title: Secrets Managenent
+title: Secrets Management
 ---
 
 Secrets management is an important feature when building secure products. Access to secrets should be limited, and it should be easy to rotate when required. It becomes a requirement when working with
