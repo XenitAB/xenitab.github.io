@@ -27,6 +27,10 @@ yarn start
 ```
 
 This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
+ ### Search function
+
+ Search function doesn't work locally, requires `yarn build`
+ [Docusaurus Search](https://github.com/lelouch77/docusaurus-lunr-search)
 
 ## Build
 
