@@ -68,6 +68,35 @@ spec:
 
 You can do allot of configuration when it comes to metrics gathering but the above config will get you started.
 
+#### networkpolicy metrics
+
+Don't forget to define a networkpolicy that allows incoming traffic from the opentelemetry namespace to gather metrics from your application.
+
+If you can see `scrape_duration_seconds = 10` your servicemonitor/podmonitor is trying to get scraped but it most likely times out after 10 seconds
+and don't provide you with any "real" data from your metrics endpoint.
+
+Verify that you have defined a networkpolicy that allows you to talk to your application from you the opentelemetry namespace.
+
+TODO (Edvin) when we have decided on a standard for the prometheus agent write it down to narrow down the networkpolicy even more.
+
+```networkpolicy-app1.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-opentelemetry-example-app
+spec:
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: opentelemetry
+  podSelector:
+    matchLabels:
+      app: app1
+  policyTypes:
+    - Ingress
+```
+
 ### Logging
 
 To gather logs we use the grafana agent operator that deploys a deamonset and runs all the nodes in the cluster and reads the logs from the kubernetes log location.
@@ -123,3 +152,35 @@ Assuming that you are using XKF the URL will be
 
 - [http://grafana-agent-traces.opentelemetry.svc.cluster.local:4318/v1/traces](http://grafana-agent-traces.opentelemetry.svc.cluster.local:4318/v1/traces)
 - [http://grafana-agent-traces.opentelemetry.svc.cluster.local:4317/v1/traces](http://grafana-agent-traces.opentelemetry.svc.cluster.local:4317/v1/traces)
+
+#### networkpolicy tracing
+
+Don't forget to define a networkpolicy that allows egress traffic to the opentelemetry namespace, else your tracing data won't be forwarded to the opentelemetry collector.
+
+TODO (Edvin) verify the networkpolicy in a clean env
+
+```networkpolicy-app1.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-opentelemetry-example-app
+spec:
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: opentelemetry
+        - podSelector:
+            matchLabels:
+              app: grafana-agent-traces
+      ports:
+        - protocol: TCP
+          port: 4317
+        - protocol: TCP
+          port: 4318
+  podSelector:
+    matchLabels:
+      app: app1
+  policyTypes:
+    - Egress
+```
