@@ -52,7 +52,7 @@ The flow is fully automatic and is triggered by the container image upload.
 1. As before, this new pull request triggers antoher pipeline that runs the `status` command. This time there is a previous environment and the status command reads the Flux commit status for that environment. Since Flux managed to apply the change in `dev` the `status` command reports success.
 1. The pull request check turns green and the pull request is automatically merged by Git provider.
 1. The Flux Kustomization controller detects that there has been an update to the app's tag in the Git repository and applies this update to the Kubernetes resource for the app (typically a `Deployment`).
-1. In this case, someoune had applied manual changes to the app's database in the `dev` environment during development. These updates are not present in the `qa` environment, and when the pods running the new container image come up, they cannot read state from the database and so fail their health check. Flux consequently sets a commit status on the `main` branch of the GitHub repository, reporting that the update failed.
+1. In this case, someone had applied manual changes to the app's database in the `dev` environment during development. These updates are not present in the `qa` environment, and when the pods running the new container image come up, they cannot read state from the database and so fail their health check. Flux consequently sets a commit status on the `main` branch of the GitHub repository, reporting that the update failed.
 
 Emilia's team has configured Flux to notify them when updates fail and so Emilia's chat client informs her that the update did not go through.
 
