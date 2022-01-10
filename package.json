@@ -17,6 +17,7 @@
     "@emotion/react": "^11.1.5",
     "@mdx-js/react": "^1.6.21",
     "clsx": "^1.1.1",
+    "markdownlint-cli": "^0.30.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   },

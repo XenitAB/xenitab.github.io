@@ -22,6 +22,7 @@ module.exports = {
           "label": "Developer Guide",
           "items": [
             "xks/developer-guide/introduction",
+            "xks/developer-guide/gitops",
             "xks/developer-guide/best-practices",
             "xks/developer-guide/secrets-management",
             "xks/developer-guide/cloud-iam",
