@@ -26,7 +26,8 @@ In the left-hand menu, select “Turn Windows features on or off”
 
 [Download and install Docker.](https://www.docker.com/products/docker-desktop)
 
-Once installation is complete, verify that the application works. We experienced issues when trying to start Docker-desktop within a managed organisation using AD accounts, this caused an error with us not being members of a group called “docker-users“. To solve this, open up “Computer Management” in Windows as an administrator. Navigate to “local users and groups” → Groups and locate the "docker-users" group and double-click. Press “Add” and search for “Authenticated Users” and add to the group.
+Once installation is complete, verify that the application works. We experienced issues when trying to start Docker-desktop within a managed organization using AD accounts, this caused an error with us not being members of a group called “docker-users“.
+To solve this, open up “Computer Management” in Windows as an administrator. Navigate to “local users and groups” → Groups and locate the "docker-users" group and double-click.Press “Add” and search for “Authenticated Users” and add to the group.
 
 Now sign-out from Windows and back in, and Docker application should work.
 
@@ -65,11 +66,11 @@ We ran the Terraform command again - and it worked perfectly.
 
 ### File lock issues
 
-If your .azure folder is mounted towards windows from your WSL2 environment we have seen potential lock issues when running terraform and `azure-cli 2.32.0`, this might apply to other versions as well.
+If your .azure folder is mounted towards Windows from your WSL2 environment we have seen potential lock issues when running terraform and `azure-cli 2.32.0`, this might apply to other versions as well.
 
-We think this have something to do with how WSL2 and windows manages locking of files, to workaround you can make sure that your `.azure` folder is only in your linux environment.
+We think this have something to do with how WSL2 and Windows manages locking of files, to workaround you can make sure that your `.azure` folder is only in your linux environment.
 
-Assuming that you haven't defined a custom `AZURE_CONFIG_DIR` you can perform the following to verify you are mounting your .azure folder to windows:
+Assuming that you haven't defined a custom `AZURE_CONFIG_DIR` you can perform the following to verify you are mounting your .azure folder to Windows:
 
 ```shell
 $ cd
