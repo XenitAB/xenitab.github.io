@@ -362,17 +362,16 @@ For instructions on how to setup and configure [see](https://github.com/XenitAB/
 #### AZAD Usage
 
 Install krew: [https://krew.sigs.k8s.io/docs/user-guide/setup/install/#windows](https://krew.sigs.k8s.io/docs/user-guide/setup/install/#windows)
-Install azad-proxy plugin: kubectl krew install azad-proxy
-Login with azure cli (a valid session with azure cli is always required): az login
-Discover the clusters: `kubectl azad-proxy discover`
+Install azad-proxy plugin: `kubectl krew install azad-proxy`
+Login with azure cli (a valid session with azure cli is always required): `az login`
+List all the available clusters: `kubectl azad-proxy menu`
 
-There are two ways to connect to the cluster using azad.
+You can also use the discover function:
 
-Ether use the menu feature:
-`kubectl azad-proxy menu`
-
-Or connect by using the generate command:
-`kubectl azad-proxy generate --cluster-name dev-cluster --proxy-url https://dev.example.com --resource https://dev.example.com`
+```shell
+kubectl azad-proxy discover
+kubectl azad-proxy generate --cluster-name dev-cluster --proxy-url https://dev.example.com --resource https://dev.example.com
+```
 
 ### AAD groups
 
