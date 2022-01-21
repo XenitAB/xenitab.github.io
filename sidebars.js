@@ -26,7 +26,6 @@ module.exports = {
             "xks/developer-guide/best-practices",
             "xks/developer-guide/secrets-management",
             "xks/developer-guide/cloud-iam",
-            "xks/developer-guide/monitoring",
             "xks/developer-guide/security",
             "xks/developer-guide/cd",
             "xks/developer-guide/ci",

@@ -14,11 +14,78 @@ Within observability we normally talk about three pillars.
 
 Some people could argue that there is more steps to it but for now we will focus on these three.
 
-We currently support two solutions to gather observability data in XKF, Datadog and the opentelemetry stack which is a open-source solution.
+We currently support two solutions to gather observability data in XKF, [Datadog](https://www.datadoghq.com) and the [Opentelemetry](https://opentelemetry.io/) stack which is a open-source solution.
 
 ## Datadog
 
-TODO
+When Datadog monitoring is used the [Datadog Operator](https://github.com/DataDog/datadog-operator) will be added to the cluster. On top of deploying a
+Datadog agent to every node to collect metrics, logs, and traces it also adds the ability to create Datadog monitors from the cluster. The Datadog
+agent handles all communication with the Datadog API meaning that individual applications do not have to deal with thing such as authentication.
+
+### Logging
+
+All logs written to `stdout` and `stderr` from applications in the tenant namespace will be collected by the Datadog agents. This means that no additional
+configuration has to be done to the application, other than making sure the logs are written to the correct destination.
+This means that `kubectl logs` and Datadog will display the same information.
+
+Check the official [Datadog Logging Documentation](https://docs.datadoghq.com/agent/kubernetes/log/?tab=daemonset) for more detailed information.
+
+### Metrics
+
+Datadog can collect exposed Prometheus or OpenMetrics from your application. In simple terms this means that the application needs to expose an
+endpoint which the Datadog agent can scrape to get the metrics. All that is required is that the Pod contains annotations which tells Datadog where to
+find the metrics.
+
+Given that your application is exposing metrics on port 8080 your pod should contain the following annotations.
+
+```yaml
+annotations:
+    ad.datadoghq.com/prometheus-example.instances: |
+      [
+        {
+          "prometheus_url": "http://%%host%%:8080/metrics"
+        }
+      ]
+```
+
+Check the official [Datadog Metrics Documentation](https://docs.datadoghq.com/agent/kubernetes/prometheus/) for more detailed information.
+
+### Tracing
+
+Datadog tracing is done with Application Performance Monitoring (APM), which sends traces from an application to Datadog. For traces to work the
+application needs to be configured with the language specific libraries. Check the [Language
+Documentation](https://docs.datadoghq.com/tracing/setup_overview/) for language specific instructions. Some of the languages that are supported are.
+
+- Golang
+- C#
+- Java
+- Python
+
+Configure your Deployment with the `DD_AGENT_HOST` environment for the APM agent to know where to send the traces.
+
+```.yaml
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  containers:
+    - env:
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+```
+
+Check the official [Datadog Tracing Documentation](https://docs.datadoghq.com/agent/kubernetes/apm/?tab=helm) for more detailed information.
+
+### networkpolicy datadog
+
+When using XKF and your cluster have enabled datadog the tenant namespace will get a networkpolicy automatically that allows egress for tracing.
+
+You can view these rules by typing
+
+```shell
+kubectl get networkpolicies
+```
 
 ## Opentelemetry
 
@@ -67,35 +134,6 @@ spec:
 ```
 
 You can do allot of configuration when it comes to metrics gathering but the above config will get you started.
-
-#### networkpolicy metrics
-
-Don't forget to define a networkpolicy that allows incoming traffic from the opentelemetry namespace to gather metrics from your application.
-
-If you can see `scrape_duration_seconds = 10` your servicemonitor/podmonitor is trying to get scraped but it most likely times out after 10 seconds
-and don't provide you with any "real" data from your metrics endpoint.
-
-Verify that you have defined a networkpolicy that allows you to talk to your application from you the opentelemetry namespace.
-
-TODO (Edvin) when we have decided on a standard for the prometheus agent write it down to narrow down the networkpolicy even more.
-
-```networkpolicy-app1.yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-opentelemetry-example-app
-spec:
-  ingress:
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              name: opentelemetry
-  podSelector:
-    matchLabels:
-      app: app1
-  policyTypes:
-    - Ingress
-```
 
 ### Logging
 
@@ -153,34 +191,54 @@ Assuming that you are using XKF the URL will be
 - [http://grafana-agent-traces.opentelemetry.svc.cluster.local:4318/v1/traces](http://grafana-agent-traces.opentelemetry.svc.cluster.local:4318/v1/traces)
 - [http://grafana-agent-traces.opentelemetry.svc.cluster.local:4317/v1/traces](http://grafana-agent-traces.opentelemetry.svc.cluster.local:4317/v1/traces)
 
-#### networkpolicy tracing
+#### Tail-based sampling
 
-Don't forget to define a networkpolicy that allows egress traffic to the opentelemetry namespace, else your tracing data won't be forwarded to the opentelemetry collector.
+By default the grafana-agent that is deployed by XKF forwards all traces without any special config.
+This can cause high costs thanks to the amount of data that is sent. Grafana-agent have done there own solution on `probabilistic sampling`
+that is called [tail-based sampling](https://grafana.com/docs/tempo/latest/grafana-agent/tail-based-sampling/) that can help you solving this issue.
 
-TODO (Edvin) verify the networkpolicy in a clean env
+For a easy way of managing access token you can setup your own trace agent with the custom config that you want and then have it forward all the traffic to our central trace agent in the opentelemetry namespace.
+We plan to write a blog post about this in the future but below you can find a simple example configmap that you can use together with your trace agent to send data to the central agent.
 
-```networkpolicy-app1.yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
+```trace-agent-configmap.yaml
+kind: ConfigMap
+apiVersion: v1
 metadata:
-  name: allow-opentelemetry-example-app
-spec:
-  egress:
-    - to:
-        - namespaceSelector:
-            matchLabels:
-              name: opentelemetry
-        - podSelector:
-            matchLabels:
-              app: grafana-agent-traces
-      ports:
-        - protocol: TCP
-          port: 4317
-        - protocol: TCP
-          port: 4318
-  podSelector:
-    matchLabels:
-      app: app1
-  policyTypes:
-    - Egress
+  name: grafana-agent-traces
+data:
+  agent.yaml: |
+    tempo:
+      configs:
+        - name: default
+          remote_write:
+            - endpoint: "grafana-agent-traces.grafana-agent.svc.cluster.local:4317"
+              insecure: true
+          receivers:
+            otlp:
+              protocols:
+                http: {}
+                grpc: {}
+            jaeger:
+              protocols:
+                grpc:
+                  endpoint: 0.0.0.0:55678
+          tail_sampling:
+            # policies define the rules by which traces will be sampled. Multiple policies
+            # can be added to the same pipeline.
+            # For more information: https://grafana.com/docs/agent/latest/configuration/traces-config/
+            # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/b2327211df976e0a57ef0425493448988772a16b/processor/tailsamplingprocessor
+            policies:
+              - probabilistic: {sampling_percentage: 90}
+              - status_code: {status_codes: [ERROR, UNSET]}
+```
+
+### networkpolicy grafana-agent
+
+When using XKF and your cluster have enabled the grafana-agent the tenant namespace will get a networkpolicy automatically that allows
+incoming metrics gathering and egress for tracing.
+
+You can view these rules by typing
+
+```shell
+kubectl get networkpolicies
 ```
