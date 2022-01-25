@@ -45,7 +45,7 @@ To setup XKS we will utilize 4 modules:
 Of course we need a place to store our terraform code so create on in your azure devops organization.
 TODO create a example repo that uses our terraform modules.
 
-You can today see a example of the [Makefile](https://github.com/XenitAB/github-actions#using)
+You can today see a example of the [Makefile](https://github.com/XenitAB/github-actions/blob/main/docker/template/Makefile)
 
 This is how we normally [structure](https://www.terraform.io/docs/language/modules/develop/structure.html) our tenant repo
 
