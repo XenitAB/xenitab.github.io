@@ -109,3 +109,9 @@ ingress, azad-proxy or the AAD we need have ways of reaching the cluster.
 ```bash
 aws eks --region eu-west-1 update-kubeconfig --name dev-eks1 --alias dev-eks1 --role-arn arn:aws:iam::111111111111:role/xkf-eu-west-1-dev-eks-admin
 ```
+
+## EKS resources
+
+To get a quick overview of what is happening in EKS you can look at it's [changelog](https://github.com/awslabs/amazon-eks-ami/blob/master/CHANGELOG.md#changelog).
+
+When upgrading node groups you need to correlate with your Kubernetes release, you can find which node group is available to [which node group](https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html).
