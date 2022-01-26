@@ -62,6 +62,6 @@ az aks nodepool delete --cluster-name aks-dev-we-aks1 --resource-group rg-dev-we
 
 For additional information about updating the system nodes refer to [this blog post](https://pumpingco.de/blog/modify-aks-default-node-pool-in-terraform-without-redeploying-the-cluster/).
 
-## AKS changelog
+## AKS resources
 
 To get a quick overview of what is happening in AKS you can look at it's [changelog](https://github.com/Azure/AKS/releases).
