@@ -107,7 +107,7 @@ Updating EKS cluster version can not be done by updating Terraform code only, it
 
 For further information on the AWS CLI commands used in this section, please refer to [AWS EKS CLI](https://docs.aws.amazon.com/cli/latest/reference/eks/index.html)
 
-### Update the control plane
+### Update the control plane using AWS CLI
 
 Get the name of the cluster to update:
 
@@ -115,7 +115,7 @@ Get the name of the cluster to update:
 aws eks list-clusters --region eu-west-1
 ```
 
-Update the control plane version by running the following command with the actual values for \<cluster-name\> and \<version>\:
+Update the control plane version by running the following command:
 
 ```bash
 aws eks update-cluster-version --region eu-west-1 --name <cluster-name> --kubernetes-version <version>
@@ -127,9 +127,13 @@ The above command provides an id that can be use to check the status of the upda
 aws eks describe-update --region eu-west-1 --name <cluster-name> --update-id <id>
 ```
 
-The update is finished when status is `Successful`. Previous updates have approximately taken 45 minutes.
+The update is finished when status is `Successful`. Previous updates have approximately taken `45 minutes`.
 
 In the `aws-eks/variables/<environment>.tfvars` Terraform file that corresponds to the actual environment, update the `kubernetes_version` in `eks_config` and make a `terraform plan`. No difference in the plan output is expected. Also make a `terraform apply` just to make sure state the state is updated (might not be needed).
+
+### Update the control plane using Terrafrom
+
+TBD
 
 ### Update the addons
 
@@ -167,6 +171,12 @@ The corresponding Pods can be checked by:
 
 ```bash
 kubectl get pods -n kube-system
+```
+
+Also perform a health check:
+
+```bash
+https://ingress-healthz.<environment>.<customer>.se/
 ```
 
 ### Update the nodes
@@ -227,6 +237,29 @@ eks_config = {
 ```
 
 When appled, the old nodes are removed. The update is now complete.
+
+### Command examples
+
+The following AWS CLI commands are an example of an update from 1.20 to 1.21:
+
+Control plane:
+
+```bash
+aws eks list-clusters --region eu-west-1
+aws eks update-cluster-version --region eu-west-1  --name qa-eks2  --kubernetes-version 1.21
+aws eks describe-update --region eu-west-1 --name qa-eks2 --update-id 25b9f04f-0be3-40ca-bc37-aaf841070012
+```
+
+Addons:
+
+```bash
+aws eks describe-addon-versions --kubernetes-version 1.21 --addon-name coredns
+aws eks update-addon --cluster-name qa-eks2 --addon-name coredns --addon-version v1.8.4-eksbuild.1 --resolve-conflicts OVERWRITE
+aws eks describe-addon  --region eu-west-1  --cluster-name qa-eks2  --addon-name coredns
+aws eks describe-addon-versions --kubernetes-version 1.21 --addon-name kube-proxy
+aws eks update-addon --cluster-name qa-eks2 --addon-name kube-proxy --addon-version v1.21.2-eksbuild.2 --resolve-conflicts OVERWRITE
+aws eks describe-addon --region eu-west-1  --cluster-name qa-eks2  --addon-name kube-proxy
+```
 
 ## Break glass
 
