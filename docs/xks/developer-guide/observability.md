@@ -16,7 +16,7 @@ Within observability we normally talk about three pillars.
 Monitoring applications is an especially important feature when developing microservices
 and something that all developers of microservices needs to focus on.
 
-We currently support two solutions to gather observability data in XKF, [Datadog](https://www.datadoghq.com) and the [Opentelemetry](https://opentelemetry.io/) stack which is a open-source solution.
+We currently support two solutions to gather observability data in XKF, [Datadog](https://www.datadoghq.com) and the [Opentelemetry](https://opentelemetry.io/) stack which is an open-source solution.
 
 ## Datadog
 
@@ -34,7 +34,7 @@ Check the official [Datadog Logging Documentation](https://docs.datadoghq.com/ag
 
 ### Metrics
 
-Datadog can collect exposed Prometheus or OpenMetrics from your application.
+Datadog can collect Prometheus or OpenMetrics metrics exposed by your application.
 In simple terms this means that the application needs to expose an endpoint which the Datadog agent can scrape to get the metrics.
 All that is required is that the Pod contains annotations which tells Datadog where to find the metrics HTTP endpoint.
 
@@ -87,7 +87,7 @@ When using XKF and your cluster have enabled datadog the tenant namespace will g
 You can view these rules by typing
 
 ```shell
-kubectl get networkpolicies -n <tenant>
+kubectl get networkpolicies -n <tenant-namespace>
 ```
 
 ## Opentelemetry
@@ -101,15 +101,15 @@ The grafana agent gathers both metrics and logs and is able to receive traces.
 
 To gather metrics data we use servicemonitors or podmonitors that is managed in XKF using the [prometheus-operator](https://github.com/prometheus-operator/prometheus-operator/).
 
-The prometheus-operator have great [getting started guide](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/getting-started.md)
-But if you want a quick example you can look below.
+The prometheus-operator have a great [getting started guide](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/getting-started.md)
+but if you want a quick example you can look below.
 
-The most important part for you as a developer you have to label the pod/service monitor yaml with `xkf.xenit.io/monitoring: tenant`,
+In order for the grafana agent to find the pod you have to put this exact label on the pod/service monitor yaml: `xkf.xenit.io/monitoring: tenant`,
 else the grafana agent won't find the rule to gather the metric.
 
-The selectors is used to find ether the pod or the service that you want to monitor.
+The [selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) is used to find ether the pod or the service that you want to monitor.
 
-The podmonitor is used when you don't have a service in-front of your pod.
+Use a podmonitor when you don't have a service in-front of your pod.
 For example this might be the case when your application don't use a HTTP endpoint to get requests.
 
 ```podmonitor.yaml
@@ -123,12 +123,11 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: app1
-      app.kubernetes.io/instance: app1
   podMetricsEndpoints:
     - port: http-metrics
 ```
 
-A servicemonitor is used to monitor a specific service.
+In general use a servicemonitor when you have a service in-front of your pod.
 
 ```servicemonitor.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -210,7 +209,7 @@ This can cause high costs thanks to the amount of data that is sent.
 You can configure the agent to use `probabilistic sampling` which Grafana-agent have done there own solution on
 that is called [tail-based sampling](https://grafana.com/docs/tempo/latest/grafana-agent/tail-based-sampling/) that can help you solve this issue.
 
-For a easy way of managing access token you can setup your own trace agent with the custom config that you want and then have it forward all the traffic to our central trace agent in the opentelemetry namespace.
+To setup a custom agent with tail-based sampling you can setup your own trace agent with the custom config that you want and then have it forward all the traffic to our central trace agent in the opentelemetry namespace.
 We plan to write a blog post about this in the future but below you can find a simple example configmap that you can use together with your trace agent to send data to the central agent.
 
 ```trace-agent-configmap.yaml
@@ -243,11 +242,11 @@ data:
 
 ### networkpolicy grafana-agent
 
-When using XKF and your cluster have enabled the grafana-agent the tenant namespace will get a networkpolicy automatically that allows
+When using XKF and your cluster have enabled the grafana-agent your tenant namespace will get a networkpolicy automatically that allows
 incoming metrics gathering and egress for tracing.
 
 You can view these rules by typing
 
 ```shell
-kubectl get networkpolicies -n <tenant>
+kubectl get networkpolicies -n <tenant-namespace>
 ```
