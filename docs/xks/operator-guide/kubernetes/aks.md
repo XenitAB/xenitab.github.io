@@ -79,6 +79,25 @@ watch kubectl get nodes
 kubectl get pods -A
 ```
 
+### Update kubernetes
+
+```shell
+export RG=rg1
+export POOL_NAME=default
+export CLUSTER_NAME=cluster1
+export AZURE_LOCATION=westeurope
+```
+
+What AKS versions can I pick in Azure location
+
+```shell
+az aks get-versions --location $AZURE_LOCATION -o table
+```
+
+```shell
+az aks get-upgrades --resource-group $RG --name $CLUSTER_NAME --output table
+```
+
 ### Update the nodes
 
 From time to time you might want to upgrade your AKS cluster without upgrading the kubernetes version. We always recommend to look at
