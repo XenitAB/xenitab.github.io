@@ -53,6 +53,8 @@ az login --identity
 az account show
 ```
 
+Make sure your application supports retries when retrieving tokens. Should at least be able to retry for 60 seconds. Read more about it [here](https://azure.github.io/aad-pod-identity/docs/best-practices/#retry-on-token-retrieval). More good practices can be found on the [aad-pod-identity docs](https://azure.github.io/aad-pod-identity/docs/best-practices).
+
 #### SDK
 
 A common scenario is that an application may need API access to an Azure resources through the API. In these cases the best solution is to use the language specific SDKs which will most of the time
