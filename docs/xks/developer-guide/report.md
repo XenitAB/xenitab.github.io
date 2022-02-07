@@ -3,12 +3,11 @@ id: reports
 title: Reports
 ---
 
-As a XKS 2.0 customer you are getting monthly reports, these reports exist to help to get a quick overview
-of your environment and how your platform is doing.
+As a XKS 2.0 customer you get monthly reports to get a quick overview of your XKS production environment.
 
 ## Security
 
-Xenit **isn't** responsible for the security of your application but a part of the report we point to
+Xenit **isn't** responsible for the security of your application but as a part of the report we state
 the number of CVE:s in your applications found by our automated scanning tools that we have in XKF.
 
 This is a extra way for at Xenit to help you as a developer but you **can't** rely on Xenit to point out specific security flaws in your application. Security is something that **you and your company** is in charge of we are just trying to visualize some of the data that we have access to.
