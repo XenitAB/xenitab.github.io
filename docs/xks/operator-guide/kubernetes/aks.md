@@ -79,7 +79,11 @@ watch kubectl get nodes
 kubectl get pods -A
 ```
 
-### Update Kubernetes version
+### Terraform update Kubernetes version
+
+TBD
+
+### CLI update Kubernetes version
 
 ```shell
 export RG=rg1
