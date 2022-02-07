@@ -62,6 +62,74 @@ az aks nodepool delete --cluster-name aks-dev-we-aks1 --resource-group rg-dev-we
 
 For additional information about updating the system nodes refer to [this blog post](https://pumpingco.de/blog/modify-aks-default-node-pool-in-terraform-without-redeploying-the-cluster/).
 
+## Update AKS cluster
+
+### Useful commands in Kubernetes
+
+When patching an AKS cluster or just upgrading nodes it can be useful to watch your resources in Kubernetes.
+
+```shell
+# Show node version
+kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.labels.kubernetes\.azure\.com\/node-image-version}{"\n"}{end}'
+
+# Watch nodes
+watch kubectl get nodes
+
+# Check the status of all pods in the cluster
+kubectl get pods -A
+```
+
+### Terraform update Kubernetes version
+
+TBD
+
+### CLI update Kubernetes version
+
+```shell
+export RG=rg1
+export POOL_NAME=default
+export CLUSTER_NAME=cluster1
+export AZURE_LOCATION=westeurope
+```
+
+What AKS versions can I pick in Azure location
+
+```shell
+az aks get-versions --location $AZURE_LOCATION -o table
+```
+
+```shell
+az aks get-upgrades --resource-group $RG --name $CLUSTER_NAME --output table
+```
+
+### Upgrading node pools without upgrading cluster
+
+From time to time you might want to upgrade your Node Pools without upgrading the Kubernetes version. We always recommend to look at
+the [official documentation](https://docs.microsoft.com/en-us/azure/aks/node-image-upgrade)as well.
+
+The node pool will spin up a new node and drain the existing one.
+When this is done the old node will be deleted.
+
+The below command works great for smaller clusters. If you want to upgrade more nodes faster it's possible to do so. Read the documentation for more information.
+
+```shell
+export RG=rg1
+export POOL_NAME=default
+export CLUSTER_NAME=cluster1
+```
+
+Get latest available node versions for your node pool
+
+```shell
+az aks nodepool get-upgrades --nodepool-name $POOL_NAME --cluster-name $CLUSTER_NAME --resource-group $RG
+```
+
+Upgrade the image on the specified node pool
+
+```shell
+az aks nodepool upgrade --resource-group $RG --cluster-name $CLUSTER_NAME --name $POOL_NAME --node-image-only
+```
+
 ## AKS resources
 
 To get a quick overview of what is happening in AKS you can look at it's [changelog](https://github.com/Azure/AKS/releases).
