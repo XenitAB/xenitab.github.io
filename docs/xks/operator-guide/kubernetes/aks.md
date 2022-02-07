@@ -104,7 +104,7 @@ az aks get-upgrades --resource-group $RG --name $CLUSTER_NAME --output table
 
 ### Upgrading node pools without upgrading cluster
 
-From time to time you might want to upgrade your AKS cluster without upgrading the Kubernetes version. We always recommend to look at
+From time to time you might want to upgrade your Node Pools without upgrading the Kubernetes version. We always recommend to look at
 the [official documentation](https://docs.microsoft.com/en-us/azure/aks/node-image-upgrade)as well.
 
 The node pool will spin up a new node and drain the existing one.
