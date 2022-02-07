@@ -62,11 +62,11 @@ az aks nodepool delete --cluster-name aks-dev-we-aks1 --resource-group rg-dev-we
 
 For additional information about updating the system nodes refer to [this blog post](https://pumpingco.de/blog/modify-aks-default-node-pool-in-terraform-without-redeploying-the-cluster/).
 
-## Update AKS
+## Update AKS cluster
 
-### Useful commands in kubernetes
+### Useful commands in Kubernetes
 
-When running patching AKS or just upgrading nodes it can be useful to watch your resources in kubernetes.
+When patching an AKS cluster or just upgrading nodes it can be useful to watch your resources in Kubernetes.
 
 ```shell
 # Show node version
@@ -75,11 +75,11 @@ kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata
 # Watch nodes
 watch kubectl get nodes
 
-# Watch the status of all pods in the cluster
+# Check the status of all pods in the cluster
 kubectl get pods -A
 ```
 
-### Update kubernetes
+### Update Kubernetes version
 
 ```shell
 export RG=rg1
@@ -98,9 +98,9 @@ az aks get-versions --location $AZURE_LOCATION -o table
 az aks get-upgrades --resource-group $RG --name $CLUSTER_NAME --output table
 ```
 
-### Update the nodes
+### Upgrading node pools without upgrading cluster
 
-From time to time you might want to upgrade your AKS cluster without upgrading the kubernetes version. We always recommend to look at
+From time to time you might want to upgrade your AKS cluster without upgrading the Kubernetes version. We always recommend to look at
 the [official documentation](https://docs.microsoft.com/en-us/azure/aks/node-image-upgrade)as well.
 
 The node pool will spin up a new node and drain the existing one.
