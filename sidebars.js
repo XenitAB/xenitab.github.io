@@ -32,6 +32,8 @@ module.exports = {
             "xks/developer-guide/observability",
             "xks/developer-guide/flux",
             "xks/developer-guide/networking",
+            "xks/developer-guide/reports",
+            "xks/developer-guide/starboard",
             "xks/developer-guide/wsl2"
           ]
         },
