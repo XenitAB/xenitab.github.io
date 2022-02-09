@@ -130,6 +130,57 @@ Upgrade the image on the specified node pool:
 az aks nodepool upgrade --resource-group $RG --cluster-name $CLUSTER_NAME --name $POOL_NAME --node-image-only
 ```
 
+## Change vm size through Terraform
+
+If you want to use terraform to change the your node pools VM size you **can't** just change the vm_size in the additional_node_pools config.
+This will tell Azure to drain all the nodes and then delete the existing ones, then Azure will spin up a new node pool after the existing one is gone.
+
+This might be fine if you already have multiple additional node pools and you pods don't have specific node affinities.
+
+But if that isn't the case terraform will most likely run for ever since it won't be able to destroy the nodes that you already have workload on.
+Or even worse it will destroy the existing node and you won't have any node pools in your cluster to manage your workloads.
+
+Instead you have to add a second additional node pool in to your cluster.
+
+For example:
+
+```.hcl
+  additional_node_pools = [
+    {
+      name                 = "standard"
+      orchestrator_version = "1.21.2"
+      vm_size              = "Standard_E2s_v4"
+      min_count            = 1
+      max_count            = 5
+      node_labels          = {}
+      node_taints          = []
+      spot_enabled         = false
+      spot_max_price       = null
+    },
+    {
+      name                 = "standard2"
+      orchestrator_version = "1.21.2"
+      vm_size              = "Standard_F4s_v2"
+      min_count            = 1
+      max_count            = 5
+      node_labels          = {}
+      node_taints          = []
+      spot_enabled         = false
+      spot_max_price       = null
+    }
+  ]
+```
+
+Run terraform and see that standard2 is up and running.
+
+Now you can remove the standard node pool and standard2 should be able to handle the new load.
+
+Azure will automatically drain all the data from the old standard node pool.
+
+If you want to make sure that you don't get any downtime think about the min count of standard2.
+The cluster autoscaler will scale up new vm:s of standard2 but it will take time.
+During the creation of more standard2 nodes much of your workload might become pending.
+
 ## AKS resources
 
 To get a quick overview of what is happening in AKS you can look at its [changelog](https://github.com/Azure/AKS/releases).
