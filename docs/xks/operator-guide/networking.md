@@ -44,11 +44,11 @@ factors.
 
 #### Links
 
-* https://docs.microsoft.com/en-us/azure/aks/load-balancer-standard#troubleshooting-snat
-* https://docs.microsoft.com/en-us/azure/load-balancer/troubleshoot-outbound-connection
-* https://www.danielstechblog.io/detecting-snat-port-exhaustion-on-azure-kubernetes-service/
-* https://medium.com/asos-techblog/an-aks-performance-journey-part-1-sizing-everything-up-ee6d2346ea99
-* https://medium.com/asos-techblog/an-aks-performance-journey-part-2-networking-it-out-e253f5bb4f69
+* [https://docs.microsoft.com/en-us/azure/aks/load-balancer-standard#troubleshooting-snat](https://docs.microsoft.com/en-us/azure/aks/load-balancer-standard#troubleshooting-snat)
+* [https://docs.microsoft.com/en-us/azure/load-balancer/troubleshoot-outbound-connection](https://docs.microsoft.com/en-us/azure/load-balancer/troubleshoot-outbound-connection)
+* [https://www.danielstechblog.io/detecting-snat-port-exhaustion-on-azure-kubernetes-service/](https://www.danielstechblog.io/detecting-snat-port-exhaustion-on-azure-kubernetes-service/)
+* [https://medium.com/asos-techblog/an-aks-performance-journey-part-1-sizing-everything-up-ee6d2346ea99](https://medium.com/asos-techblog/an-aks-performance-journey-part-1-sizing-everything-up-ee6d2346ea99)
+* [https://medium.com/asos-techblog/an-aks-performance-journey-part-2-networking-it-out-e253f5bb4f69](https://medium.com/asos-techblog/an-aks-performance-journey-part-2-networking-it-out-e253f5bb4f69)
 
 ## AWS
 
