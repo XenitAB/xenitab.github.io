@@ -44,6 +44,7 @@ module.exports = {
             "xks/operator-guide/index",
             "xks/operator-guide/getting-started",
             "xks/operator-guide/agents",
+            "xks/operator-guide/networking",
             "xks/operator-guide/blast-radius",
             "xks/operator-guide/blue-green",
             "xks/operator-guide/aws-azdo",
