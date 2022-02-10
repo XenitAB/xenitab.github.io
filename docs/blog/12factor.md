@@ -25,12 +25,6 @@ The 2022 developer considers the relationship between repositories and artifacts
 
 Expect to reorganize your sources as your apps evolve.
 
-Indicators:
-
-- difficulty automating builds or deployments
-- components have their version bumped despite being unchanged
-- versions are tied together only by manually maintained documentation
-
 ## Factor II: Dependencies
 
 > A twelve-factor app never relies on implicit existence of system-wide packages. It declares all dependencies, completely and exactly, via a dependency declaration manifest. [...] Twelve-factor apps also do not rely on the implicit existence of any system tools.
@@ -44,13 +38,6 @@ The up-to-date interpretation of this factor is that upgrading dependency versio
 > it uses a dependency isolation tool during execution to ensure that no implicit dependencies “leak in” from the surrounding system
 
 One of the innovations introduced by Docker is that this factor is enforced already at build time. Run your automated tests with the built container and there is very little space for execution environment differences.
-
-Indicators:
-
-- depending on fat base images
-- "environmental" failures are frequent
-- imprecise version numbers
-- manual steps to install dependencies
 
 ## Factor III: Config
 
@@ -66,13 +53,6 @@ This factor is now obsolete in one respect. As much as possible, secrets (passwo
 
 Furthermore, with platforms such as Kubernetes, service discovery means that some aspects need no configuration at all. Additionally, some forms of configuration can better be managed as references between IaC-controlled resources, which removes them from direct configuration management consideration.
 
-Indicators:
-
-- deploys often fail because of missing config parameters
-- manual steps required to manage secrets
-- build identifiers (e.g. container tags) contain an environment or customer name
-- docker containers with complex mount requirements
-
 ## Factor IV: Backing services
 
 > The code for a twelve-factor app makes no distinction between local and third party services.
@@ -82,12 +62,6 @@ This factor remains relevant as written. Its current iteration is sometimes refe
 Even your orchestration platform itself is a backing service, not just the services that run inside it. A service can leverage the Kubernetes control plane to run a one-off job or provision cloud resources to serve a new customer.
 
 The original text focuses a lot on relational databases. It is worth pointing out that you can create a service which scalably serves long-lived state without violating the 12 factors: as long as there is a procedure to claim or negotiate access to a particular shard of the state (e.g. backups stored in an Azure storage account), the actual process can remain stateless. Contemporary thinking in this matter is still coloured by software that predates the cloud era (e.g. MySQL, Elasticsearch, RabbitMQ). For an example of what is possible in 2022, we can look at [Loki](https://github.com/grafana/loki).
-
-Indicators:
-
-- containers with process managers in them
-- environments requiring VPN tunnels
-- relying on unauthenticated access and/or unencrypted transport between services
 
 ## Factor V: Build, release, run
 
@@ -101,12 +75,6 @@ Typically, the build stage will push a container image to some container registr
 
 The normal practice today is for a pipeline to push the release to the runtime environment. This is very useful early in the lifecycle of an app since the release process typically evolves with the app. To achieve stronger separation between the build and release, you might want to consider going GitOps. In Kubernetes-land, you would use a service such as [Flux](https://fluxcd.io).
 
-Indicators:
-
-- using empty commits to trigger changes in environments
-- containers which require read-write file systems
-- complex container entrypoint scripts
-
 ## Factor VI: Processes
 
 > Twelve-factor processes are stateless and share-nothing.
@@ -114,12 +82,6 @@ Indicators:
 This factor remains relevant as written. In the world of REST APIs, this effectively means that we should hold no domain state in memory between HTTP requests - it should always be handed over to a caching service. This is the main enabler for scale-out in a software-as-a-service.
 
 Adhering to this rule is also a good way to avoid memory leaks, which tend to plague garbage-collected ecosystems such as Java, Node, Python and Ruby. You will still get leaks after you out-source your caching to Redis, but it will be much easier to measure and the incitement to properly architecture the caching is stronger.
-
-Indicators:
-
-- filling up node disks or frequent adjustments to disk allocation (e.g. Kubernetes ephemeral-storage resource limit)
-- sticky sessions
-- extreme load when processes starts up
 
 ## Factor VII: Port binding
 
@@ -133,12 +95,6 @@ The original text focuses on network protocols such as HTTP and [XMPP](https://x
 
 Many developers implicitly assume that using high-level protocols like HTTP incurs latency. The overhead of a REST call over a local network (e.g. within a cloud provider) is typically 2-4 ms so you need to get a significant number of non-parallelizable requests before this overhead is noticeable over RDBMS operations and latency towards the consumer.
 
-Indicators:
-
-- spotty API documentation
-- discussion about latency not backed by actual measures
-- using AWS API Gateway or Azure API Management with invasive configuration: your app is no longer self-contained.
-
 ## Factor VIII: Concurrency
 
 > In the twelve-factor app, processes are a first class citizen.
@@ -151,12 +107,6 @@ Is short, horizontal scalability is much preferable over vertical scalability bu
 
 Despite the dominance of the serverless paradigm in the software-as-a-service realm, there is still an overhang from the era of vertical scaling which the Twelve Factor App tries to break with. For example, the virtual machines of Java, Node, Python and Ruby maintain large volumes of reflection metadata and are very reluctant to de-allocate memory, leading to significant inefficiency on scale-out. A new generation of ecosystems, lead by Go and Rust, are more frugal in this respect.
 
-Indicators:
-
-- scale-out yields marginal result
-- in-process scheduled jobs
-- containers with process managers in them
-
 ## Factor IX: Disposability
 
 > The twelve-factor app’s processes are disposable, meaning they can be started or stopped at a moment’s notice.
@@ -166,12 +116,6 @@ This factor remains relevant as written and remains nearly as elusive today as i
 Fulfilling this factor on an existing code base is much harder than it sounds. It means mapping all the (often implicit) state machines involved in the app and coordinating them so that there are no undefined transitions. For example, the database connection pool must be ready before we bring up our HTTP listener and must not shut down until the HTTP listener is down _and_ all in-flight HTTP requests are done. Workers must "hand back" in-progress work items so that replacement workers do not have to wait for timeout to process those work items. This difficulty is compounded with distributed systems as a conceptual "transaction" may span more than one app or backing service (e.g. writing to file storage and sending mail), requiring [two-phase commit](https://en.wikipedia.org/wiki/Two-phase_commit_protocol) semantics.
 
 This factor is nevertheless the key to the always-on experience that we take for granted in large cloud services. A service with working graceful shutdown and comprehensive health checks can be updated at any time and builds developer and operations confidence. This can result in significant productivity gains, particularly when combined with automated testing.
-
-Indicators:
-
-- long delay or elevated error rate when deploying because load balancers misjudge the app's readiness
-- manual steps in deployment even when deployments are nominally automated
-- deploys only during off-hours
 
 ## Factor X: Dev/prod parity
 
@@ -187,11 +131,6 @@ Many full-stack development setups includes "dev" servers whose role is to autom
 
 The 2022 developer considers both developer experience, continuous integration/delivery/deployment and operability when choosing tools.
 
-Indicators:
-
-- "it works on my machine"
-- docker-compose files in app repositories
-
 ## Factor XI: Logs
 
 > A twelve-factor app never concerns itself with routing or storage of its output stream
@@ -200,12 +139,6 @@ Interestingly, this factor does not actually advise on the use of logging. Rathe
 
 The factor should thus be updated to mandate that an app should be "observable", meaning that it should volunteer information on its performance and behavior. We normally break this down into logging, metrics, tracing and audit trails. The relative merit of these differ greatly between apps, but all apps should have an observability strategy. Often, the need changes as an app evolve: early in the lifecycle, logging may dominate, but as usage grows, focus shifts to metrics. The apps in a service are considered as a unit and typically provide different observability needs.
 
-Indicators:
-
-- exec:ing into containers when debugging
-- extensive printf debugging
-- frequent "we applied an update, but it didn't help."
-
 ## Factor XII: Admin processes
 
 > One-off admin processes should be run in an identical environment as the regular long-running processes of the app. They run against a release, using the same codebase and config as any process run against that release.
@@ -213,12 +146,6 @@ Indicators:
 This factor captures a practice that is common in the [Rails](https://rubyonrails.org/) and [Drupal](https://www.drupal.org/) ecosystems, among others. These are based on interpreted languages where it is relatively easy to give scripting or interactive access to the app's internals: the main reason is to ensure that database access occurs using the same models that are used during runtime. In compiled languages, this requires a modularization (e.g. making the data model a separate library) that would complicate development.
 
 However, the factor has two underlying principles which holds even today. First, that tools used to administer an app should be versioned and released with the same discipline as your app is. Second, that operating and upgrading an app is part of its ordinary usage and there is nothing strange with adding endpoints for internal administrative use. Put differently, at least factors I - IV should apply to the app's tooling just as it does to the app itself.
-
-Indicators:
-
-- a particular person does all updates
-- a particular bouncepoint is used for all administration
-- tools (e.g. scripts, binaries) are wrapped with e.g. a Makefile
 
 ## What else is there?
 
