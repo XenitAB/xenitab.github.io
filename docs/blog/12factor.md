@@ -219,3 +219,18 @@ Indicators:
 - a particular person does all updates
 - a particular bouncepoint is used for all administration
 - tools (e.g. scripts, binaries) are wrapped with e.g. a Makefile
+
+## What else is there?
+
+Various additional factors have been proposed over the years, for example [Beyond the Twelve-factor app](https://raw.githubusercontent.com/ffisk/books/master/beyond-the-twelve-factor-app.pdf) and [Seven missing factors from the Twelve-factor app](https://www.ibm.com/cloud/blog/7-missing-factors-from-12-factor-applications). The appeal of the original methodology springs from the universality of its factors. These contributions have relevance, but often only for a subsection of all apps that could (should) strive to live up to the original twelve factors. However, there is two aspects that are clearly missing: security and automated testing.
+
+The good people at WhiteHat Security has written a good analysis called [Security and the twelve-factor app](https://www.devopsdigest.com/security-and-12-factor-app-step-1) which analyses each factor from a security perspective and provides recommendations for securing your app. Their main point is that rather than being an additional factor, security needs to permeate all the twelve factors. The charge that security is underrepresented in the original methodology har merit, and the 2022 developer no longer has the luxury of treating security as an afterthought.
+
+Finally, much of the benefit of adhering to the methodology is lost without extensive and automated testing. Version control hygiene and horizontal scalability matters little if apps break as soon as they are deployed. Ten years ago, there was still a discussion about whether writing programmatic tests was worth the effort. That discussion is now settled and in 2022, the discussion is about what the automated testing strategy should look like for a particular app or service. The discerning developer considers:
+
+- when to apply unit, component, integration and end-to-end tests at app and/or service level
+- when to use in-memory implementations of backing services
+- what long-lived testing environments are needed
+- how much automated [static analysis](https://en.wikipedia.org/wiki/Static_program_analysis) to include
+
+These additions notwithstanding, the Twelve-factor app methodology remains remarkably relevant today. All developers producing software-as-a-service offerings can benefit from adhering to its factors.
