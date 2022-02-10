@@ -93,7 +93,7 @@ Indicators:
 
 > The twelve-factor app uses strict separation between the build, release, and run stages.
 
-This factor is more or less a prerequisite for developing software-as-a-service in 2022, but we need to complement this factor with a requirement for automating these stages. The maturing of CI/CD software-as-a-service providers such as GitHub and Circle CI means that it is now relatively easy to automate this process.
+This factor is more or less a prerequisite for developing software-as-a-service in 2022, but we need to complement this factor with a requirement for automating these stages. The maturing of CI/CD software-as-a-service providers such as GitHub, [ACR Tasks](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview) and [Circle CI](https://circleci.com/) means that it is now relatively easy to automate this process.
 
 Typically, the build stage will push a container image to some container registry or upload a function-as-a-service zip files to cloud storage.
 
@@ -111,7 +111,7 @@ Indicators:
 
 > Twelve-factor processes are stateless and share-nothing.
 
-This factor remains relevant as written. In the world or REST APIs, this effectively means that we should hold no domain state in memory between HTTP requests - it should always be handed over to a caching service. This is the main enabler for scale-out in a software-as-a-service.
+This factor remains relevant as written. In the world of REST APIs, this effectively means that we should hold no domain state in memory between HTTP requests - it should always be handed over to a caching service. This is the main enabler for scale-out in a software-as-a-service.
 
 Adhering to this rule is also a good way to avoid memory leaks, which tend to plague garbage-collected ecosystems such as Java, Node, Python and Ruby. You will still get leaks after you out-source your caching to Redis, but it will be much easier to measure and the incitement to properly architecture the caching is stronger.
 
@@ -129,9 +129,9 @@ This factor is now standard in containerized scenarios. Widespread adoption of p
 
 > The port-binding approach means that one app can become the backing service for another app[.]
 
-The original text focuses on network protocols such as HTTP and [XMPP](https://xmpp.org/extensions/). In order to become a backing service in 2022, the app should also adhere to an [API contact](https://apievangelist.com/2019/07/15/what-is-an-api-contract/) of some sort, defining the backing service's intended role.
+The original text focuses on network protocols such as HTTP and [XMPP](https://xmpp.org/extensions/). In order to become a backing service in 2022, the app should also adhere to an [API contract](https://apievangelist.com/2019/07/15/what-is-an-api-contract/) of some sort, defining the backing service's intended role.
 
-Many developers implicitly assume that using high-level protocols like HTTP accrues latency. The overhead of a REST call over a local network (e.g. within a cloud provider) is typically 2-4 ms so you need to get a significant number of non-parallelizable requests before this overhead is noticeable over RDBMS operations and latency towards the consumer.
+Many developers implicitly assume that using high-level protocols like HTTP incurs latency. The overhead of a REST call over a local network (e.g. within a cloud provider) is typically 2-4 ms so you need to get a significant number of non-parallelizable requests before this overhead is noticeable over RDBMS operations and latency towards the consumer.
 
 Indicators:
 
@@ -183,7 +183,7 @@ Docker has introduced a borderland where it is possible to develop a container u
 
 > The twelve-factor developer resists the urge to use different backing services between development and production
 
-Many full-stack development setups includes "dev" servers whose role is to automatically reload the app as its source code change. Similarly, tools like Docker Desktop and Tilt provide capabilities and environments that are subtly different from e.g. Azure Container instances or Kubernetes. All these will color developers' choices and risk introducing issues that will not be discovered until late in the process.
+Many full-stack development setups includes "dev" servers whose role is to automatically reload the app as its source code change. Similarly, tools like Docker Desktop and [Tilt](https://tilt.dev/) provide capabilities and environments that are subtly different from e.g. Azure Container instances or Kubernetes. All these will color developers' choices and risk introducing issues that will not be discovered until late in the process.
 
 The 2022 developer considers both developer experience, continuous integration/delivery/deployment and operability when choosing tools.
 
@@ -196,7 +196,7 @@ Indicators:
 
 > A twelve-factor app never concerns itself with routing or storage of its output stream
 
-Interestingly, this factor does not actually advise on the use of logging. Rather it treats them much as pre-contraceptive times viewed children: as something that inevitably accrues as a result of marriage.
+Interestingly, this factor does not actually advise on the use of logging. Rather it treats them much as pre-contraceptive times viewed children: as something that inevitably accumulates as a result of marriage.
 
 The factor should thus be updated to mandate that an app should be "observable", meaning that it should volunteer information on its performance and behavior. We normally break this down into logging, metrics, tracing and audit trails. The relative merit of these differ greatly between apps, but all apps should have an observability strategy. Often, the need changes as an app evolve: early in the lifecycle, logging may dominate, but as usage grows, focus shifts to metrics. The apps in a service are considered as a unit and typically provide different observability needs.
 
