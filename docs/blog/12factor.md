@@ -2,17 +2,17 @@
 
 [The Twelve-factor app](https://12factor.net/) is a methodology for building software-as-a-service apps that was first formulated by developers associated with Heroku. It's been ten years since the first presentation of this methodology. Despite the criticism that it is only applicable to Heroku and similar webapp services, it remains a relevant yard stick for software-as-a-service development. Some of its tenets have been incorporated into Docker and thence into OCI, effectively making them the law of container-land. This blog post looks at each of the twelve factors and tries to evaluate whether they remain relevant or whether they need updating.
 
-In one respect, the criticism of being Heroku-centric is relevant. Heroku (and Google App Engine and similar services) offer a single packaging model which we today might refer to as "IaC-less": you provide an HTTP server and Heroku runs it for you (or a war file in Google App Engine's case). Any non-trivial software-as-a-service offering require composing many apps into a service, where each has a distinct role: auth, caching, API, serving static files, et cetera, with some infrastructure-as-code that describes how they are exposed and interconnect. We end up with an "app" level and a "service" level and we have to be careful when considering the original text, since it talks only about the app level, but some of its concerns now reside at the service level.
+In one respect, the criticism of being Heroku-centric is relevant. Heroku (and Google App Engine and similar services) offer a single packaging model which we today might refer to as "IaC-less": you provide an HTTP server and Heroku runs it for you (or a war file in Google App Engine's case). Any non-trivial software-as-a-service offering require composing many apps into a service, where each has a distinct role: authentication, caching, API, serving static files, et.c., with some infrastructure-as-code that describes how these apps are exposed and interconnect. We end up with an "app" level and a "service" level and we have to be careful when considering the original text, since it talks only about the app level, but some of its concerns now reside at the service level.
 
 ## Factor I: Codebase
 
 > A codebase is any single repository
 
-This factor is first and foremost an argument for expressing as much as possible of your service as code that can be put under version control. This was probably already a strawman attack ten years ago. Nevertheless, the latest incarnation of mandating version control is [GitOps](https://www.weave.works/technologies/gitops/), namely the idea that your infrastructure maintains itself by reading your version control system and automatically applying changes as necessary - remarkably similar to the Heroku model.
+This factor is first and foremost an argument for expressing as much as possible of your service as code that can be put under version control. This was probably already a strawman attack ten years ago. Nevertheless, the latest incarnation of mandating version control is [GitOps](https://www.weave.works/technologies/gitops/), namely the idea that your infrastructure maintains itself by reading your version control system and automatically applies changes as necessary - remarkably similar to the original Heroku model.
 
 > There is always a one-to-one correlation between the codebase and the app.
 
-This part of the factor remains relevant at the app level, but modern public cloud providers' infrastructure-as-code tooling and platforms like Kubernetes allow us to describe a set of apps and their supporting resources (e.g. secrets management) as one package or service. Some organizations separate infrastructure-as-code and app code into separate repositories while others keep the the app and its supporting IaC together; neither of these can be said unconditionally to be best practice. Similarly, SPAs are often deployed to a CDN, while their backend may be deployed to a public cloud provider or to a Kubernetes cluster. Whether these should be kept in the same repository or in different repositories depends on how tightly coupled they are.
+This part of the factor remains relevant at the app level, but modern public cloud providers' infrastructure-as-code tooling and platforms like Kubernetes allow us to describe a set of apps and their supporting resources (e.g. secrets) as one package or service. Some organizations separate infrastructure-as-code and app code into separate repositories while others keep the app and its supporting IaC together; neither of these can be said unconditionally to be best practice. Similarly, [Single-page apps](https://en.wikipedia.org/wiki/Single-page_application) are often deployed to a [Content Distribution Network](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/), while their backend may be deployed to a public cloud provider or to a [Kubernetes](https://kubernetes.io/) cluster. Whether these should be kept in the same repository or in different repositories depends on how tightly coupled they are.
 
 The 2022 developer considers the relationship between repositories and artifacts carefully. Pertinent aspects include:
 
@@ -39,7 +39,7 @@ In the container and function-as-a-service worlds, this factor has been elevated
 
 Modern apps tend to have more than one dependency declaration manifest, namely its project manifest(s) (e.g. `go.mod` or `package.json`) and a `Dockerfile`. A consequence of this factor is that you should use Docker base images that are as bare-bone as they come, forcing the explicit installation of supporting libs and tools.
 
-The up-to-date interpretation of this factor is that upgrading dependency versions should always be a conscious action. This slightly shifts the interpretation of the original factor's "exactly". The various ecosystems and tool chains (maven, npm, cargo, et c) work differently in when they resolve dependencies. Some resolve dependencies when the developer performs a build and some require an explicit "upgrade" operation to change what goes into a build. It is therefore vital to have a codified workflow for updating dependencies. For example, when using Node.js and npm, a developer should normally do [npm ci](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable) and only use the traditional `npm install` (or `npm update`) when the intent is to modernize dependencies.
+The up-to-date interpretation of this factor is that upgrading dependency versions should always be a conscious action. This slightly shifts the interpretation of the original factor's "exactly". The various ecosystems and tool chains (maven, npm, cargo, et.c.) work differently in when they resolve dependencies. Some resolve dependencies when the developer performs a build and some require an explicit "upgrade" operation to change what goes into a build. It is therefore vital to have a codified workflow for updating dependencies. For example, when using Node.js and npm, a developer should normally do [npm ci](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable) and only use the traditional `npm install` (or `npm update`) when the intent is to modernize dependencies.
 
 > it uses a dependency isolation tool during execution to ensure that no implicit dependencies “leak in” from the surrounding system
 
@@ -60,11 +60,11 @@ This factor remains mostly relevant as written, but there are some nuances to co
 
 IaC tools like Terraform allows us to create files and database entries. Kubernetes allows us to create [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/) which will be made available to a container as a file. In both cases, the source configuration can be put under version control, any manual edits will be overwritten on the next deploy and the mechanism is easy for a developer to emulate locally. Thus, they achieve the same result as using environment variables by different means.
 
+Also, while environment variables are operations-friendly, they are problematic when writing tests, since they are global state. In ecosystems that default to parallel test execution (e.g. Rust) environment variables cannot be used. Thus, while an environment variable remains the preferred way to accept simple configuration values, a 12-factor app should convert them to internal state as early as possible.
+
+This factor is now obsolete in one respect. As much as possible, secrets (passwords, private keys, et c) should be stored using a secrets management system such as Hashicorp Vault or Azure Key Vault. Particularly where we can rely on the infrastructure to authenticate the calling process (e.g. via a Kubernetes service account) access to secrets will not directly require credentials. The existence of the secret is under version control, but the actual secret content is immaterial.
+
 Furthermore, with platforms such as Kubernetes, service discovery means that some aspects need no configuration at all. Additionally, some forms of configuration can better be managed as references between IaC-controlled resources, which removes them from direct configuration management consideration.
-
-However, while environment variables are useful because of their operations properties, they are problematic when writing tests. since they are global state. In ecosystems that default to parallel test execution (e.g. Rust) environment variables cannot be used. Thus, while an environment variable is the preferred way to accept configuration, a 12-factor app should convert it to a configuration variable as early as possible.
-
-This factor is obsolete in one respect. As much as possible, secrets (passwords, private keys, et c) should be stored using a secrets management system such as Hashicorp Vault or Azure Key Vault. Particularly where we can rely on the infrastructure to authenticate the calling process (e.g. via a Kubernetes service principal) access to the secrets management system will not directly require credentials. The existence of the secret is under version control, but the actual secret content is immaterial.
 
 Indicators:
 
@@ -77,11 +77,11 @@ Indicators:
 
 > The code for a twelve-factor app makes no distinction between local and third party services.
 
-This factor remains relevant as written. Its current iteration is sometimes referred to as ["API first"](https://swagger.io/resources/articles/adopting-an-api-first-approach/) which can be described as the principle that all services you create should be able to act as a backing service. More generally, with the advent of zero trust and the proliferation of cloud services, the logical end result of this factor is that any service can interact with any service on the planet.
+This factor remains relevant as written. Its current iteration is sometimes referred to as ["API first"](https://swagger.io/resources/articles/adopting-an-api-first-approach/) which can be described as the principle that all services you create should be able to act as a backing service. More generally, with the advent of [Zero Trust](https://www.crowdstrike.com/cybersecurity-101/zero-trust-security/) and the proliferation of cloud services, the logical end result of this factor is that any service can interact with any other service on the planet.
 
-Even your orchestration platform itself is a backing service, not just the services that run inside it. A service can leverage Kubernetes to run a one-off job or provision cloud resources to serve a new customer.
+Even your orchestration platform itself is a backing service, not just the services that run inside it. A service can leverage the Kubernetes control plane to run a one-off job or provision cloud resources to serve a new customer.
 
-The original text focuses a lot on relational databases. It is worth pointing out that you can create a service which scalably serves long-lived state without violating the 12 factors: as long as there is a procedure to claim or negotiate access to a particular shard of the state, the actual process can be stateless. Here, our thinking is still coloured by software that predates the cloud era (e.g. MySQL, Elasticsearch, RabbitMQ). For modern examples of what is possible, we can look at [Loki](https://github.com/grafana/loki).
+The original text focuses a lot on relational databases. It is worth pointing out that you can create a service which scalably serves long-lived state without violating the 12 factors: as long as there is a procedure to claim or negotiate access to a particular shard of the state (e.g. backups stored in an Azure storage account), the actual process can remain stateless. Contemporary thinking in this matter is still coloured by software that predates the cloud era (e.g. MySQL, Elasticsearch, RabbitMQ). For an example of what is possible in 2022, we can look at [Loki](https://github.com/grafana/loki).
 
 Indicators:
 
@@ -93,7 +93,9 @@ Indicators:
 
 > The twelve-factor app uses strict separation between the build, release, and run stages.
 
-The maturing of CI/CD software-as-a-service providers such as GitHub and Circle CI means that it is now relatively easy to automate this process. Typically, the build stage will push a container image to some container registry.
+This factor is more or less a prerequisite for developing software-as-a-service in 2022, but we need to complement this factor with a requirement for automating these stages. The maturing of CI/CD software-as-a-service providers such as GitHub and Circle CI means that it is now relatively easy to automate this process.
+
+Typically, the build stage will push a container image to some container registry or upload a function-as-a-service zip files to cloud storage.
 
 > The release stage takes the build produced by the build stage and combines it with the deploy’s current config
 
@@ -123,7 +125,7 @@ Indicators:
 
 > The twelve-factor app is completely self-contained.
 
-This factor is now standard in containerized scenarios. Widespread adoption of port binding has enabled a whole ecosystem of supporting proxies (e.g. Envoy, Traefik, Toxiproxy) which (ironically) means that a typical app today is often not self-contained, but depends on other containerized apps to perform e.g. authentication and tracing. This is a good development and consequently, we consider this factor at the service level.
+This factor is now standard in containerized scenarios. Widespread adoption of port binding has enabled a whole ecosystem of supporting proxies (e.g. [Envoy](https://www.envoyproxy.io/), [Traefik](https://traefik.io/), [Toxiproxy](https://github.com/Shopify/toxiproxy)) which (ironically) means that a typical app today is often not self-contained, but depends on other containerized apps to perform e.g. authentication and tracing. This is a improves [separation of concerns](https://deviq.com/principles/separation-of-concerns) and consequently, in 2022 we consider this factor at the service level.
 
 > The port-binding approach means that one app can become the backing service for another app[.]
 
@@ -143,11 +145,11 @@ Indicators:
 
 This factor is now more or less written into law. Function-as-a-service platforms typically provide transparent horizontal scaling. In Kubernetes deployments you just give the number of pods you expect.
 
-The mechanics of horizontal scalability is thus addressed in 2022. The central challenge for any successful app is to distribute work across multiple processes and backing services in such a way that it actually achieves real horizontal scalability. The typical RDBMS-backed web app usually has its scalability completely constrained by its backing database, forcing vertical scaling of the RDBMS - a matter of allocating additional CPUs. This is often expensive and yields only marginal improvement.
+The mechanics of horizontal scalability is thus addressed in 2022. The central challenge for any successful app is to distribute work across multiple processes and backing services in such a way that it actually achieves meaningful horizontal scalability. The typical RDBMS-backed web app usually has its scalability completely constrained by its backing database, forcing vertical scaling of the RDBMS - a matter of allocating additional CPUs. This is often expensive and tends to yield only marginal improvement.
 
-Is short, horizontal scalability is much preferable over vertical scalability but it is strictly a result of software architecture. It is therefore vital to identify early those apps that will actually require scaling so that they can be properly architected.
+Is short, horizontal scalability is much preferable over vertical scalability but it is strictly a result of software architecture. It is therefore vital to identify early those apps that will actually require significant scale-out so that they can be properly architected.
 
-Despite the dominance of the serverless paradigm in the software-as-a-service realm, there is still an overhang from the era of virtual scaling which the Twelve Factor App tries to break with. For example, the VMs of Java, Node, Python and Ruby maintain large volumes of reflection metadata and are very reluctant to de-allocate memory, leading to significant inefficiency on scale-out. A new generation of ecosystems, lead by Go and Rust, are more frugal in this respect.
+Despite the dominance of the serverless paradigm in the software-as-a-service realm, there is still an overhang from the era of vertical scaling which the Twelve Factor App tries to break with. For example, the virtual machines of Java, Node, Python and Ruby maintain large volumes of reflection metadata and are very reluctant to de-allocate memory, leading to significant inefficiency on scale-out. A new generation of ecosystems, lead by Go and Rust, are more frugal in this respect.
 
 Indicators:
 
@@ -163,7 +165,7 @@ This factor remains relevant as written and remains nearly as elusive today as i
 
 Fulfilling this factor on an existing code base is much harder than it sounds. It means mapping all the (often implicit) state machines involved in the app and coordinating them so that there are no undefined transitions. For example, the database connection pool must be ready before we bring up our HTTP listener and must not shut down until the HTTP listener is down _and_ all in-flight HTTP requests are done. Workers must "hand back" in-progress work items so that replacement workers do not have to wait for timeout to process those work items. This difficulty is compounded with distributed systems as a conceptual "transaction" may span more than one app or backing service (e.g. writing to file storage and sending mail), requiring [two-phase commit](https://en.wikipedia.org/wiki/Two-phase_commit_protocol) semantics.
 
-This factor is nevertheless, the key to the always-on experience that we take for granted in large cloud services.
+This factor is nevertheless the key to the always-on experience that we take for granted in large cloud services. A service with working graceful shutdown and comprehensive health checks can be updated at any time and builds developer and operations confidence. This can result in significant productivity gains, particularly when combined with automated testing.
 
 Indicators:
 
@@ -175,15 +177,15 @@ Indicators:
 
 > The twelve-factor app is designed for continuous deployment by keeping the gap between development and production small.
 
-This factor has still not established itself fully in that many production environments are hard to squeeze onto a developer's laptop. Generally speaking, the public cloud providers put too little effort into supporting development use cases for their services.
+This factor remains as relevant as ever, but has still not established itself fully in software-as-a-service development: many production environments are hard to squeeze onto a developer's laptop. Generally speaking, the public cloud providers put too little effort into supporting development use cases for their services.Kubernetes goes furthest in this respect: [Kind](https://kind.sigs.k8s.io/) deserves mentioning for its heroic effort to achieve a dev-friendly, multi-node Kuberentes cluster using only Docker.
 
-[Kind](https://kind.sigs.k8s.io/) deserves mentioning for its heroic effort to achieve a dev-friendly, multi-node Kuberentes cluster using only Docker.
-
-Docker has introduced a borderland where it is possible to develop a container using just Docker Engine for dev environment and still be reasonably confident that it will execute properly in e.g. Kubernetes. Still, some provisioning of backend services is still needed and time is wasted maintaining two different sets of instrumentation. For example, apps often have a Docker Compose file to get developers started, and a Kubernetes manifest for test/prod.
+Docker has introduced a borderland where it is possible to develop a container using just Docker Engine for dev environment and still be reasonably confident that it will execute properly in e.g. Kubernetes. Still, some provisioning of backend services is still needed and time is wasted maintaining two different sets of instrumentation. For example, apps often have a Docker Compose file to get developers started, and a Kubernetes manifest for test/prod. When these desynch, nasty surprises can occur at deployment.
 
 > The twelve-factor developer resists the urge to use different backing services between development and production
 
-Many full-stack development setup includes "dev" servers whose role is to automatically reload the app as its source code change. Similarly, tools like Docker Desktop and Tilt provide capabilities and environments that are subtly different from e.g. Azure Container instances or Kubernetes. All these will color developers' choices and risk introducing issues that will not be discovered until late in the process.
+Many full-stack development setups includes "dev" servers whose role is to automatically reload the app as its source code change. Similarly, tools like Docker Desktop and Tilt provide capabilities and environments that are subtly different from e.g. Azure Container instances or Kubernetes. All these will color developers' choices and risk introducing issues that will not be discovered until late in the process.
+
+The 2022 developer considers both developer experience, continuous integration/delivery/deployment and operability when choosing tools.
 
 Indicators:
 
@@ -196,7 +198,7 @@ Indicators:
 
 Interestingly, this factor does not actually advise on the use of logging. Rather it treats them much as pre-contraceptive times viewed children: as something that inevitably accrues as a result of marriage.
 
-A modern app should be "observable", meaning that it should volunteer information on its performance and behavior. We normally break this down into logging, metrics, tracing and audit trails. The relative merit of these differ greatly between apps, but all apps should have an observability strategy. Often, the need changes as an app evolve: early in the lifecycle, logging may dominate, but as usage grows, focus shifts to metrics.
+The factor should thus be updated to mandate that an app should be "observable", meaning that it should volunteer information on its performance and behavior. We normally break this down into logging, metrics, tracing and audit trails. The relative merit of these differ greatly between apps, but all apps should have an observability strategy. Often, the need changes as an app evolve: early in the lifecycle, logging may dominate, but as usage grows, focus shifts to metrics. The apps in a service are considered as a unit and typically provide different observability needs.
 
 Indicators:
 
@@ -208,9 +210,9 @@ Indicators:
 
 > One-off admin processes should be run in an identical environment as the regular long-running processes of the app. They run against a release, using the same codebase and config as any process run against that release.
 
-This factor captures a practice that is common in the Ruby-on-Rails and Drupal ecosystems. These are based on interpreted languages where it is relatively easy to give scripting or interactive access to the app's internals. This is typically not possible in compiled languages.
+This factor captures a practice that is common in the [Rails](https://rubyonrails.org/) and [Drupal](https://www.drupal.org/) ecosystems, among others. These are based on interpreted languages where it is relatively easy to give scripting or interactive access to the app's internals: the main reason is to ensure that database access occurs using the same models that are used during runtime. In compiled languages, this requires a modularization (e.g. making the data model a separate library) that would complicate development.
 
-However, the factor has two underlying principles which holds even today. First, that tools used to administer an app should be versioned and released with the same discipline as your app is. Second, that operating and upgrading an app is part of its ordinary usage and there is nothing strange with adding endpoints for internal administrative use. Put differently, factors I - IV should apply to the app's tooling just as it does to the app itself.
+However, the factor has two underlying principles which holds even today. First, that tools used to administer an app should be versioned and released with the same discipline as your app is. Second, that operating and upgrading an app is part of its ordinary usage and there is nothing strange with adding endpoints for internal administrative use. Put differently, at least factors I - IV should apply to the app's tooling just as it does to the app itself.
 
 Indicators:
 
