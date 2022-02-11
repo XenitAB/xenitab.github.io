@@ -251,7 +251,9 @@ spec:
 
 ### Debugging
 
-TBD
+Common networking problems include forgetting to set up egress or ingress rules that apply for your pods - or setting them up and then having the requirements change which then causes connection errors.
+
+Remember that you can inspect your network policies with `kubectl get networkpolicies`. If you cannot see your policy there, see if it's listed in your `kustomization.yaml`.
 
 ## Linkerd
 
