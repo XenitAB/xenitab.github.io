@@ -54,7 +54,7 @@ Wait for the image to be pulled and if everything works properly the output shou
 
 ## Utilising Make with WSL2, Terraform and Docker
 
-We have noticed when running Terraform from within our Ubuntu instance, that there appears to be som network issues. We saw quite slow network connections. Probably caused by the TCP connection with the following error:
+We have noticed when running Terraform from within our Ubuntu instance, that there appears to be some network issues. We saw quite slow network connections, probably caused by the TCP connection, which resulted in the following error:
 
 > │ Error: Failed to install provider
 > │

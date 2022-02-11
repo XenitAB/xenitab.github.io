@@ -9,14 +9,14 @@ To solve this problem XKS makes use of the [Secret Store CSI Driver](https://sec
 entrypoint so that secrets store services in cloud providers can be read as Kubernetes volumes. The project works in a similar way in both Azure and AWS but there are some configuration differences
 as the service that stores the secrets is different.
 
-A common question when looking at the CSI Driver is why not just load the secret with the help of the cloud provider's SDK. While that solution may work it is not reccomended as it creates a close
+A common question when looking at the CSI Driver is why not just load the secret with the help of the cloud provider's SDK. While that solution may work it is not recommended as it creates a close
 coupling between the application logic and the secret source. A simple thing such as renaming the secret could require the application to be compiled again. Local development could also be affected as
 the application would need an alternative logic get the secrets in that case. With the CSI Driver the application can just expect the secrets to be read through a file or environment variable, the
 method in which that file or environment variable got created is irrelevant for the application.
 
 > The guide below assumes that you have read and understood the [Cloud IAM](./cloud-iam.md) documentation as the Pod loading the secret will need to have permission to read the secret.
 
-The main component of the Secret Store CSI Driver is the Secret Provider Class. The Secre Provider Class creates the link between a remote secret and a Kubernetes volume. It can be referenced as a
+The main component of the Secret Store CSI Driver is the Secret Provider Class. The Secret Provider Class creates the link between a remote secret and a Kubernetes volume. It can be referenced as a
 volume which can be mounted in a Pod, it can additionally be configured to be written to a Kubernetes Secret. The name of the Secret Provider Class is only used as a reference when creating a module.
 The `objects` field contains a list of references to the secret in the secret store. The object name is the name of the secret in for example Azure KeyVault or AWS Secrets Manager.
 
