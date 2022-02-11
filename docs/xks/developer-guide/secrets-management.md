@@ -37,7 +37,7 @@ spec:
 
 When mounting the Secret Provider Class to a Pod a file will be created with the contents of the secret. The file name will either be the object name or the object alias as specified in the Secret
 Provider Class. If a Secret Provider Class has multiple objects, multiple files will be mounted in the Pod. Keep this in mind when creating Secret Provider Classes. Try to only mount the secrets
-needed for a Pod instead of creating a large Secret Provider Class which contains all the secrets needed in a namespace. The Pod resulting from Deployment below will have two files mounted in it,
+needed for a Pod instead of creating a large Secret Provider Class which contains all the secrets needed in a namespace. The Pod resulting from the Deployment below (together with the Secret Provider Class) will have two files mounted in it,
 `/mnt/secrets-store/bar` and `/mnt/secrets-store/baz`.
 
 ```yaml
