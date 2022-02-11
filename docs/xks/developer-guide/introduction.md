@@ -5,7 +5,7 @@ title: Introduction
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-This documentation is targeted towards developers using [XKS](https://xenit.se/it-tjanster/kubernetes-framework/). It covers the basics of Kubernetes and the additional features that are offered by XKS. It is recommended to read this page in its entirety to get a lay of the land. By the end of it new users should be setup with access to their clusters and ready to deploy applications.
+This documentation is targeted towards developers using [XKS](https://xenit.se/it-tjanster/kubernetes-framework/). It covers the basics of Kubernetes and the additional features that are offered by XKS. It is recommended to read this page in its entirety to get a lay of the land. By the end of reading this guide new users should have all the prerequisites for access to their clusters and be ready to deploy applications.
 
 Right now, this introduction is only targeted towards Azure users.
 
@@ -23,7 +23,7 @@ az login
 
 ## Kubectl Configuration
 
-You can run the following commands to add the AKS cluster to your kubeconfig assuming that you have installed the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+You can run the following commands to add the AKS cluster to your kubeconfig, assuming that you have installed the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 and [authenticated with the Azure portal](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli).
 
 ### Using AZAD Proxy
@@ -38,7 +38,7 @@ Once you have logged in you can list your subscriptions
 az account list -o table
 ```
 
-In the case that you have more than one subscription, you might want to change the default subscription in order to target the correct environment.
+In the case where you have more than one subscription, you might want to change the default subscription in order to target the correct environment.
 
 ```bash
 az account set -s <SubscriptionId>
@@ -50,7 +50,7 @@ To get information about cluster name and resource group for your current defaul
 az aks list -o table
 ```
 
-Once you know the resource group and name of the cluster, you can run the following to add the credentials to your kubekonfig:
+Once you know the resource group and name of the cluster, you can run the following to add the credentials to your `kubekonfig`:
 
 ```bash
 az aks get-credentials --resource-group <ResourceGroup> --name <Name>

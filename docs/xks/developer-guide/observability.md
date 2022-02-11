@@ -92,7 +92,7 @@ kubectl get networkpolicies -n <tenant-namespace>
 
 ## Opentelemetry
 
-To gather opentelemtry data we rely on the [grafana agent operator](https://github.com/grafana/agent).
+To gather opentelemetry data we rely on the [grafana agent operator](https://github.com/grafana/agent).
 The grafana agent operator deploys a grafana-agent in a central namespace configured as a part of XKF.
 
 The grafana agent gathers both metrics and logs and is able to receive traces.
@@ -101,16 +101,16 @@ The grafana agent gathers both metrics and logs and is able to receive traces.
 
 To gather metrics data we use servicemonitors or podmonitors that is managed in XKF using the [prometheus-operator](https://github.com/prometheus-operator/prometheus-operator/).
 
-The prometheus-operator have a great [getting started guide](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/getting-started.md)
+The prometheus-operator has a great [getting started guide](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/getting-started.md)
 but if you want a quick example you can look below.
 
 In order for the grafana agent to find the pod you have to put this exact label on the pod/service monitor yaml: `xkf.xenit.io/monitoring: tenant`,
-else the grafana agent won't find the rule to gather the metric.
+or else the grafana agent won't find the rule to gather the metric.
 
 The [selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) is used to find ether the pod or the service that you want to monitor.
 
-Use a podmonitor when you don't have a service in-front of your pod.
-For example this might be the case when your application don't use a HTTP endpoint to get requests.
+Use a podmonitor when you don't have a service in front of your pod.
+For example this might be the case when your application doesn't use an HTTP endpoint to get requests.
 
 ```podmonitor.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -127,7 +127,7 @@ spec:
     - port: http-metrics
 ```
 
-In general use a servicemonitor when you have a service in-front of your pod.
+In general use a servicemonitor when you have a service in front of your pod.
 
 ```servicemonitor.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -145,14 +145,14 @@ spec:
       app.kubernetes.io/instance: app1
 ```
 
-You can do allot of configuration when it comes to metrics gathering but the above config will get you started.
+You can do a lot of configuration when it comes to metrics gathering but the above config will get you started.
 
 ### Logging
 
 To gather logs from your application you need to define a PodLogs object.
 
-Just like metrics you have to define label `xkf.xenit.io/monitoring: tenant` in your PodLogs.
-The PodLogs CRD is created by the grafana agent-operator and functions very similar to how the prometheus operator works especially when it comes to selectors.
+Just like metrics you have to define a label like `xkf.xenit.io/monitoring: tenant` in your PodLogs.
+The PodLogs CRD is created by the grafana agent operator and functions very similarly to how the prometheus operator works, especially when it comes to selectors.
 Below you will find a very basic example that will scrape a single pod in the namespace where it's created.
 
 ```podlogs.yaml
@@ -170,10 +170,10 @@ spec:
     - cri: {}
 ```
 
-You can do a lot of configuration when it comes to log filtering using PodLogs. For example you can remove drop specific log types that you don't want to send to your long time storage.
-Sadly the grafana agent operator don't supply great documentation around how to define this configuration in the operator.
-But together with running `kubectl explain podlogs.monitoring.grafana.com.spec.pipelineStages` on the cluster and
-reading [official documentation](https://grafana.com/docs/loki/latest/clients/promtail/pipelines/) how to create pipelines you can get a good understanding how to create the configuration that you need.
+You can do a lot of configuration when it comes to log filtering using PodLogs. For example you can drop specific log types that you don't want to send to your long time storage.
+Sadly the grafana agent operator doesn't supply great documentation around how to define this configuration in the operator.
+However, together with running `kubectl explain podlogs.monitoring.grafana.com.spec.pipelineStages` on the cluster and
+reading the [official documentation](https://grafana.com/docs/loki/latest/clients/promtail/pipelines/) on how to create pipelines you can get a good understanding of how to create the configuration that you need.
 
 If you don't have any needs to filter or do any custom config per application you can create a namespace-wide PodLogs gatherer.
 
@@ -204,12 +204,11 @@ or [http://grafana-agent-traces.opentelemetry.svc.cluster.local:4317/v1/traces](
 
 #### Tail-based sampling
 
-By default the grafana-agent that is deployed by XKF forwards all traces without any special config to your service provider.
+By default the grafana agent that is deployed by XKF forwards all traces without any special config to your service provider.
 This can cause high costs thanks to the amount of data that is sent.
-You can configure the agent to use `probabilistic sampling` which Grafana-agent have done there own solution on
-that is called [tail-based sampling](https://grafana.com/docs/tempo/latest/grafana-agent/tail-based-sampling/) that can help you solve this issue.
+You can configure the agent to use `probabilistic sampling` which grafana agent delivers their own solution for called [tail-based sampling](https://grafana.com/docs/tempo/latest/grafana-agent/tail-based-sampling/), which can help you solve this issue.
 
-To setup a custom agent with tail-based sampling you can setup your own trace agent with the custom config that you want and then have it forward all the traffic to our central trace agent in the opentelemetry namespace.
+To setup a custom agent with tail-based sampling you can setup your own trace agent with the custom config that you want and then have it forward all the traffic to our central trace agent in the `opentelemetry` namespace.
 We plan to write a blog post about this in the future but below you can find a simple example configmap that you can use together with your trace agent to send data to the central agent.
 
 ```trace-agent-configmap.yaml
