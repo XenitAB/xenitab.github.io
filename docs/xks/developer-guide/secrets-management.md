@@ -63,6 +63,39 @@ spec:
               secretProviderClass: foo
 ```
 
+Additionally, you may want to have your secrets available as environment variables. Extending the example above, it would look like this:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foo
+spec:
+  template:
+    spec:
+      containers:
+        - name: foo
+          volumeMounts:
+            - name: secret-store
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          env:
+            - name: BAR
+              valueFrom:
+                secretKeyRef:
+                  name: bar
+                  key: baz
+      volumes:
+        - name: secret-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: foo
+```
+
+Note that even if you only want to access your secret via an environment variable, you still need to mount the secret store as a volume.
+
 ## Cloud Providers
 
 ### Azure
