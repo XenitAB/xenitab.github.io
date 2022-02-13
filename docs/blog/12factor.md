@@ -6,11 +6,11 @@ In one respect, the criticism of being Heroku-centric is relevant. Heroku (and G
 
 ## Factor I: Codebase
 
-> A codebase is any single repository
+> A codebase is any single repository. [...] The codebase is the same across all deploys, although different versions may be active in each deploy.
 
 This factor is first and foremost an argument for expressing as much as possible of your service as code that can be put under version control. This was probably already a strawman attack ten years ago. Nevertheless, the latest incarnation of mandating version control is [GitOps](https://www.weave.works/technologies/gitops/), namely the idea that your infrastructure maintains itself by reading your version control system and automatically applies changes as necessary - remarkably similar to the original Heroku model.
 
-> There is always a one-to-one correlation between the codebase and the app.
+> There is always a one-to-one correlation between the codebase and the app. If there are multiple codebases, it’s not an app – it’s a distributed system. Each component in a distributed system is an app, and each can individually comply with twelve-factor.
 
 This part of the factor remains relevant at the app level, but modern public cloud providers' infrastructure-as-code tooling and platforms like Kubernetes allow us to describe a set of apps and their supporting resources (e.g. secrets) as one package or service. Some organizations separate infrastructure-as-code and app code into separate repositories while others keep the app and its supporting IaC together; neither of these can be said unconditionally to be best practice. Similarly, [Single-page apps](https://en.wikipedia.org/wiki/Single-page_application) are often deployed to a [Content Distribution Network](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/), while their backend may be deployed to a public cloud provider or to a [Kubernetes](https://kubernetes.io/) cluster. Whether these should be kept in the same repository or in different repositories depends on how tightly coupled they are.
 
@@ -35,17 +35,17 @@ Modern apps tend to have more than one dependency declaration manifest, namely i
 
 The up-to-date interpretation of this factor is that upgrading dependency versions should always be a conscious action. This slightly shifts the interpretation of the original factor's "exactly". The various ecosystems and tool chains (maven, npm, cargo, et.c.) work differently in when they resolve dependencies. Some resolve dependencies when the developer performs a build and some require an explicit "upgrade" operation to change what goes into a build. It is therefore vital to have a codified workflow for updating dependencies. For example, when using Node.js and npm, a developer should normally do [npm ci](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable) and only use the traditional `npm install` (or `npm update`) when the intent is to modernize dependencies.
 
-> it uses a dependency isolation tool during execution to ensure that no implicit dependencies “leak in” from the surrounding system
+> it uses a dependency isolation tool during execution to ensure that no implicit dependencies “leak in” from the surrounding system. The full and explicit dependency specification is applied uniformly to both production and development.
 
-One of the innovations introduced by Docker is that this factor is enforced already at build time. Run your automated tests with the built container and there is very little space for execution environment differences.
+One of the innovations introduced by Docker is that this factor is enforced already at build time, making it easy to ensure uniformity across dev and prod. Run your automated tests with the built container and there is very little space for execution environment differences.
 
 ## Factor III: Config
 
-> An app’s config is everything that is likely to vary between deploys (staging, production, developer environments, etc). The twelve-factor app stores config in environment variables.
+> An app’s config is everything that is likely to vary between deploys (staging, production, developer environments, etc). The twelve-factor app stores config in environment variables. Env vars are easy to change between deploys without changing any code; unlike config files, there is little chance of them being checked into the code repo accidentally; and unlike custom config files, [...] they are a language- and OS-agnostic standard. [...] A litmus test for whether an app has all config correctly factored out of the code is whether the codebase could be made open source at any moment, without compromising any credentials.
 
 This factor remains mostly relevant as written, but there are some nuances to consider.
 
-IaC tools like Terraform allows us to create files and database entries. Kubernetes allows us to create [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/) which will be made available to a container as a file. In both cases, the source configuration can be put under version control, any manual edits will be overwritten on the next deploy and the mechanism is easy for a developer to emulate locally. Thus, they achieve the same result as using environment variables by different means.
+Infrastructure-as-code tools like Terraform allows us to create files and database entries. Kubernetes allows us to create [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/) which will be made available to a container as a file. In both cases, the source configuration can be put under version control, any manual edits will be overwritten on the next deploy and the mechanism is easy for a developer to emulate locally. Thus, they achieve the same result as using environment variables by different means.
 
 Also, while environment variables are operations-friendly, they are problematic when writing tests, since they are global state. In ecosystems that default to parallel test execution (e.g. Rust) environment variables cannot be used. Thus, while an environment variable remains the preferred way to accept simple configuration values, a 12-factor app should convert them to internal state as early as possible.
 
@@ -55,7 +55,7 @@ Furthermore, with platforms such as Kubernetes, service discovery means that som
 
 ## Factor IV: Backing services
 
-> The code for a twelve-factor app makes no distinction between local and third party services.
+> A backing service is any service the app consumes over the network as part of its normal operation. The code for a twelve-factor app makes no distinction between local and third party services. To the app, both are attached resources, accessed via a URL or other locator/credentials stored in the config. [...] Resources can be attached to and detached from deploys at will.
 
 This factor remains relevant as written. Its current iteration is sometimes referred to as ["API first"](https://swagger.io/resources/articles/adopting-an-api-first-approach/) which can be described as the principle that all services you create should be able to act as a backing service. More generally, with the advent of [Zero Trust](https://www.crowdstrike.com/cybersecurity-101/zero-trust-security/) and the proliferation of cloud services, the logical end result of this factor is that any service can interact with any other service on the planet.
 
@@ -65,7 +65,7 @@ The original text focuses a lot on relational databases. It is worth pointing ou
 
 ## Factor V: Build, release, run
 
-> The twelve-factor app uses strict separation between the build, release, and run stages.
+> The twelve-factor app uses strict separation between the build, release, and run stages. The build stage is a transform which converts a code repo into an executable bundle known as a build.
 
 This factor is more or less a prerequisite for developing software-as-a-service in 2022, but we need to complement this factor with a requirement for automating these stages. The maturing of CI/CD software-as-a-service providers such as GitHub, [ACR Tasks](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview) and [Circle CI](https://circleci.com/) means that it is now relatively easy to automate this process.
 
@@ -77,7 +77,7 @@ The normal practice today is for a pipeline to push the release to the runtime e
 
 ## Factor VI: Processes
 
-> Twelve-factor processes are stateless and share-nothing.
+> Twelve-factor processes are stateless and share-nothing. Any data that needs to persist must be stored in a stateful backing service.
 
 This factor remains relevant as written. In the world of REST APIs, this effectively means that we should hold no domain state in memory between HTTP requests - it should always be handed over to a caching service. This is the main enabler for scale-out in a software-as-a-service.
 
@@ -85,11 +85,11 @@ Adhering to this rule is also a good way to avoid memory leaks, which tend to pl
 
 ## Factor VII: Port binding
 
-> The twelve-factor app is completely self-contained.
+> The twelve-factor app is completely self-contained and does not rely on runtime injection of a webserver into the execution environment to create a web-facing service. The web app exports HTTP as a service by binding to a port, and listening to requests coming in on that port.
 
 This factor is now standard in containerized scenarios. Widespread adoption of port binding has enabled a whole ecosystem of supporting proxies (e.g. [Envoy](https://www.envoyproxy.io/), [Traefik](https://traefik.io/), [Toxiproxy](https://github.com/Shopify/toxiproxy)) which (ironically) means that a typical app today is often not self-contained, but depends on other containerized apps to perform e.g. authentication and tracing. This is a improves [separation of concerns](https://deviq.com/principles/separation-of-concerns) and consequently, in 2022 we consider this factor at the service level.
 
-> The port-binding approach means that one app can become the backing service for another app[.]
+> The port-binding approach means that one app can become the backing service for another app, by providing the URL to the backing app as a resource handle in the config for the consuming app.
 
 The original text focuses on network protocols such as HTTP and [XMPP](https://xmpp.org/extensions/). In order to become a backing service in 2022, the app should also adhere to an [API contract](https://apievangelist.com/2019/07/15/what-is-an-api-contract/) of some sort, defining the backing service's intended role.
 
@@ -97,7 +97,7 @@ Many developers implicitly assume that using high-level protocols like HTTP incu
 
 ## Factor VIII: Concurrency
 
-> In the twelve-factor app, processes are a first class citizen.
+> In the twelve-factor app, processes are a first class citizen. Processes in the twelve-factor app take strong cues from the unix process model for running service daemons. [...] This does not exclude individual processes from handling their own internal multiplexing. But an individual VM can only grow so large (vertical scale), so the [app] must also be able to span multiple processes running on multiple physical machines.
 
 This factor is now more or less written into law. Function-as-a-service platforms typically provide transparent horizontal scaling. In Kubernetes deployments you just give the number of pods you expect.
 
@@ -109,7 +109,7 @@ Despite the dominance of the serverless paradigm in the software-as-a-service re
 
 ## Factor IX: Disposability
 
-> The twelve-factor app’s processes are disposable, meaning they can be started or stopped at a moment’s notice.
+> The twelve-factor app’s processes are disposable, meaning they can be started or stopped at a moment’s notice. [...] Processes should strive to minimize startup time. [...] Processes shut down gracefully when they receive a SIGTERM signal, [...] allowing any current requests to finish. [...] A twelve-factor app is architected to handle unexpected, non-graceful terminations.
 
 This factor remains relevant as written and remains nearly as elusive today as it was ten years ago. For example, the HTTP server included in Node.js does [not by default perform graceful shutdown](https://blog.dashlane.com/implementing-nodejs-http-graceful-shutdown/) (see also [nodejs issue 2642](https://github.com/nodejs/node/issues/2642)).
 
@@ -119,9 +119,9 @@ This factor is nevertheless the key to the always-on experience that we take for
 
 ## Factor X: Dev/prod parity
 
-> The twelve-factor app is designed for continuous deployment by keeping the gap between development and production small.
+> Historically, there have been substantial gaps between development [...] and production [...], the time gap, the personnel gap [and] the tools gap. [...] The twelve-factor app is designed for continuous deployment by keeping the gap between development and production small.
 
-This factor remains as relevant as ever, but has still not established itself fully in software-as-a-service development: many production environments are hard to squeeze onto a developer's laptop. Generally speaking, the public cloud providers put too little effort into supporting development use cases for their services.Kubernetes goes furthest in this respect: [Kind](https://kind.sigs.k8s.io/) deserves mentioning for its heroic effort to achieve a dev-friendly, multi-node Kuberentes cluster using only Docker.
+This factor is now colloquially known as [DevOps](https://aws.amazon.com/devops/what-is-devops/) and remains as relevant as ever, but has still not established itself fully in software-as-a-service development: many production environments are hard to squeeze onto a developer's laptop. Generally speaking, the public cloud providers put too little effort into supporting development use cases for their services. Kubernetes goes furthest in this respect: [Kind](https://kind.sigs.k8s.io/) deserves mentioning for its heroic effort to achieve a dev-friendly, multi-node Kuberentes cluster using only Docker.
 
 Docker has introduced a borderland where it is possible to develop a container using just Docker Engine for dev environment and still be reasonably confident that it will execute properly in e.g. Kubernetes. Still, some provisioning of backend services is still needed and time is wasted maintaining two different sets of instrumentation. For example, apps often have a Docker Compose file to get developers started, and a Kubernetes manifest for test/prod. When these desynch, nasty surprises can occur at deployment.
 
@@ -133,7 +133,7 @@ The 2022 developer considers both developer experience, continuous integration/d
 
 ## Factor XI: Logs
 
-> A twelve-factor app never concerns itself with routing or storage of its output stream
+> Logs provide visibility into the behavior of a running app. [...] A twelve-factor app never concerns itself with routing or storage of its output stream. It should not attempt to write to or manage logfiles. Instead, each running process writes its event stream, unbuffered, to stdout. [...] Destinations are not visible to or configurable by the app, and instead are completely managed by the execution environment.
 
 Interestingly, this factor does not actually advise on the use of logging. Rather it treats them much as pre-contraceptive times viewed children: as something that inevitably accumulates as a result of marriage.
 
