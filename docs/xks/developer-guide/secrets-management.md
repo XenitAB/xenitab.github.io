@@ -310,7 +310,11 @@ become annoying for situations where the secret value may change often or there 
 
 The solution in XKS is to configure the Secret Provider Class to annotate the Pod to be recreated when the Secret value is updated. The Pod recreation is done with the
 [Reloader](https://github.com/stakater/Reloader) project which is present in all XKS clusters. Reloader works by adding an annotation with the key `secret.reloader.stakater.com/reload`, where the value
-is the name of the secret.
+is the name of the secret. If you need to recreate your Pod when any of multiple secrets are changed, use comma-separated values:
+
+```yaml
+secret.reloader.stakater.com/reload: "foo,bar"
+```
 
 > When using an object alias the object name in the secrets objects refers to the alias and not to the original object name.
 
