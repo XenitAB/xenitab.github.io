@@ -209,7 +209,7 @@ This can cause high costs thanks to the amount of data that is sent.
 You can configure the agent to use `probabilistic sampling` which grafana agent delivers their own solution for called [tail-based sampling](https://grafana.com/docs/tempo/latest/grafana-agent/tail-based-sampling/), which can help you solve this issue.
 
 To setup a custom agent with tail-based sampling you can setup your own trace agent with the custom config that you want and then have it forward all the traffic to our central trace agent in the `opentelemetry` namespace.
-We plan to write a blog post about this in the future but below you can find a simple example configmap that you can use together with your trace agent to send data to the central agent.
+Below you can find a simple example configmap that you can use together with your trace agent to send data to the central agent.
 
 ```trace-agent-configmap.yaml
 kind: ConfigMap
