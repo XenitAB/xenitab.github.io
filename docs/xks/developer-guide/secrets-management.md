@@ -63,7 +63,7 @@ spec:
               secretProviderClass: foo
 ```
 
-Additionally, you may want to have your secrets available as environment variables. Extending the example above, it would look like this:
+Additionally, you may want to have your secrets available as environment variables. Extending the example above, the secret `bar` is now also available as the environment variable `BAR`:
 
 ```yaml
 apiVersion: apps/v1
@@ -84,7 +84,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: bar
-                  key: baz
+                  key: bar
       volumes:
         - name: secret-store
           csi:
