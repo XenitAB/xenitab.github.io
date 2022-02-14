@@ -3,15 +3,15 @@ id: secrets-management
 title: Secrets Management
 ---
 
-Secrets management is an important feature when building secure products. Access to secrets should be limited, and it should be easy to rotate when required. It becomes a requirement when working with
+Secrets management is an important feature when building secure products. Access to secrets should be limited, and it should be easy to rotate them when required. It becomes a requirement when working with
 GitOps as secrets can and should not be committed to a git repository. This means that secrets have to be loaded from another source separate from the manifests, but before the application is started.
 To solve this problem XKS makes use of the [Secret Store CSI Driver](https://secrets-store-csi-driver.sigs.k8s.io/providers.html) project when running in both Azure and AWS. The CSI driver creates an
 entrypoint so that secrets store services in cloud providers can be read as Kubernetes volumes. The project works in a similar way in both Azure and AWS but there are some configuration differences
 as the service that stores the secrets is different.
 
-A common question when looking at the CSI Driver is why not just load the secret with the help of the cloud provider's SDK. While that solution may work it is not recommended as it creates a close
+A common question when looking at the CSI Driver is why not just load the secret with the help of the cloud provider's SDK? While that solution may work it is not recommended as it creates a close
 coupling between the application logic and the secret source. A simple thing such as renaming the secret could require the application to be compiled again. Local development could also be affected as
-the application would need an alternative logic get the secrets in that case. With the CSI Driver the application can just expect the secrets to be read through a file or environment variable, the
+the application would need alternative logic get the secrets locally. With the CSI Driver the application can just expect the secrets to be read through a file or environment variable, the
 method in which that file or environment variable got created is irrelevant for the application.
 
 > The guide below assumes that you have read and understood the [Cloud IAM](./cloud-iam.md) documentation as the Pod loading the secret will need to have permission to read the secret.
@@ -162,7 +162,7 @@ spec:
 
 There are two secret store services in AWS that is supported by the CSI Driver, [AWS Secret Manager](https://aws.amazon.com/secrets-manager/) and [AWS System Manager Parameter
 Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html). Both services have their own pros and cons in regards to features and pricing, but in the
-end both services delivers the same feature in the cluster. The example below shows how to read the secret `application/connection-string-test/connectionstring` with examples for both Secret Manager
+end both services deliver the same features in the cluster. The example below shows how to read the secret `application/connection-string-test/connectionstring` with examples for both Secret Manager
 and System Manager Parameter Store.
 
 Create an IAM role which gives permission to read the specific secret, note that the full ARN path including the secret name is included in the resource field. This is to limit secret acccess for the
@@ -234,9 +234,9 @@ module "irsa_test" {
 }
 ```
 
-After the IAM role and policy has been created a Secret Provider Class has to be created specifying the secrets that should be read. Make sure to specify the correct object type, it should either be
+After the IAM role and policy have been created a Secret Provider Class has to be created specifying the secrets that should be read. Make sure to specify the correct object type, it should either be
 `secretsmanager` or `ssmparameter`. Note the configuration of `objectAlias` for the object. This is required as the secret name contains the character `/` in the name. By default the CSI Driver uses
-the name as the file name, which would cause issues as that is not permitted in Linux. The solution is to give the secret an alias instead.
+the name as the file name, which would cause issues as this is not permitted in Linux. The solution is to give the secret an alias instead.
 
 ```yaml
 apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
@@ -260,7 +260,7 @@ spec:
 ```
 
 Create a deployment which mounts the secret from the remote service. The secret is mounted as a volume in the Pod and will be populated with the value stored in the remote service. It is important
-that the Service Account is configured properly as the CSI Driver will assume the Pods role when fetching the secret value.
+that the Service Account is configured properly as the CSI Driver will assume the Pod's role when fetching the secret value.
 
 ```yaml
 apiVersion: v1
@@ -309,12 +309,12 @@ updated as this would require the application to be able to restart the process 
 become annoying for situations where the secret value may change often or there are a lot of secrets being read.
 
 The solution in XKS is to configure the Secret Provider Class to annotate the Pod to be recreated when the Secret value is updated. The Pod recreation is done with the
-[Reloader](https://github.com/stakater/Reloader) project which is present in all XKS clusters. Reloader works by adding an annotation with the key `secret.reloader.stakater.com/reload` where the value
+[Reloader](https://github.com/stakater/Reloader) project which is present in all XKS clusters. Reloader works by adding an annotation with the key `secret.reloader.stakater.com/reload`, where the value
 is the name of the secret.
 
 > When using an object alias the object name in the secrets objects refers to the alias and not to the original object name.
 
-Create a Service Provider Class which also creates a Kubernetes Secret, there is no need to actually use the created secret but in the example below it is mounted as an environment variable.
+Below is an example of creating a Service Provider Class which also creates a Kubernetes Secret, there is no need to actually use the created secret but in the example below it is mounted as an environment variable.
 
 ```yaml
 apiVersion: secrets-store.csi.x-k8s.io/v1alpha1

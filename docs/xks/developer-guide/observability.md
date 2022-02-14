@@ -80,11 +80,11 @@ spec:
 
 Check the official [Datadog Tracing Documentation](https://docs.datadoghq.com/agent/kubernetes/apm/?tab=helm) for more detailed information.
 
-### networkpolicy datadog
+### Networkpolicy datadog
 
-When using XKF and your cluster have enabled datadog the tenant namespace will get a networkpolicy automatically that allows egress for tracing.
+When using XKF and your cluster has enabled Datadog the tenant namespace will automatically get a networkpolicy that allows egress for tracing.
 
-You can view these rules by typing
+You can view these rules by typing:
 
 ```shell
 kubectl get networkpolicies -n <tenant-namespace>
@@ -239,12 +239,12 @@ data:
               - status_code: {status_codes: [ERROR, UNSET]}
 ```
 
-### networkpolicy grafana-agent
+### Networkpolicy grafana agent
 
-When using XKF and your cluster have enabled the grafana-agent your tenant namespace will get a networkpolicy automatically that allows
+When using XKF and your cluster have enabled the grafana agent your tenant namespace will automatically get a networkpolicy that allows
 incoming metrics gathering and egress for tracing.
 
-You can view these rules by typing
+You can view these rules by typing:
 
 ```shell
 kubectl get networkpolicies -n <tenant-namespace>
