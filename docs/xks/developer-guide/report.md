@@ -19,4 +19,4 @@ If you are using the Xenit CI solution you are by default scanning your containe
 But new CVE:s might have come out since you created your image and that is why continuous scanning of images is important.
 
 For more information how to get deeper information of the CVE reports
-look at our [starboard documentation](startboard.md).
+look at our [starboard documentation](starboard.md).
