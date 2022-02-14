@@ -7,6 +7,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This documentation is targeted towards developers using [XKS](https://xenit.se/it-tjanster/kubernetes-framework/). It covers the basics of Kubernetes and the additional features that are offered by XKS. It is recommended to read this page in its entirety to get a lay of the land. By the end of it new users should be setup with access to their clusters and ready to deploy applications.
 
+Right now, this introduction is only targeted towards Azure users.
+
 ## Getting Started
 
 A good starting point is to get CLI access to the clusters. It is useful to have manual access to the clusters for debugging purposes. Try to avoid
