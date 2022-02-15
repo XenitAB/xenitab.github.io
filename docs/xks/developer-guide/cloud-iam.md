@@ -5,7 +5,8 @@ title: Cloud IAM
 
 Sometimes applications will need to integrate with other cloud resources as they require things like persistent data storage. When working with XKS each namespace is accompanied by an Azure resource
 group or an AWS account. This is where cloud resources can be created by each tenant. To keep things simple it may be a good idea to not share these resources across multiple tenants, as one of the
-tenants has to own each resource. Instead look at other options like exposing an API inside the cluster instead. As one may expect the authentication methods differ when running XKS in Azure and AWS, this is because the APIs and underlying authentication methods differ greatly. It is important to take this into consideration when reading this documentation.
+tenants has to own each resource. Instead look at other options like exposing an API inside the cluster instead. As one may expect the authentication methods differ when running XKS in Azure and AWS,
+this is because the APIs and underlying authentication methods differ greatly. It is important to take this into consideration when reading this documentation.
 
 ## Cloud Providers
 
