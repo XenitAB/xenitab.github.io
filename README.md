@@ -4,7 +4,7 @@ Welcome home!
 
 ## About
 
-Repository gathering documentation for Xenit open source projects
+Repository gathering documentation for Xenit open source projects.
 
 ## More details
 
@@ -26,11 +26,11 @@ yarn install
 yarn start
 ```
 
-This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
 ### Search function
 
-Search function does not work when running the dev server, it requires running `yarn build` (See below)
+The search function does not work when running the dev server, it requires running `yarn build` (see below).
 
 ## Build
 
