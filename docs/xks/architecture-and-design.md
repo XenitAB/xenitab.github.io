@@ -38,7 +38,7 @@ Each tenant namespace has the ability to use the cloud provider metadata service
 
 The platform is based on the principle of least privilege and in every layer we try to only delegate what is needed and no more. This is both true for the tenant and platform resources and their respective access.
 
-The second part of the work we do around security is around trying to keep the platform as lean and easy to understand as possible, making sure to remove complexity where needed. Adding security often means selecting a much more complex solution and it is much harder to understand and maintain something complex over something simple. Keeping the cognitive load of maintaining a platform like this as low as possible is always a priority.
+The second part of the work we do regarding security is focused around trying to keep the platform as lean and easy to understand as possible, making sure to remove complexity where needed. Adding security often means selecting a much more complex solution and it is much harder to understand and maintain something complex over something simple. Keeping the cognitive load of maintaining a platform like this as low as possible is always a priority.
 
 Additionally, we try to add products and services into the mix to make it easier for both the platform team and tenant teams to keep the environment secure. This is an ever-changing environment where new things are added as needed and the list below is not an exhaustive one:
 
