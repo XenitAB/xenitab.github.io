@@ -82,7 +82,7 @@ Check the official [Datadog Tracing Documentation](https://docs.datadoghq.com/ag
 
 ### Networkpolicy datadog
 
-When using XKF and your cluster has enabled Datadog the tenant namespace will automatically get a networkpolicy that allows egress for tracing.
+When using XKF and your cluster has Datadog enabled the tenant namespace will automatically get a networkpolicy that allows egress for tracing.
 
 You can view these rules by typing:
 
