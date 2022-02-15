@@ -42,12 +42,12 @@ Given that your application is exposing metrics on port 8080 your pod should con
 
 ```yaml
 annotations:
-    ad.datadoghq.com/prometheus-example.instances: |
-      [
-        {
-          "prometheus_url": "http://%%host%%:8080/metrics"
-        }
-      ]
+  ad.datadoghq.com/prometheus-example.instances: |
+    [
+      {
+        "prometheus_url": "http://%%host%%:8080/metrics"
+      }
+    ]
 ```
 
 Check the official [Datadog Metrics Documentation](https://docs.datadoghq.com/agent/kubernetes/prometheus/) for more detailed information.
