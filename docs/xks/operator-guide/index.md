@@ -26,7 +26,7 @@ The following Terraform modules are used in XKS.
 
 ### Governance
 
-Governance is split in [global](https://github.com/XenitAB/terraform-modules/tree/main/modules/azure/governance-global) and [regional](https://github.com/XenitAB/terraform-modules/tree/main/modules/azure/governance-regional), it handles the creation and delegation of Azure Resource Groups, Azure KeyVaults, Azure AD groups, Service Principals and resources like that.
+Governance is split into [global](https://github.com/XenitAB/terraform-modules/tree/main/modules/azure/governance-global) and [regional](https://github.com/XenitAB/terraform-modules/tree/main/modules/azure/governance-regional), it handles the creation and delegation of Azure Resource Groups, Azure KeyVaults, Azure AD groups, Service Principals and resources like that.
 
 ### Core
 
@@ -38,12 +38,12 @@ Governance is split in [global](https://github.com/XenitAB/terraform-modules/tre
 
 ### AKS
 
-The AKS terraform contains three modules that are used to setup a Kubernetes cluster. To allow for blue/green deployments of AKS clusters resources have to be split up in to
+The AKS Terraform contains three modules that are used to setup a Kubernetes cluster. To allow for blue/green deployments of AKS clusters resources have to be split up into
 global resources that can be shared between the clusters, and cluster specific resources.
 
 The aks-global module contains the global resources like ACR, DNS and Azure AD configuration.
 
-The aks and aks-core module creates a AKS cluster and configures it. This cluster will have a suffix, normally a number to allow for temporarily creating multiple clusters
+The aks and aks-core modules create a AKS cluster and configures it. This cluster will have a suffix, normally a number to allow for temporarily creating multiple clusters
 when performing a blue/green deployment of the clusters. Namespaces will be created in the cluster for each of the configured tenants. Each namespaces is linked to a resource
 group in Azure where namespace resources are expected to be created.
 <img alt="AKS Resource Groups" src={useBaseUrl("img/assets/xks/operator-guide/aks-rg-xks-overview.jpg")} />

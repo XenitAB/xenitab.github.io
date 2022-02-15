@@ -9,29 +9,26 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Add New Tenant
 
-When creating a new tenant there a number of for now manual processes to make.
+When creating a new tenant there are a number of (for now manual) processes to perform.
 
-In this scenario we are assuming that you are using azure devops and that you have already created a project and organization.
+In this scenario we are assuming that you are using Azure DevOps and that you have already created a project and organization.
 
-In many places in the text we have provided names, they are just examples, all of these names can be exchanged to fit your needs.
-
-In your project lets call it project1 in the future manually import a repository.
+In many places in the text we have provided names, they are just examples, all of these names can be exchanged to fit your needs. In this case let us call it `project1`. In the future we should manually import a repository.
 [https://github.com/XenitAB/azure-devops-templates](https://github.com/XenitAB/azure-devops-templates)
 
 ### Import azure-devops-templates pipeline
 
-To make sure that the azure-devops-templates repo is up to date we have a automatic CI that fetches updates from upstream to your local azure devops clone.
+To make sure that the `azure-devops-templates` repo is up to date we have an automatic CI that fetches updates from upstream to your local Azure DevOps clone.
 
 Go to pipelines -> New pipeline -> Azure Repos Git -> azure-devops-templates -> Existing Azure Pipelines YAML file
 
-Import the pipeline from the following path: /.ci/pipeline.yaml
+Import the pipeline from the following path: `/.ci/pipeline.yaml`
 
 ### Setup XKS
 
-In this case we will only setup a single XKS cluster in one environment, in our case dev.
-It's easy to add more environments when you have created your first one.
+In this case we will only setup a single XKS cluster in one environment, in our case dev. It is easy to add more environments when you have created your first one.
 
-At Xenit we are using terraform modules that we share [upstream](https://github.com/XenitAB/terraform-modules)
+At Xenit we are using Terraform modules that we share [upstream](https://github.com/XenitAB/terraform-modules)
 
 To setup XKS we will utilize 4 modules:
 
@@ -40,14 +37,14 @@ To setup XKS we will utilize 4 modules:
 - core
 - aks
 
-### Create terraform repo
+### Create Terraform repo
 
-Of course we need a place to store our terraform code so create on in your azure devops organization.
-TODO create a example repo that uses our terraform modules.
+Of course we need a place to store our Terraform code so create one in your Azure DevOps organization.
+TODO create a example repo that uses our Terraform modules.
 
-You can today see a example of the [Makefile](https://github.com/XenitAB/github-actions/blob/main/docker/template/Makefile)
+You can today see a example of the [Makefile](https://github.com/XenitAB/github-actions/blob/main/docker/template/Makefile).
 
-This is how we normally [structure](https://www.terraform.io/docs/language/modules/develop/structure.html) our tenant repo
+This is how we normally [structure](https://www.terraform.io/docs/language/modules/develop/structure.html) our tenant repo.
 
 ```txt
 ├── Makefile
@@ -84,32 +81,32 @@ This is how we normally [structure](https://www.terraform.io/docs/language/modul
 
 ### Update repo
 
-We need to update a number of settings in a number of places in your terraform repo.
+We need to update a number of settings in a number of places in your Terraform repo.
 
-Generate a SUFFIX that should be tfstate + a few random numbers, for example "tfstate1234"
+Generate a SUFFIX that should be tfstate + a few random numbers, for example `tfstate1234`.
 
 Update the Makefile SUFFIX variable with the suffix and the random number.
 
 Also update global.tfvars with the same random number.
 
-### Create terraform storage
+### Create Terraform storage
 
-In order to store a terraform state we need to prepare that.
+In order to store a Terraform state we need to prepare that.
 
-We have written a small golang tool that will help out with [that](https://github.com/XenitAB/github-actions/tree/main/docker/go-tf-prepare)
+We have written a small Go tool that will help out with [that](https://github.com/XenitAB/github-actions/tree/main/docker/go-tf-prepare).
 
-Instead of running these a number of these scripts manually we will use the make file.
+Instead of running these scripts manually we will use the makefile.
 
-We use one terrafrom state per DIR and environment.
-Lets create the first terraform state, in this case governance.
+We use one Terrafrom state per `DIR` and `ENV`.
+Lets create the first Terraform state, in this case governance.
 
 `make prepare ENV=dev DIR=governance`
 
-You will need to run the prepare command for each separate terraform folder.
+You will need to run the prepare command for each separate Terraform folder.
 
 ### Configure governance
 
-After defining the variables and you have have applied your config
+After defining the variables and you have have applied your config:
 
 ```shell
 make plan ENV=dev DIR=governance
@@ -120,17 +117,17 @@ make apply ENV=dev DIR=governance
 ### Configure core
 
 Get a CIDR network for your AKS env per env.
-Define in core/variables/env.tfvars
+Define in `core/variables/env.tfvars`.
 
 ### Configure AKS cluster
 
 - How big should your cluster be?
-- Which version of kubernetes should you run?
+- Which version of Kubernetes should you run?
 - What DNS zone should you use?
 - What SKU tier should your cluster have?
 - What size should your k8s nodes have?
 
-All of this is configured under aks/variables/prod.tfvars
+All of this is configured under `aks/variables/prod.tfvars`.
 
 ```prod.tfvars
 environment = "prod"
@@ -162,19 +159,20 @@ aks_config = {
 
 > Notice the vm_size = Standard_D2as_v4
 
-### GitOps using flux
+### GitOps using Flux
 
-If you want flux to manage your GitOps repo from the get go you can enable this in aks/variables/common.tfvars
-In my case I will have flux manage a namespace called monitor and sync a repo under monitor-gitops.
+If you want Flux to manage your GitOps repo from the get go you can enable this in `aks/variables/common.tfvars`.
+In my case I will have Flux manage a namespace called monitor and sync a repo under `monitor-gitops`.
 
-You need to create the repository in Azure Devops that you link to before applying this terraform.
+You need to create the repository in Azure Devops that you link to before applying this Terraform.
 The repository can be empty.
 
-You will also need to create a separate repository for `fleet-infra`, this repo is used to store flux config.
-> This repo cannot be empty and needs a README file or something similar to work as intended before you run terraform.
+You will also need to create a separate repository for `fleet-infra`, this repo is used to store Flux config.
 
-In the example bellow we are using Azure DevOps as our CSM system, but we also support GitHub.
-If you want to use GitHub just fill in it's config and make azure_devops empty instead.
+> This repo cannot be empty and needs a README file or something similar to work as intended before you run Terraform.
+
+In the example below we are using Azure DevOps as our CSM system, but we also support GitHub.
+If you want to use GitHub just fill in its config and make `azure_devops` empty instead.
 
 ```common.tfvars
 namespaces = [
@@ -202,7 +200,7 @@ namespaces = [
 ## Terraform CI/CD
 
 We have one CI/CD pipeline per terraform directory.
-You can find ready to use pipelines under .ci/ in the terraform repo.
+You can find ready to use pipelines under `.ci/` in the Terraform repo.
 
 ### Configure service principal
 
@@ -210,24 +208,23 @@ There are a few manual steps that you need to perform before we can start to con
 
 #### Service principal access
 
-Follow the instructions on how to [create a SP](https://github.com/XenitAB/terraform-modules/blob/main/modules/azure/README.md
-).
+Follow the instructions on how to [create a SP](https://github.com/XenitAB/terraform-modules/blob/main/modules/azure/README.md).
 
 In some cases it might be useful to create a group where both a admin group for you as an admin the SP can use and assign the group the needed access.
-Depending on how your global.tfvars look like it will be called something like: `az-mg-lz-xks-owner`.
+Depending on how your `global.tfvars` looks like it will be called something like: `az-mg-lz-xks-owner`.
 
 #### Create Service principal key
 
-The SP that we use is generated by terraform but we do not store the key any where,
+The SP that we use is generated by Terraform but we do not store the key anywhere,
 so this is among the few times that we have to do something manual.
 
-First find the SP that you will use, this will depend on your terraform config.
+First find the SP that you will use, this will depend on your Terraform config.
 
-There is no CLI command to create a new key so it's done through the portal.
+There is no CLI command to create a new key so it is done through the portal.
 
-AAD -> App registrations -> All applications -> *search for the application* -> Certificates & secrets -> New client secret
+AAD -> App registrations -> All applications -> _search for the application_ -> Certificates & secrets -> New client secret
 
-The key is only shown once, so copy it some where safe for long term storage. This key will be used when creating the service connection in azure devops.
+The key is only shown once, so copy it some where safe for long-term storage. This key will be used when creating the service connection in Azure DevOps.
 
 ### Setup Service Connection
 
@@ -256,11 +253,11 @@ Project settings -> Service connections -> New service connection -> Azure Resou
 
 ### Update pipelines
 
-Update the variable azureSubscriptionTemplate. You can find the value under Project settings -> Service Connections
+Update the variable `azureSubscriptionTemplate`. You can find the value under Project settings -> Service Connections
 
 <img alt="Service Connections" src={useBaseUrl("img/assets/xks/operator-guide/project_settings.png")} />
 
-In my case sp-sub-project1-xks
+In my case `sp-sub-project1-xks`:
 
 ```yaml
 name: $(Build.BuildId)
@@ -274,7 +271,7 @@ variables:
     value: "refs/heads/main"
 ```
 
-Also update the project path in name. Also notice the ref, the ref points to witch version of the module that you are using.
+Also update the project path in "name". Also notice the ref, the ref points to which version of the module that you are using:
 
 ```yaml
 resources:
@@ -289,13 +286,13 @@ resources:
 
 Once again add a pipeline.
 
-Assuming that you named your repository to terraform
+Assuming that you named your repository to Terraform
 
-Pipelines -> New pipeline -> Azure Repos Git -> terraform -> Existing Azure Pipelines YAML file
+Pipelines -> New pipeline -> Azure Repos Git -> Terraform -> Existing Azure Pipelines YAML file
 
-Import the pipeline from the following path: .ci/pipeline-governance.yaml
+Import the pipeline from the following path: `.ci/pipeline-governance.yaml`
 
-Hopefully after adding the pipeline the pipeline should automatically trigger and the plan and apply stage should go through without a problem.
+Hopefully after adding the pipeline the pipeline should automatically trigger and the plan and apply stages should go through without any problems.
 
 ### Create PAT secret
 
@@ -315,11 +312,11 @@ Copy the generated key, we will need it for the next step.
 
 To make it possible for terraform to reach the PAT in a easy and secure way we have chosen to store the PAT in Azure Key Vaults which you need to add manually.
 
-#### az cli
+#### Azure CLI
 
-You can add the secret using the az cli.
+You can add the secret using the `az` CLI.
 
-Call the secret azure-devops-pat and the value should be the token you created in azure devops.
+Call the secret `azure-devops-pat` and the value should be the token you created in Azure DevOps.
 
 ```bash
 # List all key vaults
@@ -333,37 +330,37 @@ az keyvault secret set --vault-name kv-dev-we-core-1234 --name azure-devops-pat 
 
 Or if you prefer use the UI.
 
-In azure portal search for "Key vaults" and pick the core one that matches the unique_suffix that you have specified in global.tfvars, in our case 1234.
+In the Azure portal search for "Key vaults" and pick the core one that matches the unique_suffix that you have specified in `global.tfvars`, in our case 1234.
 
 Key vaults -> core-1234 -> Secrets -> Generate/Import
 
 <img alt="Azure Key Vaults" src={useBaseUrl("img/assets/xks/operator-guide/azure_key_vault.jpg")} />
 
-Call the secret "azure-devops-pat" and add the PAT key that you created in the previous step.
+Call the secret `azure-devops-pat` and add the PAT key that you created in the previous step.
 
 ## Admin and developer access
 
 Hopefully you should now have one XKS cluster up and running, but currently no developer can actually reach the cluster.
 
-In XKF we see clusters as cattle and at any time we can decide to recreate a XKS cluster.
-To be able to do this without our developers even knowing we use blue green clusters, TODO write a document on how blue green clusters works and link.
+In XKF we see clusters as cattle and at any time we can decide to recreate an XKS cluster.
+To be able to do this without our developers even knowing we use blue green clusters. TODO write a document on how blue green clusters works and link.
 We use GitOps together with DNS to be able to migrate applications without any impact to end-users assuming that our developers have written 12 step applications.
 To store state we utilize the cloud services available in the different clouds that XKF supports.
 
-To make sure that our developers don't notice when we change our the cluster we have written a Kubernetes API Proxy called [azad-kube-proxy](https://github.com/XenitAB/azad-kube-proxy).
+To make sure that our developers do not notice when we change our the cluster we have written a Kubernetes API Proxy called [azad-kube-proxy](https://github.com/XenitAB/azad-kube-proxy).
 
 ### Azure AD Kubernetes Proxy
 
-AZAD as we also call it, is a deployment that runs inside XKS and sits in front of the kubernetes API.
+AZAD as we also call it, is a deployment that runs inside XKS and sits in front of the Kubernetes API.
 
 We also supply a krew/kubectl plugin to make it easy for our developers to use AZAD.
-For instructions on how to setup and configure [see](https://github.com/XenitAB/azad-kube-proxy).
+For instructions on how to setup and configure this [see](https://github.com/XenitAB/azad-kube-proxy).
 
 #### AZAD Usage
 
 Install krew: [https://krew.sigs.k8s.io/docs/user-guide/setup/install/#windows](https://krew.sigs.k8s.io/docs/user-guide/setup/install/#windows)
-Install azad-proxy plugin: `kubectl krew install azad-proxy`
-Login with azure cli (a valid session with azure cli is always required): `az login`
+Install the azad-proxy plugin: `kubectl krew install azad-proxy`
+Login with the Azure CLI (a valid session with azure cli is always required): `az login`
 List all the available clusters: `kubectl azad-proxy menu`
 
 You can also use the discover function:
@@ -382,11 +379,11 @@ AZAD proxy parses the AAD and that is why the user needs Directory Reader.
 
 #### No subscription
 
-If you haven't gotten any of the RG groups that XKF generates and perform `az login` you might see an error
-saying that you don't have any subscriptions.
+If you have not gotten any of the RG groups that XKF generates and perform `az login` you might see an error
+saying that you do not have any subscriptions.
 
 This is more likely if you are running XKF in AWS but also possible in Azure.
-Do as the error suggest and use the `--allow-no-subscription`.
+Do as the error suggest and use the `--allow-no-subscription` flag.
 
 ```shell
 # The variable TENANT_ID = your tenant id
@@ -397,7 +394,7 @@ AZAD proxy should still work.
 
 #### Developer groups
 
-Depending on what configuration you did in global.tfvars this will differ but the group name should be something like bellow.
+Depending on what configuration you did in `global.tfvars` this will differ but the group name should be something like bellow.
 
 This group will give your developers contributor access in the namespaces where they have access.
 
@@ -409,17 +406,17 @@ Example: `az-rg-xks-dev-aks-contributor`
 
 To make it easy for you as a admin you should also use AZAD.
 
-To give your self cluster-admin:
+To give yourself cluster-admin access:
 
 `<azure_ad_group_prefix>-xks-<cluster-env>-clusteradmin`
 
-Example: aks-xks-dev-clusteradmin
+Example: `aks-xks-dev-clusteradmin`
 
 #### Verify access
 
-There is a command option in kubernetes called --as, which enables you to see if a specific user got access to a specific resource.
+There is a flag in Kubernetes called `--as`, which enables you to see if a specific user got access to a specific resource.
 
-> Note this will not work if you are connecting to the cluster using AZAD-proxy due to it uses the --as option to run the commands for you.
+> Note this will not work if you are connecting to the cluster using AZAD-proxy due to it using the `--as` flag to run the commands for you.
 
 Since we are using OIDC we also need to provide the group id, you can find the group id in AAD.
 You can find the UUID of the group in AAD.
@@ -430,20 +427,20 @@ If you already have a rolebinding where a existing UUID exist you can run the fo
 
 `kubectl get pods --as-group=$(kubectl get rolebinding <rolebiding-name> -o jsonpath='{.subjects[0].name}') --as="fake"`
 
-### Authorized IP
+### Authorized IPs
 
-To minimize the exposure of the XKS clusters we define a list of authorized ip:s that is approved to connect the kubernetes cluster API.
+To minimize the exposure of the XKS clusters we define a list of authorized IP:s that is approved to connect the Kubernetes cluster API.
 
 We need to approve multiple infrastructure networks and user networks.
 
 - If you are using the HUB module and you are running VMSS Azure Devops Agent you need to approve those IP:s as authorized.
-- The AKS public ip
-- Your developers public ip
+- The AKS public IP
+- Your developers' public IP
 
-A recommendations is to add a comment with what IP you have added.
+A recommendation is to add a comment with what IP you have added.
 
 aks_authorized_ips = [
-  "8.8.8.8/32",  # google dns
-  "1.2.3.4/32",  # developer x ip
-  "2.3.4.5/30",  # AKS0 dev
+"8.8.8.8/32", # google dns
+"1.2.3.4/32", # developer x ip
+"2.3.4.5/30", # AKS0 dev
 ]

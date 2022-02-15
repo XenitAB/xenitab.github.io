@@ -9,10 +9,10 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 AKS requires the configuration of a system node pool when creating a cluster. This system node pool is not like the other additional node pools. It is tightly coupled to the AKS cluster. It is not
 possible without manual intervention to change the instance type or taints on this node pool without recreating the cluster. Additionally the system node pool cannot scale down to zero, for AKS to
-work there has to be at least one instance present. This is because critical system pods like tunnelfront and coredns will by default run on the system node pool. For more information about AKS
+work there has to be at least one instance present. This is because critical system pods like Tunnelfront and CoreDNS will by default run on the system node pool. For more information about AKS
 system node pool refer to the [official documentation](https://docs.microsoft.com/en-us/azure/aks/use-system-pools#system-and-user-node-pools).
 
-XKS follows the Azure recommendation and runs only system critical applications on the system node pool. Doing this protects services like coredns from starvation or memory issues caused by user
+XKS follows the Azure recommendation and runs only system critical applications on the system node pool. Doing this protects services like CoreDNS from starvation or memory issues caused by user
 applications running on the same nodes. This is achieved by adding the taint `CriticalAddonsOnly` to all of the system nodes.
 
 ### Sizing Nodes
@@ -21,7 +21,7 @@ Smaller AKS clusters can survive with a single node as the load on the system ap
 system nodes that may be larger in size. This section aims to describe how to properly size the system nodes.
 
 The minimum requirement for a system node is a VM with at least 2 vCPUs and 4GB of memory. Burstable B series VMs are not recommended. A good starting point for all clusters are the D series node
-types which have a balance of CPU and memory resources. A goo starting point is a node of type `Standard_D2as_v4`.
+types which have a balance of CPU and memory resources. A good starting point is a node of type `Standard_D2as_v4`.
 
 More work has to be done in this area regarding sizing and scaling of the system node pools to achieve a standardized solution.
 
@@ -41,20 +41,20 @@ az aks nodepool add --cluster-name aks-dev-we-aks1 --resource-group rg-dev-we-ak
 > It may not be possible to create a new node pool with the current Kubernetes version if the cluster has not been updated in a while. Azure will remove minor versions as new versions are released. In
 > that case you will need to upgrade the cluster to the latest minor version before making changes to the system pool, as AKS will not allow a node with a newer version than the control plane.
 
-Delete the system node pool created by Terraform.
+Delete the system node pool created by Terraform:
 
 ```shell
 az aks nodepool delete --cluster-name aks-dev-we-aks1 --resource-group rg-dev-we-aks --name default
 ```
 
-Create a new node pool with the new configuration. In this case it is setting a new instance type and adding a taint.
+Create a new node pool with the new configuration. In this case it is setting a new instance type and adding a taint:
 
 ```shell
 az aks nodepool add --cluster-name aks-dev-we-aks1 --resource-group rg-dev-we-aks --name default --mode "System" --zones 1 2 3 --node-vm-size "Standard_D2as_v4" --node-taints "CriticalAddonsOnly=true:NoSchedule"
 --node-count 1
 ```
 
-Delete the temporary pool.
+Delete the temporary pool:
 
 ```shell
 az aks nodepool delete --cluster-name aks-dev-we-aks1 --resource-group rg-dev-we-aks --name temp
@@ -92,7 +92,7 @@ export CLUSTER_NAME=cluster1
 export AZURE_LOCATION=westeurope
 ```
 
-What AKS versions can I pick in Azure location
+What AKS versions can I pick in this Azure location:
 
 ```shell
 az aks get-versions --location $AZURE_LOCATION -o table
@@ -110,7 +110,7 @@ the [official documentation](https://docs.microsoft.com/en-us/azure/aks/node-ima
 The node pool will spin up a new node and drain the existing one.
 When this is done the old node will be deleted.
 
-The below command works great for smaller clusters. If you want to upgrade more nodes faster it's possible to do so. Read the documentation for more information.
+The below command works great for smaller clusters. If you want to upgrade more nodes faster it is possible to do so. Read the documentation for more information.
 
 ```shell
 export RG=rg1
@@ -118,13 +118,13 @@ export POOL_NAME=default
 export CLUSTER_NAME=cluster1
 ```
 
-Get latest available node versions for your node pool
+Get the latest available node versions for your node pool:
 
 ```shell
 az aks nodepool get-upgrades --nodepool-name $POOL_NAME --cluster-name $CLUSTER_NAME --resource-group $RG
 ```
 
-Upgrade the image on the specified node pool
+Upgrade the image on the specified node pool:
 
 ```shell
 az aks nodepool upgrade --resource-group $RG --cluster-name $CLUSTER_NAME --name $POOL_NAME --node-image-only
@@ -132,4 +132,4 @@ az aks nodepool upgrade --resource-group $RG --cluster-name $CLUSTER_NAME --name
 
 ## AKS resources
 
-To get a quick overview of what is happening in AKS you can look at it's [changelog](https://github.com/Azure/AKS/releases).
+To get a quick overview of what is happening in AKS you can look at its [changelog](https://github.com/Azure/AKS/releases).

@@ -4,7 +4,7 @@ Welcome home!
 
 ## About
 
-Repository gathering documentation for Xenit open source projects
+Repository gathering documentation for Xenit open source projects.
 
 ## More details
 
@@ -26,10 +26,11 @@ yarn install
 yarn start
 ```
 
-This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
- ### Search function
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
- Search function doesn't work when running the dev server, it requires running `yarn build` (See below)
+### Search function
+
+The search function does not work when running the dev server, it requires running `yarn build` (see below).
 
 ## Build
 
@@ -41,17 +42,4 @@ This command generates static content into the `build` directory and can be serv
 
 ## Deployment
 
-```console
-GIT_USER=<Your GitHub username> USE_SSH=true yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
-
-## Generate external docs
-
-```console
-node .github/workflows/sync-docs.js terraform-modules "Terraform Modules" modules
-node .github/workflows/sync-docs.js azure-devops-templates "Azure DevOps Templates"
-```
-
-Do not commit the folders that are synced as of now.
+This documentation is deployed automatically to https://xenitab.github.io when changes are merged to the `main` branch.

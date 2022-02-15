@@ -3,18 +3,18 @@ id: blue-green
 title: Blue Green Clusters
 ---
 
-For different reasons you might want to create a completely new cluster, this can be due to many reasons like:
+For different reasons you might want to create a completely new cluster, this can be for many reasons like:
 
 - Broken cluster
-- Test patch the cluster
+- A test of patching the cluster
 - Major breaking change
 
-Thanks to this XKF support performing blue-green deployment on an entire kubernetes cluster, this is applicable for both Azure and AWS.
-These docs is intended for both clouds, the main difference is in the naming.
+Thanks to this XKF supports performing blue-green deployment on an entire Kubernetes cluster, this is applicable to both Azure and AWS.
+These docs are intended for both clouds, the main difference is in the naming.
 
-Today XKS does not support any way of only doing blue green on a specific environment.
-If you need too perform blue green on QA you should do it in dev and prod as well.
-We think that the risk is to great that you by mistake would get drift between the modules used in the different clusters would be to great.
+Today XKS does not support any way of only doing blue-green deployment on a specific environment.
+If you need to perform blue-green deployment on QA you should do it in dev and prod as well.
+We think that the risk is too great that you by mistake get drift between the modules used in the different clusters.
 
 ## Workflow
 
@@ -22,8 +22,8 @@ We think that the risk is to great that you by mistake would get drift between t
 
 1. Set up a new cluster in the target environment using Terraform
 2. Verify that the new cluster is functioning as intended
-    - You **won't** be able to verify any ingress
-    - You **won't** be able to use AZAD-proxy in the newly created cluster
+   - You **will not** be able to verify any ingress
+   - You **will not** be able to use AZAD-proxy in the newly created cluster
 3. Change the TXT DNS records over to the newly created cluster
 4. Verify that the ingress traffic is migrated to the new cluster and it is working as intended
 5. Destroy the old cluster using terraform
