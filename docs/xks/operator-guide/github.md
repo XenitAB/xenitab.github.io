@@ -46,7 +46,7 @@ jobs:
     uses: xenitab/azure-devops-templates/.github/workflows/terraform-docker.yaml@2021.10.1
     with:
       DIR: core
-      runs-on: '["self-hosted", "linux"]' # If you don't want to use the default ubuntu-latest
+      runs-on: '["self-hosted", "linux"]' # If you do not want to use the default ubuntu-latest
       ENVIRONMENTS: |
         {
           "environments":[
@@ -63,10 +63,10 @@ jobs:
 
 ### Self-hosted runners
 
-It's currently not possible to use self-hosted runners hosted in GitHub organization X while calling on workflows in GitHub organization Y.
+It is currently not possible to use self-hosted runners hosted in GitHub organization X while calling on workflows in GitHub organization Y.
 
 To be able to use self-hosted runners you have to **import (not fork)** the repository to organization X the [workflow repository](https://github.com/XenitAB/azure-devops-templates)
-and make it public. If you don't do this private repositories located in organization X won't be able to find the workflows.
+and make it public. If you do not do this private repositories located in organization X will not be able to find the workflows.
 
 ### Azure Service Principal
 

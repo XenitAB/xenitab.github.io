@@ -15,7 +15,7 @@ our GitOps flow where we use Elastic Container Registry (ECR) to store the conta
 
 ## Terraform
 
-All this is possible to solve using Terraform but we currently don't have any terraform module to handle it so for now you can read about the manual steps.
+All this is possible to solve using Terraform but we currently do not have any terraform module to handle it so for now you can read about the manual steps.
 
 - Create an IAM user
   - Tip: put both these users under a specific path, for example CI

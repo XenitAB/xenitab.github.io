@@ -110,7 +110,7 @@ the [official documentation](https://docs.microsoft.com/en-us/azure/aks/node-ima
 The node pool will spin up a new node and drain the existing one.
 When this is done the old node will be deleted.
 
-The below command works great for smaller clusters. If you want to upgrade more nodes faster it's possible to do so. Read the documentation for more information.
+The below command works great for smaller clusters. If you want to upgrade more nodes faster it is possible to do so. Read the documentation for more information.
 
 ```shell
 export RG=rg1
@@ -132,4 +132,4 @@ az aks nodepool upgrade --resource-group $RG --cluster-name $CLUSTER_NAME --name
 
 ## AKS resources
 
-To get a quick overview of what is happening in AKS you can look at it's [changelog](https://github.com/Azure/AKS/releases).
+To get a quick overview of what is happening in AKS you can look at its [changelog](https://github.com/Azure/AKS/releases).

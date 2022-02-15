@@ -22,8 +22,8 @@ We think that the risk is too great that you by mistake get drift between the mo
 
 1. Set up a new cluster in the target environment using Terraform
 2. Verify that the new cluster is functioning as intended
-   - You **won't** be able to verify any ingress
-   - You **won't** be able to use AZAD-proxy in the newly created cluster
+   - You **will not** be able to verify any ingress
+   - You **will not** be able to use AZAD-proxy in the newly created cluster
 3. Change the TXT DNS records over to the newly created cluster
 4. Verify that the ingress traffic is migrated to the new cluster and it is working as intended
 5. Destroy the old cluster using terraform

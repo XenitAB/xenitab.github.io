@@ -147,7 +147,7 @@ agent's resource group in Azure.
 The name of the image is dynamic and includes a timestamp to allow versioning of the images. The following Azure CLI command gets the name of the image:
 
 ```shell
-# Assuming that you don't have any other image this RG.
+# Assuming that you do not have any other image this RG.
 az image list -o json --query '[0].name'
 ```
 

@@ -28,7 +28,7 @@ These permissions are scoped in many different ways and start at the management 
 
 An owner role and group is also created for most resources, but the recommendation is not to use it as owners will be able to actually change the IAM which in most cases is undesirable.
 
-Usually the tenant is granted read/write to their resource groups and namespaces, meaning they will be able to add/remove whatever they want in their limited scope. This usually means creating deployments in Kubernetes as well as databases and other stateful resources in their Azure Resource Groups. When using AWS Elastic Kubernetes Service (EKS) the delegation isn't as rigorous as in Azure and the default setup creates three accounts where all the customer tenants share resources.
+Usually the tenant is granted read/write to their resource groups and namespaces, meaning they will be able to add/remove whatever they want in their limited scope. This usually means creating deployments in Kubernetes as well as databases and other stateful resources in their Azure Resource Groups. When using AWS Elastic Kubernetes Service (EKS) the delegation is not as rigorous as in Azure and the default setup creates three accounts where all the customer tenants share resources.
 
 Each tenant namespace has the ability to use the cloud provider metadata service to access services in the cloud provider. This is enabled through tools like [Azure AD POD Identity](https://github.com/Azure/aad-pod-identity) (aad-pod-identity) and [IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) (IRSA). These tools enable the tenants to access resources in their respective resource groups or accounts without having to create manually shared secrets (that would also have to be rotated).
 
@@ -66,7 +66,7 @@ Additionally, we try to add products and services into the mix to make it easier
 
 The primary authentication method to access any resource is based on Azure AD. Most of the actions taken by a tenant engineer will require authentication to Azure AD either using the Azure Management Console or the Azure CLI.
 
-A tenant will be granted access to the clusters using a [proxy](https://github.com/XenitAB/azad-kube-proxy) built by Xenit and provided in the framework, making sure they don't have to reconfigure their computers when a blue/green deployment of the clusters are made and the Kubernetes API endpoint change. The proxy will move with the clusters and it will be seamless for the tenant engineers.
+A tenant will be granted access to the clusters using a [proxy](https://github.com/XenitAB/azad-kube-proxy) built by Xenit and provided in the framework, making sure they do not have to reconfigure their computers when a blue/green deployment of the clusters are made and the Kubernetes API endpoint change. The proxy will move with the clusters and it will be seamless for the tenant engineers.
 
 The proxy also provides a CLI (`kubectl` plugin through [krew](https://krew.sigs.k8s.io/)) that makes it easier to both discover and configure access to the clusters. A valid session with Azure CLI is required to use it.
 
@@ -100,7 +100,7 @@ The platform team limits how much the clusters can auto scale and a service deli
 
 When a new tenant is being setup, the platform team provides onboarding for them and they then continously work together to assist in any questions. Monthly health checks are done to make sure that no obvious mistakes have been made by the tenants and monitoring is setup to warn the platform team if something is wrong with the platform.
 
-Most of the management of the workloads that the tenants deploy are handled through GitOps but they are also able to work with the clusters directly, with the knowledge that any cluster may at any time be rolled over (blue/green) and anything not in git won't be persisted.
+Most of the management of the workloads that the tenants deploy are handled through GitOps but they are also able to work with the clusters directly, with the knowledge that any cluster may at any time be rolled over (blue/green) and anything not in git will not be persisted.
 
 ## Xenit Kubernetes Framework
 

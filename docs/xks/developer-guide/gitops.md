@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## What is GitOps?
 
-> GitOps works by using Git as a single source of truth for declarative infrastructure and applications. With GitOps, the use of software agents can alert on any divergence between Git and what's running in [an environment]. If there's a difference, Kubernetes reconcilers automatically update or rollback the cluster depending on what is appropriate. &dash; _[Weave Works - Guide To GitOps](https://www.weave.works/technologies/gitops/)_
+> GitOps works by using Git as a single source of truth for declarative infrastructure and applications. With GitOps, the use of software agents can alert on any divergence between Git and what is running in [an environment]. If there is a difference, Kubernetes reconcilers automatically update or rollback the cluster depending on what is appropriate. &dash; _[Weave Works - Guide To GitOps](https://www.weave.works/technologies/gitops/)_
 
 XKS supports GitHub and Azure DevOps with almost identical workflows. XKF refers to these as Git providers. For simplicity, we refer to their CI/CD automation as "pipelines". If you are using GitHub, whenever this text refers to "pipeline", think "GitHub Actions workflow". As you saw in the previous section, XKS comes with a set of pipelines that automatically detects app releases and promotes them through a series of environments. The allows both rapid iteration and strong validation of apps.
 

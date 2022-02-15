@@ -105,12 +105,12 @@ The prometheus-operator has a great [getting started guide](https://github.com/p
 but if you want a quick example you can look below.
 
 In order for the grafana agent to find the pod you have to put this exact label on the pod/service monitor yaml: `xkf.xenit.io/monitoring: tenant`,
-or else the grafana agent won't find the rule to gather the metric.
+or else the grafana agent will not find the rule to gather the metric.
 
 The [selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) is used to find ether the pod or the service that you want to monitor.
 
-Use a podmonitor when you don't have a service in front of your pod.
-For example this might be the case when your application doesn't use an HTTP endpoint to get requests.
+Use a podmonitor when you do not have a service in front of your pod.
+For example this might be the case when your application does not use an HTTP endpoint to get requests.
 
 ```podmonitor.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -153,7 +153,7 @@ To gather logs from your application you need to define a PodLogs object.
 
 Just like metrics you have to define a label like `xkf.xenit.io/monitoring: tenant` in your PodLogs.
 The PodLogs CRD is created by the grafana agent operator and functions very similarly to how the prometheus operator works, especially when it comes to selectors.
-Below you will find a very basic example that will scrape a single pod in the namespace where it's created.
+Below you will find a very basic example that will scrape a single pod in the namespace where it is created.
 
 ```podlogs.yaml
 apiVersion: monitoring.grafana.com/v1alpha1
@@ -170,12 +170,12 @@ spec:
     - cri: {}
 ```
 
-You can do a lot of configuration when it comes to log filtering using PodLogs. For example you can drop specific log types that you don't want to send to your long time storage.
-Sadly the grafana agent operator doesn't supply great documentation around how to define this configuration in the operator.
+You can do a lot of configuration when it comes to log filtering using PodLogs. For example you can drop specific log types that you do not want to send to your long time storage.
+Sadly the grafana agent operator does not supply great documentation around how to define this configuration in the operator.
 However, together with running `kubectl explain podlogs.monitoring.grafana.com.spec.pipelineStages` on the cluster and
 reading the [official documentation](https://grafana.com/docs/loki/latest/clients/promtail/pipelines/) on how to create pipelines you can get a good understanding of how to create the configuration that you need.
 
-If you don't have any needs to filter or do any custom config per application you can create a namespace-wide PodLogs gatherer.
+If you do not have any needs to filter or do any custom config per application you can create a namespace-wide PodLogs gatherer.
 
 ```podlogs.yaml
 apiVersion: monitoring.grafana.com/v1alpha1

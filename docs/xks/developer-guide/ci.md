@@ -78,7 +78,7 @@ You can find more [Horusec config flags here](https://horusec.io/docs/cli/resour
 - horusecCliSeveritiesToIgnore: What severities do you want to show?
 - horusecCliFilesOrPathsToIgnore: What paths do you want to ignore?
 
-To save time it's easy to run Horusec locally:
+To save time it is easy to run Horusec locally:
 
 ```shell
 horusec start -p .

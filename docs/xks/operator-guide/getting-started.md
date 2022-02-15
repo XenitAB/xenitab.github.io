@@ -28,8 +28,7 @@ Import the pipeline from the following path: `/.ci/pipeline.yaml`
 
 ### Setup XKS
 
-In this case we will only setup a single XKS cluster in one environment, in our case dev.
-It's easy to add more environments when you have created your first one.
+In this case we will only setup a single XKS cluster in one environment, in our case dev. It is easy to add more environments when you have created your first one.
 
 At Xenit we are using Terraform modules that we share [upstream](https://github.com/XenitAB/terraform-modules)
 
@@ -175,7 +174,7 @@ You will also need to create a separate repository for `fleet-infra`, this repo 
 > This repo cannot be empty and needs a README file or something similar to work as intended before you run Terraform.
 
 In the example below we are using Azure DevOps as our CSM system, but we also support GitHub.
-If you want to use GitHub just fill in it's config and make `azure_devops` empty instead.
+If you want to use GitHub just fill in its config and make `azure_devops` empty instead.
 
 ```common.tfvars
 namespaces = [
@@ -223,7 +222,7 @@ so this is among the few times that we have to do something manual.
 
 First find the SP that you will use, this will depend on your Terraform config.
 
-There is no CLI command to create a new key so it's done through the portal.
+There is no CLI command to create a new key so it is done through the portal.
 
 AAD -> App registrations -> All applications -> _search for the application_ -> Certificates & secrets -> New client secret
 
@@ -350,7 +349,7 @@ To be able to do this without our developers even knowing we use blue green clus
 We use GitOps together with DNS to be able to migrate applications without any impact to end-users assuming that our developers have written 12 step applications.
 To store state we utilize the cloud services available in the different clouds that XKF supports.
 
-To make sure that our developers don't notice when we change our the cluster we have written a Kubernetes API Proxy called [azad-kube-proxy](https://github.com/XenitAB/azad-kube-proxy).
+To make sure that our developers do not notice when we change our the cluster we have written a Kubernetes API Proxy called [azad-kube-proxy](https://github.com/XenitAB/azad-kube-proxy).
 
 ### Azure AD Kubernetes Proxy
 
@@ -382,8 +381,8 @@ AZAD proxy parses the AAD and that is why the user needs Directory Reader.
 
 #### No subscription
 
-If you haven't gotten any of the RG groups that XKF generates and perform `az login` you might see an error
-saying that you don't have any subscriptions.
+If you have not gotten any of the RG groups that XKF generates and perform `az login` you might see an error
+saying that you do not have any subscriptions.
 
 This is more likely if you are running XKF in AWS but also possible in Azure.
 Do as the error suggest and use the `--allow-no-subscription` flag.

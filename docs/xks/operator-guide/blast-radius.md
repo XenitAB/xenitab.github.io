@@ -5,7 +5,7 @@ title: Blast Radius
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-As part of ourTterraform pipelines at Xenit we use something called OPA Blast Radius to make sure that we don't do to big changes during a single commit and don't remove needed infrastructure by mistake.
+As part of ourTterraform pipelines at Xenit we use something called OPA Blast Radius to make sure that we do not do to big changes during a single commit and do not remove needed infrastructure by mistake.
 
 ## Workflow
 
@@ -32,10 +32,10 @@ make plan ENV=dev DIR=governance OPA_BLAST_RADIUS=51
 
 ## Overwrite OPA blast radius in CI
 
-We are using Just Enough Administration (JEA) at Xenit and in many cases our admins don't have enough access to run Terraform plan/apply locally.
+We are using Just Enough Administration (JEA) at Xenit and in many cases our admins do not have enough access to run Terraform plan/apply locally.
 Instead we are forced to use our CI/CD systems to manage this for us.
 
-If you look at the `Makefile` you will see that we don't use any environment variables to overwrite the `OPA_BLAST_RADIUS` value.
+If you look at the `Makefile` you will see that we do not use any environment variables to overwrite the `OPA_BLAST_RADIUS` value.
 So how should we change the `OPA_BLAST_RADIUS` without having to update the pipeline file every time we want to overwrite the default value?
 
 Sadly here comes some magic, if you look in [https://github.com/XenitAB/azure-devops-templates/](https://github.com/XenitAB/azure-devops-templates/blob/594c374cb5418c415737fdb688049d4138f2d67f/terraform-docker/plan/main.yaml#L107)

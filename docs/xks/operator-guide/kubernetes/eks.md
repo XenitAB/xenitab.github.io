@@ -58,7 +58,7 @@ This is how an AWS repo structure can look like:
 
 Just like in AKS we use Calico as our CNI.
 
-- AWS CNI doesn't support network policies
+- AWS CNI does not support network policies
 - AWS CNI heavily limits how many pods we can run on a single node
 - We want to be consistent with AKS
 
@@ -78,9 +78,9 @@ To make it easier to use IRSA we have developed a small terraform [module](https
 ## Bootstrap
 
 By default AWS CNI limits the amount of pods that you can have on a single node.
-Since we are using Calico we don't have this limit,
+Since we are using Calico we do not have this limit,
 but when setting up a default EKS environment the EKS [bootstrap script](https://github.com/awslabs/amazon-eks-ami/blob/master/files/bootstrap.sh)
-defines a pod limit. To remove this limit we have created our own AWS launch template for our EKS node group. It sets `--use-max-pods false` and some needed Kubernetes node labels. If these labels aren't set the EKS cluster is unable to "find" the nodes in the node group.
+defines a pod limit. To remove this limit we have created our own AWS launch template for our EKS node group. It sets `--use-max-pods false` and some needed Kubernetes node labels. If these labels are not set the EKS cluster is unable to "find" the nodes in the node group.
 
 ## Tenants account peering
 
@@ -96,7 +96,7 @@ Run Terraform in the following order:
 - XKF core defines `vpc_peering_config_requester`, manually getting the needed information from the tenant account.
 - Tenant core defines `vpc_peering_config_accepter`, manually getting the needed information from the XKF account.
 
-Make sure that you only have one peering request open at the same time, else the accepter side won't be able to find a unique request.
+Make sure that you only have one peering request open at the same time, else the accepter side will not be able to find a unique request.
 Now you should be able to see the VPC peering connected on both sides.
 
 ## Update cluster version
@@ -210,7 +210,7 @@ When this change is applied, there will be a new set of nodes running the new ve
 kubectl get nodes
 ```
 
-Now it's time to drain the old nodes one by one with:
+Now it is time to drain the old nodes one by one with:
 
 ```bash
 kubectl drain <node-name> --ignore-daemonsets --delete-local-data
@@ -270,6 +270,6 @@ aws eks --region eu-west-1 update-kubeconfig --name dev-eks1 --alias dev-eks1 --
 
 ## EKS resources
 
-To get a quick overview of what is happening in EKS you can look at it's [changelog](https://github.com/awslabs/amazon-eks-ami/blob/master/CHANGELOG.md#changelog).
+To get a quick overview of what is happening in EKS you can look at its [changelog](https://github.com/awslabs/amazon-eks-ami/blob/master/CHANGELOG.md#changelog).
 
 When upgrading node groups you need to correlate with your Kubernetes release, you can find which node group is available to [which node group](https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html).
