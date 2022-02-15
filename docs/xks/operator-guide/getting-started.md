@@ -13,9 +13,7 @@ When creating a new tenant there are a number of (for now manual) processes to p
 
 In this scenario we are assuming that you are using Azure DevOps and that you have already created a project and organization.
 
-In many places in the text we have provided names, they are just examples, all of these names can be exchanged to fit your needs.
-
-In your project let us call it `project1`. In the future we should manually import a repository.
+In many places in the text we have provided names, they are just examples, all of these names can be exchanged to fit your needs. In this case let us call it `project1`. In the future we should manually import a repository.
 [https://github.com/XenitAB/azure-devops-templates](https://github.com/XenitAB/azure-devops-templates)
 
 ### Import azure-devops-templates pipeline
