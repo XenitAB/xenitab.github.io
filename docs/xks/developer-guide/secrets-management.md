@@ -96,6 +96,53 @@ spec:
 
 Note that even if you only want to access your secret via an environment variable, you still need to mount the secret store as a volume.
 
+## Auto updating secrets
+
+The CSI drivers sits and pools the cloud provider for changes in the secrets defined in your secretProviderClass. Depending on which cloud provider they have different default values.
+But the CSI driver only pools the secrets if you have a pod that is actively using the secret defined in the cloud.
+
+This can cause issues if you are using CSI driver in a cronjob and that secret don't have any other long running pods that mounts it.
+For example a cronjob that runs for under 2 minutes **is not** guaranteed to get the latest updated secret from the cloud provider.
+And even if you have a longer running cronjob that would get a update you would then have to restart that job to make sure that you got the latest secret if someone have updated the secret.
+
+To workaround this issue you have to create a pod that uses the same secret to make sure that the secret is up to date.
+All this long running pod needs to do is to mount the secret and sleep.
+
+Below you can find a suggestion on how to that:
+
+```.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foo
+spec:
+  template:
+    spec:
+      containers:
+        - name: busybox
+          image: busybox:latest
+          command: ["/bin/sh", "-c", "--"]
+          args: ["while true; do sleep 30; done;"]
+          tty: true
+          volumeMounts:
+            - name: secret-store
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          env:
+            - name: BAR
+              valueFrom:
+                secretKeyRef:
+                  name: bar
+                  key: bar
+      volumes:
+        - name: secret-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: foo
+```
+
 ## Cloud Providers
 
 ### Azure
