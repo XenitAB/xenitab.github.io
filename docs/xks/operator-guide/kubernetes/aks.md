@@ -177,7 +177,7 @@ Now you can remove the standard node pool and standard2 should be able to handle
 
 Azure will automatically drain all the data from the old standard node pool.
 
-If you want to make sure that you don't get any downtime think about the min count of standard2.
+Remember to set min_count so that your current workload fits, you can always reduce min_count later.
 The cluster autoscaler will scale up new vm:s of standard2 but it will take time.
 During the creation of more standard2 nodes much of your workload might become pending.
 
