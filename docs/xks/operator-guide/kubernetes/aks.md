@@ -90,6 +90,7 @@ export RG=rg1
 export POOL_NAME=default
 export CLUSTER_NAME=cluster1
 export AZURE_LOCATION=westeurope
+export KUBE_VERSION=1.21.9
 ```
 
 What AKS versions can I pick in this Azure location:
@@ -100,6 +101,16 @@ az aks get-versions --location $AZURE_LOCATION -o table
 
 ```shell
 az aks get-upgrades --resource-group $RG --name $CLUSTER_NAME --output table
+```
+
+We recommend to only upgrade control-plane separately and then upgrade the nodes.
+
+```shell
+az aks upgrade --resource-group $RG --name $CLUSTER_NAME --kubernetes-version $KUBE_VERSION --control-plane-only
+```
+
+```shell
+az aks nodepool upgrade --resource-group $RG --cluster-name $CLUSTER_NAME --name $POOL_NAME --kubernetes-version $KUBE_VERSION
 ```
 
 ### Upgrading node pools without upgrading cluster
