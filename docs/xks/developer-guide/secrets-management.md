@@ -131,8 +131,6 @@ kind: Deployment
 metadata:
   name: connection-string-test
   namespace: tenant
-  labels:
-    aadpodidbinding: tenant
 spec:
   selector:
     matchLabels:
@@ -141,6 +139,7 @@ spec:
     metadata:
       labels:
         app: connection-string-test
+        aadpodidbinding: tenant
     spec:
       containers:
         - name: connection-string-test
@@ -402,7 +401,28 @@ status:
 ### Is your key vault correctly configured, and does the pod have access to it?
 
 Speaking from experience, it is all too easy to setup access to the wrong key vault. If you are accessing the right key vault and you are using Azure, double check that
-`usePodIdentity: "true"` is set on the `SecretProviderClass` and it has the `aadpodidbinding` label.
+`usePodIdentity: "true"` is set on the `SecretProviderClass`.
+
+You also need to make sure that the metadata of your deployment's `template` section contains a declaration of which `aadpodidbinding` to use (which is always your tenant's name):
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connection-string-test
+  namespace: tenant
+spec:
+  selector:
+    matchLabels:
+      app: connection-string-test
+  template:
+    metadata:
+      labels:
+        app: connection-string-test
+        aadpodidbinding: tenant
+```
+
+Please also verify that `aadpodidbinding` is set on the `metadata` section under `template` and not on the root `metadata` section. The latter will not work.
 
 ### Are your environment variables correctly set?
 
