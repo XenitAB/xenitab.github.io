@@ -178,8 +178,6 @@ kind: Deployment
 metadata:
   name: connection-string-test
   namespace: tenant
-  labels:
-    aadpodidbinding: tenant
 spec:
   selector:
     matchLabels:
@@ -188,6 +186,7 @@ spec:
     metadata:
       labels:
         app: connection-string-test
+        aadpodidbinding: tenant
     spec:
       containers:
         - name: connection-string-test
@@ -423,4 +422,73 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: foo
+```
+
+## Troubleshooting
+
+There are a lot of things that can go wrong when configuring Secrets. Here are some pointers for things to check:
+
+### Did you forget to declare the `SecretProviderClass`?
+
+Remember, getting access to your secrets consists of 2 separate parts:
+
+- a `SecretProviderClass`, which tells Kubernetes where it can get the stored secret
+- a mount of the provided `secrets-store` for your deployment
+
+### Verifying your loaded YAML
+
+By running `kubectl get secretproviderclasspodstatuses -o yaml` you can get a lot of information about if and how your secrets got correctly loaded. Check here first!
+For example, look out to see that all the secrets you expect to see are available, and that they are mounted:
+
+```yaml
+status:
+  mounted: true
+```
+
+### Is your key vault correctly configured, and does the pod have access to it?
+
+Speaking from experience, it is all too easy to setup access to the wrong key vault. If you are accessing the right key vault and you are using Azure, double check that
+`usePodIdentity: "true"` is set on the `SecretProviderClass`.
+
+You also need to make sure that the metadata of your deployment's `template` section contains a declaration of which `aadpodidbinding` to use (which is always your tenant's name):
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connection-string-test
+  namespace: tenant
+spec:
+  selector:
+    matchLabels:
+      app: connection-string-test
+  template:
+    metadata:
+      labels:
+        app: connection-string-test
+        aadpodidbinding: tenant
+```
+
+Please also verify that `aadpodidbinding` is set on the `metadata` section under `template` and not on the root `metadata` section. The latter will not work.
+
+### Are your environment variables correctly set?
+
+If you want to load your secret as an environment variable, remember that it **still needs to be mounted as a volume**. Also, don't forget that it doesn't automatically become available as a
+corresponding environment variable, you still need to load it explicitly, like this:
+
+```yaml
+env:
+  - name: BAR
+    valueFrom:
+      secretKeyRef:
+        name: foo
+        key: bar
+```
+
+### Are your secret names matching the names in the reloader statement?
+
+If this is not the case, you will see errors when running `kubectl describe <podname>`. A well-behaved reloader will emit events that look like this:
+
+```bash
+Normal SecretRotationComplete 4m22s (x889 over 29h) csi-secrets-store-rotation successfully rotated K8s secret <secret-name>
 ```
