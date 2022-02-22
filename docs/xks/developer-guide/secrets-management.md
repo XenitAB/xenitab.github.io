@@ -431,12 +431,11 @@ corresponding environment variable, you still need to load it explicitly, like t
 
 ```yaml
 env:
-
-- name: BAR
-  valueFrom:
-  secretKeyRef:
-  name: foo
-  key: bar
+  - name: BAR
+    valueFrom:
+      secretKeyRef:
+        name: foo
+        key: bar
 ```
 
 ### Are your secret names matching the names in the reloader statement?
