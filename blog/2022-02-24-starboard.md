@@ -1,6 +1,11 @@
 ---
-id: blog_starboard
 title: Improving XKS security using Starboard
+description: Xenit evolves Starboard for continuous scanning of production workloads.
+authors:
+  - name: Edvin Norling
+tags:
+  - security
+  - kubernetes
 ---
 
 Just like for all companies today security is top of mind for Xenit.
@@ -11,6 +16,8 @@ having issues with the latest [log4j CVE:s](https://nvd.nist.gov/vuln/detail/CVE
 
 We use Starboard to continuously scan all container images for running on on XKS, both from a platform point of view but also our customers images.
 In the background Starboard uses [Trivy](https://github.com/aquasecurity/trivy/) to scan the container images. Trivy is the same tool that we use to scan our container images at build time so our XKS customers will have experience reading the Trivy output.
+
+<!-- truncate -->
 
 When starting to use Starboard we noticed a few feature that where missing, that we really wanted. And since Starboard is open-source we thought why not help to implement these features.
 
