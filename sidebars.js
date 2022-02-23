@@ -6,16 +6,6 @@ module.exports = {
     },
     {
       "type": "category",
-      "label": "Blog",
-      "items": [
-        {
-          "type": "doc",
-          "id": "blog/12factor"
-        }
-      ]
-    },
-    {
-      "type": "category",
       "label": "Xenit Kubernetes Service",
       "items": [
         {

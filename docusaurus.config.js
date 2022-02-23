@@ -8,7 +8,7 @@ module.exports = {
   favicon: "img/favicon.ico",
   organizationName: "XenitAB", // Usually your GitHub org/user name.
   projectName: "xenitab.github.io", // Usually your repo name.
-  plugins: [require.resolve('docusaurus-lunr-search')],
+  plugins: [require.resolve("docusaurus-lunr-search")],
   themeConfig: {
     navbar: {
       // title: "Xenit AB Open Source",
@@ -24,7 +24,7 @@ module.exports = {
           label: "Docs",
           position: "right",
         },
-        // { to: "blog", label: "Blog", position: "left" },
+        { to: "blog/", label: "Blog", position: "right" },
         {
           href: "https://github.com/XenitAB",
           label: "GitHub",
@@ -33,8 +33,8 @@ module.exports = {
       ],
     },
     prism: {
-      additionalLanguages: ["hcl", "aspnet"]
-    }
+      additionalLanguages: ["hcl", "aspnet"],
+    },
   },
   presets: [
     [
