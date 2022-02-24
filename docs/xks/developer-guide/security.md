@@ -13,6 +13,7 @@ This can include things like certain types of volume mounts, labeling requiremen
 =======
 by the API server when applying the change. Knowing this is important as certain features or options documented on the Internet may not be available or are restricted in the XKS service.
 This can include things like certain types of volume mounts, labeling requirements or container capabilities for a Pod.
+<<<<<<< HEAD
 
 A product we use to achieve this is OPA (Open Policy Agent) Gatekeeper, in which we have a set of rules defining how we allow containers to be created. To simplify this for developers, these rules are applied automatically to all Pods created to achive our set standard.
 You can read more in [their documentation](https://open-policy-agent.github.io/gatekeeper/website/docs/howto/)
@@ -133,3 +134,21 @@ You can read more in the official documentation
 >>>>>>> 738876861... Add docs from feedback
 =======
 >>>>>>> 873ec4eb1... Small fixes based on feedback
+=======
+## Security Features
+### OPA Gatekeeper
+
+OPA Gatekeeper is a product in which we have a set of rules defining how we allow containers to be created. To simplify this for the developers these rules are then applied automatically to all pods created to achive our set standard. 
+### SecurityContext
+
+To limit what a container can do, we have applied basic SecurityContext automatically with OPA Gatekeeper to all pods in our XKS clusters. The basic YAML code is described below.
+```yaml
+        securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - NET_RAW
+      readOnlyRootFilesystem: true
+```
+This is required SecurityContext configuration of the pod to be able to run, we higly encourage you to improve this configuration where applicable to further improve security.
+>>>>>>> b8083b7b0... Add initila docs for OPA & SecurityContext
