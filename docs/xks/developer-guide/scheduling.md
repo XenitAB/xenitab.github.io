@@ -117,6 +117,6 @@ antiAffinity rule: the pod should not be scheduled onto a node if that node is i
             topologyKey: topology.kubernetes.io/zone
           weight: 100
 ```
-This is an example configuration of podAntiAffinity for Ingress-nginx, to spread the pod deployment based on topology.kubernetes.io/zone. To mitigate downtime in case an entire zone goes down.
+This is an example configuration of podAntiAffinity for Ingress-nginx, to spread the pod deployment based on topology.kubernetes.io/zone. To mitigate downtime in case an entire zone goes down. i.e if a pod runs in zone A with key "app.kubernetes.io/name" and value "ingress-nginx" dont schedule in zone A, choose zone B or C.
 
 This is recommended to use, critical services should be distributed to multiple zones to mitigate downtime.
