@@ -9,7 +9,7 @@ title: Scheduling Pods
 
 The kube-scheduler looks for newly created pods that doesnt have any assigned node. The nodes that meet the requirements to run a pod is called a feasible node.
 
- Kube-scheduler becomes responsible for assiging a suitable node to the pod based on 2 criteria:
+ Kube-scheduler becomes responsible for assigning a suitable node to the pod based on 2 criteria:
 1. Filtering - Checks available nodes for available resources, to meet requirements specificed in the pod.
 2. Scoring - Based on the available resources when Filtering, ranking the avaliable nodes and choosing the highest ranking one, if 2 or more are equal, selection is random.
 
