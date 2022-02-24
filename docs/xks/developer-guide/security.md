@@ -13,6 +13,7 @@ This can include things like certain types of volume mounts, labeling requiremen
 =======
 by the API server when applying the change. Knowing this is important as certain features or options documented on the Internet may not be available or are restricted in the XKS service.
 This can include things like certain types of volume mounts, labeling requirements or container capabilities for a Pod.
+<<<<<<< HEAD
 A product we use to achieve this is OPA (Open Policy Agent) Gatekeeper, in which we have a set of rules defining how we allow containers to be created. To simplify this for developers, these rules are applied automatically to all Pods created to achive our set standard.
 You can read more in [their documentation](https://open-policy-agent.github.io/gatekeeper/website/docs/howto/)
 And in [our library](https://github.com/XenitAB/gatekeeper-library)
