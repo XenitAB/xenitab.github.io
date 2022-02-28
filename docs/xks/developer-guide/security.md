@@ -14,6 +14,7 @@ This can include things like certain types of volume mounts, labeling requiremen
 by the API server when applying the change. Knowing this is important as certain features or options documented on the Internet may not be available or are restricted in the XKS service.
 This can include things like certain types of volume mounts, labeling requirements or container capabilities for a Pod.
 <<<<<<< HEAD
+<<<<<<< HEAD
 A product we use to achieve this is OPA (Open Policy Agent) Gatekeeper, in which we have a set of rules defining how we allow containers to be created. To simplify this for developers, these rules are applied automatically to all Pods created to achive our set standard.
 You can read more in [their documentation](https://open-policy-agent.github.io/gatekeeper/website/docs/howto/)
 And in [our library](https://github.com/XenitAB/gatekeeper-library)
@@ -23,6 +24,20 @@ And in [our library](https://github.com/XenitAB/gatekeeper-library)
 ### SecurityContext
 
 We have applied basic SecurityContext automatically with OPA Gatekeeper to all Pods in your XKS clusters. The basic YAML code is described below. This configuration is enforced to both initcontainers and containers but you may still want to add this configuration to your manifests to be explicit about the limitations under which containers operate.
+=======
+
+## Security Features
+
+### OPA Gatekeeper
+
+OPA (Open Policy Agent) Gatekeeper is a product in which we have a set of rules defining how we allow containers to be created. To simplify this for the developers these rules are then applied automatically to all Pods created to achive our set standard.
+You can read more in their documentation: <https://open-policy-agent.github.io/gatekeeper/website/docs/howto/>
+And in our library: <https://github.com/XenitAB/gatekeeper-library>
+
+### SecurityContext
+
+We have applied basic SecurityContext automatically with OPA Gatekeeper to all Pods in our XKS clusters. The basic YAML code is described below. This configuration is applied to both initcontainers and containers and we encourage you to set this up in your own gitops repository to make it more visible for developers.
+>>>>>>> Add docs from feedback
 
 ```yaml
     securityContext:
@@ -36,13 +51,22 @@ We have applied basic SecurityContext automatically with OPA Gatekeeper to all P
 `allowPrivilegeEscalation` is set to `false` to not allow processes to start with higher privileges than its parent.
 
 NET_RAW is a default setting in Kubernetes to allow ICMP traffic between containers and enables an application to craft raw packets.
+<<<<<<< HEAD
 If an attacker were to get access to the containers, dropping this will constrain a variety of network exploits. The most important part of dropping NET_RAW is to stop containers from opening "raw" sockets and allowing IP packets to bypass kernel sanity checks.
 
 `readOnlyRootFilesystem` is set to `true` to make sure containers can not write to the root filesystems.
+=======
+If an attacker were to get access to the containers, dropping this will constrain a variety of network exploits.
+
+`readOnlyRootFilesystem` is set to `true` to make sure containers cant write to the root filesystems.
+
+An emptyDir volume is created when a Pod is assigned to a node and exists while that Pod is running. The emptyDir volume is initially empty. All containers in the Pod can read and write the same files in the emptyDir volume and can be mounted to different paths in each container. When the Pod is removed, the data in the emptyDir is deleted permanently.
+>>>>>>> Add docs from feedback
 
 This is the required SecurityContext configuration of the Pod to be able to run, we higly encourage you to improve this configuration where applicable to further improve security.
 For example:
 
+<<<<<<< HEAD
 ```yaml
     securityContext:
           allowPrivilegeEscalation: false
@@ -103,4 +127,26 @@ If you configure `emptyDir.medium` to `Memory`, Kubernetes will instead mount a 
 ```
 
 You can read more in the official documentation on [Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
+<<<<<<< HEAD
 >>>>>>> d1848c7cd... Add more documentation
+=======
+=======
+```yaml
+    securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+```
+
+ The `runAsUser` field specifies that for any Containers in the Pod, all processes run with user ID 1000. The runAsGroup field specifies the primary group ID of 3000 for all processes within any containers of the Pod
+
+You can read more in the official documentation
+<https://kubernetes.io/docs/tasks/configure-pod-container/security-context/>
+>>>>>>> Add docs from feedback
+>>>>>>> 738876861... Add docs from feedback
