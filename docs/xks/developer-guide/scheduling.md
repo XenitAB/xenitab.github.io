@@ -66,7 +66,7 @@ spec:
             - label-value
 ```
 
-This example only allow pods to be scheduled on nodes with a key `kubernetes.io/name` with value "ABC" or "XYZ". Among the nodes matching this criteria, nodes with key `label-key` and value `label-value` will be preferred.
+This example only allow pods to be scheduled on nodes with a key `kubernetes.io/name` with value `ABC` or `XYZ` Among the nodes matching this criteria, nodes with key `label-key` and value `label-value` will be preferred.
 
 The `weight` field ir ranged 1-100 and for each node matching all scheduling requirements, the kube-scheduler computes a score, as mentioned earlier. Then adds this number to that sum to calculate the best matching node.
 
