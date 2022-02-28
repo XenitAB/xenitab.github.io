@@ -16,7 +16,7 @@ The kube-scheduler looks for newly created pods that doesnt have any assigned no
 
 ### Node Selector
 
-You can schedule pods based on labels and nodeSelector, for example: "gpuEnabled: true"
+You can schedule pods based on labels and nodeSelector, for example: `gpuEnabled: true`
 
 Nodeconfig:
 
@@ -34,7 +34,7 @@ nodeSelector:
 
 ## Affinity & antiAffinity
 
-This is similar to "nodeSelector" bur greatly enhances the types of constraints you can express.
+This is similar to `nodeSelector` bur greatly enhances the types of constraints you can express.
 
 1. The affinity/anti-affinity language is more expressive. The language offers more matching rules.
 2. Rules can be "preferred" rather than a hard requirement, so if the scheduler can't satisfy it, the pod will still be scheduled
@@ -42,7 +42,7 @@ This is similar to "nodeSelector" bur greatly enhances the types of constraints 
 
 ### Node Affinity
 
-There are currently two types of node affinity, called "requiredDuringSchedulingIgnoredDuringExecution" and "preferredDuringSchedulingIgnoredDuringExecution". You can think of them as "hard" and "soft" requirements to schedule a pod. "IgnoredDuringExecution" part of the names means that, if labels on a node change at runtime such that the affinity rules on a pod are no longer met, the pod continues to run on the node.
+There are currently two types of node affinity, called `requiredDuringSchedulingIgnoredDuringExecution` and `preferredDuringSchedulingIgnoredDuringExecution`. You can think of them as "hard" and "soft" requirements to schedule a pod. `IgnoredDuringExecution` part of the names means that, if labels on a node change at runtime such that the affinity rules on a pod are no longer met, the pod continues to run on the node.
 
 ```yaml
 spec:
@@ -66,9 +66,9 @@ spec:
             - label-value
 ```
 
-This example only allow pods to be scheduled on nodes with a key "kubernetes.io/name" with value "ABC" or "XYZ". Among the nodes matching this criteria, nodes with key "label-key" and value "label-value" will be preferred.
+This example only allow pods to be scheduled on nodes with a key `kubernetes.io/name` with value "ABC" or "XYZ". Among the nodes matching this criteria, nodes with key `label-key` and value `label-value` will be preferred.
 
-The "weight" field ir ranged 1-100 and for each node matching all scheduling requirements, the kube-scheduler computes a score, as mentioned earlier. Then adds this number to that sum to calculate the best matching node.
+The `weight` field ir ranged 1-100 and for each node matching all scheduling requirements, the kube-scheduler computes a score, as mentioned earlier. Then adds this number to that sum to calculate the best matching node.
 
 ### podAffinity and podAntiaffinity
 
@@ -103,9 +103,9 @@ spec:
 
 This example show an example where we use both affinity rules.
 
-Affinity rule: the pod can be only scheduled onto a node if that node is in the same zone as at least one already-running pod that has a label with key "label1" and value "label-value".
+Affinity rule: the pod can be only scheduled onto a node if that node is in the same zone as at least one already-running pod that has a label with key `label1` and value `label-value`.
 
-antiAffinity rule: the pod should not be scheduled onto a node if that node is in the same zone as a pod with label having key "label2" and value "label-valu-anti"
+antiAffinity rule: the pod should not be scheduled onto a node if that node is in the same zone as a pod with label having key `label2` and value `label-value-anti`
 
 ```yaml
   affinity:
@@ -131,7 +131,7 @@ antiAffinity rule: the pod should not be scheduled onto a node if that node is i
           weight: 100
 ```
 
-This is an example configuration of podAntiAffinity for Prometheus. Spreading the pod deployment based on "topology.kubernetes.io/zone" and "topology.kubernetes.io/hostname" to only allow 1 pod on each node and to mitigate downtime in case an entire zone goes down, i.e if a pod runs in zone A with key "prometheus" and value "xks" dont schedule in zone A, choose zone B or C. Note that these settings are "preferred" and not required.
+This is an example configuration of podAntiAffinity for Prometheus. Spreading the pod deployment based on `topology.kubernetes.io/zone` and `topology.kubernetes.io/hostname` to only allow 1 pod on each node and to mitigate downtime in case an entire zone goes down, i.e if a pod runs in zone A with key `prometheus` and value `xks` dont schedule in zone A, choose zone B or C. Note that these settings are "preferred" and not required.
 
 This is recommended to use, critical services should be distributed to multiple zones to mitigate downtime.
 
