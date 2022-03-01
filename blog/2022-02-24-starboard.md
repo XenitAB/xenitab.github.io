@@ -52,13 +52,27 @@ The problem was that once a vulnerability report got generated it didn't get upd
 To solve this we have helped out to introduce a TTL(Time To Live) for reports [#879](https://github.com/aquasecurity/starboard/pull/879) by implementing a new controller.
 Setting the following config in the operator `OPERATOR_VULNERABILITY_SCANNER_REPORT_TT=24h` will automatically delete any vulnerability report older then 24 hours.
 
-TODO write about the ACR support implementation.
+So now we can scan our public images, we can get metrics from them and we can get updated scans as often as we want. But what about privates repositories?
 
-TODO write something about our documentation about repots and vuln repots
+Support in Trivy for AWS [ECR](https://aws.amazon.com/ecr/) (Elastic Container Registry) have been around for a long time and same thing with starboard.
+The problem was until recently there was no support for Azure [ACR](https://azure.microsoft.com/en-us/services/container-registry) (Azure Container Registry).
+
+Luckily just as we were thinking of starting to work on this feature someone else from the community did the heavy [lifting](https://github.com/aquasecurity/fanal/pull/371) and added support for Azure in Fanal.
+Fanal is the library that Trivy uses to scan images, and by fixing this together with a number of other commits to both Starboard and Trivy the problem was solved.
+
+Or so we thought...
+
+There had been a PR to add to the possibility of setting a custom label on your Starboard [jobs](https://github.com/aquasecurity/starboard/pull/902) thus giving us the possibility to of using [aad-pod-identity](https://github.com/Azure/aad-pod-identity) that makes it possible to talk to Azure from a container without having to worry about passwords.
+But instead of only using Starboard to run the container image scan we are running Starboard in client mode and we have deployed a Trivy instance in our cluster. This saves us allot of time when scanning a container image.
+
+The problem is that the Trivy helm chart didn't support setting custom labels on the Trivy [statefulset](https://github.com/aquasecurity/trivy/pull/1767).
 
 Thanks to this we are now able to quickly generate dashboards with the amount of critical CVEs in our clusters for both public and private images.
 
-TODO write about future https://github.com/aquasecurity/starboard/pull/740
+So what does the future bring for Xenit security scanning?
+
+TODO keep on writing.
+Short term the feature I'm mostly looking forward in Starboard is the possibility to cache scanned images in our cluster https://github.com/aquasecurity/starboard/pull/740
 
 We at Xenit love open-source and think it's really important to be able to give back to the community when we can.
 A big thanks to the maintainers over at Aqua Security and Giantswarm for there great job and being extremely helpful getting these new features merged quickly.
