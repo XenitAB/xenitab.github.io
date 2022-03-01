@@ -11,15 +11,15 @@ tags:
 Just like for all companies today security is top of mind for Xenit.
 As part of improving Xenit Kubernetes Service (XKS), we have the last few months working on implementing [Aqua Securitys](https://www.aquasec.com/) [Starboard](https://github.com/aquasecurity/starboard) to our clusters.
 
-Thanks to this we will be able to quickly generate dashboards with the amount of critical CVEs in our clusters. This will make it much easier for us to find if our platform container images or our customers for example is
-having issues with the latest [log4j CVEs](https://nvd.nist.gov/vuln/detail/CVE-2021-44228).
+Thanks to this we will be able to quickly generate dashboards with the amount of critical CVEs in our clusters. This will make it much easier for us to find if our platform container images or our customers.
+For example being able to see if we have issues with the latest [log4j CVEs](https://nvd.nist.gov/vuln/detail/CVE-2021-44228).
 
 We use Starboard to continuously scan all container images for running on on XKS, both from a platform point of view but also our customers images.
-In the background Starboard uses [Trivy](https://github.com/aquasecurity/trivy/) to scan the container images. Trivy is the same tool that we use to scan our container images at build time so our XKS customers will have experience reading the Trivy output.
+In the background Starboard uses [Trivy](https://github.com/aquasecurity/trivy/) to scan the container images. Trivy is the same tool that we use to scan our container images at build time so our XKS customers will have the same experience reading the Trivy output.
 
 <!-- truncate -->
 
-When starting to use Starboard we noticed a few features that where missing, that we really wanted. And since Starboard is open-source we thought: why not help to implement these features?
+When starting to use Starboard we noticed a few features that where missing and we really wanted. Since Starboard is open-source we thought: why not help to implement these features?
 
 The first issue we found was that the Starboard operator doesn't generate any metrics of how many CVEs that we have per container image.
 Since we want a simple way of visualizing this kind of data in the reports that we generate to our customers every month we started to look for a solution.
@@ -34,7 +34,7 @@ To solve this we introduced a new environment variable `OPERATOR_VULNERABILITY_S
 Another good thing with this is that we will decrease the number of starboard jobs that is created thus lowering the amount of resources used by Starboard.
 
 As mentioned earlier we wanted a way of continuously scan for new CVEs in the cluster.
-The problem was that once a vulnerability report gets generated it doesn't get updated unless it's deleted and this creates issues for long-running deployments.
+The problem was that once a vulnerability report gets generated it doesn't get updated unless the current vulnerability report is deleted and this creates issues for long-running deployments.
 To solve this we have helped out to introduce a TTL for reports [#879](https://github.com/aquasecurity/starboard/pull/879).
 Setting the following config in the operator `OPERATOR_VULNERABILITY_SCANNER_REPORT_TT=24h` will automatically delete any vulnerability report older then 24 hours.
 
