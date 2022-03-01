@@ -58,6 +58,8 @@ TODO write something about our documentation about repots and vuln repots
 
 Thanks to this we are now able to quickly generate dashboards with the amount of critical CVEs in our clusters for both public and private images.
 
+TODO write about future https://github.com/aquasecurity/starboard/pull/740
+
 We at Xenit love open-source and think it's really important to be able to give back to the community when we can.
 A big thanks to the maintainers over at Aqua Security and Giantswarm for there great job and being extremely helpful getting these new features merged quickly.
 It's amazing to always be able to stand on the shoulders of giants.
