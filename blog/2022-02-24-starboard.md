@@ -6,6 +6,8 @@ authors:
 tags:
   - security
   - kubernetes
+  - starboard
+  - trivy
 ---
 
 TODO write a better introduction.
@@ -14,7 +16,7 @@ Just like for all companies today security is top of mind for Xenit.
 We already scan our images in our CI/CD pipeline why should we do it in the cluster? The gap between build time scanning and the time it takes for the application to run in production a new CVE could already have been found.
 To mitigate this we need to continuously scan all the images that is running inside our clusters.
 
-The increasing rates of cyber crime (by some measures, cyber crimes now outnumber all other crimes put together) which makes it harder for companies to protect our selfs.
+The increasing rates of cyber crime (by some measures, cyber crimes now outnumber all other crimes put together) which makes it harder for companies to protect them selfs.
 The faster we can fix relatively simple problems like patching a CVE on container level the more secure we will be.
 
 Xenit is hosting a number of Kubernetes clusters for our self and our customers and we want a quick way of visualizing CVEs on a platform and a customer level without having to jump on to each cluster and run some script.
@@ -23,10 +25,11 @@ So how can we solve this?
 
 As mentioned earlier we already scan our images in our CI/CD pipeline and there we use [Trivy](https://github.com/aquasecurity/trivy/).
 
-It was a natural fit for us to got with [Aqua Securitys](https://www.aquasec.com/) [Starboard](https://github.com/aquasecurity/starboard).
-Starboard is a reporting tool that supports multiple Aqua Security tools like Trivy for vulnerability report, but also kube-hunter and kube-bench. In this post we will only focus on the vulnerability reports.
+So it was a natural fit for us to got with [Aqua Securitys](https://www.aquasec.com/) [Starboard](https://github.com/aquasecurity/starboard).
+Starboard is a reporting tool that supports multiple Aqua Security tools like Trivy for vulnerability report, but also kube-hunter and kube-bench among others.
+In this post we will only focus on the vulnerability reports.
 
-As part of improving Xenit Kubernetes Service (XKS), we have the last few months working on adding support for Starboard in XKS and after a few open source PR:s we have managed to do so.
+As part of improving Xenit Kubernetes Service (XKS), the last few months we have been working on adding support for Starboard in XKS and after a few open source PR:s we have managed to do so.
 
 <!-- truncate -->
 
@@ -34,22 +37,22 @@ But when starting to use Starboard we noticed a few features that where missing 
 
 The first issue we found was that the Starboard operator doesn't generate any metrics of how many CVEs that we have per container image.
 As a part of XKS we supply our customers with monthly reports and we want to be able to provide them with simple visualization to see the number of critical CVEs on their applications.
-It turns out that we weren't the only ones with this problem and the great people over at giantswarm had implemented a solution for this called [starboard-exporter](https://github.com/giantswarm/starboard-exporter).
+It turns out that we weren't the only ones with this problem and the great people over at Giantswarm had implemented a solution for this called [starboard-exporter](https://github.com/giantswarm/starboard-exporter).
 
 We helped out to clean up their [helm chart](https://github.com/giantswarm/starboard-exporter/pull/27) a bit and then started to use their exporter in production.
 
-This made it possible for us to start generating the metrics but we noticed that the data was strange. And we realized that it was due to duplicate data.
+This made it possible for us to start generating metrics but after some time we realized that the data was strange, this was due to duplicate multiple metrics for the same CVE.
 
-By default Starboard generates a vulnerability report per replica set, instead of one per deployment. This can be a good thing to be able to simply compare CVEs between versions of your application.
+By default Starboard generates a vulnerability report per Kubernetes replica set, instead of one per Kubernetes deployment. This can be a good thing to be able to simply compare CVEs between versions of your application.
 But when trying to get a overview of the number of CVEs in a Kubernetes cluster it creates a few issues.
 
-To solve this we introduced a new environment variable `OPERATOR_VULNERABILITY_SCANNER_SCAN_ONLY_CURRENT_REVISIONS` in [#870](https://github.com/aquasecurity/starboard/pull/870) and if set to true it will only create vulnerability report for the latest replica set in a deployment.
-Another good thing with this is that we will decrease the number of starboard jobs that is created thus lowering the amount of resources used by Starboard.
+To solve this we introduced a new environment variable `OPERATOR_VULNERABILITY_SCANNER_SCAN_ONLY_CURRENT_REVISIONS` to Starboard in [#870](https://github.com/aquasecurity/starboard/pull/870) and if set to true it will only create vulnerability report for the latest replica set in a deployment.
 
-Great now we have metrics that are correct, but wasn't the whole point of this to continuously scan for new CVEs in the cluster?
+Great now we have metrics that we can trust, but wasn't the whole point of this work to continuously scan for new CVEs in the cluster?
 
-The problem was that once a vulnerability report got generated it didn't get updated unless the current vulnerability report is deleted and this creates issues for long-running deployments.
-To solve this we have helped out to introduce a TTL(Time To Live) for reports [#879](https://github.com/aquasecurity/starboard/pull/879) by implementing a new controller.
+The problem was that once a vulnerability report got generated it didn't get updated unless the current vulnerability report was deleted and this creates issues for long-running deployments.
+To solve this we introduce a TTL(Time To Live) for vulnerability reports [#879](https://github.com/aquasecurity/starboard/pull/879) by implementing a new controller.
+The controller currently only supports managing TTL for vulnerability reports but could easily add the same feature to other Starboard reports.
 Setting the following config in the operator `OPERATOR_VULNERABILITY_SCANNER_REPORT_TT=24h` will automatically delete any vulnerability report older then 24 hours.
 
 So now we can scan our public images, we can get metrics from them and we can get updated scans as often as we want. But what about privates repositories?
@@ -62,17 +65,20 @@ Fanal is the library that Trivy uses to scan images, and by fixing this together
 
 Or so we thought...
 
-There had been a PR to add to the possibility of setting a custom label on your Starboard [jobs](https://github.com/aquasecurity/starboard/pull/902) thus giving us the possibility to of using [aad-pod-identity](https://github.com/Azure/aad-pod-identity) that makes it possible to talk to Azure from a container without having to worry about passwords.
-But instead of only using Starboard to run the container image scan we are running Starboard in client mode and we have deployed a Trivy instance in our cluster. This saves us allot of time when scanning a container image.
+There had been a PR to add to the possibility of setting a custom label on your Starboard [jobs](https://github.com/aquasecurity/starboard/pull/902) thus giving us the possibility to of using [aad-pod-identity](https://github.com/Azure/aad-pod-identity) per Starboard job.
+Aad-pod-identity makes it possible to talk to Azure from a container without having to worry about passwords so it's something we definitely want to use.
+But instead of running Starboards vulnerability scan jobs in server mode (which is the default), we are running Starboard in client mode.
+We have deployed a separate Trivy instance in our cluster to cache all the images that we scan and this saves us allot of time per image that is used in the cluster.
 
-The problem is that the Trivy helm chart didn't support setting custom labels on the Trivy [statefulset](https://github.com/aquasecurity/trivy/pull/1767).
+The problem was that the Trivy helm chart didn't support setting custom labels on the Trivy stateful set so we created a [PR](https://github.com/aquasecurity/trivy/pull/1767) to solve it.
 
 Thanks to this we are now able to quickly generate dashboards with the amount of critical CVEs in our clusters for both public and private images.
 
 So what does the future bring for Xenit security scanning?
 
-TODO keep on writing.
-Short term the feature I'm mostly looking forward in Starboard is the possibility to cache scanned images in our cluster https://github.com/aquasecurity/starboard/pull/740
+Short term the feature I'm mostly looking forward in Starboard is the possibility to cache the result of scanned images cluster wide.
+This would reduce the amount of scans allot especially when it comes to images like Linkerd side-cars.
+There is already a design [PR](https://github.com/aquasecurity/starboard/pull/740) open and the discussion is ongoing, so feel free to jump in to the discussion.
 
 We at Xenit love open-source and think it's really important to be able to give back to the community when we can.
 A big thanks to the maintainers over at Aqua Security and Giantswarm for there great job and being extremely helpful getting these new features merged quickly.
