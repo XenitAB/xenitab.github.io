@@ -10,32 +10,39 @@ tags:
   - trivy
 ---
 
-TODO write a better introduction.
-Just like for all companies today security is top of mind for Xenit.
+How sure are you that you have close to 0 critical CVEs in your Kubernetes cluster?
 
-We already scan our images in our CI/CD pipeline why should we do it in the cluster? The gap between build time scanning and the time it takes for the application to run in production a new CVE could already have been found.
-To mitigate this we need to continuously scan all the images that is running inside our clusters.
+Just like for all companies today security is top of mind for Xenit and we try to come with a solution for this question.
+
+Today we already scan our images in our CI/CD pipeline at creation time using Trivy but what about new CVEs that get found every day?
 
 The increasing rates of cyber crime (by some measures, cyber crimes now outnumber all other crimes put together) which makes it harder for companies to protect them selfs.
 The faster we can fix relatively simple problems like patching a CVE on container level the more secure we will be.
 
-Xenit is hosting a number of Kubernetes clusters for our self and our customers and we want a quick way of visualizing CVEs on a platform and a customer level without having to jump on to each cluster and run some script.
+Xenit is hosting a number of Kubernetes clusters for our self and our customers and we want a quick way of visualizing CVEs on a platform and a customer level.
+Without having to jumping around to different customers and run some script to find out the answer to that question.
 
-So how can we solve this?
+<!-- truncate -->
+
+Could one solution be to scan the container images continuously that is running in our Kubernetes clusters?
+Or should we just continuously scan the images in our private repository? But what about the images that isn't our private repository?
+
+Do we and our customers even store all the images of our cluster in the private repositories?
+
+Since we have a central monitoring solution that we use to monitor the status of all our clusters why not think of CVEs just like another metric?
+
+To be able to solve all our questions we decided to go with continuously scanning the images that is in the Kubernetes cluster.
 
 As mentioned earlier we already scan our images in our CI/CD pipeline and there we use [Trivy](https://github.com/aquasecurity/trivy/).
 
 So it was a natural fit for us to got with [Aqua Securitys](https://www.aquasec.com/) [Starboard](https://github.com/aquasecurity/starboard).
-Starboard is a reporting tool that supports multiple Aqua Security tools like Trivy for vulnerability report, but also kube-hunter and kube-bench among others.
+Starboard is a reporting tool that supports multiple Aqua Security tools like Trivy for vulnerability report, but it also supports kube-hunter and kube-bench among others.
 In this post we will only focus on the vulnerability reports.
 
-As part of improving Xenit Kubernetes Service (XKS), the last few months we have been working on adding support for Starboard in XKS and after a few open source PR:s we have managed to do so.
+But when we started using Starboard we noticed a few features that where missing and we really needed. Since Starboard is open source we thought: why not help to implement these features?
 
-<!-- truncate -->
+The first issue we found was that the Starboard operator is only able to scan the images and show the result as a CR (Custom Resource) but no metrics of how many CVEs we have per container image.
 
-But when starting to use Starboard we noticed a few features that where missing and we really wanted. Since Starboard is open source we thought: why not help to implement these features?
-
-The first issue we found was that the Starboard operator doesn't generate any metrics of how many CVEs that we have per container image.
 As a part of XKS we supply our customers with monthly reports and we want to be able to provide them with simple visualization to see the number of critical CVEs on their applications.
 It turns out that we weren't the only ones with this problem and the great people over at Giantswarm had implemented a solution for this called [starboard-exporter](https://github.com/giantswarm/starboard-exporter).
 
