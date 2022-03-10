@@ -34,7 +34,8 @@ module.exports = {
             "xks/developer-guide/networking",
             "xks/developer-guide/reports",
             "xks/developer-guide/starboard",
-            "xks/developer-guide/wsl2"
+            "xks/developer-guide/wsl2",
+            "xks/developer-guide/scheduling",
           ]
         },
         {
