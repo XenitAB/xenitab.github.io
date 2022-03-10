@@ -32,7 +32,10 @@ module.exports = {
             "xks/developer-guide/observability",
             "xks/developer-guide/flux",
             "xks/developer-guide/networking",
-            "xks/developer-guide/wsl2"
+            "xks/developer-guide/reports",
+            "xks/developer-guide/starboard",
+            "xks/developer-guide/wsl2",
+            "xks/developer-guide/scheduling",
           ]
         },
         {
@@ -42,6 +45,7 @@ module.exports = {
             "xks/operator-guide/index",
             "xks/operator-guide/getting-started",
             "xks/operator-guide/agents",
+            "xks/operator-guide/networking",
             "xks/operator-guide/blast-radius",
             "xks/operator-guide/blue-green",
             "xks/operator-guide/aws-azdo",

@@ -5,8 +5,8 @@ title: Cloud IAM
 
 Sometimes applications will need to integrate with other cloud resources as they require things like persistent data storage. When working with XKS each namespace is accompanied by an Azure resource
 group or an AWS account. This is where cloud resources can be created by each tenant. To keep things simple it may be a good idea to not share these resources across multiple tenants, as one of the
-tenants has to own the resource. Instead look at other options like exposing an API inside the cluster instead. As ony may expect the authentication methods differ when running XKS in Azure and AWS.
-This is because the APIs and underlying authentication methods differ greatly. It is important to take this into consideration when reading this documentation.
+tenants has to own each resource. Instead look at other options like exposing an API inside the cluster instead. As one may expect the authentication methods differ when running XKS in Azure and AWS,
+this is because the APIs and underlying authentication methods differ greatly. It is important to take this into consideration when reading this documentation.
 
 ## Cloud Providers
 
@@ -53,10 +53,12 @@ az login --identity
 az account show
 ```
 
+Make sure your application supports retries when retrieving tokens. It should at least be able to retry for 60 seconds. Read more about it [here](https://azure.github.io/aad-pod-identity/docs/best-practices/#retry-on-token-retrieval). More good practices can be found in the [aad-pod-identity docs](https://azure.github.io/aad-pod-identity/docs/best-practices).
+
 #### SDK
 
-A common scenario is that an application may need API access to an Azure resources through the API. In these cases the best solution is to use the language specific SDKs which will most of the time
-support MSI credentials. Below are examples for how to create a client using MSI credentials that can interact with Azure storage account blobs.
+A common scenario is that an application may need API access to Azure resources through the API. In these cases the best solution is to use the language specific SDKs which will most of the time
+support MSI credentials. Below are examples for how to create a client using MSI credentials which can interact with Azure storage account blobs.
 
 <!-- markdownlint-disable -->
 
@@ -94,7 +96,7 @@ func main() {
 }
 ```
 
-** C# **
+** C# with ASP.NET **
 
 ```aspnet
 using Azure;
@@ -121,11 +123,11 @@ TBD
 
 When authenticating towards AWS in XKS we recommend using [IAM Roles for Service Accounts](https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/setting-up-enable-IAM.html) (IRSA). IRSA
 works by intercepting AWS API calls before leaving the cluster and appending the correct authentication token to the request. This removes the need for static security credentials as it is handled
-outside the app. IRSA works by annotating a Service Account with a reference to a specfic AWS IAM role. When that Service Account is attacthed to a Pod, the Pod will be able to assume the IAM role.
-The reason IRSA works in a multi tenant cluster is because the reference is multi directional. The Service Account has to specify the full role ARN it wants to assume and the IAM role has to specify
-the name and namespace of the Service Account whihc is allowed to assume the role. So it is not enough to know the ARN of the role unless you have access to the correct namespace and Service Account.
+outside the app. IRSA works by annotating a Service Account with a reference to a specfic AWS IAM role. When that Service Account is attached to a Pod, the Pod will be able to assume the IAM role.
+The reason IRSA works in a multi-tenant cluster is because the reference is multi-directional. The Service Account has to specify the full role ARN it wants to assume and the IAM role has to specify
+the name and namespace of the Service Account which is allowed to assume the role. So it is not enough to know the ARN of the role unless you have access to the correct namespace and Service Account.
 
-Start by defining a variable for the OIDC URLs that need to be trusted. Currently this is a static definition that needs to be specified but work is planned to make this value discoverable in the
+Start by defining a variable for the OIDC URLs that should be trusted. Currently this is a static definition that needs to be specified but work is planned to make this value discoverable in the
 future.
 
 ```hcl
@@ -199,7 +201,7 @@ output "irsa_test_arn" {
 ```
 
 The correct IAM roles and policies should be created after the Terraform has been applied. The next step is to create a Service Account with the same name as specified in the IRSA module and annotate it
-with the key `eks.amazonaws.com/role-arn`. The value should be the full ARN of the created IAM role, note that the account id is part of the ARN as the IAM role is created in a different account
+with the key `eks.amazonaws.com/role-arn`. The value should be the full ARN of the created IAM role. Note that the account id is part of the ARN as the IAM role is created in a different account
 than the one the cluster is located in.
 
 ```yaml

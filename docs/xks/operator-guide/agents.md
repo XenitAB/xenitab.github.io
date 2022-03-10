@@ -8,8 +8,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 It is preferable to use self hosted agents instead of using the default agents in Azure DevOps and GitHub. This is mostly for performance reasons, as the agents will most likely be faster, enable
 running multiple jobs and cache container images. Currently agents for Azure DevOps and GitHub are supported, more may come in the future.
 
-The setup of agents relies on the hub module. The hub module is used to create a central VNET that can be peered to multiple other VNETS. One important detail when running agents is that they should
-be located in the production subscription if no other shared subscription exists. The agents expects that there is a hub vnet that can be used by the agents. The vnet is then peered to all other
+The setup of agents relies on the hub module. The hub module is used to create a central VNET that can be peered to multiple other VNETs. One important detail when running agents is that they should
+be located in the production subscription if no other shared subscription exists. The agents expects that there is a hub VNET that can be used by the agents. The VNET is then peered to all other
 environments vnets to limit the need to expose things to the public internet.
 
 To configure the agents we need to run a few steps in a specific order.
@@ -68,16 +68,20 @@ resource group has to be created for both Azure DevOps and GitHub, the only diff
 ```
 
 The Service Principal credentials need to be stored as a secret when running Packer from GitHub. This step does not have to be followed when setting up Azure DevOps. The Service Principal id and
-credentials can be retreived after the Terraform has bee applied. Read the [getting started guide](./getting-started/#configure-service-principal) for information about how to get the crecredential
+credentials can be retrieved after the Terraform has been applied. Read the [getting started guide](./getting-started/#configure-service-principal) for information about how to get the credential
 information, the difference being that the application will be named `sp-rg-xks-prod-ghrunner-contributor` instead of `az-mg-lz-xks-owner`. The secret should be added to the repository packer, as the
-VM image only has to be built for production it is enough to create the secret `AZURE_CREDENTIALS_PROD`. The format of the secret content should be as the example below.
+VM image only has to be built for production it is enough to create the secret `AZURE_CREDENTIALS_PROD`. The format of the secret content should be as in the example below.
 
+<!-- markdownlint-disable -->
+<!-- prettier-ignore-start -->
 ```json
 {"clientId": "00000000-0000-0000-0000-000000000000",
   "clientSecret": "super-duper-secret-value",
   "subscriptionId": "00000000-0000-0000-0000-000000000000",
   "tenantId": "00000000-0000-0000-0000-000000000000"}
 ```
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
 ## VM Image
 
@@ -87,7 +91,7 @@ image can be created.
 Create a repository called `packer` that is going to contain the CI jobs that will build the VM images. Doing this will allow for tracking of versions and automate the complicated build process.
 
 There are templates for Azure DevOps that can be used to build the VM images for the agents. The following pipeline definition should be commited to the file `.ci/azure-pipelines-agent.yaml` in the
-new packer repository. After that is done create a Azure DevOps pipeline for the given pipeline definition.
+new `packer` repository. After that is done create a Azure DevOps pipeline for the given pipeline definition.
 
 ```yaml
 name: $(Build.BuildId)
@@ -112,7 +116,7 @@ stages:
       packerTemplateFile: "templates/azure/azure-pipelines-agent/azure-pipelines-agent.json"
 ```
 
-There is also a template for GitHub that can be used for building with Packer. The following pipeline definition should be commited to the file `.github/workflows/github-runner.yaml` in the packer
+There is also a template for GitHub that can be used for building with Packer. The following pipeline definition should be committed to the file `.github/workflows/github-runner.yaml` in the `packer`
 repository.
 
 ```yaml
@@ -139,13 +143,13 @@ jobs:
       AZURE_CREDENTIALS_PROD: ${{ secrets.AZURE_CREDENTIALS_PROD }}
 ```
 
-Start the Packer build pipeline and allow it to run until completion. This may take up to 40 minutes to run so give it time. Afte the build is completed a new VM image should be created and stored the
-agents resource group in Azure.
+Start the Packer build pipeline and allow it to run until completion. This may take up to 40 minutes to run so give it time. Afte the build is completed a new VM image should be created and stored in the
+agent's resource group in Azure.
 
-The name of the image is dynamic and includes a timestamp to allow versioning of the images. The following Azure CLI command gets the name of the image.
+The name of the image is dynamic and includes a timestamp to allow versioning of the images. The following Azure CLI command gets the name of the image:
 
 ```shell
-# Assuming that you don't have any other image this RG.
+# Assuming that you do not have any other image this RG.
 az image list -o json --query '[0].name'
 ```
 
@@ -156,10 +160,10 @@ The name should be similar to `azp-agent-2021-04-09T08-18-30Z`.
 ### GitHub
 
 When using GitHub Runners a GitHub application has to be created that will allow the agent to communicate back to GitHub. Follow the steps in the [GitHub Runner
-Documentations](https://github.com/XenitAB/github-runner#creating-a-github-app) for instructions in how to create the GitHub Application with the correct permissions. In the end you should have
+Documentation](https://github.com/XenitAB/github-runner#creating-a-github-app) for instructions in how to create the GitHub Application with the correct permissions. In the end you should have
 created and installed a GitHub Application and have an application id, installation id, and private key.
 
-These parameters should all be stored in the already created Azure Key Vault in the ghrunner resource group. The secrets should be named `github-app-id`, `github-private-key`,
+These parameters should all be stored in the already created Azure Key Vault in the `ghrunner` resource group. The secrets should be named `github-app-id`, `github-private-key`,
 `github-installation-id`, and `github-organization`.
 
 ## Terraform
@@ -228,7 +232,7 @@ After the cloud resources have been created their respective git providers have 
 
 This step only has to be followed when setting up Azure DevOps Agents.
 
-To be able to communicate with the VMSS we need to configure a Service Connection. You will find service connection under a random project within azure devops.
+To be able to communicate with the VMSS we need to configure a Service Connection. You will find service connection under a random project within Azure DevOps.
 
 To setup the Service Connection you need to get a secret generated by Terraform.
 
@@ -242,7 +246,7 @@ az keyvault secret show --vault-name kv-prod-we-core-1337 --name sp-rg-xks-prod-
 
 #### Service Connections
 
-To create a new Service connection from Azure Devops:
+To create a new Service connection from Azure DevOps:
 
 Project settings -> Service connections -> New service connection -> Azure Resource Manager -> Service principal (manual)
 
@@ -274,10 +278,10 @@ Under "Self-Hosted CI/CD" set "Paid parallel jobs" = 3
 
 ## Peering Configuration
 
-To complete the setup we need to configure the VNET peering between the new hub VNET and the environments VNETs. This enables the agents to communicate with private resources withouth having to egress
-into the public internet first.
+To complete the setup we need to configure the VNET peering between the new hub VNET and the environments VNETs. This enables the agents to communicate with private resources without having to egress
+into the public Internet first.
 
-In the hubs `prod.tfvars` you want to add configuration to all VNETS that the VNET should have access to. If you have multiple environments there should be multiple entries to the list.
+In the hubs `prod.tfvars` you want to add configuration to all VNETs that the VNET should have access to. If you have multiple environments there should be multiple entries in the list.
 
 ```hcl
 peering_config = [

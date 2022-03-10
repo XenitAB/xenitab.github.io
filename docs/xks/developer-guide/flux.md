@@ -3,10 +3,10 @@ id: flux
 title: Flux
 ---
 
-Flux is very tightly coupled with XKF and it's how we deploy all tenant YAML to our clusters.
+Flux is very tightly coupled with XKF and it is how we deploy all tenant YAML to our clusters.
 The goal of this document is to give you as a developer a quick overview of
 how to get use Flux in XKF and perform simple debugging tasks.
-Flux has it's own [official documentation](https://fluxcd.io/) where you can find much more information.
+Flux has its own [official documentation](https://fluxcd.io/) where you can find much more information.
 
 > In this document we will only cover Flux v2
 > Before reading any further please read through the [core concepts](https://fluxcd.io/docs/concepts/) of flux.
@@ -15,7 +15,7 @@ Our very own Philip Laine's [presentation](https://www.youtube.com/watch?v=F7B_T
 
 ## Flux CLI
 
-You don't have to use the Flux CLI but it can be very helpful especially if want to force a reconciliation of a Flux resource.
+You do not have to use the Flux CLI but it can be very helpful especially if want to force a reconciliation of a Flux resource.
 In some of the commands and debugging we assume that you have the CLI installed.
 Here you can find more information on how to setup the [Flux CLI](https://fluxcd.io/docs/installation/).
 
@@ -41,7 +41,7 @@ metadata:
   name: tenant1
   namespace: tenant1
 spec:
-  # If you are using github libgit2 won't be defined
+  # If you are using github libgit2 will not be defined
   gitImplementation: libgit2
   interval: 1m
   # This example url assumes that you are using AZDO-proxy https://github.com/XenitAB/azdo-proxy
@@ -69,13 +69,13 @@ spec:
 
 ## Debugging
 
-Below, you will find a few good base commands to debug why Flux hasn't applied your changes.
+Below, you will find a few good base commands to debug why Flux has not applied your changes.
 
 ### Normal error
 
-When adding a new file to your GitOps repository don't forget to update the `kustomization.yaml` file.
+When adding a new file to your GitOps repository do not forget to update the `kustomization.yaml` file.
 
-It can easily happen that you create a file in your repository and you commit it and when you look in the cluster it hasn't been synced.
+It can easily happen that you create a file in your repository and you commit it and when you look in the cluster it has not been synced.
 This is most likely due to that you have missed to update the `kustomization.yaml` file.
 
 ```kustomization.yaml
@@ -108,7 +108,7 @@ flux reconcile source git tenant1 --namespace tenant1
 
 ### Kustomization
 
-It's always good to check if Flux have applied your changes and if your health checks have passed.
+It is always good to check if Flux has applied your changes and if your health checks have passed.
 Overall the checksum of your source and the kustomization resource should be the same.
 
 ```shell

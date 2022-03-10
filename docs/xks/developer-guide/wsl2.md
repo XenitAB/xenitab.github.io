@@ -29,13 +29,13 @@ In the left-hand menu, select “Turn Windows features on or off”
 Once installation is complete, verify that the application works. We experienced issues when trying to start Docker-desktop within a managed organization using AD accounts, this caused an error with us not being members of a group called “docker-users“.
 To solve this, open up “Computer Management” in Windows as an administrator. Navigate to “local users and groups” → Groups and locate the "docker-users" group and double-click.Press “Add” and search for “Authenticated Users” and add to the group.
 
-Now sign-out from Windows and back in, and Docker application should work.
+Now sign out from Windows and sign back in, and the Docker application should work.
 
-Verify in settings, WSL2 based engine is used.
+Verify in settings that the WSL2-based engine is used.
 
 <img alt="docker1" src={useBaseUrl("img/assets/xks/developer-guide/docker1.png")} />
 
-Also under settings. Go to Resources → WSL Integration and verify that you have access to the WSL integration with your installed WSL. In this case Ubuntu and make sure it is checked.
+Also under settings, go to Resources → WSL Integration and verify that you have access to the WSL integration with your installed WSL (in this case Ubuntu), and make sure it is checked.
 
 <img alt="docker2" src={useBaseUrl("img/assets/xks/developer-guide/docker2.png")} />
 
@@ -54,7 +54,7 @@ Wait for the image to be pulled and if everything works properly the output shou
 
 ## Utilising Make with WSL2, Terraform and Docker
 
-We have noticed when running Terraform from within our Ubuntu instance, that there appears to be som network issues. We saw quite slow network connections. Probably caused by the TCP connection with the following error:
+We have noticed when running Terraform from within our Ubuntu instance, that there appears to be some network issues. We saw quite slow network connections, probably caused by the TCP connection, which resulted in the following error:
 
 > │ Error: Failed to install provider
 > │
@@ -66,11 +66,11 @@ We ran the Terraform command again - and it worked perfectly.
 
 ### File lock issues
 
-If your .azure folder is mounted towards Windows from your WSL2 environment we have seen potential lock issues when running terraform and `azure-cli 2.32.0`, this might apply to other versions as well.
+If your `.azure` folder is mounted towards Windows from your WSL2 environment we have seen potential lock issues when running terraform and `azure-cli 2.32.0`, this might apply to other versions as well.
 
-We think this have something to do with how WSL2 and Windows manages locking of files, to workaround you can make sure that your `.azure` folder is only in your linux environment.
+We think this have something to do with how WSL2 and Windows manages locking of files, to workaround you can make sure that your `.azure` folder is only in your Linux environment.
 
-Assuming that you haven't defined a custom `AZURE_CONFIG_DIR` you can perform the following to verify you are mounting your .azure folder to Windows:
+Assuming that you have not defined a custom `AZURE_CONFIG_DIR` you can perform the following to verify you are mounting your `.azure` folder to Windows:
 
 ```shell
 $ cd
@@ -80,7 +80,7 @@ drwxr-xr-x  4 root  root     4096 Feb 12  2021 ..
 drwxr-xr-x  7 user1 user1    4096 Dec 12 13:04 .azure -> /mnt/c/Users/user1/.azure
 ```
 
-Running the following commands will create a new .azure folder in your current working directory and tell azure-cli to use that folder to store it's login data.
+Running the following commands will create a new `.azure` folder in your current working directory and tell `azure-cli` to use that folder to store its login data.
 Remember that the `export` command only is per terminal. You can make the config persistent by adding the export command to your `.bashrc` file located in your home folder.
 
 ```shell
