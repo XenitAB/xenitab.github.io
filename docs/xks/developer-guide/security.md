@@ -35,7 +35,7 @@ We have applied basic SecurityContext automatically with OPA Gatekeeper to all P
 `allowPrivilegeEscalation` is set to `false` to not allow processes to start with higher privileges than its parent.
 
 NET_RAW is a default setting in Kubernetes to allow ICMP traffic between containers and enables an application to craft raw packets.
-If an attacker were to get access to the containers, dropping this will constrain a variety of network exploits.
+If an attacker were to get access to the containers, dropping this will constrain a variety of network exploits. The most important part of dropping NET_RAW is to stop containers from opening "raw" sockets and allowing IP packets to bypass kernel sanity checks.
 
 `readOnlyRootFilesystem` is set to `true` to make sure containers can not write to the root filesystems.
 
@@ -59,8 +59,9 @@ This is required SecurityContext configuration of the pod to be able to run, we 
 >>>>>>> ce8055a06... Add initila docs for OPA & SecurityContext
 =======
 
- The `runAsUser` field specifies that for any Containers in the Pod, all processes run with user ID 1000. The runAsGroup field specifies the primary group ID of 1000 for all processes within any containers of the Pod
+ The `runAsUser` field specifies that for any Containers in the Pod, all processes run with user ID 1000. The runAsGroup field specifies the primary group ID of 1000 for all processes within any containers of the Pod. If this field is not set, the primary group ID of the containers will be root. Using `runAsNonRoot: true` makes it impossible for containers to run as root, it will require a defined non-zero numeric USER directive defined in the container image.
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 You can read more in the official documentation
 <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/>
@@ -68,3 +69,29 @@ You can read more in the official documentation
 =======
 You can read more in the [official documentation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 >>>>>>> 86a14c5b3... Small fixes based on feedback
+=======
+You can read more in the official documentation on [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+ and [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/)
+
+### EmptyDir
+
+An emptyDir volume is created when a Pod is assigned to a node and exists while that Pod is running. The emptyDir volume is initially empty. All containers in the Pod can read and write the same files in the emptyDir volume and can be mounted to different paths in each container. When the Pod is removed, the data in the emptyDir is deleted permanently.
+An example configuration of a basic emptyDir is:
+
+```yaml
+  volumes:
+  - name: temp
+    emptyDir: {}
+```
+
+If you configure `emptyDir.medium` to `Memory`, Kubernetes will instead mount a RAM-backed tmpfs instead, which is faster, but will clear on node-reboot and consumption will count towards your resource limits. For example:
+
+```yaml
+  volumes:
+  - name: temp
+    emptyDir: {}
+    medium: Memory
+```
+
+You can read more in the official documentation on [Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
+>>>>>>> d1848c7cd... Add more documentation
