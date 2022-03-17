@@ -62,7 +62,7 @@ This is required SecurityContext configuration of the pod to be able to run, we 
  The `runAsUser` field specifies that for any Containers in the Pod, all processes run with user ID 1000. The runAsGroup field specifies the primary group ID of 1000 for all processes within any containers of the Pod. If this field is not set, the primary group ID of the containers will be root. Using `runAsNonRoot: true` forces the containers to not be able to run as root, it will require a defined non-zero numeric USER directive defined in the container image.
  Below is a basic example for defining a user `appuser` with a UID of `1000` and in a primary group with GID `1000` in the Dockerfile:
 
-```
+```bash
 FROM ubuntu:latest
 RUN useradd -u 1000 -g 1000 appuser
 USER appuser
