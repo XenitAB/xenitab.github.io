@@ -22,7 +22,79 @@ to the central coreDNS the DNS request is handled by NodeLocal DNS.
 
 #### Node local DNS configuration
 
-kubectl get svc kube-dns -n kube-system -o jsonpath={.spec.clusterIP}
+To configure NodeLocal DNS you need to provide two values.
+The IP of the central DNS server in your cluster, you can find this by running: `kubectl get svc kube-dns -n kube-system -o jsonpath={.spec.clusterIP}`.
+The second value is a random IP that you know that nothing else in the cluster is ever going to use, in our case we used the example ip `169.254.20.10`.
+These values are defined for you in XKS but it's good to know about them and where to find them.
+
+Here you can view the example [configuration](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/nodelocaldns/nodelocaldns.yaml) provided in the docs.
+
+NodeLocal DNS is built on-top of CoreDNS and is plugin based. Depending on your needs you can easily enable new features.
+By default NodeLocal DNS don't log the DNS requests it gets but it can make it hard to debug.
+
+In XKS we haven't enabled any debug logs ether but if you need to enable it all you need to do is to add `log` as part of the plugins defined in your yaml.
+
+For example:
+
+```.yaml
+data:
+  Corefile: |
+    .:53 {
+        errors
+        log
+        cache 30
+        reload
+        loop
+        bind 169.254.20.10 10.0.0.10
+        forward . __PILLAR__UPSTREAM__SERVERS__
+        prometheus :9253
+        }
+```
+
+For you as a XKS administrator the biggest chance to change is in the [cache plugin](https://coredns.io/plugins/cache/).
+Instead of me trying to rewrite the docs I recommend you to read it but we have changed the default value and at the time of writing we use the following config:
+
+```.yaml
+data:
+  Corefile: |
+    .:53 {
+        log
+        errors
+        cache {
+                success 9984 30
+                denial 9984 10
+                prefetch 20 60s 15%
+        }
+        reload
+        loop
+        bind 169.254.20.10 10.0.0.10
+        forward . /etc/resolv.conf
+        prometheus :9253
+        }
+```
+
+The prefetch feature allows us to automatically get DNS entries that is in the cache and automatically update it before the DNS TTL ends.
+Remember that the cache TTL won't change the TTL of your cached DNS entries.
+If the DNS entry have a TTL of 1 minute and the cache have a TTL of 5 minutes the DNS entry will disappear after 1 minute.
+
+If you for example define a cache without setting success and denial but set the prefetch config the default TTL cache value will still be applied.
+
+```.yaml
+data:
+  Corefile: |
+    .:53 {
+        log
+        errors
+        cache {
+            prefetch 20 60s 15%
+        }
+        reload
+        loop
+        bind 169.254.20.10 10.0.0.10
+        forward . /etc/resolv.conf
+        prometheus :9253
+        }
+```
 
 #### Node local DNS networkpolicy
 
