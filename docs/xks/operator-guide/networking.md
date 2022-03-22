@@ -11,6 +11,34 @@ debugging networking issues.
 
 TBD
 
+### Node local DNS
+
+To lower DNS query latency and a number of other [reasons](https://kubernetes.io/docs/tasks/administer-cluster/nodelocaldns/#motivation)
+we are using [NodeLocal DNS](https://kubernetes.io/docs/tasks/administer-cluster/nodelocaldns/) in XKS.
+
+NodeLocal DNS is a daemonset that runs on each node and creates a loopback interface on that node + a number of iptables rules
+that is defines how to intercept all the default DNS traffic on all pods on the node and instead of sending them
+to the central coreDNS the DNS request is handled by NodeLocal DNS.
+
+#### Node local DNS configuration
+
+kubectl get svc kube-dns -n kube-system -o jsonpath={.spec.clusterIP}
+
+#### Node local DNS networkpolicy
+
+Sadly when using NodeLocal DNS together with Networkpolicy and the Calico CNI you need to write a networkpolicy that instead of using label selectors on a pod level you need to write a ruler
+that will work on the [node level](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/nodelocaldns/README.md#network-policy-and-dns-connectivity)
+What it doesn't say in the docs is that you need to define the internal vnet IP as well.
+
+These are the same values that was defined when doing the configuration.
+The default values on XKS `AKS` is `169.254.20.10` and `10.0.0.10` and on `AWS` it's `169.254.20.10` and `172.20.0.10`.
+
+The needed networkpolicy exist by default in all the tenant namespaces and is called `default-deny` and is managed by terraform.
+
+To view the rule run:
+
+`kubectl get networkpolicies default-deny -n <tenant>`
+
 ## Azure
 
 XKS in Azure uses a single VNET with a single subnet per AKS cluster. The VNET and subnets are created by the [core module](https://github.com/XenitAB/terraform-modules/tree/main/modules/azure/core).
