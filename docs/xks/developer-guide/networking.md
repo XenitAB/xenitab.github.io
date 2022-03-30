@@ -169,7 +169,7 @@ certificates are not handled by the application. The recommendation is to always
 quick and easy so there is no reason not to do this. Every XKS cluster comes with a preconfigured Cluster Issuer which will provision certificates from [Let's Encrypt](https://letsencrypt.org/).
 
 Start off by creating a Certificate resource for your Ingress. It is possible to have Cert Manager automatically create a Certificate when an Ingress resource is created. This however has the
-downside that every Ingress resource will receive its own Certificate. Lets Encrypt has [rate limits](https://letsencrypt.org/docs/rate-limits/) for the same domain, if one were to create
+downside that every Ingress resource will receive its own Certificate. Lets Encrypt has [rate limits](https://letsencrypt.org/docs/rate-limits/) for the same domain, if one were to create a
 Certificate per ingress that rate limit would be hit pretty quickly. For this reason it is better to create a shared Certificate per tenant namespace with multiple DNS names instead. Each DNS name will be
 present in the Certificate so that it can be used for multiple Ingress resources. When the Certificate is provisioned it will be written to a Secret.
 
@@ -217,9 +217,36 @@ spec:
       secretName: shared-cert
 ```
 
-### Private Ingress
+### Public and Private Ingress
 
-TBD
+By default an XKS cluster will deploy a single public Ingress controller. All Ingress resources will be routed with a public IP and therefore exposed to the public Internet. It is however also possible to
+create private Ingress resources which are only exposed through an IP that is private to the virtual network in which the Kubernetes cluster is deployed. This is an opt in feature
+as two load balancing services are needed. Making an Ingress private is simple when the private Ingress feature is enabled. All that is required is that the Ingress class has to be set
+to `nginx-private`, this makes sure that the resource is only served through the private IP.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-one
+  namespace: tenant
+spec:
+  ingressClassName: nginx-private
+  rules:
+    - host: app-one.example.com
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: app-one
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - app-one.example.com
+      secretName: shared-cert
+```
 
 ### Nginx Configuration
 
