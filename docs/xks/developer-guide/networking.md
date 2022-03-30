@@ -219,7 +219,7 @@ spec:
 
 ### Public and Private Ingress
 
-By default an XKS cluster will deploy a single public Ingress controller. All Ingress resources will be routed with a public IP and therefore exposed to the public Internet. It is however also possible to 
+By default an XKS cluster will deploy a single public Ingress controller. All Ingress resources will be routed with a public IP and therefore exposed to the public Internet. It is however also possible to
 create private Ingress resources which are only exposed through an IP that is private to the virtual network in which the Kubernetes cluster is deployed. This is an opt in feature
 as two load balancing services are needed. Making an Ingress private is simple when the private Ingress feature is enabled. All that is required is that the Ingress class has to be set
 to `nginx-private`, this makes sure that the resource is only served through the private IP.
