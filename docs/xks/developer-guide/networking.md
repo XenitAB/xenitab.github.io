@@ -331,6 +331,39 @@ of endpoints resolve their routing through layer 7 which means that the host hea
 Another use case is to rewrite the request paths. This is possible through the `nginx.ingress.kubernetes.io/rewrite-target` which can allow for complex path modification logic. For details how to
 use the annotation refer to the [documentation](https://kubernetes.github.io/ingress-nginx/examples/rewrite/#rewrite-target).
 
+### Rate Limiting
+
+At times it is beneficial to rate limit the amount of requests that reach an internal application from the Internet. Rate limiting can be configured to act based on different parameters. Rate limiting
+is configured for an Ingress through the use of annotations. The annotations `nginx.ingress.kubernetes.io/limit-connections` limits the amount of concurrent connections allowed from a single source IP.
+The other annotation `nginx.ingress.kubernetes.io/limit-rps` sets a limit for the amount of requests per second that can be sent from a single source IP. These two strategies do not work together, you
+have to decide on one or the other. Below is an example of a Ingress which limits the amount of concurrent connections.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example
+  annotations:
+    nginx.ingress.kubernetes.io/limit-connections: 10
+spec:
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: example
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - example.com
+      secretName: cert
+```
+
+For more information refer to the [official documentation](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#rate-limiting).
+
 ### Nginx Configuration
 
 It is useful to be aware of [annotation configuration](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#annotations) in the Nginx ingress controller.
@@ -344,7 +377,6 @@ metadata:
   name: foo
   namespace: bar
   annotations:
-    kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/client-body-buffer-size: 1M
 spec:
   rules:
