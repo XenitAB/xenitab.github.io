@@ -248,6 +248,89 @@ spec:
       secretName: shared-cert
 ```
 
+### External Routing
+
+There is no requirement that the destination for an Ingress resource has to be served from within the cluster. It is possible to route Ingress traffic either to endpoints outside of the
+cloud provider or to another service that is only accessible from within the private network. Using the XKS Ingress instead of a separate solution has it's benefits in these situations,
+as DNS record creation and certificate management is already setup to work. A typical use case may be during a migration period when XKS and another solution may exist in parallel.
+All traffic can enter through XKS but then be forwarded to the external destination. The service endpoints can be updated as applications are migrated to run inside XKS instead of outside.
+
+A Service resource is required to configure the destination of the traffic. There are two options available in Kubernetes when directing traffic outside of the cluster. The first option is to
+create a Service of type ExternalName which specifies a host name which the Service should write to. When a request is made to the Service the given external name IP will be resolved and the
+request will be sent to that destination.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: to-external
+spec:
+  type: ExternalName
+  externalName: example.com
+```
+
+The other option is to create a Service which routes to a static IP. This is implemented with a Serivce without an external name or label selector, then also creating an Endpoint for the Service.
+This way the Service will only resolve to the static IP given, in this case the static IP is `1.2.3.4` and the port is `443`.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: to-external
+spec:
+  ports:
+    - protocol: TCP
+      port: 443
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: to-external
+subsets:
+  - addresses:
+      - ip: 1.2.3.4
+    ports:
+      - port: 443
+```
+
+The Serivce resources only solve half the problem as they are only accessible within the cluster. They have to be exposed with an Ingress resource to solve the other half, so that on host name
+can be translated to another. The example assume that all traffic is expected to be HTTPS on both ends. The Ingress below exposes the Service named `to-external` on the port `443` with the host
+name `forward.xenit.io`. It also assumes that a TLS Secret exists which is valid for the Ingress host name.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: forward-traffic
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/upstream-vhost: "forward.xenit.io"
+spec:
+  rules:
+    - host: forward.xenit.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: forward-traffic
+                port:
+                  number: 443
+  tls:
+    - hosts:
+        - forward.xenit.io
+      secretName: to-external
+```
+
+The only major changes with the Ingress compared to a "normal" Ingress resource are the annotations. The annotations `nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"` makes sure that the traffic
+on the backend is sent as HTTPS traffic. Without this annotation there is a risk that the backend traffic could be transported as HTTP. The second annotations
+`nginx.ingress.kubernetes.io/upstream-vhost: "forward.xenit.io"` specifies the host header set in the upstream request. This annotation is not necessarily required for all external endpoints, but a lot
+of endpoints resolve their routing through layer 7 which means that the host header has to be set properly. A good practice is to set the annotation value to be the same as the external name.
+
+Another use case is to rewrite the request paths. This is possible through the `nginx.ingress.kubernetes.io/rewrite-target` which can allow for complex path modification logic. For details how to
+use the annotation refer to the [documentation](https://kubernetes.github.io/ingress-nginx/examples/rewrite/#rewrite-target).
+
 ### Nginx Configuration
 
 It is useful to be aware of [annotation configuration](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#annotations) in the Nginx ingress controller.
