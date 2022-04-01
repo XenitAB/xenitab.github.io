@@ -16,9 +16,7 @@ TBD
 To lower DNS query latency and a number of other [reasons](https://kubernetes.io/docs/tasks/administer-cluster/nodelocaldns/#motivation)
 we are using [NodeLocal DNS](https://kubernetes.io/docs/tasks/administer-cluster/nodelocaldns/) in XKS.
 
-NodeLocal DNS is a daemonset that runs on each node and creates a loopback interface on that node + a number of iptables rules
-that is defines how to intercept all the default DNS traffic on all pods on the node and instead of sending them
-to the central coreDNS the DNS request is handled by NodeLocal DNS.
+Node Local DNS is an application that runs on each node and creates a loopback interface on each node together with a number of iptables rules. The iptables rules intercepts all the DNS traffic from all pods that is sent to the clusters DNS server.
 
 #### Node Local DNS Configuration
 
