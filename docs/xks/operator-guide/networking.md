@@ -11,6 +11,104 @@ debugging networking issues.
 
 TBD
 
+### Node Local DNS
+
+To lower DNS query latency and a number of other [reasons](https://kubernetes.io/docs/tasks/administer-cluster/nodelocaldns/#motivation)
+we are using [NodeLocal DNS](https://kubernetes.io/docs/tasks/administer-cluster/nodelocaldns/) in XKS.
+
+Node Local DNS is an application that runs on each node and creates a loopback interface on each node together with a number of iptables rules. The iptables rules intercepts all the DNS traffic from all pods that is sent to the clusters DNS server.
+
+#### Node Local DNS Configuration
+
+To configure Node Local DNS you need to provide two values.
+The IP of the central DNS server in your cluster, you can find this by running: `kubectl get svc kube-dns -n kube-system -o jsonpath={.spec.clusterIP}`.
+The second value is a random IP that you know that nothing else in the cluster is ever going to use, in our case we used the example ip `169.254.20.10`.
+These values are defined for you in XKS but it's good to know about them and where to find them.
+
+Here you can view the example [configuration](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/nodelocaldns/nodelocaldns.yaml) provided in the docs.
+
+Node Local DNS is built on top of CoreDNS and is plugin based. Depending on your needs you can easily enable new features.
+By default NodeLocal DNS don't log the DNS requests it gets but it can make it hard to debug.
+
+In XKS we haven't enabled any debug logs ether but if you need to enable it all you need to do is to add `log` as part of the plugins defined in your yaml.
+
+For example:
+
+```.yaml
+data:
+  Corefile: |
+    .:53 {
+        errors
+        log
+        cache 30
+        reload
+        loop
+        bind 169.254.20.10 10.0.0.10
+        forward . __PILLAR__UPSTREAM__SERVERS__
+        prometheus :9253
+        }
+```
+
+For you as a XKS administrator the biggest chance to change is in the [cache plugin](https://coredns.io/plugins/cache/).
+Instead of me trying to rewrite the docs I recommend you to read it but we have changed the default value and at the time of writing we use the following config:
+
+```.yaml
+data:
+  Corefile: |
+    .:53 {
+        log
+        errors
+        cache {
+                success 9984 30
+                denial 9984 10
+                prefetch 20 60s 15%
+        }
+        reload
+        loop
+        bind 169.254.20.10 10.0.0.10
+        forward . /etc/resolv.conf
+        prometheus :9253
+        }
+```
+
+The prefetch feature allows us to automatically get DNS entries that is in the cache and automatically update it before the DNS TTL ends.
+Remember that the cache TTL won't change the TTL of your cached DNS entries.
+If the DNS entry have a TTL of 1 minute and the cache have a TTL of 5 minutes the DNS entry will disappear after 1 minute.
+
+If you for example define a cache without setting success and denial but set the prefetch config the default TTL cache value will still be applied.
+
+```.yaml
+data:
+  Corefile: |
+    .:53 {
+        log
+        errors
+        cache {
+            prefetch 20 60s 15%
+        }
+        reload
+        loop
+        bind 169.254.20.10 10.0.0.10
+        forward . /etc/resolv.conf
+        prometheus :9253
+        }
+```
+
+#### Node local DNS networkpolicy
+
+Sadly when using NodeLocal DNS together with Networkpolicy and the Calico CNI you need to write a networkpolicy that instead of using label selectors on a pod level you need to write a ruler
+that will work on the [node level](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/nodelocaldns/README.md#network-policy-and-dns-connectivity)
+What it doesn't say in the docs is that you need to define the internal vnet IP as well.
+
+These are the same values that was defined when doing the configuration.
+The default values on XKS `AKS` is `169.254.20.10` and `10.0.0.10` and on `AWS` it's `169.254.20.10` and `172.20.0.10`.
+
+The needed networkpolicy exist by default in all the tenant namespaces and is called `default-deny` and is managed by terraform.
+
+To view the rule run:
+
+`kubectl get networkpolicies default-deny -n <tenant>`
+
 ## Azure
 
 XKS in Azure uses a single VNET with a single subnet per AKS cluster. The VNET and subnets are created by the [core module](https://github.com/XenitAB/terraform-modules/tree/main/modules/azure/core).
