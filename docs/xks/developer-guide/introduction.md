@@ -68,4 +68,4 @@ TBD
 
 There is a great guide how to debug Kubernetes deployment over at [learnk8s.io](https://learnk8s.io/troubleshooting-deployments).
 
-To debug flux issues have a look at our [Flux docs](flux.md).
+To debug flux issues have a look at our [Flux docs](ci-cd/flux.md).
