@@ -29,7 +29,7 @@ These values are defined for you in XKS but it's good to know about them and whe
 
 Here you can view the example [configuration](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/nodelocaldns/nodelocaldns.yaml) provided in the docs.
 
-NodeLocal DNS is built on-top of CoreDNS and is plugin based. Depending on your needs you can easily enable new features.
+Node Local DNS is built on top of CoreDNS and is plugin based. Depending on your needs you can easily enable new features.
 By default NodeLocal DNS don't log the DNS requests it gets but it can make it hard to debug.
 
 In XKS we haven't enabled any debug logs ether but if you need to enable it all you need to do is to add `log` as part of the plugins defined in your yaml.
