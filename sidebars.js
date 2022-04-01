@@ -22,15 +22,21 @@ module.exports = {
           "label": "Developer Guide",
           "items": [
             "xks/developer-guide/introduction",
-            "xks/developer-guide/gitops",
             "xks/developer-guide/best-practices",
             "xks/developer-guide/secrets-management",
             "xks/developer-guide/cloud-iam",
             "xks/developer-guide/security",
-            "xks/developer-guide/cd",
-            "xks/developer-guide/ci",
+            {
+              "type": "category",
+              "label": "CI/CD",
+              "items": [
+                "xks/developer-guide/ci-cd/ci",
+                "xks/developer-guide/ci-cd/cd",
+                "xks/developer-guide/ci-cd/gitops",
+                "xks/developer-guide/ci-cd/flux",
+              ]
+            },
             "xks/developer-guide/observability",
-            "xks/developer-guide/flux",
             "xks/developer-guide/networking",
             "xks/developer-guide/reports",
             "xks/developer-guide/starboard",
