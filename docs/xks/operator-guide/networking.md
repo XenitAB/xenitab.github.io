@@ -20,7 +20,7 @@ NodeLocal DNS is a daemonset that runs on each node and creates a loopback inter
 that is defines how to intercept all the default DNS traffic on all pods on the node and instead of sending them
 to the central coreDNS the DNS request is handled by NodeLocal DNS.
 
-#### Node local DNS configuration
+#### Node Local DNS Configuration
 
 To configure Node Local DNS you need to provide two values.
 The IP of the central DNS server in your cluster, you can find this by running: `kubectl get svc kube-dns -n kube-system -o jsonpath={.spec.clusterIP}`.
