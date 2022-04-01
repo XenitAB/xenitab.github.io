@@ -11,7 +11,7 @@ debugging networking issues.
 
 TBD
 
-### Node local DNS
+### Node Local DNS
 
 To lower DNS query latency and a number of other [reasons](https://kubernetes.io/docs/tasks/administer-cluster/nodelocaldns/#motivation)
 we are using [NodeLocal DNS](https://kubernetes.io/docs/tasks/administer-cluster/nodelocaldns/) in XKS.
