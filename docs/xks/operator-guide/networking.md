@@ -22,7 +22,7 @@ to the central coreDNS the DNS request is handled by NodeLocal DNS.
 
 #### Node local DNS configuration
 
-To configure NodeLocal DNS you need to provide two values.
+To configure Node Local DNS you need to provide two values.
 The IP of the central DNS server in your cluster, you can find this by running: `kubectl get svc kube-dns -n kube-system -o jsonpath={.spec.clusterIP}`.
 The second value is a random IP that you know that nothing else in the cluster is ever going to use, in our case we used the example ip `169.254.20.10`.
 These values are defined for you in XKS but it's good to know about them and where to find them.
