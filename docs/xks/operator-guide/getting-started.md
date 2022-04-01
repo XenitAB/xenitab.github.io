@@ -114,6 +114,15 @@ make plan ENV=dev DIR=governance
 make apply ENV=dev DIR=governance
 ```
 
+By default you don't get access to the key vaults that governance creates.
+You should probably give the access to a group that you and your team have access to but to get started you can run the following.
+
+```shell
+AZ_ID=$(az ad user show --id "your@email" --output tsv --query objectId)
+KEYVAULTNAME=kv-favorite-name
+az keyvault set-policy --name $KEYVAULTNAME --object-id $AZ_ID --secret-permissions backup delete get list purge recover restore set --key-permissions backup create decrypt delete encrypt get import list purge recover restore sign unwrapKey update verify wrapKey --certificate-permissions backup create delete deleteissuers get getissuers import list listissuers managecontacts manageissuers purge recover restore setissuers update
+```
+
 ### Configure core
 
 Get a CIDR network for your AKS env per env.
