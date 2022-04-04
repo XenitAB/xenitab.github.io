@@ -22,7 +22,6 @@ module.exports = {
           "label": "Developer Guide",
           "items": [
             "xks/developer-guide/introduction",
-            "xks/developer-guide/best-practices",
             "xks/developer-guide/secrets-management",
             "xks/developer-guide/cloud-iam",
             "xks/developer-guide/security",
@@ -40,6 +39,7 @@ module.exports = {
             "xks/developer-guide/networking",
             "xks/developer-guide/reports",
             "xks/developer-guide/starboard",
+            "xks/developer-guide/production-readiness",
             "xks/developer-guide/wsl2",
             "xks/developer-guide/scheduling",
           ]
