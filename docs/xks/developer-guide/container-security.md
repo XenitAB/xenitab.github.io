@@ -205,7 +205,7 @@ With the knowledge that the mitigation for future container vulnerabilities is s
 USER 65534:65534
 ```
 
-Another solution is to make changes to the Pod so that a different user is used when running. The user id and group id used can be set in the Pods security context.
+Another solution is to make changes to the Pod so that a different user is used when running. The user id and group id used can be set in the Pod's security context.
 
 ```yaml
 apiVersion: v1
