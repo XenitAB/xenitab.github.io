@@ -129,7 +129,7 @@ spec:
 
 ### Privileged Containers
 
-Privileged containers have root capabilities on the host machine and are there for not allowed in XKF. There would be no separation between the container and the host if this setting were to be allowed.
+Privileged containers have root capabilities on the host machine and are therefore not allowed in XKF. There would be no separation between the container and the host if this setting were to be allowed.
 
 ```yaml
 apiVersion: v1
