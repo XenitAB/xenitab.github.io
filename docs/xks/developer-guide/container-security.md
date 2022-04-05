@@ -161,7 +161,7 @@ spec:
 
 ### Proc Mount
 
-There are certain files in the `/proc` directory that may be sensitive is exposed to a container. By default the container runtime will apply a filter the files mounted to the container from the directory, so opting out of it is not allowed.
+There are certain files in the `/proc` directory that may be sensitive if exposed to a container. By default the container runtime will apply a filter to the files mounted to the container from the directory, so opting out of it is not allowed.
 
 ```yaml
 apiVersion: v1
