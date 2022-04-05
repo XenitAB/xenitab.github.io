@@ -46,7 +46,7 @@ spec:
 
 This setting is the one that may have the largest impact on a deployed application if it is expected to write to the file system. Containers may be ephemeral but that does not mean that certain applications may still want to write temporary files. Enabling read only root filesystem blocks the container from writing to its filesystem by default. The reasoning for this is that if an attacker is able to gain access to a container the attacker will not be able to modify any files or add any additional binaries to the container.
 
-Of course there is a solution for applications that still do want to write to the filesystem. The solution is to create a [`emptyDir`](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir) volume and mount it to the directory to which files should be written. In the example below the `emptyDir` volume `tmp` is mounted to the path `/tmp` making it possible to write files to the directory.
+Of course there is a solution for applications that still do want to write to the filesystem. The solution is to create an [`emptyDir`](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir) volume and mount it to the directory to which files should be written. In the example below the `emptyDir` volume `tmp` is mounted to the path `/tmp` making it possible to write files to the directory.
 
 ```yaml
 apiVersion: v1
