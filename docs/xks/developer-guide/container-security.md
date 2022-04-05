@@ -114,7 +114,7 @@ spec:
   hostNetwork: true
 ```
 
-Using a host port for a Pods container will result in binding that hosts port to the container port. This would expose the container to the network outside of the cluster. This can cause issues in cases where the ports have to be unique, and is generally a feature that is not needed in XKF which is my it is not allowed.
+Using a host port for a Pod's container will result in binding that hosts port to the container port. This would expose the container to the network outside of the cluster. This can cause issues in cases where the ports have to be unique, and is generally a feature that is not needed in XKF, which is why it is not allowed.
 
 ```yaml
 apiVersion: v1
