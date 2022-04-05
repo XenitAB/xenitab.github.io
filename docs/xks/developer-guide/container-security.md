@@ -144,7 +144,7 @@ spec:
 
 ### Capabilities
 
-As stated in the default security context section certain capabilities will always be dropped. It is however also possible to grant capabilities to a Pod. There for all Pods that attempt to add extra capabilities are not allowed, as it could lead to privilege escalation.
+As stated in the default security context section certain capabilities will always be dropped. It is however also possible to grant capabilities to a Pod. Therefore any Pods that attempt to add extra capabilities are not allowed, as it could lead to privilege escalation.
 
 ```yaml
 apiVersion: v1
