@@ -10,16 +10,16 @@ The Kubernetes scheduler is responsible for assigning new Pods to Nodes. This fu
 1. Filtering - Checks Nodes for available resources and if they meet the requirements of the Pod.
 2. Scoring - Ranks the filtered Nodes and chooses the highest ranked one.
 
-Most Kubernetes users encounter the scheduler for the first time when creating either a Deployment or Pod. The scheduler has to decide which Node to assign the Pod to. In the case of a Deployment the replica count can be increased and decreased at a moments notice by the user. When replica is changed for example from three to twenty the scheduler will have a lot of Pods all of a sudden to assign to Nodes. Having a deeper understanding of the Kubernetes scheduler will allow for a more efficient usage of resource consumption and debugging of any scheduler issues. A static replica count is the simplest method to work with Pod scaling and scheduling, this section will cover a lot of other options that exist in Kubernetes related to scaling and scheduling.
+Most Kubernetes users encounter the scheduler for the first time when creating either a Deployment or Pod. The scheduler has to decide which Node to assign the Pod to. In the case of a Deployment the replica count can be increased and decreased at a moment's notice by the user. When replica is changed for example from three to twenty the scheduler will have a lot of Pods all of a sudden to assign to Nodes. Having a deeper understanding of the Kubernetes scheduler will allow for efficient resource consumption and debugging any scheduling issues. This section will give an overview overscheduling and scaling features in Kubernetes and how they relate to each other.
 
 ## Pod Resources
 
-Setting the correct [resources for a Pod](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) is an important component in helping the scheduler select the correct Node to schedule a Pod to. There are two types of resource configuration fields, and these are configured for each container in a Pod.
-The resource request tells the scheduler how much of each resource each container in a Pod is expected to consume, it is however allowed of a Pod to consume more. The limit sets the maximum amount of resources each container in a Pod can consume. There are two main resource types that one should be aware of, CPU and memory.
+Setting good [resource requests and limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) for a container is an important component in helping the scheduler select the correct Node to schedule a Pod to. There are two types of resource configuration fields, and these are configured for each container in a Pod.
+The resource request tells the scheduler how much of each resource each container in a Pod is expected to consume, though a Pod is allowed to consume more. The limit sets the maximum amount of resources each container in a Pod can consume. There are two main resource types that one should be aware of, CPU and memory.
 The CPU resource is defined in CPU units where one CPU unit is the equivalent of one CPU core. Fractional units can also be requested, in either decimals like `0.1` but also in terms of millicores where `100m` would be the same amount. The memory resource is defined in whole integers with the quantity suffixes
 `Ei, Pi, Ti, Gi, Mi, Ki`.
 
-If you do not specify any resources for a container the default resource request and limit will be applied as shown below. These resources are low on purpose, both to minimize the effects of over provisioning but also to make it obvious for end users that resources have not been specified. The keen-eyed may notice that
+If you do not specify any resources for a container the default resource request and limit will be applied as shown below. These resources are low on purpose, both to minimize the effects of overprovisioning but also to make it obvious for XKF users that resources have not been specified. The keen-eyed may notice that
 a CPU limit is not set by default, this is on purpose and the reasons for it will be discussed later.
 
 ```yaml
@@ -32,18 +32,26 @@ resources:
 ```
 
 The scheduler will look at the cumulative resource requests across all containers in a Pod during the scheduling phase. The scheduler will exclude any Node which does not have capacity for the Pods resource request. Capacity is determined based on the total resources available in a Node minus the sum of all the
-resource requests of all Pods currently scheduled to the Node. This makes it possible to over provision as the resource request can be much larger than the actual consumption of the Pod. Efficient resource allocation is a constant battle between requesting enough resources to avoid under allocation while not
-requesting too much which would result in over allocation. A Pod may at times request more resource than any Node has capacity for, there are two possible outcomes for this situation. If the Pods resource request is less than a Nodes total available resources, a new Node will be added to the cluster. The Pod will
+resource requests of all Pods currently scheduled to the Node. A Pod may at times request more resource than any Node has capacity for, there are two possible outcomes for this situation. If the Pods resource request is less than a Nodes total available resources, a new Node will be added to the cluster. The Pod will
 however be considered unschedulable if the resource request exceeds the total resources available on a single node. In these cases either the resource request has to change or a new Node type has to be added to the cluster to cater to these needs.
 
 <img alt="Pod Scheduling" src={useBaseUrl("img/assets/xks/developer-guide/pod-scheduling.jpg")} />
+
+It is possible to overprovision Node resources in cases where the resource request for each container is much larger that the actual resource consumption. Efficient resource allocation is a constant battle between requesting enough resources to avoid under allocation while not
+requesting too much which would result in overallocation. The easiest way to think about resources consumption and availability is to imaging the capacity as a glass, as more resources are consumed water is added to the glass. If the consumption increase does not stop the glass will eventually overfill.
+
+<!-- TODO: Should we reccomend most users to just use the same memory request and limit? -->
+
+<img alt="Pod Scheduling" src={useBaseUrl("img/assets/xks/developer-guide/pod-resource-request.jpg")} />
 
 The resource limit defined for a Pod has no affect on the scheduling of a Pod. Limits instead comes into play for a Pod during runtime. Exceeding the resource limit for CPU and memory will have
 different affects. A Pod which exceeds the memory limit will be terminated with an out of memory error (OOM Error).  The Pod will after termination be started again, it may start to exceed the limit again which will result in another OOM error. These types of errors can either be resolved by having the application
 consume less memory alternatively increasing the memory limit. Without a memory limit a Pod would be able to continue consuming memory until the Node runs out. This would not only affect critical
 system processes that runs in the node but other Pods which may not even be able to consume the resources it requested.
 
-CPU limits should be treated slightly differently from memory limits. When memory is over consumed applications will crash when there is no place to store new data. However when CPU is over consumed throttling will occur. Applications will not immediately crash even if performance may be severely deprecated. CPU differs from memory as a resource in the sense that CPU time will be wasted if not consumed and applications required CPU time can vary a lot. Reserving CPU time that is not used is a waste if another application would benefit from using it. Setting a CPU limit for a Pod will result in artificial CPU throttling even if it would not necessarily be required. It is for this reason why a CPU limit is not enforced for Pods by default, instead it is something that should be opted into when the effects of CPU throttling is understood. It is still important to set a reasonable CPU request for Kubernetes to determine the minimal resource requirements, but CPU limits should be avoided in most cases where it is not fully understood.
+CPU limits should be treated slightly differently from memory limits. When memory is overconsumed applications will crash when there is no place to store new data. However when CPU is overconsumed throttling will occur. Applications will not immediately crash even if performance may be severely deprecated. CPU differs from memory as a resource in the sense that CPU time will be wasted if not consumed and applications required CPU time can vary a lot. Reserving CPU time that is not used is a waste if another application would benefit from using it. Setting a CPU limit for a Pod will result in artificial CPU throttling even if it would not necessarily be required. It is for that reason that a CPU limit is not enforced for Pods by default, instead it is something that should be opted into when the effects of CPU throttling is understood. It is still important to set a reasonable CPU request for Kubernetes to determine the minimal resource requirements, but CPU limits should be avoided in most cases where it is not fully understood.
+
+<!-- TODO: Discussion about what the effects of throttling has on applications and the bugs it can cause. -->
 
 <!-- TODO: Something about detecting CPU throtlling and adjusting CPU requests -->
 
@@ -51,22 +59,40 @@ CPU limits should be treated slightly differently from memory limits. When memor
 
 <!-- TODO: Different strategies around requests and limits, like setting them to be the same-->
 
-## Node Selector
+## Scheduling on Specific Nodes
 
-You can schedule pods based on labels and nodeSelector, for example, you can force your pod to run on a machine with GPU by setting: `gpuEnabled: true`
+[Node Selectors](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) are the easiest may to make sure that a Pod runs on a specific Node. It is a label selector which filters out which Nodes the Pod can be scheduled to. Any Node which does not match the label selector will not be considered for scheduling.
 
-Nodeconfig:
+> A Pod with a Node Selector which does not match with any Node will never be scheduled.
+
+Given the two nodes with different values for the `agentpool` label.
 
 ```yaml
-labels:
-    gpuEnabled: true
+apiVersion: v1
+kind: Node
+metadata:
+  name: aks-standard-node
+  labels:
+    agentpool: standard
+---
+apiVersion: v1
+kind: Node
+metadata:
+  name: aks-memory-node
+  labels:
+    agentpool: memory
 ```
 
-Podconfig:
+The Node Selector would make sure that the Pod would only be scheduled on the second Node `aks-memory-node` and never on the first Node.
 
 ```yaml
-nodeSelector:
-    gpuEnabled: true
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+spec:
+  nodeSelector:
+    agentpool: memory
 ```
 
 ## Affinity and Anti Affinity
@@ -199,9 +225,9 @@ spec:
 
 ## Horizontal Pod Autoscaler
 
-A static replica count may work for a lot of applications but may not be optimal for production workloads. The goal should be to achieve good stability and latency while avoiding over provisioning. As discussed earlier one way to scale an application is through increasing its resource requests and limits, this type of scaling is known as vertical scaling. Another option is to increase the amount of replicas instead, this type of scaling is known as horizontal scaling. Increasing the replica count will result in more Pods which can share the workload and increase the through put. Changing the replica count manually during the day would just be time consuming and impossible to achieve at scale.
+<!-- Will update this with more detailed documentation when autoscaling/v2 is GA -->
 
-<!-- Details about autoscaling/v2 -->
+A static replica count may work for a lot of applications but may not be optimal for production workloads. The goal should be to achieve good stability and latency while avoiding overprovisioning. As discussed earlier one way to scale an application is through increasing its resource requests and limits, this type of scaling is known as vertical scaling. Another option is to increase the amount of replicas instead, this type of scaling is known as horizontal scaling. Increasing the replica count will result in more Pods which can share the workload and increase the through put. Changing the replica count manually during the day would just be time consuming and impossible to achieve at scale.
 
 The [Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) can do this automatically. The version `autoscaling/v1` of the Horizontal Pod Autoscaler only supports scaling based on CPU utilization. Future versions will support scaling based on more metrics types.
 
