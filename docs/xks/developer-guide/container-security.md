@@ -197,15 +197,21 @@ spec:
 
 ## Non Root User
 
-A common practice for a lot of public images is to, if not otherwise specified, run the containers as root with UID 0. The main reason this is done is because it is the default in Docker. Changing to another user by default has to be opted in. Running the container as root is generally not a problem as it is not the same as root on the node. It does however become a problem when new container vulnerabilities are found which allow escaping the sandbox. An example of such a vulnerability is [CVE-2019-5736](https://avd.aquasec.com/nvd/2019/cve-2019-5736/) which allowed containers running as root users to escalate its privileges to becoming root on the node. One of the mitigations for this vulnerability is to make sure that all containers run as non root.
+A common practice for a lot of images is to, by default, run the containers as the user root. It is widespread because it is the deafault in a lot of the base images, but it does not mean that it is the best choice. Running the container as root is generally not a problem as it is not the same as root on the node. It does however become a problem when new container runtime vulnerabilities are found which allow escaping the sandbox. An example of such a vulnerability is [CVE-2019-5736](https://avd.aquasec.com/nvd/2019/cve-2019-5736/) which allowed containers running as root users to escalate its privileges to becoming root on the node. A mitigation for this vulnerability would have been to make sure that the container is running as user other than root. With the knowledge that the mitigation for future container vulnerabilities is so simple it would be lazy not to take the precautionary steps. 
 
-With the knowledge that the mitigation for future container vulnerabilities is so simple it would be lazy not to take the precautionary steps. One method to change the user used to run the container is to do it at the image source. It is as simple as changing the user. Some testing may have to be done initially if the applications needs to read files which have different permissions. The example below sets both the user and group to `65534` which is an existing user called `nouser`.
+Changing the user has to be solved both at the source of the image and in Kubernetes to ensure no issues appear. A common problem is that the new non root user does not have the correct permissions for required files and directories.
+A general recommendation is also to use a user ID (UID) and group ID (GID) greater than `10000` to avoid overlapping with other system users.
+
+Create a Dockerfile which changes the UID and GID from the default of the base image.
 
 ```Dockerfile
-USER 65534:65534
+FROM alpine:latest
+RUN addgroup -g 10000 app && adduser -u 10000 -G app -D app
+USER 10000
+
 ```
 
-Another solution is to make changes to the Pod so that a different user is used when running. The user id and group id used can be set in the Pod's security context.
+Configure the Pod that that is runs with a non root user. The field `runAsUser` has to be configured when `runAsNonRoot` is set to `true`. Set both these values to be the UID and GID configured in the Dockerfile.
 
 ```yaml
 apiVersion: v1
@@ -214,11 +220,12 @@ metadata:
   name: app
 spec:
   securityContext:
-    runAsUser: 65534
-    runAsGroup: 65534
+    runAsNonRoot: true
+    runAsUser: 10000
+    runAsGroup: 10000
 ```
 
-In the future enforcement of non-root users will be handled by XKF. When this is enabled a containers attempting to run with the UID 0 will not be permitted. Before that can enabled however all existing Pods have to work when running as a non-root user. 
+In the future enforcement of running as a non root users will be handled by XKF. When this is enabled a containers attempting to run with the UID 0 will not be permitted. The minimum UID and GID will also be enforced to `10000`.
 
 ## Vulnerability Reports
 
