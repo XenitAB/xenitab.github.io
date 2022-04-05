@@ -80,7 +80,7 @@ Disabling privilege escalation for all Pods is critical for applications to not 
 
 Linux capabilities are certain root permissions that can be given to containers without giving root access. Certain capabilities should never be given to a container as they would give too much access, for this reason they are always dropped.
 
-* `CAP_SYS_ADMIN` - Is the same as making the container root, would allow a container to escalate privileges.
+* `CAP_SYS_ADMIN` - Is the same as making the container root, as it would allow a container to escalate privileges.
 * `NET_RAW` - Allows a container to craft raw network packets which can be exploited for malicious actions.
 
 ## Pod Constraints
