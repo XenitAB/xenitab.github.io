@@ -3,7 +3,7 @@ id: container-security
 title: Container Security
 ---
 
-Container security is a critical component of the framework. Kubernetes in it's vanilla form is by design open, but that also means that to a certain extent Kuberentes is insecure. In a multi tenant context this statement hold even more truth. Container security in Kubernetes can be seen from two different perspectives. One is protecting the cluster from being exploited by maliciously configured Pods. The other is mitigating the attack surface of an application in a cluster. Sometimes these two perspectives are one and the same. XKF tries to balance between enforcing good security practices by default while allowing for developer flexibility. For this reason some security measures are required while others are merely recommendations to help developers achieve a higher security standard.
+Container security is a critical component of the framework. Kubernetes in its vanilla form is by design open, but that also means that to a certain extent Kuberentes is insecure. In a multi-tenant context this statement holds even more truth. Container security in Kubernetes can be seen from two different perspectives. One is protecting the cluster from being exploited by maliciously configured Pods. The other is mitigating the attack surface of an application in a cluster. Sometimes these two perspectives are one and the same. XKF tries to balance between enforcing good security practices by default while allowing for developer flexibility. For this reason some security measures are required while others are merely recommendations to help developers achieve a higher security standard.
 
 ## Default Security Context
 
