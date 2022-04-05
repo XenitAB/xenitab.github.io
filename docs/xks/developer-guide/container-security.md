@@ -74,7 +74,7 @@ spec:
 
 ### Allow Privilege Escalation
 
-Disabling privilege escalation for all Pods is critical for applications to to gain greater access to the Node than they need to. This setting will probably never affect most applications.
+Disabling privilege escalation for all Pods is critical for applications to not gain greater access to the Node than they need to. This setting will probably never affect most applications.
 
 ### Dropped Capabilities
 
