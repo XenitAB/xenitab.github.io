@@ -15,11 +15,11 @@ The Pod below is the most basic yet valid Pod which can be applied to a Kubernet
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: app
 spec:
   containers:
-    - name: nginx
-      image: nginx:1.14.2
+    - name: app
+      image: busybox:1.35.0
 ```
 
 When applied to an XKF Kubernetes cluster the following mutations occur.
@@ -28,11 +28,11 @@ When applied to an XKF Kubernetes cluster the following mutations occur.
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: app
 spec:
   containers:
-    - name: nginx
-      image: nginx:1.14.2
+    - name: app
+      image: busybox:1.35.0
       securityContext:
         readOnlyRootFilesystem: true
         allowPrivilegeEscalation: false
@@ -52,11 +52,11 @@ Of course there is a solution for applications that still do want to write to th
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: app
 spec:
   containers:
-    - name: nginx
-      image: nginx:1.14.2
+    - name: app
+      image: busybox:1.35.0
       securityContext:
         readOnlyRootFilesystem: true
         allowPrivilegeEscalation: false
