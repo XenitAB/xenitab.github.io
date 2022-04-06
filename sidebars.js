@@ -25,7 +25,7 @@ module.exports = {
             "xks/developer-guide/best-practices",
             "xks/developer-guide/secrets-management",
             "xks/developer-guide/cloud-iam",
-            "xks/developer-guide/security",
+            "xks/developer-guide/container-security",
             {
               "type": "category",
               "label": "CI/CD",
@@ -39,7 +39,6 @@ module.exports = {
             "xks/developer-guide/observability",
             "xks/developer-guide/networking",
             "xks/developer-guide/reports",
-            "xks/developer-guide/starboard",
             "xks/developer-guide/wsl2",
             "xks/developer-guide/scheduling",
           ]
