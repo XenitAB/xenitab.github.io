@@ -7,7 +7,7 @@ Container security is a critical component of the framework. Kubernetes in its v
 
 ## Default Security Context
 
-All Pods in the cluster will have a default security context enforced. Any default security context setting which has not been configured properly when applying the Pod to the cluster will be automatically set before the Pod is created. No action has to be taken from the end user but it is important to be aware that the Pod applied may not be identical to the Pod created and what these settings mean. 
+All Pods in the cluster will have a default security context enforced. Any default security context setting which has not been configured properly when applying the Pod to the cluster will be automatically set before the Pod is created. No action has to be taken from the end user but it is important to be aware that the Pod applied may not be identical to the Pod created and what these settings mean.
 
 The Pod below is the most basic yet valid Pod which can be applied to a Kubernetes.
 
@@ -171,7 +171,7 @@ metadata:
 spec:
   containers:
     - securityContext:
-        procMount: UnmaskedProcMount 
+        procMount: UnmaskedProcMount
 ```
 
 ### Volume Type
@@ -197,7 +197,7 @@ spec:
 
 ## Non Root User
 
-A common practice for a lot of images is to, by default, run the containers as the user root. It is widespread because it is the deafault in a lot of the base images, but it does not mean that it is the best choice. Running the container as root is generally not a problem as it is not the same as root on the node. It does however become a problem when new container runtime vulnerabilities are found which allow escaping the sandbox. An example of such a vulnerability is [CVE-2019-5736](https://avd.aquasec.com/nvd/2019/cve-2019-5736/) which allowed containers running as root users to escalate its privileges to becoming root on the node. A mitigation for this vulnerability would have been to make sure that the container is running as user other than root. With the knowledge that the mitigation for future container vulnerabilities is so simple it would be lazy not to take the precautionary steps. 
+A common practice for a lot of images is to, by default, run the containers as the user root. It is widespread because it is the deafault in a lot of the base images, but it does not mean that it is the best choice. Running the container as root is generally not a problem as it is not the same as root on the node. It does however become a problem when new container runtime vulnerabilities are found which allow escaping the sandbox. An example of such a vulnerability is [CVE-2019-5736](https://avd.aquasec.com/nvd/2019/cve-2019-5736/) which allowed containers running as root users to escalate its privileges to becoming root on the node. A mitigation for this vulnerability would have been to make sure that the container is running as user other than root. With the knowledge that the mitigation for future container vulnerabilities is so simple it would be lazy not to take the precautionary steps.
 
 Changing the user has to be solved both at the source of the image and in Kubernetes to ensure no issues appear. A common problem is that the new non root user does not have the correct permissions for required files and directories.
 A general recommendation is also to use a user ID (UID) and group ID (GID) greater than `10000` to avoid overlapping with other system users.
@@ -243,7 +243,7 @@ Describe a specific vulnerability report to view specific details.
 kubectl describe vulnerabilityreports.aquasecurity.github.io <report-name>
 ```
 
-Below is an example of how the output may look. It includes information of the scanner used, when the scan was run, and the vulnerabilities found. Each vulnerability has a CVE ID and a link for more information about the vulnerability. 
+Below is an example of how the output may look. It includes information of the scanner used, when the scan was run, and the vulnerabilities found. Each vulnerability has a CVE ID and a link for more information about the vulnerability.
 
 ```yaml
 Report:
