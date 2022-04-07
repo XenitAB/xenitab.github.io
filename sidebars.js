@@ -36,11 +36,11 @@ module.exports = {
                 "xks/developer-guide/ci-cd/flux",
               ]
             },
+            "xks/developer-guide/scheduling-scaling",
             "xks/developer-guide/observability",
             "xks/developer-guide/networking",
-            "xks/developer-guide/reports",
             "xks/developer-guide/wsl2",
-            "xks/developer-guide/scheduling",
+            "xks/developer-guide/reports",
           ]
         },
         {
