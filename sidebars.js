@@ -26,6 +26,7 @@ module.exports = {
             "xks/developer-guide/secrets-management",
             "xks/developer-guide/cloud-iam",
             "xks/developer-guide/container-security",
+            "xks/developer-guide/security",
             {
               "type": "category",
               "label": "CI/CD",
