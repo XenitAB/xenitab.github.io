@@ -40,6 +40,9 @@ spec:
           drop:
             - NET_RAW
             - CAP_SYS
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
 ```
 
 ### Read Only Root Filesystem
