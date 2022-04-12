@@ -12,8 +12,7 @@ This can include things like certain types of volume mounts, labeling requiremen
 
 ## Seccomp
 
-Secure computing mode or [seccomp](https://docs.docker.com/engine/security/seccomp/) for short.
-SeccompProfile is a pod wide securityContext setting and is a way to restrict which system calls a application can make inside a container.
+Secure computing mode ([seccomp](https://docs.docker.com/engine/security/seccomp/))  is a pod wide securityContext setting and is a way to restrict which system calls a application can make inside a container.
 
 In XKF we have added a mutating webhook that automatically assigns the `RuntimeDefault` default profile to any container started.
 This is a security measure to give you as a developer a good base to stand-on while minimizing the risk of getting issues in your application.
