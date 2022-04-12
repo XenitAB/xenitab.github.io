@@ -30,6 +30,7 @@ kind: Pod
 metadata:
   name: app
 spec:
+  automountServiceAccountToken: false
   containers:
     - name: app
       image: busybox:1.35.0
@@ -226,6 +227,25 @@ spec:
 ```
 
 In the future enforcement of running as a non root users will be handled by XKF. When this is enabled a containers attempting to run with the UID 0 will not be permitted. The minimum UID and GID will also be enforced to `10000`.
+
+## Automount ServiceAccount Token
+
+By default all pods uses the default serviceAccount. The pod will also automatically get the default serviceAccounts Kubernetes token.
+Most application workloads don't have a need for this token.
+
+XKF is configured to mutate all Pods, which do not specify explicitly `spec.automountServiceAccountToken` and will set the value to `false` by default.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+spec:
+  automountServiceAccountToken: false
+  containers:
+    - name: app
+      image: busybox:1.35.0
+```
 
 ## Vulnerability Reports
 
