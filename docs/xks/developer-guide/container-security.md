@@ -227,6 +227,44 @@ spec:
 
 In the future enforcement of running as a non root users will be handled by XKF. When this is enabled a containers attempting to run with the UID 0 will not be permitted. The minimum UID and GID will also be enforced to `10000`.
 
+## Seccomp
+
+Secure computing mode ([seccomp](https://docs.docker.com/engine/security/seccomp/)) is a pod wide securityContext setting and is a way to restrict which system calls a application can make inside a container.
+
+XKF is configured to mutate all Pods, which do not specify a seccomp profile, with the profiler `RuntimeDefault`.
+This is a security measure to give you as a developer a good base to stand-on while minimizing the risk of getting issues in your application.
+
+It is possible to use a different profile if the application for some reason does not work as intended with the `RuntimeDefault`profile. To allow all system calls the application can use the profile `Unconfined`. The Pod will not be mutated as long as a seccomp profile has been set in the security context.
+
+```.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test
+spec:
+  securityContext:
+    seccompProfile:
+      type: Unconfined
+  containers:
+    - command:
+        - /bin/sh
+      resources:
+        requests:
+          memory: "16Mi"
+          cpu: "10m"
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+      image: alpine:latest
+      name: container-00
+      tty: true
+```
+
+To see which system calls is disabled in `RuntimeDefault` the most human readable option we have found is [dockers profile page](https://docs.docker.com/engine/security/seccomp/#significant-syscalls-blocked-by-the-default-profile).
+Another option is to read the containerd [code](https://github.com/containerd/containerd/blob/v1.6.1/contrib/seccomp/seccomp_default.go), they might not be identical but it's close enough.
+
+RuntimeDefault isn't a ideal solution and in the long run we hope to add support to something like [security-profile-operator](https://github.com/kubernetes-sigs/security-profiles-operator) to XKF.
+
 ## Vulnerability Reports
 
 Containers can use the same image for a very long time, either because the application has not been updated for a long time, or because an external image is used and not updated as new versions are released. These old image versions may collect security vulnerabilities as new ones are discovered and patched in later releases, but it does not mean that an image is insecure just because an image version is old. XKF helps developers detect security vulnerabilities in container images with the help of [Starboard](https://github.com/aquasecurity/starboard/). One thing Starboard does is to continuously scan images used in the cluster with the help of [Trivy](https://github.com/aquasecurity/trivy/). Any vulnerability found will be stored as a resource in the Namespace in which it was found in.
