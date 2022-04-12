@@ -269,7 +269,6 @@ Another option is to read the containerd [code](https://github.com/containerd/co
 
 RuntimeDefault isn't a ideal solution and in the long run we hope to add support to something like [security-profile-operator](https://github.com/kubernetes-sigs/security-profiles-operator) to XKF.
 
-
 ## Automount ServiceAccount Token
 
 By default all pods uses the default serviceAccount. The pod will also automatically get the default serviceAccounts Kubernetes token.
