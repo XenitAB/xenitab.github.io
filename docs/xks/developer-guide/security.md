@@ -17,9 +17,7 @@ Secure computing mode ([seccomp](https://docs.docker.com/engine/security/seccomp
 XKF is configured to mutate all Pods, which do not specify a seccomp profile, with the profiler `RuntimeDefault`.
 This is a security measure to give you as a developer a good base to stand-on while minimizing the risk of getting issues in your application.
 
-If your application for some reason don't work as intended with the RuntimeDefault you can always use another profile.
-To allow all system calls you can use `Unconfined`. As long as you have defined a seccompProfile in your securityContext of the pod
-the mutating webhook won't perform any changes to to the seccompProfile.
+It is possible to use a different profile if the application for some reason does not work as intended with the `RuntimeDefault`profile. To allow all system calls the application can use the profile `Unconfined`. The Pod will not be mutated as long as a seccomp profile has been set in the security context.
 
 ```.yaml
 apiVersion: v1
