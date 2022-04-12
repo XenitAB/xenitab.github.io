@@ -231,7 +231,6 @@ spec:
 
 In the future enforcement of running as a non root users will be handled by XKF. When this is enabled a containers attempting to run with the UID 0 will not be permitted. The minimum UID and GID will also be enforced to `10000`.
 
-
 ## Seccomp
 
 Secure computing mode ([seccomp](https://docs.docker.com/engine/security/seccomp/)) is a pod wide securityContext setting and is a way to restrict which system calls a application can make inside a container.
