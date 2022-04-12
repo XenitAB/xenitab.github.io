@@ -30,6 +30,7 @@ kind: Pod
 metadata:
   name: app
 spec:
+  automountServiceAccountToken: false
   containers:
     - name: app
       image: busybox:1.35.0
@@ -230,6 +231,7 @@ spec:
 
 In the future enforcement of running as a non root users will be handled by XKF. When this is enabled a containers attempting to run with the UID 0 will not be permitted. The minimum UID and GID will also be enforced to `10000`.
 
+
 ## Seccomp
 
 Secure computing mode ([seccomp](https://docs.docker.com/engine/security/seccomp/)) is a pod wide securityContext setting and is a way to restrict which system calls a application can make inside a container.
@@ -267,6 +269,26 @@ To see which system calls is disabled in `RuntimeDefault` the most human readabl
 Another option is to read the containerd [code](https://github.com/containerd/containerd/blob/v1.6.1/contrib/seccomp/seccomp_default.go), they might not be identical but it's close enough.
 
 RuntimeDefault isn't a ideal solution and in the long run we hope to add support to something like [security-profile-operator](https://github.com/kubernetes-sigs/security-profiles-operator) to XKF.
+
+
+## Automount ServiceAccount Token
+
+By default all pods uses the default serviceAccount. The pod will also automatically get the default serviceAccounts Kubernetes token.
+Most application workloads don't have a need for this token.
+
+XKF is configured to mutate all Pods, which do not specify explicitly `spec.automountServiceAccountToken` and will set the value to `false` by default.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+spec:
+  automountServiceAccountToken: false
+  containers:
+    - name: app
+      image: busybox:1.35.0
+```
 
 ## Vulnerability Reports
 
