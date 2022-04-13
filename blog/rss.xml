@@ -8,9 +8,9 @@
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
-            <title><![CDATA[Kubernetes Ephemeral Containers Security]]></title>
-            <link>http://xenitab.github.io/blog/2022/04/12/ephemeral-containers</link>
-            <guid>Kubernetes Ephemeral Containers Security</guid>
+            <title><![CDATA[Kubernetes Ephemeral Container Security]]></title>
+            <link>http://xenitab.github.io/blog/2022/04/12/ephemeral-container-security</link>
+            <guid>Kubernetes Ephemeral Container Security</guid>
             <pubDate>Tue, 12 Apr 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Ephemeral containers is a new concept in Kubernetes which allows attaching  containers to already running Pods. It also introduces new security concerns which have to be resolved before it can be enabled.
 ]]></description>

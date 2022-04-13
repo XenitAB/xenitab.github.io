@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhome=self.webpackChunkhome||[]).push([[5667],{8698:function(e){e.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"/blog/tags/ephemeral-container","name":"ephemeral container","count":1,"permalink":"/blog/tags/ephemeral-container"}')}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhome=self.webpackChunkhome||[]).push([[2535],{5641:function(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Kubernetes Ephemeral Containers Security","permalink":"/blog/2022/04/12/ephemeral-containers"},{"title":"Twelve-factor app anno 2022","permalink":"/blog/2022/02/23/12factor"}]}')}}]);
