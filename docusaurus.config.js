@@ -35,6 +35,7 @@ module.exports = {
     prism: {
       additionalLanguages: ["hcl", "aspnet"],
     },
+    image: "img/Xenit_logo_Svart.png",
   },
   presets: [
     [
