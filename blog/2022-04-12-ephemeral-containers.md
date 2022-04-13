@@ -4,15 +4,14 @@ description: >
   Ephemeral containers is a new concept in Kubernetes which allows attaching 
   containers to already running Pods. It also introduces new security concerns
   which have to be resolved before it can be enabled.
-authors:
-  - name: Philip Laine
+authors: phillebaba
 tags:
   - kubernetes
   - security
   - ephemeral container
 ---
 
-Attempting to debug a Pod and realizing that you can't install curl due to security settings has to be a meme at this point. Good security practices is always nice but it often comes at the cost of usability. To the point where some may even solve this problem by installing debug tools into their production images. Shudders.
+Attempting to debug a Pod and realizing that you can't install curl due to security settings has to be a meme at this point. Good security practices are always nice but it often comes at the cost of usability. To the point where some may even solve this problem by installing debug tools into their production images. Shudders.
 
 <!-- truncate -->
 
@@ -22,7 +21,7 @@ Kubernetes has introduced a new concept called [ephemeral containers](https://ku
 
 ## Digging Deeper
 
-Now that we have the new feature we can start a ephemeral container in what ever Pod we like.
+Now that we have the new feature we can start a ephemeral container in any Pod we like.
 
 ```shell
 kubectl run ephemeral-demo --image=k8s.gcr.io/pause:3.1 --restart=Never
@@ -48,7 +47,7 @@ spec:
     tty: true
 ```
 
-Interesting, there is a new field called `ephemeralContainers` in the Pod. This new field contains a list of containers similar to `initContainers` and `containers`. It is not identical as there are certain options which are not available, refer to the [API documentation](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#ephemeralcontainer-v1-core) for more information. It does however allow configuration of the container security context, which could in theory allow a bad actor to escalate the containers privileges. This should not affect those of us who use a policy enforcement tool right? The answer is yes and no depending on the tool and version that is being used. It also depends on if you are using policies from the projects library or policies developed in house.
+Interesting, there is a new field called `ephemeralContainers` in the Pod definition. This new field contains a list of containers similar to `initContainers` and `containers`. It is not identical as there are certain options which are not available, refer to the [API documentation](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#ephemeralcontainer-v1-core) for more information. It does however allow configuration of the container security context, which could in theory allow a bad actor to escalate the container's privileges. This should not affect those of us who use a policy enforcement tool right? The answer is yes and no depending on the tool and version that is being used. It also depends on if you are using policies from the project's library or policies developed in house.
 
 ### OPA Gatekeeper
 
@@ -95,7 +94,7 @@ Disallowing ephemeral containers with RBAC could be an option if the feature is 
 > * Write or use a third-party admission controller to allow or reject Pod updates that modify ephemeral containers based on the content of the update.
 > * Disable the feature using the EphemeralContainers feature gate.
 
-RBAC is additive which means that it is not possible to remove permissions from a role. This type of mitigation obviously does not matter if all users a cluster admin, which they should not be, so we assume that new roles are created for the cluster consumers. In this case having a look at the existing roles can be enough to make sure that the subresource is not included in the role.
+RBAC is additive which means that it is not possible to remove permissions from a role. This type of mitigation obviously does not matter if all users a cluster admin, which they should not be, so we assume that new roles are created for the cluster consumers. In this case having a look at the existing roles can be enough to make sure that the subresource `/ephemeralcontainers` is not included in the role.
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -121,7 +120,7 @@ rules:
 
 ## Checking Policy Enforcement
 
-So what if we have a cluster with ephemeral containers enabled, and you are unsure if the correct policies are enforced? Or you just want to verify you work. The debug command does not expose any options to set any security context configuration, so we need another option. Ephemeral containers cannot be defined in a Pod when it is created neither can it be added with an update. The Kubernetes documentation states the following.
+Let's say that you upgraded your cluster and informed all end users of the great new feature. How do you know that the correct policies are enforced in accordance to your security practices. You may have been aware of the API changes and taken the correct precautionary steps. Or you just updated Kyverno and it's policies out of pure happenstance. Either way it is good to trust but verify that it is not for example possible to create a privileged ephemeral container. Annoyingly the debug command does not expose any options to set any security context configuration, so we need another option. Ephemeral containers cannot be defined in a Pod when it is created and it can neither be added with an update. We need some other method to create these specific ephemeral containers.
 
 > Ephemeral containers are created using a special ephemeralcontainers handler in the API rather than by adding them directly to pod.spec, so it's not possible to add an ephemeral container using `kubectl edit`.
 
@@ -201,7 +200,7 @@ Run the program and pass the namespace, pod name, and path to a kube config file
 go run main.go default ephemeral-demo $KUBECONFIG
 ```
 
-If it completes with no error a privileged ephemeral container should have been added to the Pod. Exec into it and list the hosts devices to prove that it is a privileged container.
+If it completes with no error a privileged ephemeral container should have been added to the Pod. Exec into it and list the host's devices to prove that it is a privileged container.
 
 ```shell
 kubectl exec -it ephemeral-demo -c debug -- sh
@@ -210,8 +209,9 @@ ls /dev
 
 ## Conclusion
 
-If there is one thing that you learn from this post, it is that any policy tool that has not been updated in the last couple of months will not enforce rules on ephemeral containers. Additionally you should really analyze any in house developed policies to include checking ephemeral containers.
+If there is one takeaway from this post, it is that any policy tool that has not been updated in the last couple of months will not enforce rules on ephemeral containers. This also includes all policies written in house! It is not enough to update the community policies.
 
-Some may argue that this type of oversight is not really an issue. Ephemeral containers can't mount host paths, share host PID, or host networking. All it can do is set the common container security context. That is a fair comment, because it's true. Being able to create a privileged container is however still not ideal, and there are [methods to escalate privileges](https://bishopfox.com/blog/kubernetes-pod-privilege-escalation#Pod3) when this is possible. Either way it is important to be aware of how policies are enforced and the security contexts which are allowed.
+Some may argue that this type of oversight is not really an issue. Ephemeral containers can't mount [host paths](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath), or access the [hosts namespaces](https://kubernetes.io/docs/concepts/security/pod-security-policy/#host-namespaces). All it can do is set the common container security context. That is a fair comment, because it's true. Being able to create a privileged container is however still not ideal, and there are [methods to escalate privileges](https://bishopfox.com/blog/kubernetes-pod-privilege-escalation#Pod3) when this is possible. Either way it is important to be aware of how policies are enforced and the security contexts which are allowed.
 
-I am still not sure how much of an issue this will be short term. Cloud providers are currently in the process of rolling out Kubernetes v1.23 in their SaaS offerings. In these solutions it is still a possibility that they chose to disable ephemeral containers. Those rolling their own clusters may have already upgraded to v1.23 and not be aware of the new feature. That is the biggest issue really, that the end user has to be aware of the existence of ephemeral containers. A company may have invested in a security audit 6 months ago but that is only valid as long as the same Kubernetes version is used. The reality is that these types of things are easy to miss, especially when one assumes that the policy tool just solves the issue without verifying that it does.
+I am still not sure how much of an issue this will be short term. Cloud providers are currently in the process of rolling out Kubernetes v1.23 in their SaaS offerings. In these solutions it is still a possibility that they chose to disable ephemeral containers. Those rolling their own clusters may have already upgraded to v1.23 and not be aware of the new feature. That is the biggest issue really, that the platform administrator has to be aware of the existence of ephemeral containers. The fact that kubectl does not expose the option to set a security context will make even less people aware that it is still possible to set one with other means. Investing in a security audit 6 months ago will only be valuable as long as the same Kubernetes version is used. Kubernetes is by design **not** secure by default, so each new feature introduced has to be analyzed. The fact that upgrading from Kubernetes v1.22 to v.23 could make your cluster less secure is part of the difficulties of working with Kubernetes, requiring platform administrators to always stay on top of things. The reality is that these types of things are easy to miss, so hopefully this post has helped someone make their cluster a bit more secure.
+
