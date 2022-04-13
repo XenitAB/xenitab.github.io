@@ -1,5 +1,5 @@
 ---
-title: Kubernetes Ephemeral Containers Security
+title: Kubernetes Ephemeral Container Security
 description: >
   Ephemeral containers is a new concept in Kubernetes which allows attaching 
   containers to already running Pods. It also introduces new security concerns
@@ -8,7 +8,11 @@ authors: phillebaba
 tags:
   - kubernetes
   - security
-  - ephemeral container
+  - ephemeral containers
+keywords:
+  - kubernetes
+  - security
+  - ephemeral containerss
 ---
 
 Attempting to debug a Pod and realizing that you can't install curl due to security settings has to be a meme at this point. Good security practices are always nice but it often comes at the cost of usability. To the point where some may even solve this problem by installing debug tools into their production images. Shudders.
