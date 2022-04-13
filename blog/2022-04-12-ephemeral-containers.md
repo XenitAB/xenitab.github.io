@@ -14,9 +14,11 @@ tags:
 
 Attempting to debug a Pod and realizing that you can't install curl due to security settings has to be a meme at this point. Good security practices is always nice but it often comes at the cost of usability. To the point where some may even solve this problem by installing debug tools into their production images. Shudders.
 
+<!-- truncate -->
+
 <img src="https://i.imgflip.com/6cczqi.jpg" title="made at imgflip.com"/>
 
-Kubernetes has introduced a new concept called [ephemeral containers](https://kubernetes.io/docs/concepts/workloads/pods/ephemeral-containers/) to deal with this problem. Ephemeral containers are temporary containers that can be attached after a Pod has been created. Rejoice! We can now attach a temporary container will all the tools which we desire. While the applications container may have "annoying security features" like a read only file system the ephemeral container can enjoy all the freedom which writing files entails. I love this feature so I need to upgrade my cluster immediately!
+Kubernetes has introduced a new concept called [ephemeral containers](https://kubernetes.io/docs/concepts/workloads/pods/ephemeral-containers/) to deal with this problem. Ephemeral containers are temporary containers that can be attached after a Pod has been created. Rejoice! We can now attach a temporary container with all the tools which we desire. While the applications container may have "annoying security features" like a read only file system the ephemeral container can enjoy all the freedom which writing files entails. I love this feature so I need to upgrade my cluster immediately!
 
 ## Digging Deeper
 
@@ -58,11 +60,12 @@ The good news is that this is a pretty easy fix, the bad news is that it require
 
 [Kyverno](https://github.com/kyverno/kyverno) seems to have resolved the issues faster. Compared to OPA Gatekeeper however it did require a small code change which means that version [1.5.3](https://github.com/kyverno/kyverno/releases/tag/v1.5.3) or later is needed to write policies for ephemeral containers. They have also [updated their policy library](https://github.com/kyverno/policies/pull/241) to include checking ephemeral containers. Kyverno has done a great job solving these issues quickly. It does still require end users to update however.
 
+
 ### Pod Security Policies
 
 [Pod Security Policies](https://kubernetes.io/docs/concepts/security/pod-security-policy/) used to be the default policy tool for Kubernetes, and a lot of projects have rules based on Pod Security Policies (PSP). However if you are relying on PSP in a modern cluster you should really start looking for other options like OPA Gatekeeper or Kyverno. PSP has been deprecated since Kubernetes v1.21 and will be removed in v1.25.
 
-If PSP is your only policy tool and you are planning to upgrade to v1.23, don't. As PSP is deprecated no new features have been added, and that includes policy enforcement on ephemeral containers. Which means that any security context in an ephemeral container is allowed no matter the PSP in the cluster. 
+If PSP is your only policy tool and you are planning to upgrade to v1.23, don't. As PSP is deprecated no new features have been added, and that includes policy enforcement on ephemeral containers. Which means that any security context in an ephemeral container is allowed no matter the PSP in the cluster.  The PSP below will have no affect when adding an ephemeral container to a Pod which is privileged.
 
 ```yaml
 apiVersion: policy/v1beta1
@@ -83,7 +86,38 @@ spec:
   - '*'
 ```
 
-A PSP above will have no affect when adding an ephemeral container to a Pod which is privileged.
+### RBAC
+
+Disallowing ephemeral containers with RBAC could be an option if the feature is not needed and it is not possible to disable the feature completely. The [KEP-277: Ephemeral Containers](https://github.com/kubernetes/enhancements/blob/master/keps/sig-node/277-ephemeral-containers/README.md) state the following about using RBAC to disable ephemeral containers.
+
+> Cluster administrators will be expected to choose from one of the following mechanisms for restricting usage of ephemeral containers:
+> * Use RBAC to control which users are allowed to access the /ephemeralcontainers subresource.
+> * Write or use a third-party admission controller to allow or reject Pod updates that modify ephemeral containers based on the content of the update.
+> * Disable the feature using the EphemeralContainers feature gate.
+
+RBAC is additive which means that it is not possible to remove permissions from a role. This type of mitigation obviously does not matter if all users a cluster admin, which they should not be, so we assume that new roles are created for the cluster consumers. In this case having a look at the existing roles can be enough to make sure that the subresource is not included in the role.
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: edit
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/attach
+  - pods/exec
+  - pods/portforward
+  - pods/proxy
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - patch
+  - update
+```
 
 ## Checking Policy Enforcement
 
