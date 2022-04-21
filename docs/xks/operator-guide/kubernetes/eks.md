@@ -273,3 +273,7 @@ aws eks --region eu-west-1 update-kubeconfig --name dev-eks1 --alias dev-eks1 --
 To get a quick overview of what is happening in EKS you can look at its [changelog](https://github.com/awslabs/amazon-eks-ami/blob/master/CHANGELOG.md#changelog).
 
 When upgrading node groups you need to correlate with your Kubernetes release, you can find which node group is available to [which node group](https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html).
+
+AWS general [security information](https://aws.amazon.com/security/security-bulletins/)
+
+Public [containers roadmap](https://github.com/aws/containers-roadmap).
