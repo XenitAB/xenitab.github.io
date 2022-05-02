@@ -23,6 +23,8 @@ The literature on API design will exhort you to analyze the problem space and co
 
 This post proposes and motivates a set of guidelines for RESTful APIs (and by extension their contracts) intended to maximize their life span and support rapid evolution throughout it. The post focuses on organizations that want to provide commercial software-as-a-service offerings, though many of the guidelines have wider application.
 
+<!-- truncate -->
+
 ## Start with the basics
 
 The guidelines below should be considered in addition to established good practice, so if you are new to REST, you may want to start by reading the literature. Here are some good good articles about RESTful API practices:
@@ -45,7 +47,7 @@ _The most central tenet of REST bears repeating: your API is expressed in nouns,
 
 **Motivation**: Focusing on resources reduces the risk of implementation details bleeding into the API, which means that it becomes easier to change the backing implementation. This is akin to Kant's [Der ding an sich](https://en.wikipedia.org/wiki/Thing-in-itself), in that we are trying to discover what properties a resource should reasonably have to match the sum of all observations.
 
-An important consequence of realizing a service as a series of nouns is that in order to be able to keep to CRUD operations, we may need to introduce new nouns (i.e. sub-resource), for example giving cars "services" so that we have `POST /vehicles/:id/services/heater` for activating the car's heater. With this design, the developer using the API knows that discovery will be `GET /vehicles/:id/services` and heater status can be checked with `GET /vehicles/:id/services/heater`. "CRUD plus noun" becomes a contract building blocks.
+An important consequence of realizing a service as a series of nouns is that in order to be able to keep to CRUD operations, we may need to introduce new nouns (i.e. sub-resource), for example giving cars "services" so that we have `POST /vehicles/:id/services/heater` for activating the car's heater. With this design, the developer using the API knows that discovery will be `GET /vehicles/:id/services` and heater status can be checked with `GET /vehicles/:id/services/heater`. "CRUD plus noun" allows us to builda a contract taxonomy.
 
 ### The caller is responsible for the use case
 
