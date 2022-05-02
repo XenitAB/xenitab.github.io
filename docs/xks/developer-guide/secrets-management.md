@@ -46,7 +46,13 @@ kind: Deployment
 metadata:
   name: foo
 spec:
+  selector:
+    matchLabels:
+      app: test
   template:
+    metadata:
+      labels:
+        app: test
     spec:
       containers:
         - name: foo
@@ -71,7 +77,13 @@ kind: Deployment
 metadata:
   name: foo
 spec:
+  selector:
+    matchLabels:
+      app: test
   template:
+    metadata:
+      labels:
+        app: test
     spec:
       containers:
         - name: foo
@@ -116,7 +128,13 @@ kind: Deployment
 metadata:
   name: foo
 spec:
+  selector:
+    matchLabels:
+      app: test
   template:
+    metadata:
+      labels:
+        app: test
     spec:
       containers:
         - name: busybox
