@@ -1,8 +1,7 @@
 ---
 title: Improving XKS security using Starboard
 description: Xenit evolves Starboard for continuous scanning of production workloads.
-authors:
-  - name: Edvin Norling
+authors: nissessenap
 tags:
   - security
   - kubernetes
@@ -34,7 +33,7 @@ To be able to solve all our questions we decided to go with continuously scannin
 
 As mentioned earlier we already scan our images in our CI/CD pipeline and there we use [Trivy](https://github.com/aquasecurity/trivy/).
 So it was a natural fit for us to got with [Aqua Securitys](https://www.aquasec.com/) [Starboard](https://github.com/aquasecurity/starboard).
-Starboard is a reporting tool that supports multiple Aqua Security tools like Trivy for vulnerability report, but it also supports [kube-hunter](https://github.com/aquasecurity/kube-hunter) and [kube-bench](https://github.com/aquasecurity/kube-bench) among others.
+Starboard is a reporting tool that supports multiple Aqua Security tools like Trivy for vulnerability report, but it also supports [conftest](https://aquasecurity.github.io/starboard/latest/configuration-auditing/pluggable-scanners/conftest/) and [kube-bench](https://github.com/aquasecurity/kube-bench) among others.
 In this post we will only focus on the vulnerability reports generated from the image scanning.
 
 When starting to use Starboard we noticed a few features that where missing and we really needed. Since Starboard is open source we thought: why not help to implement these features?
