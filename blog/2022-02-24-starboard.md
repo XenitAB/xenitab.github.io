@@ -14,19 +14,19 @@ How sure are you that you have close to 0 critical CVEs in your Kubernetes clust
 
 Just like for all companies today security is top of mind for Xenit and we try to come with a solution for this question.
 
-Today we already scan our images in our CI/CD pipeline at creation time using Trivy but what about new CVEs that gets disclosed after the initial image build?
+At the time we were already scanning our images in our CI/CD pipeline at creation time using Trivy, but what about new CVEs that gets disclosed after the initial image build?
 
-The increasing rates of cyber crime (by some measures, cyber crimes now outnumber all other crimes put together) which makes it harder for companies to protect them selfs.
+The increasing rates of cyber crime (by some measures, cyber crimes now outnumber all other crimes put together) which makes it harder for companies to protect themselves.
 The faster we can fix relatively simple problems like patching a CVE on container level the more secure we will be.
 
-Xenit is hosting a number of Kubernetes clusters for our self and our customers and we want a quick way of visualizing CVEs on a platform and a per customer basis.
-We want to achieve this without having to jumping around to different clusters and run some script to find out the answer to that question.
+Xenit is hosting a number of Kubernetes clusters for our customers and we want a quick way of visualizing CVEs on a platform and a per customer basis.
+We want to achieve this without having to jumping around to different clusters and run some script to find out the answer to this question.
 
 <!-- truncate -->
 
-Could one solution be to scan the container images continuously that is running in the Kubernetes clusters?
-Or should we just continuously scan the images that is stored in our private image registry? But what about the images that isn't our private image registry?
-What about the third-party images that we use from places like quay or docker hub? Some people would argue that these images are most important once to scan.
+Could one solution be to scan the container images continuously that are running in the Kubernetes clusters?
+Or should we just continuously scan the images that are stored in our private image registry? But what about the images that isn't our private image registry?
+What about the third-party images that we use from places like [Quay](https://quay.io/) or [Docker hub](https://hub.docker.com/)? Some people would argue that these images are the most important ones to scan.
 
 At Xenit we already have a central monitoring solution that we use to monitor the status of all our clusters why not think of CVEs just like another metric?
 
@@ -34,22 +34,22 @@ To be able to solve all our questions we decided to go with continuously scannin
 
 As mentioned earlier we already scan our images in our CI/CD pipeline and there we use [Trivy](https://github.com/aquasecurity/trivy/).
 So it was a natural fit for us to got with [Aqua Securitys](https://www.aquasec.com/) [Starboard](https://github.com/aquasecurity/starboard).
-Starboard is a reporting tool that supports multiple Aqua Security tools like Trivy for vulnerability report, but it also supports kube-hunter and kube-bench among others.
+Starboard is a reporting tool that supports multiple Aqua Security tools like Trivy for vulnerability report, but it also supports [kube-hunter](https://github.com/aquasecurity/kube-hunter) and [kube-bench](https://github.com/aquasecurity/kube-bench) among others.
 In this post we will only focus on the vulnerability reports generated from the image scanning.
 
 When starting to use Starboard we noticed a few features that where missing and we really needed. Since Starboard is open source we thought: why not help to implement these features?
 
 The first issue we found was that the Starboard operator is only able to scan the images and show the result as a CR (Custom Resource) but no metrics of how many CVEs we have per container image.
 
-As a part of XKS we supply our customers with monthly reports and we want to be able to provide them with simple visualization to see the number of critical CVEs on their applications.
+As a part of XKS we supply our customers with monthly reports and we wanted to be able to provide them with simple visualization to see the number of critical CVEs on their applications.
 It turns out that we weren't the only ones that thought missing metrics was a problem and the great people over at Giantswarm had implemented a solution for this called [starboard-exporter](https://github.com/giantswarm/starboard-exporter).
 
-After helping out to clean up their [helm chart](https://github.com/giantswarm/starboard-exporter/pull/27) a bit we started to use starboard-exporter in production.
+After helping out to clean up their [Helm chart](https://github.com/giantswarm/starboard-exporter/pull/27) a bit we started to use starboard-exporter in production.
 
 This made it possible for us to start generating metrics but after some time we realized that the data was strange, this was due to duplicate metrics for the same CVE.
 
-By default Starboard generates a vulnerability report per Kubernetes replica set, instead of one per Kubernetes deployment. This can be a good thing to be able to simply compare CVEs between versions of your application.
-But when trying to get a overview of the number of CVEs in a Kubernetes cluster it creates a few issues.
+By default Starboard generates a vulnerability report per Kubernetes replica set, instead of one per Kubernetes deployment. This can be a good thing to be able to simply compare the number of CVEs between versions of your application.
+But when trying to get a overview of the number of CVEs in a Kubernetes cluster it created a few issues.
 
 To solve this we introduced a new environment variable `OPERATOR_VULNERABILITY_SCANNER_SCAN_ONLY_CURRENT_REVISIONS` to Starboard in [#870](https://github.com/aquasecurity/starboard/pull/870) and if set to true it will only create vulnerability report for the latest replica set in a deployment.
 
@@ -60,7 +60,7 @@ To solve this we introduce a TTL(Time To Live) for vulnerability reports [#879](
 The controller currently only supports managing TTL for vulnerability reports but could easily add the same feature to other Starboard reports.
 Setting the following config in the operator `OPERATOR_VULNERABILITY_SCANNER_REPORT_TT=24h` will automatically delete any vulnerability report older then 24 hours.
 
-So now we can scan our public images, we can get metrics from them and we can get updated scans as often as we want. But what about privates repositories?
+So now we were able to scan our public images, we could get metrics and updated scans as often as we want. But what about privates repositories?
 
 Support in Trivy for AWS [ECR](https://aws.amazon.com/ecr/) (Elastic Container Registry) have been around for a long time and same thing with starboard.
 The problem was until recently there was no support for Azure [ACR](https://azure.microsoft.com/en-us/services/container-registry) (Azure Container Registry).
@@ -78,6 +78,7 @@ We have deployed a separate Trivy instance in our cluster to cache all the image
 The problem was that the Trivy helm chart didn't support setting custom labels on the Trivy stateful set so we created a [PR](https://github.com/aquasecurity/trivy/pull/1767) to solve it.
 
 Thanks to this we are now able to quickly generate dashboards with the amount of critical CVEs in our clusters for both public and private images.
+TODO add image from the report
 
 So what does the future bring for Xenit security scanning?
 
