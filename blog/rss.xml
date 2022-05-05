@@ -4,9 +4,16 @@
         <title>Xenit Blog</title>
         <link>http://xenitab.github.io/blog</link>
         <description>Xenit Blog</description>
-        <lastBuildDate>Mon, 25 Apr 2022 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 04 May 2022 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[Improving XKS security using Starboard]]></title>
+            <link>http://xenitab.github.io/blog/2022/05/04/starboard</link>
+            <guid>Improving XKS security using Starboard</guid>
+            <pubDate>Wed, 04 May 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[Xenit evolves Starboard for continuous scanning of production workloads.]]></description>
+        </item>
         <item>
             <title><![CDATA[Designing RESTful APIs for cloud services]]></title>
             <link>http://xenitab.github.io/blog/2022/04/25/designing-restful-apis-for-cloud-services</link>
