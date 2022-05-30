@@ -102,6 +102,14 @@ html[data-theme="dark"] {
   }
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "MaisonNeue-Demi";
+}
+
+body {
+  font-family: "MaisonNeue-Book";
+}
+
 @font-face {
   font-family: "MaisonNeue-Bold";
   src: url("/fonts/MaisonNeue-Bold.woff") format("woff");
