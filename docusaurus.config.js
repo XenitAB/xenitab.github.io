@@ -45,11 +45,10 @@ module.exports = {
           sidebarPath: require.resolve("./sidebars.js"),
           editUrl: "https://github.com/xenitab/xenitab.github.io/edit/main/",
         },
-        /*blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl: "https://github.com/xenitab/home/edit/main/blog/",
-        },*/
+        gtag: {
+          trackingID: "GTM-5K3TQ3K",
+          anonymizeIP: true,
+        },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
