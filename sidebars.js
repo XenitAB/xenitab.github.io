@@ -21,6 +21,7 @@ module.exports = {
           "type": "category",
           "label": "Developer Guide",
           "items": [
+            "xks/developer-guide/api-migrations",
             "xks/developer-guide/introduction",
             "xks/developer-guide/best-practices",
             "xks/developer-guide/secrets-management",
