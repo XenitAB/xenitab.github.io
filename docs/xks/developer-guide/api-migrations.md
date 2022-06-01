@@ -9,17 +9,11 @@ resources if you are utilizing them, but we will of course inform you when it's 
 
 This page is about sharing that information.
 
-## XKF 2022.05.4
-
-This release is preparing for deprecation happening in kubernetes 1.22, as a part of this release we upgraded allot of CRD:s.
-
-You as a developer only need to think about one API upgrade in this release.
-
-### SecretProviderClass API version
+## SecretProviderClass v1alpha1 to v1
 
 Moving SecretProviderClass apiVersion from `secrets-store.csi.x-k8s.io/v1alpha1` to `secrets-store.csi.x-k8s.io/v1`.
 
-The only thing you need to do is to change from
+So the only thing you need to do is to change is the API version.
 
 ```yaml
 apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
