@@ -69,6 +69,14 @@ module.exports = {
     },
     {
       "type": "category",
+      "label": "Xenit Style Guide",
+      "items": [
+        "xenit-style-guide/containers",
+        "xenit-style-guide/golang",
+      ]
+    },
+    {
+      "type": "category",
       "label": "Projects",
       "items": []
     }
