@@ -264,7 +264,7 @@ In Azure DevOps under project settings.
 
 Agent pools -> Add Pool -> Pick VMSS from dropdown
 
-<img alt="Agent image" src={useBaseUrl("img/assets/xks/operator-guide/agent_pool.png")} />
+<img alt="Agent image" src={useBaseUrl("img/assets/xkf/operator-guide/agent_pool.png")} />
 
 #### Billing
 

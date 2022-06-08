@@ -6,8 +6,8 @@ all: install-site build
 
 .PHONY: assets
 assets:
-	docker run --rm -it -v $(PWD):/data rlespinasse/drawio-export:4.1.0 -s 3 -b 10 -f jpg --remove-page-suffix -o /data/static/img/assets/xks/operator-guide/ /data/assets/xks/operator-guide/
-	docker run --rm -it -v $(PWD):/data rlespinasse/drawio-export:4.1.0 -s 3 -b 10 -f jpg --remove-page-suffix -o /data/static/img/assets/xks/developer-guide/ /data/assets/xks/developer-guide/
+	docker run --rm -it -v $(PWD):/data rlespinasse/drawio-export:4.1.0 -s 3 -b 10 -f jpg --remove-page-suffix -o /data/static/img/assets/xkf/operator-guide/ /data/assets/xkf/operator-guide/
+	docker run --rm -it -v $(PWD):/data rlespinasse/drawio-export:4.1.0 -s 3 -b 10 -f jpg --remove-page-suffix -o /data/static/img/assets/xkf/developer-guide/ /data/assets/xkf/developer-guide/
 
 .SILENT:
 serve: all

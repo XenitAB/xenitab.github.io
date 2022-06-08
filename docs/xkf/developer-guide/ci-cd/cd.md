@@ -5,7 +5,7 @@ title: Continuous Delivery
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-Continuous Delivery (CD) should be the only way to make changes to running applications in the XKS service.
+Continuous Delivery (CD) should be the only way to make changes to running applications in the XKF service.
 This is to ensure that changes are consistent and tracked in a centralized manner that can be observed by all.
 
 ## GitOps
@@ -27,7 +27,7 @@ The core feature of the gitops repo is that one of the pipelines automatically u
 
 We have to grant it permissions to do this, sadly manually...
 
-<img alt="CI access" src={useBaseUrl("img/assets/xks/developer-guide/gitops_repo_settings.png")} />
+<img alt="CI access" src={useBaseUrl("img/assets/xkf/developer-guide/gitops_repo_settings.png")} />
 
 ### Service connections
 

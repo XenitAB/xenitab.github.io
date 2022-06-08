@@ -12,7 +12,7 @@ possible without manual intervention to change the instance type or taints on th
 work there has to be at least one instance present. This is because critical system pods like Tunnelfront and CoreDNS will by default run on the system node pool. For more information about AKS
 system node pool refer to the [official documentation](https://docs.microsoft.com/en-us/azure/aks/use-system-pools#system-and-user-node-pools).
 
-XKS follows the Azure recommendation and runs only system critical applications on the system node pool. Doing this protects services like CoreDNS from starvation or memory issues caused by user
+XKF follows the Azure recommendation and runs only system critical applications on the system node pool. Doing this protects services like CoreDNS from starvation or memory issues caused by user
 applications running on the same nodes. This is achieved by adding the taint `CriticalAddonsOnly` to all of the system nodes.
 
 ### Sizing Nodes

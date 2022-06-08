@@ -8,12 +8,12 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 ## Network Policies
 
 [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) in Kubernetes add the ability to allow and deny network traffic from specific pods and namespaces. Both
-egress traffic from a Pod and ingress traffic to a Pod can be controlled. In a vanilla Kubernetes cluster all traffic between all namespaces is allowed by default. This is not the case in XKS. Out of
-the box in XKS all tenant namespaces have a default deny rule added to them. This default deny rule will block any traffic going between namespaces. It will deny both ingress traffic from other
+egress traffic from a Pod and ingress traffic to a Pod can be controlled. In a vanilla Kubernetes cluster all traffic between all namespaces is allowed by default. This is not the case in XKF. Out of
+the box in XKF all tenant namespaces have a default deny rule added to them. This default deny rule will block any traffic going between namespaces. It will deny both ingress traffic from other
 namespaces and egress traffic to other namespaces. All traffic within the namespace between Pods is allowed. The reasoning behind this setup is that Pods should not have more network access than they
 require to function, as it reduces the blast radius in case of an exploit.
 
-<img alt="Default Deny Network Policy" src={useBaseUrl("img/assets/xks/developer-guide/network-policy-default-deny.jpg")} />
+<img alt="Default Deny Network Policy" src={useBaseUrl("img/assets/xkf/developer-guide/network-policy-default-deny.jpg")} />
 
 The default deny Network Policy contains an exception for traffic destined to the cluster's DNS service. Without this exception DNS resolution would not work. The Pod selector in the Network Policy is
 empty, this means that the Network Policy will apply for all Pods in the namespace.
@@ -160,13 +160,13 @@ TBD
 as a layer on top of Kubernetes Services by exposing the Service with a hostname. All Ingress traffic is Layer 7 routed, meaning that traffic is routed based on the host header in the HTTP request. This
 also means that Ingress only works with HTTP traffic. Doing it this way means that only a single load balancer is required reducing cost compared to running multiple load balancers, one per Ingress.
 
-<img alt="Ingress Overview" src={useBaseUrl("img/assets/xks/developer-guide/ingress-overview.jpg")} />
+<img alt="Ingress Overview" src={useBaseUrl("img/assets/xkf/developer-guide/ingress-overview.jpg")} />
 
-XKS comes with everything pre-configured for Ingress to work. The cluster will either have a single [Nginx Ingress Controller](https://kubernetes.github.io/ingress-nginx/) which is exposed to the
+XKF comes with everything pre-configured for Ingress to work. The cluster will either have a single [Nginx Ingress Controller](https://kubernetes.github.io/ingress-nginx/) which is exposed to the
 public Internet or two controllers where one is public and one is private. On top of that the cluster is configured with [External DNS](https://github.com/kubernetes-sigs/external-dns)(which creates
 DNS records) and [Cert Manager](https://cert-manager.io/docs/) (which deals with certificate creation and renewal). Together these three tools offer an automated solution where the complexity of DNS and
 certificates are not handled by the application. The recommendation is to always enable TLS for all Ingress resources no matter how small the service is. Updating a certificate is
-quick and easy so there is no reason not to do this. Every XKS cluster comes with a preconfigured Cluster Issuer which will provision certificates from [Let's Encrypt](https://letsencrypt.org/).
+quick and easy so there is no reason not to do this. Every XKF cluster comes with a preconfigured Cluster Issuer which will provision certificates from [Let's Encrypt](https://letsencrypt.org/).
 
 Start off by creating a Certificate resource for your Ingress. It is possible to have Cert Manager automatically create a Certificate when an Ingress resource is created. This however has the
 downside that every Ingress resource will receive its own Certificate. Lets Encrypt has [rate limits](https://letsencrypt.org/docs/rate-limits/) for the same domain, if one were to create a
@@ -219,7 +219,7 @@ spec:
 
 ### Public and Private Ingress
 
-By default an XKS cluster will deploy a single public Ingress controller. All Ingress resources will be routed with a public IP and therefore exposed to the public Internet. It is however also possible to
+By default an XKF cluster will deploy a single public Ingress controller. All Ingress resources will be routed with a public IP and therefore exposed to the public Internet. It is however also possible to
 create private Ingress resources which are only exposed through an IP that is private to the virtual network in which the Kubernetes cluster is deployed. This is an opt in feature
 as two load balancing services are needed. Making an Ingress private is simple when the private Ingress feature is enabled. All that is required is that the Ingress class has to be set
 to `nginx-private`, this makes sure that the resource is only served through the private IP.
@@ -251,9 +251,9 @@ spec:
 ### External Routing
 
 There is no requirement that the destination for an Ingress resource has to be served from within the cluster. It is possible to route Ingress traffic either to endpoints outside of the
-cloud provider or to another service that is only accessible from within the private network. Using the XKS Ingress instead of a separate solution has it's benefits in these situations,
-as DNS record creation and certificate management is already setup to work. A typical use case may be during a migration period when XKS and another solution may exist in parallel.
-All traffic can enter through XKS but then be forwarded to the external destination. The service endpoints can be updated as applications are migrated to run inside XKS instead of outside.
+cloud provider or to another service that is only accessible from within the private network. Using the XKF Ingress instead of a separate solution has it's benefits in these situations,
+as DNS record creation and certificate management is already setup to work. A typical use case may be during a migration period when XKF and another solution may exist in parallel.
+All traffic can enter through XKF but then be forwarded to the external destination. The service endpoints can be updated as applications are migrated to run inside XKF instead of outside.
 
 A Service resource is required to configure the destination of the traffic. There are two options available in Kubernetes when directing traffic outside of the cluster. The first option is to
 create a Service of type ExternalName which specifies a host name which the Service should write to. When a request is made to the Service the given external name IP will be resolved and the
@@ -399,8 +399,8 @@ Remember that you can inspect your network policies with `kubectl get networkpol
 
 ## Linkerd
 
-[Linkerd](https://linkerd.io/) is an optional service mesh that can be added to XKS. The component is opt-in as it adds a certain amount of overhead,
-so unless it has been requested Linkerd will not be present in XKS. A service mesh extends the networking functionality in a Kubernetes cluster. It is
+[Linkerd](https://linkerd.io/) is an optional service mesh that can be added to XKF. The component is opt-in as it adds a certain amount of overhead,
+so unless it has been requested Linkerd will not be present in XKF. A service mesh extends the networking functionality in a Kubernetes cluster. It is
 useful when features such as end-to-end encryption or GRPC load balancing is required. Linkerd will automatically handle TCP loadbalancing so when
 GRPC is used Linkerd will detect this and loadbalance between instances of GRPC servers.
 
@@ -409,7 +409,7 @@ Refer to the [official documentation](https://linkerd.io/2.10/overview/) for doc
 Linkerd works by injecting a sidecar into every Pod which uses Linkerd. All network requests have to be sent through the sidecar which will then be
 responsible for forwarding it. The sidecar will handle things like traffic encryption before sending the packets outside of the node.
 
-<img alt="Linkerd Overview" src={useBaseUrl("img/assets/xks/developer-guide/linkerd-overview.jpg")} />
+<img alt="Linkerd Overview" src={useBaseUrl("img/assets/xkf/developer-guide/linkerd-overview.jpg")} />
 
 ### Get Started
 

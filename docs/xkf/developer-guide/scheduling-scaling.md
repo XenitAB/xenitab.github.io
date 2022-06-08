@@ -35,14 +35,14 @@ The scheduler will look at the cumulative resource requests across all container
 resource requests of all Pods currently scheduled to the Node. A Pod may at times request more resource than any Node has capacity for, there are two possible outcomes for this situation. If the Pods resource request is less than a Nodes total available resources, a new Node will be added to the cluster. The Pod will
 however be considered unschedulable if the resource request exceeds the total resources available on a single node. In these cases either the resource request has to change or a new Node type has to be added to the cluster to cater to these needs.
 
-<img alt="Pod Scheduling" src={useBaseUrl("img/assets/xks/developer-guide/pod-scheduling.jpg")} />
+<img alt="Pod Scheduling" src={useBaseUrl("img/assets/xkf/developer-guide/pod-scheduling.jpg")} />
 
 It is possible to overprovision Node resources in cases where the resource request for each container is much larger that the actual resource consumption. Efficient resource allocation is a constant battle between requesting enough resources to avoid under allocation while not
 requesting too much which would result in overallocation. The easiest way to think about resources consumption and availability is to imaging the capacity as a glass, as more resources are consumed water is added to the glass. If the consumption increase does not stop the glass will eventually overfill.
 
 <!-- TODO: Should we reccomend most users to just use the same memory request and limit? -->
 
-<img alt="Pod Scheduling" src={useBaseUrl("img/assets/xks/developer-guide/pod-resource-request.jpg")} />
+<img alt="Pod Scheduling" src={useBaseUrl("img/assets/xkf/developer-guide/pod-resource-request.jpg")} />
 
 The resource limit defined for a Pod has no affect on the scheduling of a Pod. Limits instead comes into play for a Pod during runtime. Exceeding the resource limit for CPU and memory will have
 different affects. A Pod which exceeds the memory limit will be terminated with an out of memory error (OOM Error).  The Pod will after termination be started again, it may start to exceed the limit again which will result in another OOM error. These types of errors can either be resolved by having the application
@@ -180,7 +180,7 @@ antiAffinity rule: the pod should not be scheduled onto a node if that node is i
                 - key: prometheus
                   operator: In
                   values:
-                    - xks
+                    - xkf
             topologyKey: kubernetes.io/hostname
           weight: 100
         - podAffinityTerm:
@@ -189,12 +189,12 @@ antiAffinity rule: the pod should not be scheduled onto a node if that node is i
                 - key: prometheus
                   operator: In
                   values:
-                    - xks
+                    - xkf
             topologyKey: topology.kubernetes.io/zone
           weight: 100
 ```
 
-This is an example configuration of podAntiAffinity for Prometheus. Spreading the pod deployment based on `topology.kubernetes.io/zone` and `topology.kubernetes.io/hostname` to only allow 1 pod on each node and to mitigate downtime in case an entire zone goes down, e.g: if a pod runs in zone A with key `prometheus` and value `xks` do not schedule it in zone A - choose zone B or C. Note that these settings are "preferred" and not required.
+This is an example configuration of podAntiAffinity for Prometheus. Spreading the pod deployment based on `topology.kubernetes.io/zone` and `topology.kubernetes.io/hostname` to only allow 1 pod on each node and to mitigate downtime in case an entire zone goes down, e.g: if a pod runs in zone A with key `prometheus` and value `xkf` do not schedule it in zone A - choose zone B or C. Note that these settings are "preferred" and not required.
 
 We recommend using this configuration, as critical services should be distributed to multiple zones to minimize downtime.
 
@@ -203,7 +203,7 @@ You can read more about this [in the official documentation](https://kubernetes.
 ## Pod Disruption Budget
 
 [Pod Disruption Budgets](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) are critical for any production deployment of an application. It enforces so that there are always a set amount of replicas of an application running. There is a risk that an application will during a short period of time have zero replicas
-running without if a Pod Disruption Budget has not been defined. XKS depends heavily on the existence of Pod Disruption Budgets to make sure that a cluster node pool can be scaled safely and upgrades can be applied to node pools without involving individual developers. During these types of event multiple Nodes will be drained.
+running without if a Pod Disruption Budget has not been defined. XKF depends heavily on the existence of Pod Disruption Budgets to make sure that a cluster node pool can be scaled safely and upgrades can be applied to node pools without involving individual developers. During these types of event multiple Nodes will be drained.
 The Node will block any new Pods from being scheduled to it and start evicting all existing Pods running the Node during a drain. Without a Pod Disruption Budget all Pods belonging to the same Deployment may be stopped at the same time, before any new Pods have had the time to start. With a Pod Disruption Budget a limited
 amount of Pods will be stopped, and then started on a new Node. Eviction will continue with the remaining Pods after the new Pods are running and passed their readiness probe. This documentation is only relevant for applications that are deployed with multiple replicas. It is not possible to create a Pod Disruption Budget for
 a single replica application, one has to assume that downtime will most likely happen and an application is deployed as a single replica.
@@ -258,7 +258,7 @@ The Kubernetes scheduler will out of the box treat each Pod with the same priori
 scheduling duration may increase if multiple Horizontal Pod Autoscalers were to increase the replica count at the same time, as new Nodes would have to be provisioned first. In this case the queue would grow while waiting for more capacity in the cluster. Some applications may be more critical than others for the survival
 of a product. Waiting for the applications turn may not be the optimal solution if other applications have no problem waiting a bit longer to start running.
 
-Setting Priority Class to a Pod can help the scheduler decide which Pods are more important and should be assigned to a Node first. In XKS there are three Priority Classes available.
+Setting Priority Class to a Pod can help the scheduler decide which Pods are more important and should be assigned to a Node first. In XKF there are three Priority Classes available.
 
 * `tenant-low`
 * `tenant-medium`

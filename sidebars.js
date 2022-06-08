@@ -10,57 +10,57 @@ module.exports = {
       "items": [
         {
           "type": "doc",
-          "id": "xks/index"
+          "id": "xkf/index"
         },
         {
           "type": "doc",
-          "id": "xks/architecture-and-design",
+          "id": "xkf/architecture-and-design",
 
         },
         {
           "type": "category",
           "label": "Developer Guide",
           "items": [
-            "xks/developer-guide/introduction",
-            "xks/developer-guide/best-practices",
-            "xks/developer-guide/secrets-management",
-            "xks/developer-guide/cloud-iam",
-            "xks/developer-guide/container-security",
+            "xkf/developer-guide/introduction",
+            "xkf/developer-guide/best-practices",
+            "xkf/developer-guide/secrets-management",
+            "xkf/developer-guide/cloud-iam",
+            "xkf/developer-guide/container-security",
             {
               "type": "category",
               "label": "CI/CD",
               "items": [
-                "xks/developer-guide/ci-cd/ci",
-                "xks/developer-guide/ci-cd/cd",
-                "xks/developer-guide/ci-cd/gitops",
-                "xks/developer-guide/ci-cd/flux",
+                "xkf/developer-guide/ci-cd/ci",
+                "xkf/developer-guide/ci-cd/cd",
+                "xkf/developer-guide/ci-cd/gitops",
+                "xkf/developer-guide/ci-cd/flux",
               ]
             },
-            "xks/developer-guide/scheduling-scaling",
-            "xks/developer-guide/observability",
-            "xks/developer-guide/networking",
-            "xks/developer-guide/wsl2",
-            "xks/developer-guide/reports",
+            "xkf/developer-guide/scheduling-scaling",
+            "xkf/developer-guide/observability",
+            "xkf/developer-guide/networking",
+            "xkf/developer-guide/wsl2",
+            "xkf/developer-guide/reports",
           ]
         },
         {
           "type": "category",
           "label": "Operator Guide",
           "items": [
-            "xks/operator-guide/index",
-            "xks/operator-guide/getting-started",
-            "xks/operator-guide/agents",
-            "xks/operator-guide/networking",
-            "xks/operator-guide/blast-radius",
-            "xks/operator-guide/blue-green",
-            "xks/operator-guide/aws-azdo",
-            "xks/operator-guide/github",
+            "xkf/operator-guide/index",
+            "xkf/operator-guide/getting-started",
+            "xkf/operator-guide/agents",
+            "xkf/operator-guide/networking",
+            "xkf/operator-guide/blast-radius",
+            "xkf/operator-guide/blue-green",
+            "xkf/operator-guide/aws-azdo",
+            "xkf/operator-guide/github",
             {
               "type": "category",
               "label": "Kubernetes",
               "items": [
-                "xks/operator-guide/kubernetes/aks",
-                "xks/operator-guide/kubernetes/eks",
+                "xkf/operator-guide/kubernetes/aks",
+                "xkf/operator-guide/kubernetes/eks",
               ]
             }
           ]

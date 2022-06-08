@@ -3,16 +3,16 @@ id: cloud-iam
 title: Cloud IAM
 ---
 
-Sometimes applications will need to integrate with other cloud resources as they require things like persistent data storage. When working with XKS each namespace is accompanied by an Azure resource
+Sometimes applications will need to integrate with other cloud resources as they require things like persistent data storage. When working with XKF each namespace is accompanied by an Azure resource
 group or an AWS account. This is where cloud resources can be created by each tenant. To keep things simple it may be a good idea to not share these resources across multiple tenants, as one of the
-tenants has to own each resource. Instead look at other options like exposing an API inside the cluster instead. As one may expect the authentication methods differ when running XKS in Azure and AWS,
+tenants has to own each resource. Instead look at other options like exposing an API inside the cluster instead. As one may expect the authentication methods differ when running XKF in Azure and AWS,
 this is because the APIs and underlying authentication methods differ greatly. It is important to take this into consideration when reading this documentation.
 
 ## Cloud Providers
 
 ### Azure
 
-The recommended way to authenticate towards Azure in XKS is to make use of [AAD Pod Identity](https://github.com/Azure/aad-pod-identity) which runs inside the cluster. AAD Pod Identity allows Pods
+The recommended way to authenticate towards Azure in XKF is to make use of [AAD Pod Identity](https://github.com/Azure/aad-pod-identity) which runs inside the cluster. AAD Pod Identity allows Pods
 within the cluster to use [managed identities](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview) to authenticate towards Azure. This removes the need
 for static credentials that have to be passed to the Pods. It works by intercepting API requests before they leave the cluster and will attach the correct credential based on the source Pod of the
 request.
@@ -121,7 +121,7 @@ TBD
 
 ### AWS
 
-When authenticating towards AWS in XKS we recommend using [IAM Roles for Service Accounts](https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/setting-up-enable-IAM.html) (IRSA). IRSA
+When authenticating towards AWS in XKF we recommend using [IAM Roles for Service Accounts](https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/setting-up-enable-IAM.html) (IRSA). IRSA
 works by intercepting AWS API calls before leaving the cluster and appending the correct authentication token to the request. This removes the need for static security credentials as it is handled
 outside the app. IRSA works by annotating a Service Account with a reference to a specfic AWS IAM role. When that Service Account is attached to a Pod, the Pod will be able to assume the IAM role.
 The reason IRSA works in a multi-tenant cluster is because the reference is multi-directional. The Service Account has to specify the full role ARN it wants to assume and the IAM role has to specify
