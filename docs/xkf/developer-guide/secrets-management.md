@@ -5,7 +5,7 @@ title: Secrets Management
 
 Secrets management is an important feature when building secure products. Access to secrets should be limited, and it should be easy to rotate them when required. It becomes a requirement when working with
 GitOps as secrets can and should not be committed to a git repository. This means that secrets have to be loaded from another source separate from the manifests, but before the application is started.
-To solve this problem XKS makes use of the [Secret Store CSI Driver](https://secrets-store-csi-driver.sigs.k8s.io/providers.html) project when running in both Azure and AWS. The CSI driver creates an
+To solve this problem XKF makes use of the [Secret Store CSI Driver](https://secrets-store-csi-driver.sigs.k8s.io/providers.html) project when running in both Azure and AWS. The CSI driver creates an
 entrypoint so that secrets store services in cloud providers can be read as Kubernetes volumes. The project works in a similar way in both Azure and AWS but there are some configuration differences
 as the service that stores the secrets is different.
 
@@ -372,8 +372,8 @@ A Pod will get the latest version of the Secret Provider Class when started. The
 updated as this would require the application to be able to restart the process and read the file instead. The Pod will not receive the new value until a new instance of the Pod is created. This could
 become annoying for situations where the secret value may change often or there are a lot of secrets being read.
 
-The solution in XKS is to configure the Secret Provider Class to annotate the Pod to be recreated when the Secret value is updated. The Pod recreation is done with the
-[Reloader](https://github.com/stakater/Reloader) project which is present in all XKS clusters. Reloader works by adding an annotation with the key `secret.reloader.stakater.com/reload`, where the value
+The solution in XKF is to configure the Secret Provider Class to annotate the Pod to be recreated when the Secret value is updated. The Pod recreation is done with the
+[Reloader](https://github.com/stakater/Reloader) project which is present in all XKF clusters. Reloader works by adding an annotation with the key `secret.reloader.stakater.com/reload`, where the value
 is the name of the secret. If you need to recreate your Pod when any of multiple secrets are changed, use comma-separated values:
 
 ```yaml

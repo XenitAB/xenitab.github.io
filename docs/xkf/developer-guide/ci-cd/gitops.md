@@ -1,6 +1,6 @@
 ---
 id: gitops
-title: GitOps a la XKS
+title: GitOps a la XKF
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
@@ -9,9 +9,9 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 > GitOps works by using Git as a single source of truth for declarative infrastructure and applications. With GitOps, the use of software agents can alert on any divergence between Git and what is running in [an environment]. If there is a difference, Kubernetes reconcilers automatically update or rollback the cluster depending on what is appropriate. &dash; _[Weave Works - Guide To GitOps](https://www.weave.works/technologies/gitops/)_
 
-XKS supports GitHub and Azure DevOps with almost identical workflows. XKF refers to these as Git providers. For simplicity, we refer to their CI/CD automation as "pipelines". If you are using GitHub, whenever this text refers to "pipeline", think "GitHub Actions workflow". As you saw in the previous section, XKS comes with a set of pipelines that automatically detects app releases and promotes them through a series of environments. The allows both rapid iteration and strong validation of apps.
+XKF supports GitHub and Azure DevOps with almost identical workflows. XKF refers to these as Git providers. For simplicity, we refer to their CI/CD automation as "pipelines". If you are using GitHub, whenever this text refers to "pipeline", think "GitHub Actions workflow". As you saw in the previous section, XKF comes with a set of pipelines that automatically detects app releases and promotes them through a series of environments. The allows both rapid iteration and strong validation of apps.
 
-XKS is built around [trunk-based development](https://trunkbaseddevelopment.com/).
+XKF is built around [trunk-based development](https://trunkbaseddevelopment.com/).
 
 ## User story: Emilia updates an app
 
@@ -36,7 +36,7 @@ The `dev` and `qa` environments have `auto: true` which means that new releases 
 
 The flow is fully automatic and is triggered by the container image upload.
 
-<img alt="Apply to dev" src={useBaseUrl("img/assets/xks/developer-guide/developer-flow-apply-dev.jpg")} />
+<img alt="Apply to dev" src={useBaseUrl("img/assets/xkf/developer-guide/developer-flow-apply-dev.jpg")} />
 
 1. The <img src={useBaseUrl("img/gitops/acr-icon.png")} style={{width: '1em'}} /> / <img src={useBaseUrl("img/gitops/ecr-icon.png")} style={{width: '1em'}} /> container image upload triggers a pipeline in the GitOps repository that runs the <img src={useBaseUrl("img/gitops/devops-icon.png")} style={{width: '1em'}} /> / <img src={useBaseUrl("img/gitops/github-icon.png")} style={{width: '1em'}} /> [gitops-promotion new](https://github.com/XenitAB/gitops-promotion#gitops-promotion-new) command. It pushes a new branch and updates the `dev` environment manifest for the app with the new tag. It then opens an "auto-merging" pull request to integrate the new tag into the main branch.
 1. The <img src={useBaseUrl("img/gitops/pr-icon.png")} style={{width: '1em'}} /> pull request triggers another pipeline that runs <img src={useBaseUrl("img/gitops/devops-icon.png")} style={{width: '1em'}} /> / <img src={useBaseUrl("img/gitops/github-icon.png")} style={{width: '1em'}} /> [gitops-promotion status](https://github.com/XenitAB/gitops-promotion#gitops-promotion-new) command. Since `dev` is the first environment in the list, it does nothing and reports success.
@@ -46,7 +46,7 @@ The flow is fully automatic and is triggered by the container image upload.
 
 ### Applying to qa
 
-<img alt="Apply to qa" src={useBaseUrl("img/assets/xks/developer-guide/developer-flow-apply-qa.jpg")} />
+<img alt="Apply to qa" src={useBaseUrl("img/assets/xkf/developer-guide/developer-flow-apply-qa.jpg")} />
 
 1. Merging a promotion to the main branch triggers a pipeline in the GitOps repository that runs the [gitops-promotion promote](https://github.com/XenitAB/gitops-promotion#gitops-promotion-promote) command. Like `new`, it creates a branch and updates the `qa` environment manifest for the app with the new tag. Because the configuration for this environment says `auto: true` it creates an auto-merging pull request.
 1. As before, this new pull request triggers another pipeline that runs the `status` command. This time there is a previous environment and the status command reads the Flux commit status for that environment. Since Flux managed to apply the change in `dev` the `status` command reports success.
@@ -58,7 +58,7 @@ Emilia's team has configured Flux to notify them when updates fail and so Emilia
 
 ### Application to prod is blocked
 
-<img alt="Apply to prod" src={useBaseUrl("img/assets/xks/developer-guide/developer-flow-apply-prod-blocked.jpg")} />
+<img alt="Apply to prod" src={useBaseUrl("img/assets/xkf/developer-guide/developer-flow-apply-prod-blocked.jpg")} />
 
 The workflow for applying to `prod` is similar to that of `qa` above, but since Flux reported failure when applying the update to `qa`, the pipeline running the `status` command will fail and the Git provider will block merging of the pull request.
 
@@ -66,6 +66,6 @@ Seeing that the rollout failed, Emilia investigates and realizes that the releas
 
 ### Second attempt applying to prod
 
-<img alt="Apply to prod" src={useBaseUrl("img/assets/xks/developer-guide/developer-flow-apply-prod-success.jpg")} />
+<img alt="Apply to prod" src={useBaseUrl("img/assets/xkf/developer-guide/developer-flow-apply-prod-success.jpg")} />
 
 Emilia's updated app with database migration is successfully applied, first to the `dev` environment and then to the `qa` environment. The `status` check for the pull request against `prod` turns green and the pull request can be merged. Since the configuration says `auto: false`, the pull request is not automatically merged. Emilia can now verify the update in the `qa` environment and then merge the pull request through the Git provider's user interface.

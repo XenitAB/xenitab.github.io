@@ -24,13 +24,13 @@ Go to pipelines -> New pipeline -> Azure Repos Git -> azure-devops-templates -> 
 
 Import the pipeline from the following path: `/.ci/pipeline.yaml`
 
-### Setup XKS
+### Setup XKF
 
-In this case we will only setup a single XKS cluster in one environment, in our case dev. It is easy to add more environments when you have created your first one.
+In this case we will only setup a single XKF cluster in one environment, in our case dev. It is easy to add more environments when you have created your first one.
 
 At Xenit we are using Terraform modules that we share [upstream](https://github.com/XenitAB/terraform-modules)
 
-To setup XKS we will utilize 4 modules:
+To setup XKF we will utilize 4 modules:
 
 - governance-global
 - governance-regional
@@ -231,7 +231,7 @@ az ad sp create --id ${AZ_APP_OBJECT_ID}
 Grant the service principal additional permissions in the App Registration. The permissions `Group.ReadWrite.All` and `Application.ReadWrite.All` in Microsoft Graph should be added. After the
 permissions are added grant admin consent for the Tenant.
 
-Make the service principal `Owner` of all the XKS subscriptions. This is done in the IAM settings of each individual subscription. Additionaly the service principal also needs to be member of the User
+Make the service principal `Owner` of all the XKF subscriptions. This is done in the IAM settings of each individual subscription. Additionaly the service principal also needs to be member of the User
 administrator role.
 
 Create three Azure AD groups. These will be used to assing users a owner, contributor, or reader role for all resources..
@@ -290,7 +290,7 @@ Project settings -> Service connections -> New service connection -> Azure Resou
 
 Update the variable `azureSubscriptionTemplate`. You can find the value under Project settings -> Service Connections
 
-<img alt="Service Connections" src={useBaseUrl("img/assets/xks/operator-guide/project_settings.png")} />
+<img alt="Service Connections" src={useBaseUrl("img/assets/xkf/operator-guide/project_settings.png")} />
 
 In my case `sp-sub-project1-xks`:
 
@@ -335,11 +335,11 @@ To make it possible for flux to clone repos from azure devops we need to create 
 
 User Settings -> Personal access tokens -> New Token
 
-<img alt="Settings user" src={useBaseUrl("img/assets/xks/operator-guide/settings_user.png")} />
+<img alt="Settings user" src={useBaseUrl("img/assets/xkf/operator-guide/settings_user.png")} />
 
 Create a PAT
 
-<img alt="Create PAT" src={useBaseUrl("img/assets/xks/operator-guide/create_pat.png")} />
+<img alt="Create PAT" src={useBaseUrl("img/assets/xkf/operator-guide/create_pat.png")} />
 
 Copy the generated key, we will need it for the next step.
 
@@ -369,15 +369,15 @@ In the Azure portal search for "Key vaults" and pick the core one that matches t
 
 Key vaults -> core-1234 -> Secrets -> Generate/Import
 
-<img alt="Azure Key Vaults" src={useBaseUrl("img/assets/xks/operator-guide/azure_key_vault.jpg")} />
+<img alt="Azure Key Vaults" src={useBaseUrl("img/assets/xkf/operator-guide/azure_key_vault.jpg")} />
 
 Call the secret `azure-devops-pat` and add the PAT key that you created in the previous step.
 
 ## Admin and developer access
 
-Hopefully you should now have one XKS cluster up and running, but currently no developer can actually reach the cluster.
+Hopefully you should now have one XKF cluster up and running, but currently no developer can actually reach the cluster.
 
-In XKF we see clusters as cattle and at any time we can decide to recreate an XKS cluster.
+In XKF we see clusters as cattle and at any time we can decide to recreate an XKF cluster.
 To be able to do this without our developers even knowing we use blue green clusters. TODO write a document on how blue green clusters works and link.
 We use GitOps together with DNS to be able to migrate applications without any impact to end-users assuming that our developers have written 12 step applications.
 To store state we utilize the cloud services available in the different clouds that XKF supports.
@@ -386,7 +386,7 @@ To make sure that our developers do not notice when we change our the cluster we
 
 ### Azure AD Kubernetes Proxy
 
-AZAD as we also call it, is a deployment that runs inside XKS and sits in front of the Kubernetes API.
+AZAD as we also call it, is a deployment that runs inside XKF and sits in front of the Kubernetes API.
 
 We also supply a krew/kubectl plugin to make it easy for our developers to use AZAD.
 For instructions on how to setup and configure this [see](https://github.com/XenitAB/azad-kube-proxy).
@@ -464,7 +464,7 @@ If you already have a rolebinding where a existing UUID exist you can run the fo
 
 ### Authorized IPs
 
-To minimize the exposure of the XKS clusters we define a list of authorized IP:s that is approved to connect the Kubernetes cluster API.
+To minimize the exposure of the XKF clusters we define a list of authorized IP:s that is approved to connect the Kubernetes cluster API.
 
 We need to approve multiple infrastructure networks and user networks.
 

@@ -49,7 +49,7 @@ Pipelines -> "pipeline-you-want-to-run" -> Run pipeline -> Variables -> Add vari
 
 Add `opaBlastRadius=51`, it should look something like this:
 
-<img alt="Blast Radius" src={useBaseUrl("img/assets/xks/operator-guide/opaBlastRadius.png")} />
+<img alt="Blast Radius" src={useBaseUrl("img/assets/xkf/operator-guide/opaBlastRadius.png")} />
 
 To start the job you have to push "<-" and Run.
 

@@ -11,12 +11,12 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 In the terminology of [Microsoft Cloud Adoption Framework](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/architecture) (CAF), Xenit Kubernetes Service is an enterprise-scale landing zone. Additionally, the workload supports multiple cloud providers and AWS is also supported at the moment (but still requires the governance part in Azure).
 
-<img alt="XKS Overview" src={useBaseUrl("img/assets/xks/operator-guide/aks-overview.jpg")} />
+<img alt="XKF Overview" src={useBaseUrl("img/assets/xkf/operator-guide/aks-overview.jpg")} />
 
 ### Glossary
 
 - Platform team: the team managing the platform (XKF)
-- Tenant: A group of people (team/project/product) at the company using XKS
+- Tenant: A group of people (team/project/product) at the company using XKF
 
 ## Role-based access management
 
@@ -76,7 +76,7 @@ Other than that, most of the access and work with the tenant resources are done 
 
 By default, the network setup is expected to be quite autonomous and usually considered to be an external service compared to everything else in the organization using it. It is possible to setup peering with internal networks, but usually it begins with a much simpler setup and then grows organically when required.
 
-<img alt="XKS Simple Network Design" src={useBaseUrl("img/assets/xks/operator-guide/simple-network-design.jpg")} />
+<img alt="XKF Simple Network Design" src={useBaseUrl("img/assets/xkf/operator-guide/simple-network-design.jpg")} />
 
 The cluster environments are completely separated from each other, but a hub in the production subscription has a peering with them to provide static IP-addresses for CI/CD like terraform to access resources.
 
@@ -104,10 +104,10 @@ Most of the management of the workloads that the tenants deploy are handled thro
 
 ## Xenit Kubernetes Framework
 
-XKF is set up from a set of Terraform modules that when combined creates the full XKS service. There are multiple individual states that all fulfill their own purpose and build
+XKF is set up from a set of Terraform modules that when combined creates the full XKF service. There are multiple individual states that all fulfill their own purpose and build
 upon each other in a hierarchical manner. The first setup requires applying the Terraform in the correct order, but after that ordering should not matter. Separate states are used
 as it allows for a more flexible architecture that could be changed in parallel.
-<img alt="XKS Overview" src={useBaseUrl("img/assets/xks/operator-guide/aks-overview.jpg")} />
+<img alt="XKF Overview" src={useBaseUrl("img/assets/xkf/operator-guide/aks-overview.jpg")} />
 
 The AKS Terraform contains three modules that are used to setup a Kubernetes cluster. To allow for blue/green deployments of AKS clusters resources have to be split up into
 global resources that can be shared between the clusters, and cluster-specific resources.
@@ -117,4 +117,4 @@ The aks-global module contains the global resources like ACR, DNS and Azure AD c
 The aks and aks-core module creates an AKS cluster and configures it. This cluster will have a suffix, normally a number to allow for temporarily creating multiple clusters
 when performing a blue/green deployment of the clusters. Namespaces will be created in the cluster for each of the configured tenants. Each namespace is linked to a resource
 group in Azure where namespace resources are expected to be created.
-<img alt="AKS Resource Groups" src={useBaseUrl("img/assets/xks/operator-guide/aks-rg-xks-overview.jpg")} />
+<img alt="AKS Resource Groups" src={useBaseUrl("img/assets/xkf/operator-guide/aks-rg-xks-overview.jpg")} />
