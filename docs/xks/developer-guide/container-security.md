@@ -359,3 +359,9 @@ Report:
 ```
 
 The presence of a vulnerability does not mean that a patched version exists yet, or even that the image is inherently insecure. The vulnerability may affect components that are not used or have low risk to being exposed. It is however important to be conscious of the vulnerabilities that exist and consider future work to take responsibility for fixing them. Refer to the [official Starboard documentation](https://aquasecurity.github.io/starboard/latest/faq) for more specific documentation.
+
+## Pod max PID
+
+To make sure that a single pod can't take down a whole server aks noisy neighbours, we have set a max limit on how many PID:s a single pod can utilize.
+The max value is today [1000](https://github.com/XenitAB/terraform-modules/blob/a0679d05b4509aaac115bc282c1e289bad166991/modules/azure/aks/aks.tf#L90-L92),
+if you have a need to use more than 1000 PID:s **per** pod. Please feel free to reach out and we will discuss how to solve it.
