@@ -362,7 +362,7 @@ The presence of a vulnerability does not mean that a patched version exists yet,
 
 ## Pod max PID
 
-XKF has set a maximum limit on how many PIDs a single Pod can utilize. This is to make sure that any Pod can't cause [CPU starvation](https://en.wikipedia.org/wiki/Starvation_(computer_science)) for other Pods by consuming all available PIDs on the host OS.
+XKF has set a maximum limit on how many PIDs a single Pod can utilize. This is to make sure that a Pod can't cause [PID starvation](https://en.wikipedia.org/wiki/Starvation_(computer_science)) for other Pods by consuming all available PIDs on the host OS.
 
 The max value today is [1000](https://github.com/XenitAB/terraform-modules/blob/a0679d05b4509aaac115bc282c1e289bad166991/modules/azure/aks/aks.tf#L90-L92).
 Configuration changes on cluster level have to be made in the case where a Pod requires more than 1000 PIDs.
