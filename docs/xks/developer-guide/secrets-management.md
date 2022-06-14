@@ -21,7 +21,7 @@ volume which can be mounted in a Pod, it can additionally be configured to be wr
 The `objects` field contains a list of references to the secret in the secret store. The object name is the name of the secret in for example Azure KeyVault or AWS Secrets Manager.
 
 ```yaml
-apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
   name: foo
@@ -170,7 +170,7 @@ Key Vault and the tenant id where the CSI Driver can find the secret. Additional
 AAD Pod Identity.
 
 ```yaml
-apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
   name: connection-string-test
@@ -303,7 +303,7 @@ After the IAM role and policy have been created a Secret Provider Class has to b
 the name as the file name, which would cause issues as this is not permitted in Linux. The solution is to give the secret an alias instead.
 
 ```yaml
-apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
   name: connection-string-test
@@ -385,7 +385,7 @@ secret.reloader.stakater.com/reload: "foo,bar"
 Below is an example of creating a Service Provider Class which also creates a Kubernetes Secret, there is no need to actually use the created secret but in the example below it is mounted as an environment variable.
 
 ```yaml
-apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
   name: application
