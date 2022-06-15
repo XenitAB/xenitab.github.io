@@ -129,53 +129,9 @@ The update is finished when status is `Successful`. Previous updates have taken 
 
 In the `aws-eks/variables/<environment>.tfvars` Terraform file that corresponds to the actual environment, update the `kubernetes_version` in `eks_config` and make a `terraform plan`. No difference in the plan output is expected. Also perform a `terraform apply` just to make sure state the state is updated (might not be needed).
 
-### Update the control plane using Terrafrom
+### Update the control plane using Terraform
 
 TBD
-
-### Update the addons
-
-The addons to be updated are `coredns` and `kube-proxy`. Can be verified with:
-
-```bash
-aws eks list-addons --region eu-west-1 --cluster-name <cluster-name>
-```
-
-The current addon version can be found by:
-
-```bash
-aws eks describe-addon --region eu-west-1  --cluster-name <cluster-name>  --addon-name <addon-name>
-```
-
-The version to update to can be found by:
-
-```bash
-aws eks describe-addon-versions --region eu-west-1 --kubernetes-version <version> --addon-name <addon-name>
-```
-
-The addons are updated with:
-
-```bash
-aws eks update-addon --region eu-west-1 --cluster-name <cluster-name> --addon-name <name> --addon-version <version> --resolve-conflicts OVERWRITE
-```
-
-Check that the status of new addon vestion is `ACTIVE`:
-
-```bash
-aws eks describe-addon --region eu-west-1  --cluster-name <cluster-name>  --addon-name  <name>
-```
-
-The corresponding Pods can be checked by:
-
-```bash
-kubectl get pods -n kube-system
-```
-
-Also perform a health check:
-
-```bash
-https://ingress-healthz.<environment>.<customer>.se/
-```
 
 ### Update the nodes
 
@@ -213,7 +169,7 @@ kubectl get nodes
 Now it is time to drain the old nodes one by one with:
 
 ```bash
-kubectl drain <node-name> --ignore-daemonsets --delete-local-data
+kubectl drain <node-name> --ignore-daemonsets --delete-emptydir-data
 ```
 
 When all nodes are drained, remove the old node group in `eks_config`. From the example above:
@@ -246,17 +202,6 @@ Control plane:
 aws eks list-clusters --region eu-west-1
 aws eks update-cluster-version --region eu-west-1  --name qa-eks2  --kubernetes-version 1.21
 aws eks describe-update --region eu-west-1 --name qa-eks2 --update-id 25b9f04f-0be3-40ca-bc37-aaf841070012
-```
-
-Addons:
-
-```bash
-aws eks describe-addon-versions --kubernetes-version 1.21 --addon-name coredns
-aws eks update-addon --cluster-name qa-eks2 --addon-name coredns --addon-version v1.8.4-eksbuild.1 --resolve-conflicts OVERWRITE
-aws eks describe-addon  --region eu-west-1  --cluster-name qa-eks2  --addon-name coredns
-aws eks describe-addon-versions --kubernetes-version 1.21 --addon-name kube-proxy
-aws eks update-addon --cluster-name qa-eks2 --addon-name kube-proxy --addon-version v1.21.2-eksbuild.2 --resolve-conflicts OVERWRITE
-aws eks describe-addon --region eu-west-1  --cluster-name qa-eks2  --addon-name kube-proxy
 ```
 
 ## Break glass
