@@ -223,7 +223,7 @@ Create the new service principal. It should have a name with the format `sp-sub-
 
 ```shell
 AZ_APP_NAME="sp-sub-<subscription_name>-all-owner"
-AZ_APP_ID=$(az ad app create --display-name ${AZ_APP_NAME} --query appId -o tsv)
+AZ_APP_ID=$(az ad app create --display-name ${AZ_APP_NAME} --sign-in-audience AzureADMyOrg --query appId -o tsv)
 AZ_APP_OBJECT_ID=$(az ad app show --id ${AZ_APP_ID} --output tsv --query objectId)
 az ad sp create --id ${AZ_APP_OBJECT_ID}
 ```
