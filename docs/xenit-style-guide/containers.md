@@ -3,7 +3,7 @@ id: containers
 title: Containers
 ---
 
-This page documents best practices when publishing open source applications that are meant to run in Kubernetes. Refer to the [developer guide](./xks/developer-guide/introduction) for documentation about how to run and manage applications in Kubernetes.
+This page documents best practices when publishing open source applications that are meant to run in Kubernetes. Refer to the [developer guide](../xks/developer-guide/introduction) for documentation about how to run and manage applications in Kubernetes.
 
 ## Docker
 
@@ -36,6 +36,6 @@ jobs:
         run: |
           cd charts
           helm registry login -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
-          helm package --app-version ${{ steps.get_tag.outputs.tag }} --version ${{ steps.get_tag.outputs.tag }} node-ttl 
+          helm package --app-version ${{ steps.get_tag.outputs.tag }} --version ${{ steps.get_tag.outputs.tag }} node-ttl
           helm push node-ttl-${{ steps.get_tag.outputs.tag }}.tgz oci://ghcr.io/xenitab/helm-charts
 ```
