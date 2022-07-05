@@ -7,7 +7,7 @@ Golang (Go) is one of the most common languages at Xenit especially for backend 
 
 ## HTTP
 
-Go has a standard library which includes an HTTP server, but it usually does not fullfill all requirements. For this reason the prefered HTTP library to be used at Xenit is [go-gin](https://github.com/gin-gonic/gin). It provides certain extensions such as pathb parameters and middleware which developers are acustomed to in other programming languages.
+Go has a standard library which includes an HTTP server, but it usually does not fulfill all requirements. For this reason the preferred HTTP library to be used at Xenit is [go-gin](https://github.com/gin-gonic/gin). It provides certain extensions such as path parameters and middleware which developers are accustomed to in other programming languages.
 
 ## Logging
 
