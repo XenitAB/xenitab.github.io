@@ -8,6 +8,7 @@ all: install-site build
 assets:
 	docker run --rm -it -v $(PWD):/data rlespinasse/drawio-export:4.1.0 -s 3 -b 10 -f jpg --remove-page-suffix -o /data/static/img/assets/xks/operator-guide/ /data/assets/xks/operator-guide/
 	docker run --rm -it -v $(PWD):/data rlespinasse/drawio-export:4.1.0 -s 3 -b 10 -f jpg --remove-page-suffix -o /data/static/img/assets/xks/developer-guide/ /data/assets/xks/developer-guide/
+	docker run --rm -it -v $(PWD):/data rlespinasse/drawio-export:4.1.0 -s 3 -b 10 -f jpg --remove-page-suffix -o /data/static/img/assets/xenit-style-guide/ /data/assets/xenit-style-guide/
 
 .SILENT:
 serve: all
