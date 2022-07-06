@@ -22,6 +22,56 @@ func main() {
 
 ## Metrics
 
+The [ginmetrics](https://github.com/penglongli/gin-metrics) library can be used to export metrics for Prometheus when using the gin HTTP server. The example below sets up a two gin servers, one user-facing on port `8080` and one exposing metrics on port `8081`. Now, after visiting `http://localhost:8080/increment-counter`, the value of `my_counter` can be seen on `http://localhost:8081/metrics` together with some default metrics.
+
+```go
+import (
+    "github.com/gin-gonic/gin"
+    "github.com/penglongli/gin-metrics/ginmetrics"
+)
+
+func main() {
+    apiRouter := gin.Default()
+
+    // Add a route that increments the counter `my_counter`
+    apiRouter.GET("/increment-counter", func(c *gin.Context) {
+        _ = ginmetrics.GetMonitor().GetMetric("my_counter").Inc([]string{"label1-value"})
+        c.JSON(200, gin.H{"message": "Incremented counter `my_counter`"})
+    })
+
+    // Get the global metrics monitor
+    monitor := ginmetrics.GetMonitor()
+
+    // Set the metrics path, the default is /debug/metrics
+    monitor.SetMetricPath("/metrics")
+
+    // Let the api router use the metrics server without exposing the metrics
+    // path on the same port. This is useful to not expose the metrics to the
+    // user.
+    monitor.UseWithoutExposingEndpoint(apiRouter)
+
+    // Create and add a counter
+    counter := &ginmetrics.Metric{
+        Type:        ginmetrics.Counter,
+        Name:        "my_counter",
+        Description: "description of counter",
+        Labels:      []string{"label1"},
+    }
+    monitor.AddMetric(counter)
+
+    // Create a metrics router and add the metric path to it
+    metricsRouter := gin.New()
+    monitor.Expose(metricsRouter)
+
+    go func() {
+        apiRouter.Run("localhost:8080")
+    }()
+
+    // Run the metrics server on a separate port
+    metricsRouter.Run("localhost:8081")
+}
+```
+
 ## Configuration
 
 ## Tracing
