@@ -74,6 +74,7 @@ module.exports = {
       "items": [
         "xenit-style-guide/containers",
         "xenit-style-guide/golang",
+        "xenit-style-guide/javascript",
       ]
     },
     {
