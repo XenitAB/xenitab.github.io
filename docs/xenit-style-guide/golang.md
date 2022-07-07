@@ -13,10 +13,40 @@ Go has a standard library which includes an HTTP server, but it usually does not
 
 ## Logging
 
+To log all requests that are done to a gin HTTP server, the [ginlogr](https://github.com/alron/ginlogr) middleware can be used, see example code below. It is unfortunately not possible to configure the fields that `ginlogr` logs.
+
 ```go
+// Taken from https://github.com/alron/ginlogr
 func main() {
+    r := gin.New()
+    // We use zap and zapr here, but you can really use any of the loggers
+    // supported by logr
+    zl, _ := zap.NewProduction()
+    logger := zapr.NewLogger(zl)
 
+    // Add a ginlogr middleware, which:
+    //   - Logs all requests, like a combined access and error log.
+    //   - Logs to stdout.
+    //   - RFC3339 with UTC time format.
+    r.Use(ginlogr.Ginlogr(logger, time.RFC3339, true))
 
+    // Logs all panic to error log
+    //   - RFC3389 with UTC time format.
+    //   - stack means whether output the stack info.
+    r.Use(ginlogr.RecoveryWithLogr(logger, time.RFC3339, true, true))
+
+    // Example ping request.
+    r.GET("/ping", func(c *gin.Context) {
+        c.String(200, "pong "+fmt.Sprint(time.Now().Unix()))
+    })
+
+    // Example when panic happen.
+    r.GET("/panic", func(c *gin.Context) {
+        panic("An unexpected error happen!")
+    })
+
+    // Listen and Server in 0.0.0.0:8080
+    r.Run(":8080")
 }
 ```
 
@@ -112,3 +142,37 @@ func main() {
 To add tracing for other http frameworks and libraries, see [Go Compatibility Requirements](https://docs.datadoghq.com/tracing/setup_overview/compatibility_requirements/go/#compatibility).
 
 It is recommended to use [Datadog's Unified Service Tagging](https://docs.datadoghq.com/getting_started/tagging/unified_service_tagging/?tabs=kubernetes), to tag the traces with the environment where the service is run and its name and version. These variables can be set when calling `tracer.Start()` or as environment variables.
+
+### Connect logs and traces
+
+To connect logs and traces, log the span id of the current span. An example of a custom gin middleware logger that uses Datadog as tracing provider is shown below. It adds a `dd` field that holds the trace and span id. Read more on how to connect logs and traces in Datadog [here](https://docs.datadoghq.com/tracing/faq/why-cant-i-see-my-correlated-logs-in-the-trace-id-panel/?tab=custom&tabs=custom).
+
+```go
+type span struct {
+    SpanID  uint64 `json:"span_id"`
+    TraceID uint64 `json:"trace_id"`
+}
+
+func getSpan(c *gin.Context) span {
+    span, _ := tracer.SpanFromContext(c.Request.Context())
+    return span{
+        SpanID: span.Context().SpanID(),
+        TraceID: span.Context().TraceID(),
+    }
+}
+
+func ginlogrWithSpan(logger logr.Logger) gin.HandlerFunc {
+    return func(c *gin.Context) {
+        path := c.Request.URL.Path
+        span := getSpan()
+        // Extract other values to log
+        // ...
+
+        logger.Info(path,
+            // Other fields
+            // ...
+            "dd", span,
+        )
+    }
+}
+```
