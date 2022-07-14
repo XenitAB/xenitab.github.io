@@ -80,6 +80,10 @@ spec:
 
 Check the official [Datadog Tracing Documentation](https://docs.datadoghq.com/agent/kubernetes/apm/?tab=helm) for more detailed information.
 
+To add tracing to Datadog's [Browser Test](https://docs.datadoghq.com/synthetics/browser_tests) results, add the URLs that the browser tests visits under UX Monitoring/Synthetic Settings/Integration Settings. See [Synthetic APM](https://docs.datadoghq.com/synthetics/apm) for more information. You can see a example on how to set this up below. By using a wildcard, multiple endpoints can be traced.
+
+<img alt="Browser Test URLs" src={useBaseUrl("img/assets/xks/developer-guide/browser-test-urls.png")} />
+
 ### Networkpolicy datadog
 
 When using XKF and your cluster has Datadog enabled the tenant namespace will automatically get a networkpolicy that allows egress for tracing and ingress for metrics.
