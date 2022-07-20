@@ -50,6 +50,10 @@ func main() {
 }
 ```
 
+### Datadog
+
+Using the `status` field when logging can interfere with how Datadog interprets the severity of the log. If you have a log with fields `status = 400` and `level = error`, then Datadog reports this as an info log. If you use another field for the status code, for example `http_response.status_code`, together with `level = error`, Datadog will report it as an error log. You can read more about the `status` field and other reserved log fields in Datadog [here](https://docs.datadoghq.com/logs/log_configuration/attributes_naming_convention/#reserved-attributes).
+
 ## Metrics
 
 The [ginmetrics](https://github.com/penglongli/gin-metrics) library can be used to export metrics for Prometheus when using the gin HTTP server. The example below sets up a two gin servers, one user-facing on port `8080` and one exposing metrics on port `8081`. Now, after visiting `http://localhost:8080/increment-counter`, the value of `my_counter` can be seen on `http://localhost:8081/metrics` together with some default metrics.
