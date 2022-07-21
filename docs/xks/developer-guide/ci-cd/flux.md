@@ -117,3 +117,32 @@ NAME       READY   STATUS                                                       
 apps-dev   True    Applied revision: main/9baa401630894b78ecc5fa5ebdf72c978583dea8   47h
 tenant1    True    Applied revision: main/9baa401630894b78ecc5fa5ebdf72c978583dea8   2d2h
 ```
+
+## Helm
+
+You can of course use flux to manage your helm charts.
+
+### Upgrade retries exhausted
+
+For different reasons, the helm release can come into a state of no more retries to apply your helm release. One of the errors that can be shown is `Upgrade retries exhausted`.
+
+```shell
+$ kubectl get helmreleases.helm.toolkit.fluxcd.io
+NAME                            READY   STATUS                             AGE
+app1                            True    Release reconciliation succeeded   14d
+app2                            False   upgrade retries exhausted          14d
+```
+
+After you have debugged and solved the issue you probably want to retrigger the reconciliation of the helmrelease.
+
+```shell
+flux reconcile helmrelease app2 -n tenant1
+```
+
+But due to a [bug](https://github.com/fluxcd/helm-controller/issues/454) it's currently not possible.
+An easy workaround for this is to suspend and resume the helm release.
+
+```shell
+flux suspend hr app2 -n tenant1
+flux resume hr app2 -n tenant1
+```
