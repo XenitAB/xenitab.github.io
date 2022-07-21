@@ -140,7 +140,7 @@ flux reconcile helmrelease app2 -n tenant1
 ```
 
 But due to a [bug](https://github.com/fluxcd/helm-controller/issues/454) it's currently not possible.
-An easy workaround for this is it suspend and resume the helm release.
+An easy workaround for this is to suspend and resume the helm release.
 
 ```shell
 flux suspend hr app2 -n tenant1
