@@ -57,7 +57,7 @@ CPU limits should be treated slightly differently from memory limits. When memor
 
 ## Vertical Pod Autoscaler
 
-Defining a good resource definitions is one of the hardest things that you can do in Kubernetes.
+Defining good resource definitions is one of the hardest things that you can do in Kubernetes.
 To help out with this there is something called [Vertical Pod Autoscaler (VPA)](https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler).
 On XKF VPA is running in `"Off"` mode which only provide resource recommendations instead of change the resource definitions for you.
 VPA uses cpu and memory usage metrics from 8:days back to recommend the resource settings.
