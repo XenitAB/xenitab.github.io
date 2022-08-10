@@ -7,6 +7,72 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 Golang (Go) is one of the most common languages at Xenit especially for backend systems and open source projects. It should be the first language choice when starting a new project.
 
+## Program Input
+
+Go has a lot of options when parsing program input flags and commands. On top of the standard `flag` library there are a bunch of other options out there that do the one or the other, or both. For this reason it is good to standardize on a library to use at Xenit. The most popular libraries at this time are [cobra](https://github.com/spf13/cobra) and by extension [pflag](https://github.com/spf13/pflag). While these libraries may be popular they also introduce a lot of opinion and complexity to the project structure.
+
+A lightweight alternative is [go-arg](https://github.com/alexflint/go-arg) which offers the same feature set in a less opinionated manner. It offers most features that can be needed such as struct mapping, environment variables, default values, descriptions, short and long form, and argument lists. On top of these features it offers support for subcommands which allows for specific arguments which are only expected for specific subcommands.
+
+All flags are defined in a struct which is then populated with the input args. All configuration of the parsing is done through annotations.
+
+```golang
+package main
+
+import (
+	"fmt"
+
+	"github.com/alexflint/go-arg"
+)
+
+type args struct {
+	Id      bool `arg:"-i,--id,env:ID" help:"id input"`
+	Verbose bool `arg:"-v,--verbose,env:VERBOSE" default:"true" help:"verbosity level"`
+}
+
+func main() {
+	a := &args{}
+	arg.MustParse(a)
+	fmt.Printf("%#v\n", a)
+}
+```
+
+Subcommands are useful when there are multiple functions that can be called in the same program.
+
+```golang
+type CheckoutCmd struct {
+	Branch string `arg:"positional"`
+	Track  bool   `arg:"-t"`
+}
+type CommitCmd struct {
+	All     bool   `arg:"-a"`
+	Message string `arg:"-m"`
+}
+type PushCmd struct {
+	Remote      string `arg:"positional"`
+	Branch      string `arg:"positional"`
+	SetUpstream bool   `arg:"-u"`
+}
+var args struct {
+	Checkout *CheckoutCmd `arg:"subcommand:checkout"`
+	Commit   *CommitCmd   `arg:"subcommand:commit"`
+	Push     *PushCmd     `arg:"subcommand:push"`
+	Quiet    bool         `arg:"-q"` // this flag is global to all subcommands
+}
+
+arg.MustParse(&args)
+
+switch {
+case args.Checkout != nil:
+	fmt.Printf("checkout requested for branch %s\n", args.Checkout.Branch)
+case args.Commit != nil:
+	fmt.Printf("commit requested with message \"%s\"\n", args.Commit.Message)
+case args.Push != nil:
+	fmt.Printf("push requested from %s to %s\n", args.Push.Branch, args.Push.Remote)
+}
+```
+
+Refer to the [API Documentation](https://pkg.go.dev/github.com/alexflint/go-arg) for more detailed information.
+
 ## HTTP
 
 Go has a standard library which includes an HTTP server, but it usually does not fulfill all requirements. For this reason the preferred HTTP library to be used at Xenit is [go-gin](https://github.com/gin-gonic/gin). It provides certain extensions such as path parameters and middleware which developers are accustomed to in other programming languages.
@@ -105,8 +171,6 @@ func main() {
     metricsRouter.Run("localhost:8081")
 }
 ```
-
-## Configuration
 
 ## Tracing
 
