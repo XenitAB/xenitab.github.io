@@ -134,7 +134,12 @@ Refer to the [API Documentation](https://pkg.go.dev/github.com/alexflint/go-arg)
 
 ## HTTP
 
-Go has a standard library which includes an HTTP server, but it usually does not fulfill all requirements. For this reason the preferred HTTP library to be used at Xenit is [go-gin](https://github.com/gin-gonic/gin). It provides certain extensions such as path parameters and middleware which developers are accustomed to in other programming languages.
+The Go standard library includes a http package that works well for simple applications, but requires a lot of custom code when building larger projects. While it is fine to just use the standard library for simple applications it is preferable to switch to [Gin](https://github.com/gin-gonic/gin) as project feature requirements develop. Gin provides extra functionality and extensions to simplify things like parsing parameters in the URL path and endpoint authorization. 
+
+Example with shutdown startup
+
+```golang
+```
 
 ## Logging
 
