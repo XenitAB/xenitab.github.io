@@ -7,6 +7,10 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 Golang (Go) is one of the most common languages at Xenit especially for backend systems and open source projects. It should be the first language choice when starting a new project.
 
+## Shared Library
+
+Some code may be best to share between multiple repositories. These shared packages should be stored in [pkg](https://github.com/xenitAB/pkg).
+
 ## Startup and Shutdown
 
 It may seem a bit nit picky to document how a program should startup and shutdown, but it is necissary as there are a lot of resources like blogs which offer a multitude of solutions how it could be implemented. Doing this properly is important to make sure that all incoming messages such as HTTP requests and processed before shutting down, the alternative would be to cancel HTTP request without responding to them. There are generally two event soures which cause a shutdown, either an internal error which requires the program shutdown or an [external signal](https://pkg.go.dev/os/signal) notifying the program to shut down.
@@ -132,57 +136,130 @@ case args.Push != nil:
 
 Refer to the [API Documentation](https://pkg.go.dev/github.com/alexflint/go-arg) for more detailed information.
 
-## HTTP
-
-The Go standard library includes a http package that works well for simple applications, but requires a lot of custom code when building larger projects. While it is fine to just use the standard library for simple applications it is preferable to switch to [Gin](https://github.com/gin-gonic/gin) as project feature requirements develop. Gin provides extra functionality and extensions to simplify things like parsing parameters in the URL path and endpoint authorization. 
-
-Example with shutdown startup
-
-```golang
-```
-
 ## Logging
 
-To log all requests that are done to a gin HTTP server, the [ginlogr](https://github.com/alron/ginlogr) middleware can be used, see example code below. It is unfortunately not possible to configure the fields that `ginlogr` logs.
+The options when logging with Go is usual many and opinionated, they depend on the required output format or how variables are passed. Currently the best compromise out there is [logr](https://github.com/go-logr/logr) which is a logging interface compatible with a lot of logging libraries. This means that the logging library can easily be replaced in the future without having to refactor the whole code base. A main feature of logr is that it supports structured logging, which means that parameters can easily be passed with the log message in a structured manner.  
 
-```go
-// Taken from https://github.com/alron/ginlogr
+:::caution
+Using the `status` field when logging can interfere with how Datadog interprets the severity of the log. If you have a log with fields `status = 400` and `level = error`, then Datadog reports this as an info log. If you use another field for the status code, for example `http_response.status_code`, together with `level = error`, Datadog will report it as an error log. You can read more about the `status` field and other reserved log fields in Datadog [here](https://docs.datadoghq.com/logs/log_configuration/attributes_naming_convention/#reserved-attributes).
+:::
+
+Unless there are any other requirements it is good to use the [zapr](https://github.com/go-logr/zapr) logger. Zapr is fast and will output logs as JSON.
+
+```golang
+package main
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/go-logr/logr"
+	"github.com/go-logr/zapr"
+	"go.uber.org/zap"
+)
+
 func main() {
-    r := gin.New()
-    // We use zap and zapr here, but you can really use any of the loggers
-    // supported by logr
-    zl, _ := zap.NewProduction()
-    logger := zapr.NewLogger(zl)
-
-    // Add a ginlogr middleware, which:
-    //   - Logs all requests, like a combined access and error log.
-    //   - Logs to stdout.
-    //   - RFC3339 with UTC time format.
-    r.Use(ginlogr.Ginlogr(logger, time.RFC3339, true))
-
-    // Logs all panic to error log
-    //   - RFC3389 with UTC time format.
-    //   - stack means whether output the stack info.
-    r.Use(ginlogr.RecoveryWithLogr(logger, time.RFC3339, true, true))
-
-    // Example ping request.
-    r.GET("/ping", func(c *gin.Context) {
-        c.String(200, "pong "+fmt.Sprint(time.Now().Unix()))
-    })
-
-    // Example when panic happen.
-    r.GET("/panic", func(c *gin.Context) {
-        panic("An unexpected error happen!")
-    })
-
-    // Listen and Server in 0.0.0.0:8080
-    r.Run(":8080")
+	zapLog, err := zap.NewProduction()
+	if err != nil {
+		panic(fmt.Sprintf("who watches the watchmen (%v)?", err))
+	}
+	log := zapr.NewLogger(zapLog)
+	log.Info("Logr in action!", "the answer", 42)
 }
 ```
 
-### Datadog
+The logging object should be passed through the context when calling a function that needs to log. This removes the need to add an additional parameter that needs to be tracked.
 
-Using the `status` field when logging can interfere with how Datadog interprets the severity of the log. If you have a log with fields `status = 400` and `level = error`, then Datadog reports this as an info log. If you use another field for the status code, for example `http_response.status_code`, together with `level = error`, Datadog will report it as an error log. You can read more about the `status` field and other reserved log fields in Datadog [here](https://docs.datadoghq.com/logs/log_configuration/attributes_naming_convention/#reserved-attributes).
+```golang
+ctx := logr.NewContext(context.Background(), log)
+run(ctx)
+
+func run(ctx context.Context) {
+	log := logr.FromContextOrDiscard(ctx)
+	log.Info("running function")
+}
+```
+
+## HTTP
+
+The Go standard library includes a http package that works well for simple applications, but requires a lot of custom code when building larger projects. While it is fine to just use the standard library for simple applications it is preferable to switch to [Gin](https://github.com/gin-gonic/gin) as project feature requirements develop. Gin provides extra functionality and extensions to simplify things like parsing parameters in the URL path and endpoint authorization.
+
+The HTTP server should be started and stopped in accordance to the Startup and Shutdown documentation. The HTTP server should be gracefully stopped before the program exits to make sure that all in flight requests are processed. A good practice is to use the [logger middleware](https://github.com/XenitAB/pkg/tree/main/middleware/logger) to log all incoming requests to the HTTP server.
+
+```golang
+package main
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"time"
+
+	"golang.org/x/sync/errgroup"
+
+	"github.com/alexflint/go-arg"
+	"github.com/gin-gonic/gin"
+	"github.com/go-logr/zapr"
+	"github.com/xenitab/pkg/middleware/logger"
+	"go.uber.org/zap"
+)
+
+type arguments struct {
+	Addr string `arg:"--addr" default:":8080"`
+}
+
+func main() {
+	zapLog, err := zap.NewProduction()
+	if err != nil {
+		panic(fmt.Sprintf("who watches the watchmen (%v)?", err))
+	}
+	log := zapr.NewLogger(zapLog)
+
+	args := &arguments{}
+	arg.MustParse(args)
+
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer cancel()
+	g, ctx := errgroup.WithContext(ctx)
+
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.New()
+	router.Use(logger.Logger(log))
+	router.Use(gin.Recovery())
+	router.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "pong",
+		})
+	})
+	srv := &http.Server{
+		Addr:    args.Addr,
+		Handler: router,
+	}
+	g.Go(func() error {
+		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			return err
+		}
+		return nil
+	})
+	g.Go(func() error {
+		<-ctx.Done()
+		shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		return srv.Shutdown(shutdownCtx)
+	})
+
+	fmt.Println("running")
+	if err := g.Wait(); err != nil {
+		fmt.Printf("stopped with error: %v\n", err)
+		os.Exit(1)
+		return
+	}
+	fmt.Println("stopped without error")
+}
+```
 
 ## Metrics
 
