@@ -7,6 +7,65 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 Golang (Go) is one of the most common languages at Xenit especially for backend systems and open source projects. It should be the first language choice when starting a new project.
 
+## Startup and Shutdown
+
+It may seem a bit nit picky to document how a program should startup and shutdown, but it is necissary as there are a lot of resources like blogs which offer a multitude of solutions how it could be implemented. Doing this properly is important to make sure that all incoming messages such as HTTP requests and processed before shutting down, the alternative would be to cancel HTTP request without responding to them. There are generally two event soures which cause a shutdown, either an internal error which requires the program shutdown or an [external signal](https://pkg.go.dev/os/signal) notifying the program to shut down.
+
+In a lot of cases a program may run multiple go routines simultaneously, and example of this would be running both the buisness logic HTTP server and the HTTP server that is serving metrics. All of these would need to be gracefully stopped and also cause a graceful shutdown in case of an error. The [errgroup](https://pkg.go.dev/golang.org/x/sync/errgroup) package offers a solution to this problem by wrapping the go routines with an error handler which cancels a context when one of the go routines returns an error.
+
+```golang
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"os/signal"
+	"time"
+
+	"golang.org/x/sync/errgroup"
+)
+
+func main() {
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer cancel()
+	g, ctx := errgroup.WithContext(ctx)
+
+	g.Go(func() error {
+		<-ctx.Done()
+		fmt.Println("completed 1")
+		return nil
+	})
+	g.Go(func() error {
+		var err error
+		select {
+		case <-ctx.Done():
+		case <-time.After(5 * time.Second):
+			err = fmt.Errorf("example timeout error")
+		}
+		fmt.Println("completed 2")
+		return err
+	})
+	g.Go(func() error {
+		<-ctx.Done()
+		fmt.Println("completed 3")
+		return nil
+	})
+
+	fmt.Println("running")
+	if err := g.Wait(); err != nil {
+		fmt.Printf("stopped with error: %v\n", err)
+		os.Exit(1)
+		return
+	}
+	fmt.Println("stopped without error")
+}
+```
+
+All of the go routines will run at the same time. The program can be stopped with two methods. Either it runs for 5 seconds and the second go routine will return an error, or a signal will stop the program before the error is returned. Either way the context will be cancelled causing all of the go routines to run to completion. When this occurs the `Wait()` call returns wither with the error returned from one of the go routines or nil. This logic may seem complicated but is with the help of error groups simple to implement.
+
+A general good practice when building programs with multiple go routines is to allow the error group to manage the go routine. This means that all functions when possible should be blocking and should not implement there own threading and error handling. Instead if possible the functions should accept a context as a parameter and listen to the returned done channel. This increases testability of individual components while simplifying logic and decreasing risks of improper shutdowns and orphande go routines.
+
 ## Program Input
 
 Go has a lot of options when parsing program input flags and commands. On top of the standard `flag` library there are a bunch of other options out there that do the one or the other, or both. For this reason it is good to standardize on a library to use at Xenit. The most popular libraries at this time are [cobra](https://github.com/spf13/cobra) and by extension [pflag](https://github.com/spf13/pflag). While these libraries may be popular they also introduce a lot of opinion and complexity to the project structure.
