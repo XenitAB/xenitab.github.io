@@ -40,12 +40,12 @@ however be considered unschedulable if the resource request exceeds the total re
 It is possible to overprovision Node resources in cases where the resource request for each container is much larger that the actual resource consumption. Efficient resource allocation is a constant battle between requesting enough resources to avoid under allocation while not
 requesting too much which would result in overallocation. The easiest way to think about resources consumption and availability is to imaging the capacity as a glass, as more resources are consumed water is added to the glass. If the consumption increase does not stop the glass will eventually overfill.
 
-<!-- TODO: Should we reccomend most users to just use the same memory request and limit? -->
+<!-- TODO: Should we recommend most users to just use the same memory request and limit? -->
 
 <img alt="Pod Scheduling" src={useBaseUrl("img/assets/xks/developer-guide/pod-resource-request.jpg")} />
 
 The resource limit defined for a Pod has no affect on the scheduling of a Pod. Limits instead comes into play for a Pod during runtime. Exceeding the resource limit for CPU and memory will have
-different affects. A Pod which exceeds the memory limit will be terminated with an out of memory error (OOM Error).  The Pod will after termination be started again, it may start to exceed the limit again which will result in another OOM error. These types of errors can either be resolved by having the application
+different affects. A Pod which exceeds the memory limit will be terminated with an out of memory error (OOM Error). The Pod will after termination be started again, it may start to exceed the limit again which will result in another OOM error. These types of errors can either be resolved by having the application
 consume less memory alternatively increasing the memory limit. Without a memory limit a Pod would be able to continue consuming memory until the Node runs out. This would not only affect critical
 system processes that runs in the node but other Pods which may not even be able to consume the resources it requested.
 
@@ -55,7 +55,67 @@ CPU limits should be treated slightly differently from memory limits. When memor
 
 <!-- TODO: Something about detecting CPU throtlling and adjusting CPU requests -->
 
-<!-- TODO: Something about VPA or link to how to use VPA -->
+## Vertical Pod Autoscaler
+
+Defining good resource definitions is one of the hardest things that you can do in Kubernetes.
+To help out with this there is something called [Vertical Pod Autoscaler (VPA)](https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler).
+On XKF VPA is running in `"Off"` mode which only provide resource recommendations instead of change the resource definitions for you.
+VPA uses cpu and memory usage metrics from 8:days back to recommend the resource settings.
+
+The VPA object is automatically on all your `deployments` in XKF with the help of Fairwinds [Goldilocks](https://github.com/FairwindsOps/goldilocks).
+
+To view the VPA recommendations:
+
+```shell
+$ kubectl get vpa
+NAME             MODE   CPU   MEM         PROVIDED   AGE
+goldilocks-debug Off    15m   36253748    True       1d
+goldilocks-lab   Off    11m   12582912    True       21d
+```
+
+To get a detailed overview of add -o yaml.
+
+```shell
+$ kubectl get vpa goldilocks-debug -o yaml
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  labels:
+    creator: Fairwinds
+    source: goldilocks
+  name: goldilocks-debug
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: debug
+  updatePolicy:
+    updateMode: "Off"
+status:
+  conditions:
+  - lastTransitionTime: "2022-07-11T14:14:08Z"
+    status: "True"
+    type: RecommendationProvided
+  recommendation:
+    containerRecommendations:
+    - containerName: debug
+      lowerBound:
+        cpu: 15m
+        memory: "36253326"
+      target:
+        cpu: 15m
+        memory: "36253748"
+      uncappedTarget:
+        cpu: 15m
+        memory: "36253748"
+      upperBound:
+        cpu: 15m
+        memory: "36464648"
+```
+
+Overall `target` is the value that is recommended to follow.
+
+> VPA isn't perfect and should be seen as a guide in helping you setting resource definitions.
 
 <!-- TODO: Different strategies around requests and limits, like setting them to be the same-->
 
