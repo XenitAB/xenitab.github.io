@@ -47,7 +47,7 @@ spec:
         objectType: "<type>"
 ```
 
-## Flux sourcecontroller v1beta1 to v1betta2
+## Flux sourcecontroller v1beta1 to v1beta2
 
 The only thing that you need to change when moving source.toolkit.fluxcd.io from `source.toolkit.fluxcd.io/v1beta1`to `source.toolkit.fluxcd.io/v1beta2` is the API version.
 
