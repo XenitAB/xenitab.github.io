@@ -46,3 +46,9 @@ spec:
       - objectName: "baz"
         objectType: "<type>"
 ```
+
+## Flux sourcecontroller v1beta1 to v1beta2
+
+The only thing that you need to change when moving source.toolkit.fluxcd.io from `source.toolkit.fluxcd.io/v1beta1`to `source.toolkit.fluxcd.io/v1beta2` is the API version.
+
+In XKF we handle the upgrade of your default GitRepository, but if you have created some other source object you will need to update it on your own.
