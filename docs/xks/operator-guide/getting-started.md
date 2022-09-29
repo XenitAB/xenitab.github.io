@@ -118,7 +118,7 @@ By default you don't get access to the key vaults that governance creates.
 You should probably give the access to a group that you and your team have access to but to get started you can run the following.
 
 ```shell
-AZ_ID=$(az ad user show --id "your@email" --output tsv --query objectId)
+AZ_ID=$(az ad user show --id "your@email" --output tsv --query id)
 KEYVAULTNAME=kv-favorite-name
 az keyvault set-policy --name $KEYVAULTNAME --object-id $AZ_ID --secret-permissions backup delete get list purge recover restore set --key-permissions backup create decrypt delete encrypt get import list purge recover restore sign unwrapKey update verify wrapKey --certificate-permissions backup create delete deleteissuers get getissuers import list listissuers managecontacts manageissuers purge recover restore setissuers update
 ```
@@ -224,7 +224,7 @@ Create the new service principal. It should have a name with the format `sp-sub-
 ```shell
 AZ_APP_NAME="sp-sub-<subscription_name>-all-owner"
 AZ_APP_ID=$(az ad app create --display-name ${AZ_APP_NAME} --sign-in-audience AzureADMyOrg --query appId -o tsv)
-AZ_APP_OBJECT_ID=$(az ad app show --id ${AZ_APP_ID} --output tsv --query objectId)
+AZ_APP_OBJECT_ID=$(az ad app show --id ${AZ_APP_ID} --output tsv --query id)
 az ad sp create --id ${AZ_APP_OBJECT_ID}
 ```
 
