@@ -17,7 +17,7 @@ It may seem a bit nit picky to document how a program should startup and shutdow
 
 In a lot of cases a program may run multiple go routines simultaneously, and example of this would be running both the buisness logic HTTP server and the HTTP server that is serving metrics. All of these would need to be gracefully stopped and also cause a graceful shutdown in case of an error. The [errgroup](https://pkg.go.dev/golang.org/x/sync/errgroup) package offers a solution to this problem by wrapping the go routines with an error handler which cancels a context when one of the go routines returns an error.
 
-```golang
+```go
 package main
 
 import (
@@ -78,7 +78,7 @@ A lightweight alternative is [go-arg](https://github.com/alexflint/go-arg) which
 
 All flags are defined in a struct which is then populated with the input args. All configuration of the parsing is done through annotations.
 
-```golang
+```go
 package main
 
 import (
@@ -101,7 +101,7 @@ func main() {
 
 Subcommands are useful when there are multiple functions that can be called in the same program.
 
-```golang
+```go
 type CheckoutCmd struct {
 	Branch string `arg:"positional"`
 	Track  bool   `arg:"-t"`
@@ -146,7 +146,7 @@ Using the `status` field when logging can interfere with how Datadog interprets 
 
 Unless there are any other requirements it is good to use the [zapr](https://github.com/go-logr/zapr) logger. Zapr is fast and will output logs as JSON.
 
-```golang
+```go
 package main
 
 import (
@@ -170,7 +170,7 @@ func main() {
 
 The logging object should be passed through the context when calling a function that needs to log. This removes the need to add an additional parameter that needs to be tracked.
 
-```golang
+```go
 ctx := logr.NewContext(context.Background(), log)
 run(ctx)
 
@@ -180,13 +180,11 @@ func run(ctx context.Context) {
 }
 ```
 
-## HTTP
+## Metrics
 
-The Go standard library includes a http package that works well for simple applications, but requires a lot of custom code when building larger projects. While it is fine to just use the standard library for simple applications it is preferable to switch to [Gin](https://github.com/gin-gonic/gin) as project feature requirements develop. Gin provides extra functionality and extensions to simplify things like parsing parameters in the URL path and endpoint authorization.
+The [Prometheus Go client](https://prometheus.io/docs/guides/go-application/) contains packages which help instrumenting a project with metrics. The `promhttp` package help expose these metrics through an HTTP handler. Programs should expose their metrics through the path `/metrics`. It is important to **NOT** add the metrics handler to an existing HTTP server if one already exists. Metrics should be served on its own address that is not used by the buisness logic. This is to avoid exposing metrics, which should not but could, contain sensitive information to the public. The `promauto` package allows registering of new metrics in a Go native method.
 
-The HTTP server should be started and stopped in accordance to the Startup and Shutdown documentation. The HTTP server should be gracefully stopped before the program exits to make sure that all in flight requests are processed. A good practice is to use the [logger middleware](https://github.com/XenitAB/pkg/tree/main/middleware/logger) to log all incoming requests to the HTTP server.
-
-```golang
+```go
 package main
 
 import (
@@ -201,23 +199,23 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/alexflint/go-arg"
-	"github.com/gin-gonic/gin"
-	"github.com/go-logr/zapr"
-	"github.com/xenitab/pkg/middleware/logger"
-	"go.uber.org/zap"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+)
+
+var (
+	opsProcessed = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "processed_ops_total",
+		Help: "The total number of processed events",
+	})
 )
 
 type arguments struct {
-	Addr string `arg:"--addr" default:":8080"`
+	MetricsAddr string `arg:"--metrics-addr" default:":9090"`
 }
 
 func main() {
-	zapLog, err := zap.NewProduction()
-	if err != nil {
-		panic(fmt.Sprintf("who watches the watchmen (%v)?", err))
-	}
-	log := zapr.NewLogger(zapLog)
-
 	args := &arguments{}
 	arg.MustParse(args)
 
@@ -225,18 +223,11 @@ func main() {
 	defer cancel()
 	g, ctx := errgroup.WithContext(ctx)
 
-	gin.SetMode(gin.ReleaseMode)
-	router := gin.New()
-	router.Use(logger.Logger(log))
-	router.Use(gin.Recovery())
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	mux := http.NewServeMux()
+	mux.Handle("/metrics", promhttp.Handler())
 	srv := &http.Server{
-		Addr:    args.Addr,
-		Handler: router,
+		Addr:    args.MetricsAddr,
+		Handler: mux,
 	}
 	g.Go(func() error {
 		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
@@ -251,65 +242,23 @@ func main() {
 		return srv.Shutdown(shutdownCtx)
 	})
 
-	fmt.Println("running")
+	g.Go(func() error {
+		for {
+			select {
+			case <-ctx.Done():
+				return nil
+			case <-time.After(2 * time.Second):
+				opsProcessed.Inc()
+			}
+
+		}
+	})
+
 	if err := g.Wait(); err != nil {
 		fmt.Printf("stopped with error: %v\n", err)
 		os.Exit(1)
 		return
 	}
-	fmt.Println("stopped without error")
-}
-```
-
-## Metrics
-
-The [ginmetrics](https://github.com/penglongli/gin-metrics) library can be used to export metrics for Prometheus when using the gin HTTP server. The example below sets up a two gin servers, one user-facing on port `8080` and one exposing metrics on port `8081`. Now, after visiting `http://localhost:8080/increment-counter`, the value of `my_counter` can be seen on `http://localhost:8081/metrics` together with some default metrics.
-
-```go
-import (
-    "github.com/gin-gonic/gin"
-    "github.com/penglongli/gin-metrics/ginmetrics"
-)
-
-func main() {
-    apiRouter := gin.Default()
-
-    // Add a route that increments the counter `my_counter`
-    apiRouter.GET("/increment-counter", func(c *gin.Context) {
-        _ = ginmetrics.GetMonitor().GetMetric("my_counter").Inc([]string{"label1-value"})
-        c.JSON(200, gin.H{"message": "Incremented counter `my_counter`"})
-    })
-
-    // Get the global metrics monitor
-    monitor := ginmetrics.GetMonitor()
-
-    // Set the metrics path, the default is /debug/metrics
-    monitor.SetMetricPath("/metrics")
-
-    // Let the api router use the metrics server without exposing the metrics
-    // path on the same port. This is useful to not expose the metrics to the
-    // user.
-    monitor.UseWithoutExposingEndpoint(apiRouter)
-
-    // Create and add a counter
-    counter := &ginmetrics.Metric{
-        Type:        ginmetrics.Counter,
-        Name:        "my_counter",
-        Description: "description of counter",
-        Labels:      []string{"label1"},
-    }
-    monitor.AddMetric(counter)
-
-    // Create a metrics router and add the metric path to it
-    metricsRouter := gin.New()
-    monitor.Expose(metricsRouter)
-
-    go func() {
-        apiRouter.Run("localhost:8080")
-    }()
-
-    // Run the metrics server on a separate port
-    metricsRouter.Run("localhost:8081")
 }
 ```
 
@@ -383,5 +332,85 @@ func ginlogrWithSpan(logger logr.Logger) gin.HandlerFunc {
             "dd", span,
         )
     }
+}
+```
+
+## HTTP
+
+The Go standard library includes a http package that works well for simple applications, but requires a lot of custom code when building larger projects. While it is fine to just use the standard library for simple applications it is preferable to switch to [Gin](https://github.com/gin-gonic/gin) as project feature requirements develop. Gin provides extra functionality and extensions to simplify things like parsing parameters in the URL path and endpoint authorization.
+
+The HTTP server should be started and stopped in accordance to the Startup and Shutdown documentation. The HTTP server should be gracefully stopped before the program exits to make sure that all in flight requests are processed.
+
+It is highly recommended to use the default Gin router from [Xenit Gin PKG](https://github.com/XenitAB/pkg/tree/main/gin). It sets up default midleware such as logging and metrics which all applications should configure. The option to extend additional functionality is still possible but it removes the need to think about the best practices.
+
+```go
+package main
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"time"
+
+	"golang.org/x/sync/errgroup"
+
+	"github.com/alexflint/go-arg"
+	"github.com/gin-gonic/gin"
+	"github.com/go-logr/zapr"
+	"go.uber.org/zap"
+	pkggin "github.com/xenitab/pkg/gin"
+)
+
+type arguments struct {
+	Addr string `arg:"--addr" default:":8080"`
+}
+
+func main() {
+	args := &arguments{}
+	arg.MustParse(args)
+	
+  zapLog, err := zap.NewProduction()
+	if err != nil {
+		panic(fmt.Sprintf("who watches the watchmen (%v)?", err))
+	}
+	log := zapr.NewLogger(zapLog)
+
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer cancel()
+	g, ctx := errgroup.WithContext(ctx)
+
+  router := pkggin.Default(logger)
+	router.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "pong",
+		})
+	})
+	srv := &http.Server{
+		Addr:    args.Addr,
+		Handler: router,
+	}
+	g.Go(func() error {
+		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			return err
+		}
+		return nil
+	})
+	g.Go(func() error {
+		<-ctx.Done()
+		shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		return srv.Shutdown(shutdownCtx)
+	})
+
+	fmt.Println("running")
+	if err := g.Wait(); err != nil {
+		fmt.Printf("stopped with error: %v\n", err)
+		os.Exit(1)
+		return
+	}
+	fmt.Println("stopped without error")
 }
 ```
