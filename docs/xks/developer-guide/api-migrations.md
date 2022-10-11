@@ -13,7 +13,7 @@ This page is about sharing that information.
 
 ## CronJob
 Moving CronJob apiVersion from `batch/v1beta1` to `batch/v1`
-So what is needed is making changes according to:
+So the only thing you need to do is to change is the API version.
 
 From:
 ````yaml
@@ -33,7 +33,7 @@ metadata:
 ````
 ## HorizontalPodAutoscaler
 Moving HorizontalPodAutoscaler apiVersion from `autoscaling/v2beta1` to `autoscaling/v2`
-So what is needed is making changes according to:
+So the only thing you need to do is to change is the API version.
 
 From:
 ````yaml
@@ -53,7 +53,7 @@ metadata:
 ````
 ## PodDisruptionBudget
 Moving HorizontalPodAutoscaler apiVersion from `autoscaling/v2beta1` to `autoscaling/v2`
-So what is needed is making changes according to:
+So the only thing you need to do is to change is the API version.
 
 From:
 ````yaml
