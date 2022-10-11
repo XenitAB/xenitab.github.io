@@ -12,10 +12,12 @@ This page is about sharing that information.
 # Kubernetes 1.25
 
 ## CronJob
+
 Moving CronJob apiVersion from `batch/v1beta1` to `batch/v1`
 The only thing you need to do is to change the API version.
 
 From:
+
 ````yaml
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -32,10 +34,12 @@ metadata:
   name: foo
 ````
 ## HorizontalPodAutoscaler
+
 Moving HorizontalPodAutoscaler apiVersion from `autoscaling/v2beta1` to `autoscaling/v2`
 The only thing you need to do is to change the API version.
 
 From:
+
 ````yaml
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
@@ -52,10 +56,12 @@ metadata:
   name: foo
 ````
 ## PodDisruptionBudget
+
 Moving HorizontalPodAutoscaler apiVersion from `autoscaling/v2beta1` to `autoscaling/v2`
 The only thing you need to do is to change the API version.
 
 From:
+
 ````yaml
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
@@ -78,6 +84,7 @@ Other noticeable changes is that in `policy/v1` an empty `spec.selector {}` sele
 PodSecurityPolicy in the policy/v1beta1 API version will no longer be served in v1.25, and the PodSecurityPolicy admission controller will be removed. More informaiton can be found [here.](https://kubernetes.io/docs/reference/using-api/deprecation-guide/#psp-v125)
 
 # Older versions
+
 ## SecretProviderClass v1alpha1 to v1
 
 Moving SecretProviderClass apiVersion from `secrets-store.csi.x-k8s.io/v1alpha1` to `secrets-store.csi.x-k8s.io/v1`.
