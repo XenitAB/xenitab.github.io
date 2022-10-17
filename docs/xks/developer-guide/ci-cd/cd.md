@@ -12,6 +12,31 @@ This is to ensure that changes are consistent and tracked in a centralized manne
 
 ## Azure AD Identity
 
+## GitOps Setup
+
+### Validation for GitOps Status
+
+Important to remember is to setup the Build Validation for the Status pipeline to trigger correctly.
+
+That is done:
+
+- In Azure devops
+- Project Settings -> Repositories -> 'your-gitops-repo' -> On the 'Policies' tab
+- Select your default branch, usually 'main'. And on the 'Build Validation' section, press the '+' button.
+- Select your Status pipeline
+- Enter the following settings:
+- Trigger: Automatic
+- Policy requirement: Required
+- Build expiration: 12h
+
+Also see images below:
+
+<img alt="build-validation" src={useBaseUrl("img/assets/xks/developer-guide/build-validation.png")} />
+
+<img alt="build-validation-setup" src={useBaseUrl("img/assets/xks/developer-guide/build-validation-setup.png")} />
+
+<img alt="build-validation-final" src={useBaseUrl("img/assets/xks/developer-guide/build-validation-final.png")} />
+
 ## Setup CI/CD pipeline
 
 At Xenit we have created a CI/CD template to make it easier to get started with GitOps in our case using FluxV2 and the [GitOps toolkit](https://toolkit.fluxcd.io/).
