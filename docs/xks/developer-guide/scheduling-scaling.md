@@ -338,3 +338,8 @@ spec:
     - name: nginx
       image: nginx
 ```
+
+## Eviction
+
+A pod can be evicted due to many reasons.
+All from priority classes to memory starvation on the nodes, you can find an excellent blog about it at [https://sysdig.com/blog/kubernetes-pod-evicted](https://sysdig.com/blog/kubernetes-pod-evicted).
