@@ -56,6 +56,7 @@ module.exports = {
             "xks/operator-guide/blue-green",
             "xks/operator-guide/aws-azdo",
             "xks/operator-guide/github",
+            "xks/operator-guide/cve",
             {
               "type": "category",
               "label": "Kubernetes",
