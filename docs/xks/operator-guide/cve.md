@@ -33,10 +33,10 @@ AKS specific [information](https://github.com/Azure/AKS/issues/3299).
 
 Not a problem in AKS clusters due to the usage of [Konnectivity](https://github.com/Azure/AKS/issues/3327).
 
-In XKS developer can't modify Node objects so it shouldn't be a problem in EKS ether.
+XKS users can't modify node objects so it shouldn't be a problem in EKS ether.
 
 ### CVE-2022-3162 Unauthorized read of Custom Resources
 
 > 2022-11-10
 
-Developers shouldn't have cluster wide read access on any CRD.
+Developers do not have cluster wide read access on any CRD in XKS. Due to this the CVE isn't an issue.
