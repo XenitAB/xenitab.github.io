@@ -18,44 +18,70 @@ The only thing you need to do is to change the API version.
 
 From:
 
-````yaml
+```yaml
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: foo
-````
+```
 
 To:
 
-````yaml
+```yaml
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: foo
-````
+```
 
 ### HorizontalPodAutoscaler
 
 Moving HorizontalPodAutoscaler apiVersion from `autoscaling/v2beta1` to `autoscaling/v2`
-The only thing you need to do is to change the API version.
+
+Changes will include the `apiVersion` and also `targetAverageUtilization` to the changes made below.
 
 From:
 
-````yaml
+```yaml
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: foo
-````
+spec:
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: X%
+
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: X%
+```
 
 To:
 
-````yaml
+```yaml
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: foo
-````
+spec:
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: X%
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageValue: X%
+```
 
 ### PodDisruptionBudget
 
@@ -64,21 +90,21 @@ The only thing you need to do is to change the API version.
 
 From:
 
-````yaml
+```yaml
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   name: foo
-````
+```
 
 To:
 
-````yaml
+```yaml
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: foo
-````
+```
 
 Other noticeable changes is that in `policy/v1` an empty `spec.selector {}` selects all pods in the namespace, when the previous `policy/v1beta1` did not select any pods.
 
