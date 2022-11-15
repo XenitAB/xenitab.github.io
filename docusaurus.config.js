@@ -8,10 +8,7 @@ module.exports = {
   favicon: "img/favicon.ico",
   organizationName: "XenitAB", // Usually your GitHub org/user name.
   projectName: "xenitab.github.io", // Usually your repo name.
-  plugins: [
-    require.resolve("docusaurus-lunr-search"),
-    'docusaurus-plugin-hubspot',
-  ],
+  plugins: [require.resolve("docusaurus-lunr-search")],
   themeConfig: {
     navbar: {
       // title: "Xenit AB Open Source",
@@ -39,9 +36,6 @@ module.exports = {
       additionalLanguages: ["hcl", "aspnet"],
     },
     image: "img/Xenit_logo_Svart.png",
-    hubspot: {
-      accountId: 25696959,
-    },
   },
   presets: [
     [
