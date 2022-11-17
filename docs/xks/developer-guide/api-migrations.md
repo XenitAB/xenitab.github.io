@@ -85,7 +85,7 @@ spec:
 
 ### PodDisruptionBudget
 
-Moving HorizontalPodAutoscaler apiVersion from `autoscaling/v2beta1` to `autoscaling/v2`
+Moving PodDisruptionBudget apiVersion from `policy/v1beta1` to `policy/v1`
 The only thing you need to do is to change the API version.
 
 From:
