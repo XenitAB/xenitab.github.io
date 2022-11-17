@@ -52,12 +52,12 @@ spec:
     - type: Resource
       resource:
         name: cpu
-        targetAverageUtilization: 123
+        targetAverageUtilization: 50
 
     - type: Resource
       resource:
         name: memory
-        targetAverageUtilization: 123
+        targetAverageUtilization: 50
 ```
 
 To:
@@ -74,13 +74,13 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 123
+          averageUtilization: 50
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 123
+          averageUtilization: 50
 ```
 
 ### PodDisruptionBudget
