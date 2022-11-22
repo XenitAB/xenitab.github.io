@@ -21,9 +21,8 @@ module.exports = {
           "type": "category",
           "label": "Developer Guide",
           "items": [
-            "xks/developer-guide/api-migrations",
             "xks/developer-guide/introduction",
-            "xks/developer-guide/best-practices",
+            "xks/developer-guide/api-migrations",
             "xks/developer-guide/secrets-management",
             "xks/developer-guide/cloud-iam",
             "xks/developer-guide/container-security",
@@ -42,6 +41,7 @@ module.exports = {
             "xks/developer-guide/networking",
             "xks/developer-guide/wsl2",
             "xks/developer-guide/reports",
+            "xks/developer-guide/best-practices"
           ]
         },
         {

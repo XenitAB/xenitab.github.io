@@ -3,7 +3,7 @@ id: api-migrations
 title: API-migrations
 ---
 
-In kubernetes API:s gets continuously upgraded and deprecated.
+In Kubernetes API:s get continuously upgraded and deprecated.
 As a part of XKF we are in charge of upgrading the applications but it's up to you as a developer to upgrade the
 resources if you are utilizing them, but we will of course inform you when it's time and what is needed to be done.
 
