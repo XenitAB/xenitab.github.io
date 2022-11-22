@@ -52,6 +52,8 @@ The core feature of the gitops repo is that one of the pipelines automatically u
 
 We have to grant it permissions to do this, sadly manually...
 
+In cases where there are multiple "build services" make sure that you are setting correct permissons the correct one. This appears to be a trial-and-error based mission. Use the `Project Collection Build Service ({your organization})`, not the group `Project Collection Build Service Accounts ({your organization})`.
+
 <img alt="CI access" src={useBaseUrl("img/assets/xks/developer-guide/gitops_repo_settings.png")} />
 
 ### Service connections
