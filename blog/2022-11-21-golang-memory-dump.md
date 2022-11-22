@@ -159,7 +159,7 @@ Just for fun I also generated a flame graph using pprof by port-forwarding to th
 go tool pprof -http=: http://localhost:8080/debug/pprof/allocs
 ```
 
-<img alt="XKS Overview" src={useBaseUrl("img/assets/blog/pprof_flame.png")} />
+<img alt="pprof flame" src={useBaseUrl("img/assets/blog/pprof_flame.png")} />
 
 ## Cleanup
 
