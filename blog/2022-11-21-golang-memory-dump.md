@@ -1,6 +1,6 @@
 ---
-title: Memory dump golang in kubernetes
-description: Memory dump golang in kubernetes using Kubernetes debug.
+title: Profiling golang in kubernetes
+description: Profiling golang in kubernetes using Kubernetes debug.
 authors: nissessenap
 tags:
   - pprof
@@ -152,6 +152,14 @@ Showing top 10 nodes out of 17
 ```
 
 By looking at the output we can see that it's `math/big.nat.make` that takes the most resources.
+
+Just for fun I also generated a flame graph using pprof by port-forwarding to the application and running
+
+```shell
+go tool pprof -http=: http://localhost:8080/debug/pprof/allocs
+```
+
+<img alt="XKS Overview" src={useBaseUrl("img/assets/blog/pprof_flame.png")} />
 
 ## Cleanup
 
