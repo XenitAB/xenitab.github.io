@@ -14,11 +14,9 @@ keywords:
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-In kubernetes 1.23 the new API ephemeral containers went in to beta and in 1.25 it became stable.
-
-Ephemeral containers or debug containers which is also known as, makes it's possible to attach a container to a already running pod without restarting it.
-
-This is extremely useful when you want to debug your application since they can contain debugging tools that you don't to have in your application container.
+In kubernetes 1.23 the new ephemeral containers API went in to beta and in 1.25 it became stable.
+Ephemeral containers or debug containers as it is also known as, makes it's possible to inject a container into an already running pod without restarting it.
+This is very useful when you want to debug your application since the ephemeral container can provide tools that you don't want in your application container.
 
 In this post I thought we could go trough how to profile a running container in Kubernetes.
 
@@ -78,16 +76,14 @@ Sadly this output isn't the easiest to read so why not use pprof and while we ar
 
 ## Debug container/ephemeral container
 
-Before doing my research my plan was to write about how we attached an volume so we could
-save data locally inside the ephemeral container and then copy it out of the container on to our client and
-do show some nice flame graphs. But apparently it's not supported to attach volumes, it's not even supported to reach the existing volumes on the pod.
+My original plan for this blog post was to attach a new volume to the ephemeral container so we could save data locally and then copy it out to our client and show some nice flame graphs. But apparently it's not supported to attach volumes to the ephemeral container.
+The ephemeral container cannot even reach the existing volumes on the pod you attach to.
 
 There is an open [issue](https://github.com/kubernetes/kubectl/issues/1071) to solve this but it's not part of the current enhancement [proposal](https://github.com/kubernetes/enhancements/issues/1441) so this is nothing that we will see in the near future.
 
 So instead I will just show how we can debug using pprof from within the container.
-
 Since we exposed the endpoint through a service we could of course do this from another pod as well.
-But in general you should be extremely restrictive of what traffick that can reach your pprof endpoint if you expose it at all.
+But in general you should be very restrictive of what traffic that can reach your pprof endpoint if you expose it at all.
 
 So finally time to use the `kubectl debug` command.
 
@@ -97,7 +93,7 @@ Let's attach a standard golang container to our running pod, in this case i choo
 Kubernetes will attach the container for you and give you a shell.
 
 ```shell
-kubectl debug pprof-example-app-go-7c4b6d77d-xw52p --image=golang:1.15-alpine3.14 -i -t -- /bin/sh
+kubectl debug -i -t pprof-example-app-go-7c4b6d77d-xw52p --image=golang:1.15-alpine3.14 -- /bin/sh
 ```
 
 Now we can point on localhost using pprof.
@@ -109,7 +105,6 @@ go tool pprof http://localhost:8080/debug/pprof/allocs
 This will provide you with a pprof terminal inside the container.
 
 I'm no pprof pro but there are some easy commands to get you started.
-
 `top 10 -cum` will show you the resource consumption it takes to call a function including all function it calls
 
 ```pprof
@@ -177,11 +172,7 @@ The `kubectl debug` command is extremely useful when you want to debug your appl
 don't have access to a shell or the tools that you need in your normal container.
 
 It saves us from having to install unneeded applications in our container which lowers the amount of potential CVE:s and the time it takes to start your container by lower container size.
-
-Kubectl debug isn't perfect and it won't work for all your uses cases especially since you can't
-attach volumes but it's a great start.
-
-If you really don't want to use a tool like pprof inside a container you could of course write some small application that performs a request to an endpoint and streams the output to an object store or similar without ever storing the data on disk.
+Kubectl debug isn't perfect and it won't work for all your uses cases especially since you can't use it to interact with existing volumes but it's a great start.
 
 When it comes to continues profiling it's probably better to look at tool specifically written for it like [Grafana Phlare](https://grafana.com/oss/phlare/) or [Parca](https://www.parca.dev/docs/overview).
 But using a tool like pprof locally can be a good start. Hopefully we will get time to write a blog about continues profiling in the future.
