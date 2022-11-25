@@ -343,3 +343,96 @@ spec:
 
 A pod can be evicted due to many reasons.
 All from priority classes to memory starvation on the nodes, you can find an excellent blog about it at [https://sysdig.com/blog/kubernetes-pod-evicted](https://sysdig.com/blog/kubernetes-pod-evicted).
+
+## Specific workload on node type example
+
+As mentioned earlier there are a number of ways scheduling workloads on different node.
+To make it a easier lets provide an example.
+
+If you want to have a batch job running on a specific node type and only your pod running on that specific node you need to set a node taint, this is done by your Kubernetes Admin.
+
+To use this node you will need to add a `toleration` to your pod.
+
+```.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    tty: true
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        memory: 12Gi
+      limits:
+        memory: 22Gi
+  tolerations:
+  - key: "batch"
+    value: "true"
+    effect: "NoSchedule"
+```
+
+If you also want to make sure that this job `only` can run on that specific node type you also have to provide a `nodeSelector`
+
+```.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    tty: true
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        memory: 12Gi
+      limits:
+        memory: 22Gi
+  nodeSelector:
+    batch: "true"
+  tolerations:
+  - key: "batch"
+    value: "true"
+    effect: "NoSchedule"
+```
+
+If it's okay that your batch job run on other `nodes` as well you can use `pod affinity`.
+
+```.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    tty: true
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        memory: 12Gi
+      limits:
+        memory: 22Gi
+  tolerations:
+  - key: "batch"
+    value: "true"
+    effect: "NoSchedule"
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 80
+        preference:
+          matchExpressions:
+          - key: batch
+            operator: In
+            values:
+            - "true"
+```
+
+This way your batch job will be able to run even if the specific node type isn't available.
