@@ -344,14 +344,14 @@ spec:
 A pod can be evicted due to many reasons.
 All from priority classes to memory starvation on the nodes, you can find an excellent blog about it at [https://sysdig.com/blog/kubernetes-pod-evicted](https://sysdig.com/blog/kubernetes-pod-evicted).
 
-## Specific workload on node type example
+## Specific workload on node pool types example
 
-As mentioned earlier there are a number of ways scheduling workloads on different node.
-To make it a easier lets provide an example.
+As mentioned earlier there are a number of ways scheduling workloads on different node pools.
+To make it a easier to understand lets provide an example.
 
-If you want to have a batch job running on a specific node type and only your pod running on that specific node you need to set a node taint, this is done by your Kubernetes Admin.
+If you want to have a batch job running on a specific node type and only your pod running on that specific node you need to set a node taint, this is done by your Kubernetes Admin. In this example the node taint is `key=batch, value="true"`.
 
-To use this node you will need to add a `toleration` to your pod.
+To schedule your pod on this node you will need to add a `toleration` to your pod.
 
 ```.yaml
 apiVersion: v1
@@ -375,7 +375,7 @@ spec:
     effect: "NoSchedule"
 ```
 
-If you also want to make sure that this job `only` can run on that specific node type you also have to provide a `nodeSelector`
+If you also want to make sure that this pod `only` can run on that specific node type you also have to provide a `nodeSelector`
 
 ```.yaml
 apiVersion: v1
@@ -401,7 +401,8 @@ spec:
     effect: "NoSchedule"
 ```
 
-If it's okay that your batch job run on other `nodes` as well you can use `pod affinity`.
+If it's okay that your pod run on other `nodes` as well as the batch node you can use `pod affinity`.
+This way your pod will be able to run even if the specific node type isn't available.
 
 ```.yaml
 apiVersion: v1
@@ -434,5 +435,3 @@ spec:
             values:
             - "true"
 ```
-
-This way your batch job will be able to run even if the specific node type isn't available.
