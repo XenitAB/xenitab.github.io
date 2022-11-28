@@ -1,6 +1,6 @@
 ---
-title: Profiling golang in kubernetes
-description: Profiling golang in kubernetes using Kubernetes debug.
+title: Profiling Go in Kubernetes
+description: Profiling Go in Kubernetes using Kubernetes debug.
 authors: nissessenap
 tags:
   - pprof
@@ -14,7 +14,7 @@ keywords:
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-In kubernetes 1.23 the new ephemeral containers API went in to beta and in 1.25 it became stable.
+In Kubernetes 1.23 the new ephemeral containers API went in to beta and in 1.25 it became stable.
 Ephemeral containers or debug containers as it is also known as, makes it's possible to inject a container into an already running pod without restarting it.
 This is very useful when you want to debug your application since the ephemeral container can provide tools that you don't want in your application container.
 
