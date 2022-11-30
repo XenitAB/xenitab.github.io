@@ -114,6 +114,10 @@ PodSecurityPolicy in the policy/v1beta1 API version will no longer be served in 
 
 This is not something that we use in XKF, but it is good to know.
 
+### Patching
+
+If you have any kustomizations patching in different values between environments, or similar. These will also have to be changed to match the new apiVersion.
+
 ## General API changes
 
 ### SecretProviderClass v1alpha1 to v1
