@@ -1,6 +1,6 @@
 ---
 id: api-migrations
-title: API-migrations
+title: API migrations
 ---
 
 In Kubernetes API:s get continuously upgraded and deprecated.
