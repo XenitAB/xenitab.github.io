@@ -5,15 +5,15 @@ title: API migrations
 
 In Kubernetes API:s get continuously upgraded and deprecated.
 As a part of XKF we are in charge of upgrading the applications but it's up to you as a developer to upgrade the
-resources if you are utilizing them, but we will of course inform you when it's time and what is needed to be done.
+resources if you are utilizing them. We will of course inform you when it's time and summarize what needs to be done.
 
 This page is about sharing that information.
 
-## Kubernetes 1.25
+## Upgrading to Kubernetes 1.25
 
 ### CronJob
 
-Moving CronJob apiVersion from `batch/v1beta1` to `batch/v1`
+CronJob `apiVersion` is moved from `batch/v1beta1` to `batch/v1`.
 The only thing you need to do is to change the API version.
 
 From:
@@ -36,9 +36,9 @@ metadata:
 
 ### HorizontalPodAutoscaler
 
-Moving HorizontalPodAutoscaler apiVersion from `autoscaling/v2beta1` to `autoscaling/v2`
+HorizontalPodAutoscaler `apiVersion` is moved from `autoscaling/v2beta1` to `autoscaling/v2`.
 
-Changes will include the `apiVersion` and also `targetAverageUtilization` to the changes made below.
+Changes include the `apiVersion` but there's also changes to how `targetAverageUtilization` is used. See example below.
 
 From:
 
@@ -85,8 +85,8 @@ spec:
 
 ### PodDisruptionBudget
 
-Moving PodDisruptionBudget apiVersion from `policy/v1beta1` to `policy/v1`
-The only thing you need to do is to change the API version.
+PodDisruptionBudget `apiVersion` is moved from `policy/v1beta1` to `policy/v1`.
+The main thing you need to do is to change `apiVersion`.
 
 From:
 
@@ -106,25 +106,49 @@ metadata:
   name: foo
 ```
 
-Other noticeable changes is that in `policy/v1` an empty `spec.selector {}` selects all pods in the namespace, when the previous `policy/v1beta1` did not select any pods.
+Another important change is that in `policy/v1` an empty `spec.selector {}` selects all pods in the namespace, when the previous `policy/v1beta1` did not select any pods.
 
 ### PodSecurityPolicy
 
-PodSecurityPolicy in the policy/v1beta1 API version will no longer be served in v1.25, and the PodSecurityPolicy admission controller will be removed. More informaiton can be found [here.](https://kubernetes.io/docs/reference/using-api/deprecation-guide/#psp-v125)
+PodSecurityPolicy in the policy/v1beta1 API version will no longer be served in v1.25, and the PodSecurityPolicy admission controller will be removed. More information can be found [here.](https://kubernetes.io/docs/reference/using-api/deprecation-guide/#psp-v125)
 
 This is not something that we use in XKF, but it is good to know.
 
 ### Patching
 
-If you have any kustomizations patching in different values between environments, or similar. These will also have to be changed to match the new apiVersion.
+If you have any kustomizations patching in different values between environments, or similar, these will also have to be changed to match the new `apiVersion`.
+
+From:
+
+```yaml
+- path: pdb-patch.yaml
+  target:
+    group: policy
+    version: v1beta1
+    kind: PodDisruptionBudget
+    name: app
+```
+
+To:
+
+```yaml
+- path: pdb-patch.yaml
+  target:
+    group: policy
+    version: v1
+    kind: PodDisruptionBudget
+    name: app
+```
 
 ## General API changes
 
 ### SecretProviderClass v1alpha1 to v1
 
-Moving SecretProviderClass apiVersion from `secrets-store.csi.x-k8s.io/v1alpha1` to `secrets-store.csi.x-k8s.io/v1`.
+SecretProviderClass `apiVersion` is moved from `secrets-store.csi.x-k8s.io/v1alpha1` to `secrets-store.csi.x-k8s.io/v1`.
 
-So the only thing you need to do is to change is the API version.
+The only thing you need to do is to change is the API version.
+
+From:
 
 ```yaml
 apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
@@ -141,7 +165,7 @@ spec:
         objectType: "<type>"
 ```
 
-to
+To:
 
 ```yaml
 apiVersion: secrets-store.csi.x-k8s.io/v1
