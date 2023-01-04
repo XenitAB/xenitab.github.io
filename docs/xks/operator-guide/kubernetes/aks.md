@@ -195,3 +195,16 @@ During the creation of more standard2 nodes much of your workload might become p
 ## AKS resources
 
 To get a quick overview of what is happening in AKS you can look at its [changelog](https://github.com/Azure/AKS/releases).
+
+## VMSS inject commands
+
+In Azure you can inject commands to VMSS instances using the [Azure Linux VM agent](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/run-command).
+
+All you need to do is to get the RG of the VMSS, the node pool name and the instance ID.
+You can find the instance ID by running `az vmss list-instances -g rg1 -n nodepool1` and look for `instanceId`.
+
+```shell
+az vmss run-command invoke -g <RG> -n <node-pool-name> --command-id RunShellScript --instance-id <instance id>  --scripts " nc -vz mcr.microsoft.com 443 "
+# example
+az vmss run-command invoke -g rg1 -n nodepool1 --command-id RunShellScript --instance-id 1  --scripts " nc -vz mcr.microsoft.com 443 "
+```
