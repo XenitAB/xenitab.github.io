@@ -16,7 +16,7 @@ This segment provides a summay of things one should consider while developing ap
 
 - **Cattle not Pets**
 
-  In contemporary software systems it is common to say that you should treat components of your systems as cattle, not pets. In the case of Kubernetes this relates to the fact that a pod may be restarted at arbitrary times or a node can be rotated. To be cloud native means to accomodate for this. This is discussed at length in other places in our documentation, but it is worthwhile to always think. _What happens in my application if the pod is restarted?_
+  In contemporary software systems it is common to say that you should treat components of your systems as cattle, not pets. In the case of Kubernetes this relates to the fact that a pod may be restarted at arbitrary times or a node can be rotated. To be cloud native means to accomodate for this. This is discussed at length in other places in our documentation, but it is worthwhile to always think: _What happens in my application if the pod is restarted?_
 
 - **Run more than one replica in all environments**
 
@@ -36,7 +36,7 @@ Xenit provides some language specific documentation, e.g. [Xenit's Golang style 
 
 ## Readiness/Liveness probes
 
-Good probes are important if you want stable applications. They help with error reporting, but in our experience they are the most important when you deploy new versions.
+Good probes are important if you want stable applications. They help with error reporting, but in our experience, they are the most important when you deploy new versions.
 
 The short summary follows,
 
@@ -53,11 +53,9 @@ TODO
 
 TODO
 
-## Database
+## Graceful Shutdown
 
-Your pod can be shut down by kubernetes. Make sure the following has been configured.
-
-1. Your application has graceful shutdown that closes connection to database.
+Your pod can be shut down by kubernetes. Make sure you capture sigterm and act reasonably on the signal. What reasonable is depends on you application, but a common case is to finish handling all ongoing http-requests as well as closing connections cleanly to databases and external services.
 
 ## Observability and Telemetry
 
@@ -82,26 +80,7 @@ Add tracing to your application. We have found that modern trace tools provide p
 
 ## Pod disruption budgets
 
-Make sure you have written a pod disruption budget. This is extensively documented [here](https://xenitab.github.io/docs/xks/developer-guide/scheduling-scaling#pod-disruption-budget).
-A basic one can look as follows
-
-```
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: podinfo
-spec:
-  minAvailable: 2
-  selector:
-    matchLabels:
-      app: podinfo
-```
-
-To check if a budget exists for your application the you can use the following,
-
-```
-kubectl get PodDisruptionBudget
-```
+Make sure you have written a pod disruption budget. Otherwise you will have problems with downtime when a node rotates. This is extensively documented [here](https://xenitab.github.io/docs/xks/developer-guide/scheduling-scaling#pod-disruption-budget).
 
 ## Network Policies
 
@@ -111,10 +90,13 @@ Configure network policies. No network policy is needed if your application only
 
 Make sure you have written reasonable resource requests and limits. It is extensively documented [here](https://xenitab.github.io/docs/xks/developer-guide/scheduling-scaling#pod-resources).
 
-## Secret Management
+## Secret Management & External Resources
+
+If you communicate with things outside of your namespace, i.e. databases and such make you have checked the following.
 
 1. Make sure no secrets are commited to either source code repository, nor gitops repository.
-2. Load secrets using Secret Store CSI Driver. It is documented extensively [here](https://xenitab.github.io/docs/xks/developer-guide/secrets-management).
+2. Use MSI (Managed Service Identity) to provide an identity for your pods. Documentation can be found [here](https://xenitab.github.io/docs/xks/developer-guide/cloud-iam).
+3. How you load secrets is very specific for your own application. However, we have used and documented Secret Store CSI Driver. Documentation can be found [here](https://xenitab.github.io/docs/xks/developer-guide/secrets-management).
 
 ## Documentation
 
