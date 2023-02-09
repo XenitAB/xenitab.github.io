@@ -95,7 +95,7 @@ Make sure you have written reasonable resource requests and limits. It is extens
 If you communicate with things outside of your namespace, i.e. databases and such make you have checked the following.
 
 1. Make sure no secrets are commited to either source code repository, nor gitops repository.
-2. Use MSI (Managed Service Identity) to provide an identity for your pods. Documentation can be found [here](https://xenitab.github.io/docs/xks/developer-guide/cloud-iam).
+2. We recommend using MSI (Managed Service Identity) to provide an identity for your pods. Documentation can be found [here](https://xenitab.github.io/docs/xks/developer-guide/cloud-iam). It's okay to get secrets from Cloud provider key vault solutions as well.
 3. How you load secrets is very specific for your own application. However, we have used and documented Secret Store CSI Driver. Documentation can be found [here](https://xenitab.github.io/docs/xks/developer-guide/secrets-management).
 
 ## Documentation
