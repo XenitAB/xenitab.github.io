@@ -10,7 +10,7 @@ If you follow these guidlines, you will most likely have a well running applicat
 We segment our best practices into two parts. The first regards general philosophies you should adhere to when developing your applications.
 The second is a checklist you should check make sure you satisfy before bringing your application to production.
 
-# Development Philosophy in XKF
+## Development Philosophy in XKF
 
 This segment provides a summay of things one should consider while developing applications in XKF.
 
@@ -43,7 +43,7 @@ The short summary follows,
 1. Liveness probes are too powerful and in most situations you do not want them.
 2. You most likely want a basic readiness probe. This readiness probe should probably not involve other applications as this can lead to thundering herd problems. An endpoint that answers with **200** on **/healthz** on your http server for your application is a very good start.
 
-Your mileage may vary and only you can know what it means for your application to be ready to receive traffic. Consider reading this https://srcco.de/posts/kubernetes-liveness-probes-are-dangerous.html as it provides a more nuanced discussion when and where you want to use liveness/readiness probes.
+Your mileage may vary and only you can know what it means for your application to be ready to receive traffic. Consider reading [livenes probes are dangerous](https://srcco.de/posts/kubernetes-liveness-probes-are-dangerous.html) as it provides a more nuanced discussion when and where you want to use liveness/readiness probes.
 
 ## Incoming HTTP
 
@@ -106,4 +106,4 @@ Is everything documented to a sufficient level? If the whole team would quit tom
 
 This documentation provides bare minimum for making a production ready kubernetes application. Consider reading the following for further understanding,
 
-1. https://srcco.de/posts/web-service-on-kubernetes-production-checklist-2019.html
+1. [Production checklist](https://srcco.de/posts/web-service-on-kubernetes-production-checklist-2019.html)
