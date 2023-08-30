@@ -12,6 +12,8 @@ There are 2 ways one can structure the GitOps repository, based upon how you wan
 - Per ENV kustomization
   - Somewhat easier to maintain and configure, every app relies on one reconciliation of the kustomization.
   - One kustomization per ENV in the Flux-configuration, looking something like this:
+
+
 ```yaml
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
@@ -32,6 +34,8 @@ spec:
 - Per APP kustomization
   - More granular control and every app has its own reconciliation and kustomization.
   - One kustomization per app in the Flux-configuration, looking something like this:
+
+
 ```yaml
   apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
@@ -170,4 +174,5 @@ GitOps
   ├── Tenant/
   │   └── Platform / Flux configuration.
 ```
+
 Note that we in this example also utilize the "Per ENV" method for things that are used by all applications, such as the certificates we create, we only create one certificate resource containing multiple SANs for each application. Each app also uses the same Key Vault, therefor this can be the same also.
