@@ -5,7 +5,7 @@ title: GitOps Repository Structure
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# Repository Structure
+## Repository Structure
 
 There are 2 ways one can structure the GitOps repository, based upon how you want the kustomizations in flux to work.
 
