@@ -113,7 +113,6 @@ GitOps
   │   └── Platform / Flux configuration.
 ```
 
-
 ## Per APP - Repository Structure
 
 ```bash
