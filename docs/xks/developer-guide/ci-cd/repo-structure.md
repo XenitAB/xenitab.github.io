@@ -162,6 +162,5 @@ GitOps
 ```
 
 Note that we in this example also utilize the "Per ENV" method for things that are used by all applications, such as the certificates we create, we only create one certificate resource containing multiple SANs for each application. Each app also uses the same Key Vault, therefor this can be the same also.
-
-Another repository structure worth mentioning is using a **/base** folder for each application, in both the "Per ENV" and "Per App" structures. 
+Another repository structure worth mentioning is using a **/base** folder for each application, in both the "Per ENV" and "Per App" structures.
 This will enable you to have a "Common" folder containing all the configuration that is the same between your environments and then patch the correct values in each ENV folder.
