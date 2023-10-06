@@ -1,5 +1,5 @@
 ---
-id: structure
+id: repo-structure
 title: GitOps Repository Structure
 ---
 

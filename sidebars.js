@@ -34,6 +34,7 @@ module.exports = {
                 "xks/developer-guide/ci-cd/cd",
                 "xks/developer-guide/ci-cd/gitops",
                 "xks/developer-guide/ci-cd/flux",
+                "xks/developer-guide/ci-cd/repo-structure",
               ]
             },
             "xks/developer-guide/scheduling-scaling",
