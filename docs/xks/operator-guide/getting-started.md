@@ -235,7 +235,7 @@ Grant the service principal additional permissions in the App Registration. The 
   - `Application.ReadWrite.All`
   - `AppRoleAssignment.ReadWrite.All`
 
-After the permissions are added grant admin consent* for the Tenant.
+After the permissions are added grant admin consent for the Tenant.
 
 Make the service principal `Owner` of all the XKS subscriptions. This is done in the IAM settings of each individual subscription. Additionaly the service principal also needs to be member of the User
 administrator role.
