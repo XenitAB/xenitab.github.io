@@ -228,8 +228,14 @@ AZ_APP_OBJECT_ID=$(az ad app show --id ${AZ_APP_ID} --output tsv --query id)
 az ad sp create --id ${AZ_APP_OBJECT_ID}
 ```
 
-Grant the service principal additional permissions in the App Registration. The permissions `Group.ReadWrite.All` and `Application.ReadWrite.All` in Microsoft Graph should be added. After the
-permissions are added grant admin consent for the Tenant.
+Grant the service principal additional permissions in the App Registration. The required  permissions are:
+
+- Microsoft Graph:
+  - `Group.ReadWrite.All`
+  - `Application.ReadWrite.All`
+  - `AppRoleAssignment.ReadWrite.All`
+
+After the permissions are added grant admin consent for the Tenant.
 
 Make the service principal `Owner` of all the XKS subscriptions. This is done in the IAM settings of each individual subscription. Additionaly the service principal also needs to be member of the User
 administrator role.
