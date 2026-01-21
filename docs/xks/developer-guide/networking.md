@@ -168,7 +168,7 @@ The Gateway API provides:
 - **Protocol support**: Built-in support for HTTP, HTTPS, TCP, TLS, UDP, and GRPC
 - **Future-proof**: Officially maintained by Kubernetes SIG Network and graduated to GA status
 
-For comprehensive documentation on using Gateway API in XKS, including examples, advanced features, and usage patterns, see the **[Gateway API Developer Guide](/docs/xks/developer-guide/gateway-api)**.
+For comprehensive documentation on using Gateway API in XKS, including examples, advanced features, and usage patterns, see the **[Gateway API Developer Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api)**.
 
 Refer to the official [Gateway API documentation](https://gateway-api.sigs.k8s.io/) for the complete specification and community resources.
 
@@ -203,7 +203,7 @@ For Envoy internals and advanced configuration, refer to:
 
 **Migration Resources:**
 
-- **[Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-migration)** - Complete deprecation information, timelines, step-by-step migration instructions, and annotation mapping
+- **[Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-retiring)** - Complete deprecation information, timelines, step-by-step migration instructions, and annotation mapping
 - **[Gateway API Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api#migration-from-ingress)** - Side-by-side Ingress to HTTPRoute examples
 
 For official deprecation information and Kubernetes community guidance:

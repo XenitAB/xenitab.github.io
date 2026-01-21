@@ -13,11 +13,11 @@ Gateway API represents a significant evolution in Kubernetes networking, offerin
 
 > **Note**: XKS uses [Envoy Gateway](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway) as the implementation of Gateway API. For Envoy-specific features like policies, observability, and performance tuning, see the [Envoy Gateway documentation](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway).
 >
-> **Migrating from Ingress?** See the [Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-migration) for deprecation information, timelines, and step-by-step migration instructions.
+> **Migrating from Ingress?** See the [Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-retiring) for deprecation information, timelines, and step-by-step migration instructions.
 
 ## Why Gateway API?
 
-Gateway API brings several significant improvements over the traditional Ingress API. For a detailed comparison and migration information, see the [Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-migration#why-migrate).
+Gateway API brings several significant improvements over the traditional Ingress API. For a detailed comparison and migration information, see the [Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-retiring#why-migrate).
 
 ## Key Concepts
 
@@ -468,7 +468,7 @@ spec:
 
 ## Migration from Ingress
 
-> **Complete Migration Guide**: For comprehensive migration information including deprecation timelines, official documentation links, and detailed step-by-step instructions, see the [Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-migration).
+> **Complete Migration Guide**: For comprehensive migration information including deprecation timelines, official documentation links, and detailed step-by-step instructions, see the [Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-retiring).
 
 Migrating from Ingress to HTTPRoute is straightforward. Here's a quick comparison:
 
@@ -539,7 +539,7 @@ spec:
 4. **Explicit backend references**: Use `backendRefs` instead of `backend`
 5. **Path matching**: More explicit with `type` field (`PathPrefix`, `Exact`, etc.)
 
-For detailed migration steps, annotation mapping, and support resources, see the [Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-migration).
+For detailed migration steps, annotation mapping, and support resources, see the [Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-retiring).
 
 ## Debugging
 
@@ -590,4 +590,4 @@ For advanced Envoy-specific debugging including configuration inspection, statis
 - [Gateway API Best Practices](https://gateway-api.sigs.k8s.io/guides/) - Recommended patterns
 - [Official Migration Guide](https://gateway-api.sigs.k8s.io/guides/migrating-from-ingress/) - Kubernetes SIG Network migration documentation
 - [Envoy Gateway Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway) - XKS Envoy Gateway documentation
-- [Ingress Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-migration) - XKS migration guide and timelines
+- [Ingress Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-retiring) - XKS migration guide and timelines
