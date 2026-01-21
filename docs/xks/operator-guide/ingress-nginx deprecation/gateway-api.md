@@ -539,7 +539,7 @@ spec:
 4. **Explicit backend references**: Use `backendRefs` instead of `backend`
 5. **Path matching**: More explicit with `type` field (`PathPrefix`, `Exact`, etc.)
 
-For detailed migration steps, annotation mapping, and support resources, see the [Ingress Nginx Migration Guide](/docs/xks/developer-guide/ingress-nginx-migration).
+For detailed migration steps, annotation mapping, and support resources, see the [Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-migration).
 
 ## Debugging
 
@@ -559,7 +559,7 @@ kubectl get gateway default-gateway -n gateway-system -o yaml
 
 Check if the Gateway is ready and which routes are attached.
 
-For advanced Envoy-specific debugging including configuration inspection, statistics, and logging, see the [Envoy Gateway Debugging Guide](/docs/xks/developer-guide/envoy-gateway#debugging).
+For advanced Envoy-specific debugging including configuration inspection, statistics, and logging, see the [Envoy Gateway Debugging Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#debugging).
 
 ### Common Issues
 
@@ -589,5 +589,5 @@ For advanced Envoy-specific debugging including configuration inspection, statis
 - [Gateway API User Guides](https://gateway-api.sigs.k8s.io/guides/) - Official tutorials and guides
 - [Gateway API Best Practices](https://gateway-api.sigs.k8s.io/guides/) - Recommended patterns
 - [Official Migration Guide](https://gateway-api.sigs.k8s.io/guides/migrating-from-ingress/) - Kubernetes SIG Network migration documentation
-- [Envoy Gateway Guide](/docs/xks/developer-guide/envoy-gateway) - XKS Envoy Gateway documentation
-- [Ingress Migration Guide](/docs/xks/developer-guide/ingress-nginx-migration) - XKS migration guide and timelines
+- [Envoy Gateway Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway) - XKS Envoy Gateway documentation
+- [Ingress Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-migration) - XKS migration guide and timelines

@@ -184,7 +184,7 @@ Key capabilities:
 - Rich observability (metrics, distributed tracing, structured logging)
 - Service mesh ready architecture
 
-For details on Envoy Gateway features, policies, observability, performance tuning, and troubleshooting, see the **[Envoy Gateway Guide](/docs/xks/developer-guide/envoy-gateway)**.
+For details on Envoy Gateway features, policies, observability, performance tuning, and troubleshooting, see the **[Envoy Gateway Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway)**.
 
 For Envoy internals and advanced configuration, refer to:
 
@@ -203,8 +203,8 @@ For Envoy internals and advanced configuration, refer to:
 
 **Migration Resources:**
 
-- **[Ingress Nginx Migration Guide](/docs/xks/developer-guide/ingress-nginx-migration)** - Complete deprecation information, timelines, step-by-step migration instructions, and annotation mapping
-- **[Gateway API Guide](/docs/xks/developer-guide/gateway-api#migration-from-ingress)** - Side-by-side Ingress to HTTPRoute examples
+- **[Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-migration)** - Complete deprecation information, timelines, step-by-step migration instructions, and annotation mapping
+- **[Gateway API Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api#migration-from-ingress)** - Side-by-side Ingress to HTTPRoute examples
 
 For official deprecation information and Kubernetes community guidance:
 
