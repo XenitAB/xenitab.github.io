@@ -177,6 +177,7 @@ Refer to the official [Gateway API documentation](https://gateway-api.sigs.k8s.i
 XKS uses [Envoy Gateway](https://gateway.envoyproxy.io/) as the implementation of the Gateway API standard. Envoy Gateway leverages [Envoy Proxy](https://www.envoyproxy.io/), a modern, cloud-native proxy designed for high-performance scenarios.
 
 Key capabilities:
+
 - Dynamic configuration without downtime
 - Native Gateway API support
 - Advanced traffic management (circuit breaking, sophisticated retries, multiple load balancing algorithms)
@@ -186,6 +187,7 @@ Key capabilities:
 For details on Envoy Gateway features, policies, observability, performance tuning, and troubleshooting, see the **[Envoy Gateway Guide](/docs/xks/developer-guide/envoy-gateway)**.
 
 For Envoy internals and advanced configuration, refer to:
+
 - [Envoy Gateway Documentation](https://gateway.envoyproxy.io/)
 - [Envoy Proxy Documentation](https://www.envoyproxy.io/docs)
 
@@ -194,15 +196,18 @@ For Envoy internals and advanced configuration, refer to:
 > **⚠️ IMPORTANT**: The traditional Ingress API with Nginx Ingress Controller is deprecated in XKS and will be removed in a future release.
 
 **What this means:**
+
 - Existing Ingress resources continue to work during the migration period
 - All new applications should use Gateway API
 - Migration assistance is available from the XKS platform team
 
 **Migration Resources:**
+
 - **[Ingress Nginx Migration Guide](/docs/xks/developer-guide/ingress-nginx-migration)** - Complete deprecation information, timelines, step-by-step migration instructions, and annotation mapping
 - **[Gateway API Guide](/docs/xks/developer-guide/gateway-api#migration-from-ingress)** - Side-by-side Ingress to HTTPRoute examples
 
 For official deprecation information and Kubernetes community guidance:
+
 - [Gateway API GA Announcement](https://kubernetes.io/blog/2023/10/31/gateway-api-ga/)
 - [Official Gateway API Migration Guide](https://gateway-api.sigs.k8s.io/guides/migrating-from-ingress/)
 

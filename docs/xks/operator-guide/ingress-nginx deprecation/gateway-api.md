@@ -12,7 +12,7 @@ The [Kubernetes Gateway API](https://gateway-api.sigs.k8s.io/) is the next-gener
 Gateway API represents a significant evolution in Kubernetes networking, offering role-oriented design, enhanced expressiveness, and extensive extensibility that addresses the limitations of the original Ingress API.
 
 > **Note**: XKS uses [Envoy Gateway](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway) as the implementation of Gateway API. For Envoy-specific features like policies, observability, and performance tuning, see the [Envoy Gateway documentation](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway).
-
+>
 > **Migrating from Ingress?** See the [Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-migration) for deprecation information, timelines, and step-by-step migration instructions.
 
 ## Why Gateway API?
@@ -97,6 +97,7 @@ spec:
 ```
 
 Key points:
+
 - `parentRefs` references the Gateway that will handle this route (typically managed by the cluster operator)
 - `hostnames` defines which domain names this route responds to
 - `rules` define matching criteria and backend services
@@ -563,17 +564,20 @@ For advanced Envoy-specific debugging including configuration inspection, statis
 ### Common Issues
 
 **HTTPRoute not working**:
+
 - Verify the Gateway reference in `parentRefs` is correct
 - Check Network Policies allow traffic from gateway-system namespace
 - Ensure the Service exists and has healthy endpoints
 - Check HTTPRoute status for acceptance conditions
 
 **TLS not working**:
+
 - Verify the Gateway has a TLS listener configured
 - Check Certificate resource status
 - Ensure DNS record points to Gateway IP address
 
 **No traffic reaching backend**:
+
 - Check Service selector matches Pod labels
 - Verify Pod is running and healthy
 - Check Network Policies allow traffic within namespace

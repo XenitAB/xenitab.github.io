@@ -77,6 +77,7 @@ Envoy Gateway consists of two main components:
 ### Control Plane
 
 The Envoy Gateway control plane:
+
 - Watches Gateway API resources (Gateway, HTTPRoute, etc.)
 - Translates them into Envoy xDS configuration
 - Manages Envoy Proxy deployments
@@ -85,6 +86,7 @@ The Envoy Gateway control plane:
 ### Data Plane
 
 The Envoy Proxy data plane:
+
 - Receives dynamic configuration from the control plane
 - Routes and processes traffic based on configuration
 - Reports metrics and traces
@@ -173,6 +175,7 @@ spec:
 ```
 
 Available load balancing types:
+
 - **RoundRobin**: Distribute requests evenly (default)
 - **LeastRequest**: Send to backend with fewest active requests
 - **Random**: Random selection
@@ -552,6 +555,7 @@ Envoy Gateway exposes Prometheus metrics for monitoring:
 - **Envoy Proxy metrics**: Available at `:19001/stats/prometheus` on Envoy pods
 
 Key metrics to monitor:
+
 - `envoy_http_downstream_rq_total`: Total requests received
 - `envoy_http_downstream_rq_xx`: Requests by status code (2xx, 4xx, 5xx)
 - `envoy_cluster_upstream_rq_total`: Total requests to backends
@@ -647,6 +651,7 @@ spec:
 Envoy Gateway and Envoy Proxy resource requirements depend on traffic patterns:
 
 **Low Traffic** (< 100 RPS):
+
 ```yaml
 resources:
   requests:
@@ -658,6 +663,7 @@ resources:
 ```
 
 **Medium Traffic** (100-1000 RPS):
+
 ```yaml
 resources:
   requests:
@@ -669,6 +675,7 @@ resources:
 ```
 
 **High Traffic** (> 1000 RPS):
+
 ```yaml
 resources:
   requests:
@@ -777,22 +784,26 @@ curl -X POST localhost:19000/logging?level=info
 ### Common Issues
 
 **HTTPRoute not accepting traffic**:
+
 - Check Gateway acceptance conditions: `kubectl get httproute <name> -o yaml`
 - Verify BackendTrafficPolicy is targeting correct HTTPRoute
 - Ensure Service has healthy endpoints
 
 **High latency**:
+
 - Check backend response times in metrics
 - Review circuit breaker settings
 - Examine retry configurations
 - Check connection pooling limits
 
 **Rate limiting not working**:
+
 - Verify BackendTrafficPolicy targetRef matches HTTPRoute
 - Check rate limit metrics: `envoy_ratelimit_*`
 - Ensure client selectors match traffic patterns
 
 **TLS errors**:
+
 - Verify certificate validity and SANs
 - Check BackendTLSPolicy configuration
 - Review Envoy logs for TLS handshake errors

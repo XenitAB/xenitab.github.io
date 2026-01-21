@@ -6,7 +6,7 @@ title: Ingress Nginx Retiring
 ## Retirment and Deprecation Notice for Ingress Nginx
 
 We defer you to the original and most up-to-date official post regarding the retirement of Ingress Nginx project
-https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/
+<https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/>
 
 The Ingress API and Nginx Ingress Controller are being deprecated across the Kubernetes ecosystem and within XKS. This change aligns with the Kubernetes community's shift toward the Gateway API as the successor to Ingress.
 
@@ -34,6 +34,7 @@ The migration from Ingress to Gateway API offers significant benefits:
 ### Standardization
 
 Gateway API is an official Kubernetes standard maintained by SIG Network, ensuring:
+
 - Long-term support and stability
 - Cross-vendor compatibility
 - Regular updates aligned with Kubernetes releases
@@ -42,6 +43,7 @@ Gateway API is an official Kubernetes standard maintained by SIG Network, ensuri
 ### Enhanced Capabilities
 
 Gateway API provides features that were impossible or required complex workarounds in Ingress:
+
 - **Header-based routing**: Make routing decisions based on HTTP headers
 - **Traffic splitting**: Distribute traffic across multiple backends for canary deployments
 - **Request mirroring**: Duplicate traffic for testing without affecting production
@@ -69,6 +71,7 @@ To understand and implement Gateway API in XKS, refer to the comprehensive [Gate
 - **Debugging Guide**: Troubleshooting tips and common issues
 
 For the official Gateway API specification and concepts, see:
+
 - [Gateway API Official Documentation](https://gateway-api.sigs.k8s.io/)
 - [Gateway API Concepts](https://gateway-api.sigs.k8s.io/concepts/api-overview/)
 - [Gateway API User Guides](https://gateway-api.sigs.k8s.io/guides/)
@@ -84,11 +87,13 @@ XKS uses Envoy Gateway as the implementation of Gateway API. Learn more in the [
 - **Troubleshooting**: Debugging Envoy configuration and behavior
 
 For official Envoy Gateway documentation:
+
 - [Envoy Gateway Documentation](https://gateway.envoyproxy.io/)
 - [Envoy Gateway Quick Start](https://gateway.envoyproxy.io/latest/user/quickstart/)
 - [Envoy Gateway Tasks](https://gateway.envoyproxy.io/latest/tasks/)
 
 For Envoy Proxy internals:
+
 - [Envoy Proxy Documentation](https://www.envoyproxy.io/docs)
 - [Envoy Architecture](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/arch_overview)
 
@@ -103,6 +108,7 @@ kubectl get ingress --all-namespaces
 ```
 
 Document:
+
 - Hostnames and paths configured
 - Annotations used (especially implementation-specific ones)
 - TLS configuration
@@ -119,6 +125,7 @@ Convert each Ingress to an HTTPRoute. See the [Gateway API Guide](/docs/xks/oper
 Basic conversion pattern:
 
 **Before (Ingress):**
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -145,6 +152,7 @@ spec:
 ```
 
 **After (HTTPRoute):**
+
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -170,6 +178,7 @@ spec:
 ### Step 4: Test in Parallel
 
 Keep both Ingress and HTTPRoute running initially:
+
 - Use different hostnames for testing (e.g., `app-new.example.com` for HTTPRoute)
 - Verify functionality matches expected behavior
 - Test with actual traffic patterns
@@ -177,6 +186,7 @@ Keep both Ingress and HTTPRoute running initially:
 ### Step 5: Update DNS and Switch Traffic
 
 Once confident in HTTPRoute configuration:
+
 - Update DNS records to point to Gateway IP
 - Monitor metrics and logs for issues
 - Keep Ingress as a fallback initially
@@ -184,6 +194,7 @@ Once confident in HTTPRoute configuration:
 ### Step 6: Clean Up
 
 After successful migration:
+
 - Remove old Ingress resources
 - Delete unused Certificate resources if consolidated
 - Update documentation and deployment pipelines
