@@ -87,11 +87,6 @@ module.exports = {
         "xenit-style-guide/golang",
         "xenit-style-guide/javascript",
       ]
-    },
-    {
-      "type": "category",
-      "label": "Projects",
-      "items": []
     }
   ]
 }

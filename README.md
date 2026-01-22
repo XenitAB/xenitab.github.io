@@ -12,7 +12,12 @@ Take a look at the [Makefile](Makefile) and in [docs/](docs/).
 
 ## Website
 
-This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
+This website is built using [Docusaurus 3](https://docusaurus.io/), a modern static website generator.
+
+## Prerequisites
+
+- Node.js 18.0 or higher
+- Yarn package manager
 
 ## Installation
 
@@ -39,6 +44,14 @@ yarn build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service or locally by running `yarn serve`.
+
+### Clear Cache
+
+If you encounter build issues, clear the Docusaurus cache:
+
+```console
+yarn clear
+```
 
 ## Deployment
 

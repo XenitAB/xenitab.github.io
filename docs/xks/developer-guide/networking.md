@@ -213,7 +213,7 @@ For official deprecation information and Kubernetes community guidance:
 
 ## Ingress (Legacy)
 
-> **Note**: This section documents the legacy Ingress API for reference. New applications should use [Gateway API](#gateway-api-and-envoy-gateway) instead.
+> **Note**: This section documents the legacy Ingress API for reference. New applications should use [Gateway API](#gateway-api) instead.
 
 [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) in Kubernetes is used to allow network traffic from the outside the cluster to reach Pods inside the cluster. Ingress works
 as a layer on top of Kubernetes Services by exposing the Service with a hostname. All Ingress traffic is Layer 7 routed, meaning that traffic is routed based on the host header in the HTTP request. This

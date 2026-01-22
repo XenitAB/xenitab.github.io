@@ -5,8 +5,9 @@ title: Ingress Nginx Retiring
 
 ## Retirment and Deprecation Notice for Ingress Nginx
 
-We defer you to the original and most up-to-date official post regarding the retirement of Ingress Nginx project
-<https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/>
+We defer you to the original and most up-to-date official post regarding the retirement of Ingress Nginx project:
+
+https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/
 
 The Ingress API and Nginx Ingress Controller are being deprecated across the Kubernetes ecosystem and within XKS. This change aligns with the Kubernetes community's shift toward the Gateway API as the successor to Ingress.
 
@@ -205,14 +206,14 @@ After successful migration:
 |--------------------------|------------------------|---------------|
 | `nginx.ingress.kubernetes.io/rewrite-target` | URLRewrite filter | [Gateway API - URL Rewriting](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api#url-rewriting) |
 | `nginx.ingress.kubernetes.io/backend-protocol` | BackendTLSPolicy | [Envoy Gateway - Backend TLS](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#backend-tls) |
-| `nginx.ingress.kubernetes.io/limit-rps` | BackendTrafficPolicy (rate limiting) | [Gateway API - Rate Limiting](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api#rate-limiting) |
-| `nginx.ingress.kubernetes.io/limit-connections` | BackendTrafficPolicy (rate limiting) | [Gateway API - Rate Limiting](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api#rate-limiting) |
+| `nginx.ingress.kubernetes.io/limit-rps` | BackendTrafficPolicy (rate limiting) | [Envoy Gateway - Rate Limiting](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#rate-limiting) |
+| `nginx.ingress.kubernetes.io/limit-connections` | BackendTrafficPolicy (rate limiting) | [Envoy Gateway - Rate Limiting](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#rate-limiting) |
 | `nginx.ingress.kubernetes.io/cors-*` | CORSPolicy (extension) | [Envoy Gateway - CORS](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#cors-policy) |
-| `nginx.ingress.kubernetes.io/auth-*` | SecurityPolicy | [Envoy Gateway - Authentication](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#authentication) |
-| `nginx.ingress.kubernetes.io/upstream-hash-by` | BackendTrafficPolicy (load balancing) | [Gateway API - Load Balancing](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api#load-balancing) |
+| `nginx.ingress.kubernetes.io/auth-*` | SecurityPolicy | [Envoy Gateway - Basic Authentication](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#basic-authentication) |
+| `nginx.ingress.kubernetes.io/upstream-hash-by` | BackendTrafficPolicy (load balancing) | [Envoy Gateway - Load Balancing](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#load-balancing) |
 | `nginx.ingress.kubernetes.io/affinity` | BackendTrafficPolicy (session affinity) | [Envoy Gateway - Session Affinity](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#session-affinity) |
-| `nginx.ingress.kubernetes.io/proxy-body-size` | ClientTrafficPolicy (buffer limits) | [Envoy Gateway - Client Traffic](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#client-traffic-policy) |
-| `nginx.ingress.kubernetes.io/ssl-redirect` | HTTPRoute (redirect rule) | [Gateway API - Redirects](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api#redirects) |
+| `nginx.ingress.kubernetes.io/proxy-body-size` | ClientTrafficPolicy (buffer limits) | [Envoy Gateway - ClientTrafficPolicy](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#clienttrafficpolicy) |
+| `nginx.ingress.kubernetes.io/ssl-redirect` | HTTPRoute (redirect) | Use HTTPRoute filters for redirect behavior |
 | `nginx.ingress.kubernetes.io/configuration-snippet` | Custom filters or policies | [Envoy Gateway - Extensibility](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#extensibility) |
 
 For complex configurations using configuration snippets, consult the XKS platform team for guidance on migration strategies.
@@ -258,11 +259,11 @@ TLS configuration moves from Ingress to Gateway resource (managed by cluster ope
 
 ### Rate Limiting
 
-Rate limiting moves from annotations to BackendTrafficPolicy resources with more granular control. See [Gateway API - Rate Limiting](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api#rate-limiting).
+Rate limiting moves from annotations to BackendTrafficPolicy resources with more granular control. See [Envoy Gateway - Rate Limiting](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway#rate-limiting).
 
 ### External Services
 
-Routing to external endpoints works similarly but uses Gateway API's more explicit configuration. See [Gateway API - External Routing](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api#external-routing).
+Routing to external endpoints works similarly but uses Gateway API's ExternalName services.
 
 ## Getting Help
 

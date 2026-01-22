@@ -284,7 +284,7 @@ Project settings -> Service connections -> New service connection -> Azure Resou
 - Service Principal Id = $APP_ID
 - Service principal key = The key created in the earlier step
 - Tenant ID = $TENANT_ID
-- Service connection name = xks-${environment}-owner
+- Service connection name = xks-$\{environment\}-owner
 
 ### Update pipelines
 

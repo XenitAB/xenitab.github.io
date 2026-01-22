@@ -250,7 +250,7 @@ To create a new Service connection from Azure DevOps:
 
 Project settings -> Service connections -> New service connection -> Azure Resource Manager -> Service principal (manual)
 
-{"clientId":"12345","clientSecret":"SoMuchSecret","subscriptionId":"sub-id","tenantId":"tenant-id"}
+`{"clientId":"12345","clientSecret":"SoMuchSecret","subscriptionId":"sub-id","tenantId":"tenant-id"}`
 
 - Subscription Id = subscriptionId
 - Service Principal Id = clientId
