@@ -110,7 +110,7 @@ Another important change is that in `policy/v1` an empty `spec.selector {}` sele
 
 ### PodSecurityPolicy
 
-PodSecurityPolicy in the policy/v1beta1 API version will no longer be served in v1.25, and the PodSecurityPolicy admission controller will be removed. More information can be found [here.](https://kubernetes.io/docs/reference/using-api/deprecation-guide/#psp-v125)
+PodSecurityPolicy in the policy/v1beta1 API version will no longer be served in v1.25, and the PodSecurityPolicy admission controller will be removed. More information can be found in the [Kubernetes deprecation guide](https://kubernetes.io/docs/reference/using-api/deprecation-guide/#psp-v125).
 
 This is not something that we use in XKF, but it is good to know.
 
