@@ -414,6 +414,7 @@ spec:
 Similar to the Ingress setup, XKS can provide both public and private Gateways. The default Gateway is public and exposed to the Internet. For internal-only applications, you can create a private Gateway and reference that in the HTTPRoute:
 
 Gateway:
+
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -432,6 +433,7 @@ spec:
 ```
 
 HTTPRoute:
+
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
