@@ -411,8 +411,28 @@ spec:
 
 ## Public and Private Gateways
 
-Similar to the Ingress setup, XKS can provide both public and private Gateways. The default Gateway is public and exposed to the Internet. For internal-only applications, you can reference a private Gateway:
+Similar to the Ingress setup, XKS can provide both public and private Gateways. The default Gateway is public and exposed to the Internet. For internal-only applications, you can create a private Gateway and reference that in the HTTPRoute:
 
+Gateway:
+```yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: private-gateway
+  namespace: gateway-system
+spec:
+  gatewayClassName: envoy
+  infrastructure:
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  listeners:
+  - name: https
+    port: 443
+    protocol: HTTPS
+
+```
+
+HTTPRoute:
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
