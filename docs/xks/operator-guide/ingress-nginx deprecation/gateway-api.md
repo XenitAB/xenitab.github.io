@@ -429,7 +429,6 @@ spec:
   - name: https
     port: 443
     protocol: HTTPS
-
 ```
 
 HTTPRoute:
