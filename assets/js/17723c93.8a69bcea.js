@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhome=self.webpackChunkhome||[]).push([[3198],{2897:function(a){a.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"/blog/tags/starboard","name":"starboard","count":1,"permalink":"/blog/tags/starboard"}')}}]);

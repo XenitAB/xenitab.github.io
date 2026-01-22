@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhome=self.webpackChunkhome||[]).push([[5407],{9213:function(e){e.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"/blog/tags/architecture","name":"architecture","count":1,"permalink":"/blog/tags/architecture"}')}}]);

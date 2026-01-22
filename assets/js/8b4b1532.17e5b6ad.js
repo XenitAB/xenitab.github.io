@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhome=self.webpackChunkhome||[]).push([[1535],{6471:function(s){s.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"/blog/tags/trivy","name":"trivy","count":1,"permalink":"/blog/tags/trivy"}')}}]);

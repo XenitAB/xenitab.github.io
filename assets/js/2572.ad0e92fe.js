@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhome=self.webpackChunkhome||[]).push([[2572],{2572:function(e,h,s){s.r(h)}}]);
