@@ -154,7 +154,66 @@ spec:
 
 TBD
 
-## Ingress
+## Ingress and Gateway API
+
+XKS uses the [Kubernetes Gateway API](https://gateway-api.sigs.k8s.io/) as the modern standard for managing ingress traffic, with [Envoy Gateway](https://gateway.envoyproxy.io/) as the implementation. Gateway API is the successor to the traditional Ingress API and provides a more powerful, flexible, and extensible way to configure traffic routing into your Kubernetes cluster.
+
+### Gateway API
+
+The Gateway API provides:
+
+- **Role-oriented design**: Clear separation between infrastructure providers, cluster operators, and application developers
+- **Enhanced expressiveness**: Native support for header-based routing, traffic splitting, request mirroring, and more
+- **Better extensibility**: Uses typed Kubernetes resources instead of implementation-specific annotations
+- **Protocol support**: Built-in support for HTTP, HTTPS, TCP, TLS, UDP, and GRPC
+- **Future-proof**: Officially maintained by Kubernetes SIG Network and graduated to GA status
+
+For comprehensive documentation on using Gateway API in XKS, including examples, advanced features, and usage patterns, see the **[Gateway API Developer Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api)**.
+
+Refer to the official [Gateway API documentation](https://gateway-api.sigs.k8s.io/) for the complete specification and community resources.
+
+### Envoy Gateway
+
+XKS uses [Envoy Gateway](https://gateway.envoyproxy.io/) as the implementation of the Gateway API standard. Envoy Gateway leverages [Envoy Proxy](https://www.envoyproxy.io/), a modern, cloud-native proxy designed for high-performance scenarios.
+
+Key capabilities:
+
+- Dynamic configuration without downtime
+- Native Gateway API support
+- Advanced traffic management (circuit breaking, sophisticated retries, multiple load balancing algorithms)
+- Rich observability (metrics, distributed tracing, structured logging)
+- Service mesh ready architecture
+
+For details on Envoy Gateway features, policies, observability, performance tuning, and troubleshooting, see the **[Envoy Gateway Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway)**.
+
+For Envoy internals and advanced configuration, refer to:
+
+- [Envoy Gateway Documentation](https://gateway.envoyproxy.io/)
+- [Envoy Proxy Documentation](https://www.envoyproxy.io/docs)
+
+### Ingress Nginx Deprecation
+
+> **⚠️ IMPORTANT**: The traditional Ingress API with Nginx Ingress Controller is deprecated in XKS and will be removed in a future release.
+
+**What this means:**
+
+- Existing Ingress resources continue to work during the migration period
+- All new applications should use Gateway API
+- Migration assistance is available from the XKS platform team
+
+**Migration Resources:**
+
+- **[Ingress Nginx Migration Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/ingress-nginx-retiring)** - Complete deprecation information, timelines, step-by-step migration instructions, and annotation mapping
+- **[Gateway API Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api#migration-from-ingress)** - Side-by-side Ingress to HTTPRoute examples
+
+For official deprecation information and Kubernetes community guidance:
+
+- [Gateway API GA Announcement](https://kubernetes.io/blog/2023/10/31/gateway-api-ga/)
+- [Official Gateway API Migration Guide](https://gateway-api.sigs.k8s.io/guides/migrating-from-ingress/)
+
+## Ingress (Legacy)
+
+> **Note**: This section documents the legacy Ingress API for reference. New applications should use [Gateway API](#gateway-api) instead.
 
 [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) in Kubernetes is used to allow network traffic from the outside the cluster to reach Pods inside the cluster. Ingress works
 as a layer on top of Kubernetes Services by exposing the Service with a hostname. All Ingress traffic is Layer 7 routed, meaning that traffic is routed based on the host header in the HTTP request. This

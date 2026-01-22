@@ -141,7 +141,7 @@ Refer to the [API Documentation](https://pkg.go.dev/github.com/alexflint/go-arg)
 The options when logging with Go is usual many and opinionated, they depend on the required output format or how variables are passed. Currently the best compromise out there is [logr](https://github.com/go-logr/logr) which is a logging interface compatible with a lot of logging libraries. This means that the logging library can easily be replaced in the future without having to refactor the whole code base. A main feature of logr is that it supports structured logging, which means that parameters can easily be passed with the log message in a structured manner.  
 
 :::caution
-Using the `status` field when logging can interfere with how Datadog interprets the severity of the log. If you have a log with fields `status = 400` and `level = error`, then Datadog reports this as an info log. If you use another field for the status code, for example `http_response.status_code`, together with `level = error`, Datadog will report it as an error log. You can read more about the `status` field and other reserved log fields in Datadog [here](https://docs.datadoghq.com/logs/log_configuration/attributes_naming_convention/#reserved-attributes).
+Using the `status` field when logging can interfere with how Datadog interprets the severity of the log. If you have a log with fields `status = 400` and `level = error`, then Datadog reports this as an info log. If you use another field for the status code, for example `http_response.status_code`, together with `level = error`, Datadog will report it as an error log. You can read more about the `status` field and other reserved log fields in [Datadog's reserved attributes documentation](https://docs.datadoghq.com/logs/log_configuration/attributes_naming_convention/#reserved-attributes).
 :::
 
 Unless there are any other requirements it is good to use the [zapr](https://github.com/go-logr/zapr) logger. Zapr is fast and will output logs as JSON.
@@ -303,7 +303,7 @@ It is recommended to use [Datadog's Unified Service Tagging](https://docs.datado
 
 ### Connect logs and traces
 
-To connect logs and traces, log the span id of the current span. An example of a custom gin middleware logger that uses Datadog as tracing provider is shown below. It adds a `dd` field that holds the trace and span id. Read more on how to connect logs and traces in Datadog [here](https://docs.datadoghq.com/tracing/faq/why-cant-i-see-my-correlated-logs-in-the-trace-id-panel/?tab=custom&tabs=custom).
+To connect logs and traces, log the span id of the current span. An example of a custom gin middleware logger that uses Datadog as tracing provider is shown below. It adds a `dd` field that holds the trace and span id. Read more on how to connect logs and traces in [Datadog's trace correlation documentation](https://docs.datadoghq.com/tracing/faq/why-cant-i-see-my-correlated-logs-in-the-trace-id-panel/?tab=custom&tabs=custom).
 
 ```go
 type span struct {

@@ -135,7 +135,7 @@ TBD
 
 ### Update the nodes
 
-In the `aws-eks/variables/<environment>.tfvars` Terraform file that corresponds to the actual environment, add a new node group in `eks_config`. The example below shows a node upgrade from `1.20` to `1.21` where `standard2` is the new node group. The value of `release_version` must match an AMI version (preferrably the latest) for the actual Kubernetes version (can be found [here](https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html)):
+In the `aws-eks/variables/<environment>.tfvars` Terraform file that corresponds to the actual environment, add a new node group in `eks_config`. The example below shows a node upgrade from `1.20` to `1.21` where `standard2` is the new node group. The value of `release_version` must match an AMI version (preferrably the latest) for the actual Kubernetes version (can be found in the [EKS Linux AMI versions documentation](https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html)):
 
 ```terraform
 eks_config = {

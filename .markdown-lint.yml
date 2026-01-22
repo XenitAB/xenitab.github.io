@@ -18,3 +18,6 @@ MD033:
 
 # MD037/no-space-in-emphasis - Spaces inside emphasis markers
 MD037: false
+
+# MD060/table-column-style - Table column style
+MD060: false

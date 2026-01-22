@@ -65,6 +65,15 @@ module.exports = {
                 "xks/operator-guide/kubernetes/aks",
                 "xks/operator-guide/kubernetes/eks",
               ]
+            },
+            {
+              "type": "category",
+              "label": "Deprecation ingress-nginx ",
+              "items": [
+                "xks/operator-guide/ingress-nginx deprecation/ingress-nginx-retiring",
+                "xks/operator-guide/ingress-nginx deprecation/gateway-api",
+                "xks/operator-guide/ingress-nginx deprecation/envoy-gateway",
+              ]
             }
           ]
         }
@@ -78,11 +87,6 @@ module.exports = {
         "xenit-style-guide/golang",
         "xenit-style-guide/javascript",
       ]
-    },
-    {
-      "type": "category",
-      "label": "Projects",
-      "items": []
     }
   ]
 }

@@ -105,4 +105,4 @@ _Clients are expected to:_
 
 **Motivation**: We are building REST APIs to be used by many different callers and our situation would quickly be untenable if we had to respect quirky clients and inexperienced developers. For example, it is relatively straight-forward to horizontally scale a service that can answer 1 million GET/s, but very tricky to answer one GET request which is supposed to return 1 million entries per second.
 
-Someone may protest that browsers only allow 6-8 concurrent HTTP sessions against one host and that data must therefore be aggregated or pre-processed for clients to be performant. Normally, introducing [HTTP/2.0 multiplexing](https://datatracker.ietf.org/doc/html/rfc7540#section-5) and ensuring observed response times of <50ms will do the trick just as well.
+Someone may protest that browsers only allow 6-8 concurrent HTTP sessions against one host and that data must therefore be aggregated or pre-processed for clients to be performant. Normally, introducing [HTTP/2.0 multiplexing](https://datatracker.ietf.org/doc/html/rfc7540#section-5) and ensuring observed response times of \<50ms will do the trick just as well.

@@ -2,6 +2,7 @@
 SHELL := /bin/bash
 UNAME_S := $(shell uname -s)
 
+# Docusaurus v3 requires Node.js >= 18.0
 all: install-site build
 
 .PHONY: assets

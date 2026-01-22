@@ -4,11 +4,25 @@ module.exports = {
   url: "http://xenitab.github.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "XenitAB", // Usually your GitHub org/user name.
   projectName: "xenitab.github.io", // Usually your repo name.
-  plugins: [require.resolve("docusaurus-lunr-search")],
+  themes: [
+    [
+      require.resolve("@cmfcmf/docusaurus-search-local"),
+      {
+        indexDocs: true,
+        indexBlog: true,
+        indexPages: false,
+        language: "en",
+      },
+    ],
+  ],
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "warn",
+    },
+  },
   themeConfig: {
     navbar: {
       // title: "Xenit AB Open Source",
