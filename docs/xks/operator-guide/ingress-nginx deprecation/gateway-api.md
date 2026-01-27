@@ -31,7 +31,7 @@ Gateway API introduces a clear separation of concerns between different organiza
 
 This separation allows teams to work independently while maintaining security boundaries and operational clarity.
 
-<img alt="Gateway API Roles" src={useBaseUrl("img/assets/xks/developer-guide/gateway-api-roles.jpg")} />
+<img alt="Gateway API Roles" src={useBaseUrl("img/assets/xks/operator-guide/gateway-route-binding.png")} />
 
 ### Core Resources
 

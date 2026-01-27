@@ -70,7 +70,7 @@ Envoy's filter architecture enables powerful extensions:
 
 ## Architecture
 
-<img alt="Envoy Gateway Architecture" src={useBaseUrl("img/assets/xks/developer-guide/envoy-gateway-architecture.jpg")} />
+<img alt="Envoy Gateway Architecture" src={useBaseUrl("img/assets/xks/operator-guide/architecture.png")} />
 
 Envoy Gateway consists of two main components:
 
