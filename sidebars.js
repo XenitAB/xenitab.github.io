@@ -73,6 +73,7 @@ module.exports = {
                 "xks/operator-guide/ingress-nginx deprecation/ingress-nginx-retiring",
                 "xks/operator-guide/ingress-nginx deprecation/gateway-api",
                 "xks/operator-guide/ingress-nginx deprecation/envoy-gateway",
+                "xks/operator-guide/ingress-nginx deprecation/azure-dns-migration-playbook",
               ]
             }
           ]
