@@ -126,6 +126,8 @@ spec:
 ```
 
 :::tip Finding the Gateway IP
+Depending on how you deployed your Gateway it might be in a different namespace and with a different name so the command bellow might not be accurate.
+
 Get the Gateway's load balancer IP with:
 
 ```bash
