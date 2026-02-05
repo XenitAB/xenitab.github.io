@@ -3,7 +3,7 @@ id: ingress-nginx-retiring
 title: Ingress Nginx Retiring
 ---
 
-## Retirment and Deprecation Notice for Ingress Nginx
+## Retirement and Deprecation Notice for Ingress Nginx
 
 We defer you to the original and most up-to-date official post regarding the retirement of Ingress Nginx project:
 
@@ -27,6 +27,12 @@ The Kubernetes community has officially recognized Gateway API as the future of 
 - **Migration Period**: Existing Ingress resources should be migrated to Gateway API. Support for legacy Ingress will be maintained during a transition period
 - **Future Removal**: Advanced notice will be provided before Ingress support is removed from XKS clusters
 - **Support**: The XKS platform team is available to assist with migration planning and execution
+
+:::tip Ready to Migrate? Check Out Our Example Playbook!
+We've prepared step-by-step example migration playbooks to guide you through the process. Start with the [Azure DNS Migration Playbook](/docs/xks/operator-guide/ingress-nginx%20deprecation/azure-dns-migration-playbook) for a near zero-downtime DNS switchover guide using external-dns.
+
+Please note that in your scenario you might not be able to follow this exact playbook this is just an example. Please double check your situation gitops, pipelines or manual deployments for you to understand whats the best way to handle the DNS switchover and or to minimize downtime if that is important.
+:::
 
 ## Why Migrate?
 
@@ -269,6 +275,7 @@ Routing to external endpoints works similarly but uses Gateway API's ExternalNam
 
 ### Documentation Resources
 
+- [Azure DNS Migration Playbook](/docs/xks/operator-guide/ingress-nginx%20deprecation/azure-dns-migration-playbook) - Step-by-step migration guide with external-dns
 - [Gateway API Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/gateway-api) - Complete XKS Gateway API documentation
 - [Envoy Gateway Guide](/docs/xks/operator-guide/ingress-nginx%20deprecation/envoy-gateway) - Envoy-specific features and configuration
 - [Official Gateway API Docs](https://gateway-api.sigs.k8s.io/) - Kubernetes Gateway API specification
