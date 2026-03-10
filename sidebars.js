@@ -49,8 +49,8 @@ module.exports = {
           "type": "category",
           "label": "Operator Guide",
           "items": [
-            "xks/operator-guide/index",
             "xks/operator-guide/getting-started",
+            "xks/operator-guide/architecture",
             "xks/operator-guide/agents",
             "xks/operator-guide/networking",
             "xks/operator-guide/blast-radius",

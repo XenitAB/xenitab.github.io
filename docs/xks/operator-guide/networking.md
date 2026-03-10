@@ -9,7 +9,15 @@ debugging networking issues.
 
 ## Kubernetes
 
-TBD
+### Ingress
+
+Ingress is all traffic that originates from outside the Kubernetes cluster with a destination inside the cluster. The majority of ingress traffic is HTTP but TCP ingress traffic is also possible. There are multiple components which makes ingress work. Load balancers, DNS records, TLS certificates, and Ingress Controllers are all required to achieve a production ready ingress solution in Kubernetes. The diagram below shows an overview of all the components involved in ingress networking. 
+
+<img alt="Ingress Networking" src={useBaseUrl("img/assets/xks/operator-guide/ingress-networking.jpg")} />
+
+An important note is that the DNS zone in which the records are create does not belong to a specific cluster or region. It is instead global to the specific region. This is the case regardless of the cloud or DNS provider used. Additionally XKF supports multiple DNS zones in the same cluster. This is useful if for example different applications should be exposed with totally different DNS records.
+
+The ingress controller is the application where all HTTP traffic will first reach inside of the Kubernetes cluster. It will forward request to the correct destination based on request parameters. The ingress controller has an accompanying load balancer with an IP which is routable from outside of the Kubernetes cluster. Requests to this IP will reach the ingress controller. It is possible to run multiple ingress controller in Kubernetes but XKF only has a single [NGINX ingress controller](https://github.com/kubernetes/ingress-nginx). DNS records are managed by [external-dns](https://github.com/kubernetes-sigs/external-dns) in the Kubernetes clusters. It looks at Ingress resources in the Kubernetes cluster and creates DNS records in the correct zone. The IP which the DNS record points towards is the load balancer which directs traffic to the ingress controller. Lastly certificates have to be provisioned. This is done with the help of [cert-manager](https://github.com/cert-manager/cert-manager). It runs in each cluster and provisions new certificates through [Let's Encrypt](Let's Encrypt). The certificate provisioning process includes a validation process to verify ownership of the DNS record for which the certificate is being created for. XKF uses [DNS01 challenges](https://letsencrypt.org/docs/challenge-types/#dns-01-challenge) in favor of [HTTP01 challenges](https://letsencrypt.org/docs/challenge-types/#http-01-challenge) to accomplish this for two specific reasons. The first being that HTTP01 challenges do not allow creation of wildcard certificates. The second being that the validation process would not work with how XKF implements blue/green cluster upgrades, as the requests to `http://<DOMAIN>/.well-known/acme-challenge/<TOKEN>` has to routed to the new cluster. The DNS01 works by creating a TXT record at `_acme-challenge.<DOMAIN>` with the value of the TXT record being a specific token value. The record only has to exist during the certificate provisioning and can be removed after it is complete.
 
 ### Node Local DNS
 
